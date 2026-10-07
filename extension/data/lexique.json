@@ -150,5 +150,88 @@
     "sources": [
       "CLARUS D3.2"
     ]
+  },
+  {
+    "id": "hachage",
+    "terme": "Hachage",
+    "anglais": "Hash / Hashing",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Technique cryptographique permettant de calculer, à partir de données, une valeur de taille fixe utilisée notamment pour contrôler leur intégrité et comparer un original à une copie forensique.",
+    "synonymes": [
+      "Calcul d’empreinte",
+      "Fonction de hachage"
+    ],
+    "termes_deconseilles": [
+      "Hashage"
+    ],
+    "exemple_rapport": "Une valeur de hachage est calculée afin de contrôler l’intégrité des données extraites.",
+    "sources": [
+      "CLARUS D3.2 — Hash/Hashing"
+    ]
+  },
+  {
+    "id": "valeur-hachage",
+    "terme": "Valeur de hachage",
+    "anglais": "Hash value",
+    "categorie": "Preuve numérique",
+    "definition": "Valeur obtenue par l’application d’une fonction de hachage à un ensemble de données. La comparaison de valeurs de hachage permet notamment de vérifier qu’une copie n’a pas été modifiée par rapport à la donnée de référence.",
+    "synonymes": [
+      "Empreinte numérique",
+      "Hash"
+    ],
+    "termes_deconseilles": [
+      "Checksum cryptographique"
+    ],
+    "exemple_rapport": "Les valeurs de hachage calculées avant et après l’opération sont identiques, ce qui permet de vérifier l’intégrité de la copie.",
+    "sources": [
+      "CLARUS D3.2 — Hash/Hashing"
+    ]
+  },
+  {
+    "id": "metadonnees",
+    "terme": "Métadonnées",
+    "anglais": "Metadata",
+    "categorie": "Preuve numérique",
+    "definition": "Données décrivant d’autres données, notamment leurs caractéristiques, propriétés, contexte ou structure. En criminalistique numérique, elles peuvent contribuer à établir l’origine, l’historique ou les attributs d’un fichier ou d’un système.",
+    "synonymes": [],
+    "termes_deconseilles": [],
+    "exemple_rapport": "L’examen des métadonnées permet d’apporter des éléments complémentaires sur l’origine et l’historique du fichier.",
+    "sources": [
+      "CLARUS D3.2 — Metadata"
+    ]
+  },
+  {
+    "id": "copie-forensique",
+    "terme": "Copie forensique",
+    "anglais": "Forensic copy / Forensic image",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Copie de données numériques réalisée au moyen de procédures contrôlées afin de préserver les données d’origine pour leur examen et leur analyse.",
+    "synonymes": [
+      "Image forensique",
+      "Copie de travail forensique"
+    ],
+    "termes_deconseilles": [
+      "Copie simple"
+    ],
+    "exemple_rapport": "Nous réalisons une copie forensique du support afin de préserver les données d’origine lors des opérations d’analyse.",
+    "sources": [
+      "CLARUS D3.2 — Forensic copy"
+    ]
+  },
+  {
+    "id": "chaine-tracabilite",
+    "terme": "Chaîne de traçabilité",
+    "anglais": "Chain of custody",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Ensemble des enregistrements permettant de documenter chronologiquement la prise en charge, les transferts, les opérations, le stockage et, le cas échéant, la restitution ou la destruction d’un élément de preuve afin d’en assurer la traçabilité et l’intégrité.",
+    "synonymes": [
+      "Chaîne de possession",
+      "Traçabilité du scellé"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "Les différentes opérations réalisées sur le scellé sont consignées afin d’en assurer la traçabilité.",
+    "sources": [
+      "CLARUS D3.2 — Chain of custody"
+    ]
   }
 ]
