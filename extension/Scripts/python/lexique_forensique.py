@@ -18,14 +18,12 @@ def _desktop():
 
 
 def _extension_root():
-    """Return the installed extension directory as a system path."""
-    ctx = _ctx()
-    smgr = ctx.ServiceManager
-    pkg = smgr.createInstanceWithContext(
-        "com.sun.star.deployment.PackageInformationProvider", ctx
+    """Return the installed extension directory from this script location."""
+    # In an installed .oxt, this file lives in:
+    # <extension-root>/Scripts/python/lexique_forensique.py
+    return os.path.abspath(
+        os.path.join(os.path.dirname(__file__), os.pardir, os.pardir)
     )
-    url = pkg.getPackageLocation(EXT_ID)
-    return uno.fileUrlToSystemPath(url)
 
 
 def _load_data():
@@ -138,7 +136,7 @@ def open_lexicon(*args):
     model.PositionY = 50
     model.Width = 250
     model.Height = 190
-    model.Title = "Lexique forensique FR — v0.1.1"
+    model.Title = "Lexique forensique FR — v0.1.2"
 
     def add(name, service, x, y, w, h, **props):
         m = model.createInstance(service)
