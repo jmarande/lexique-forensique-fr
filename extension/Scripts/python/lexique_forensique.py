@@ -15,7 +15,7 @@ from com.sun.star.awt import XActionListener, XItemListener, XTopWindowListener
 _OPEN_LEXICON_WINDOWS = []
 _OPEN_ABOUT_WINDOWS = []
 
-CURRENT_VERSION = "0.7.7"
+CURRENT_VERSION = "0.7.8"
 GITHUB_URL = "https://github.com/jmarande/lexique-forensique-fr"
 GITHUB_LATEST_RELEASE_API = (
     "https://api.github.com/repos/jmarande/lexique-forensique-fr/releases/latest"
@@ -86,8 +86,24 @@ def _bad_terms(entry):
     return entry.get("termes_deconseilles", entry.get("deconseilles", []))
 
 
-def _report_example(entry):
-    return entry.get("exemple_rapport", entry.get("rapport", ""))
+def _report_formulations(entry):
+    values = entry.get("formulations_rapport")
+    result = []
+    if isinstance(values, list):
+        for item in values:
+            if isinstance(item, dict):
+                text = (item.get("texte") or "").strip()
+                label = (item.get("type") or "").strip()
+                if text:
+                    result.append((label or "Proposition", text))
+            elif isinstance(item, str) and item.strip():
+                result.append(("Proposition", item.strip()))
+
+    if result:
+        return result
+
+    legacy = (entry.get("exemple_rapport") or entry.get("rapport") or "").strip()
+    return [("Formulation", legacy)] if legacy else []
 
 
 def _sources(entry):
@@ -121,8 +137,7 @@ def _format_entry(e, warning=None):
         + f"Synonymes : {syn}\n"
         + f"Termes déconseillés : {bad}\n"
         + f"Sources : {_sources(e)}\n\n"
-        + f"DÉFINITION\n{e.get('definition', '')}\n\n"
-        + f"FORMULATION POUR RAPPORT\n{_report_example(e)}"
+        + f"DÉFINITION\n{e.get('definition', '')}"
     )
 
 
@@ -183,6 +198,8 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
         results_box,
         alerts_box,
         detail_box,
+        formulations_box,
+        formulation_preview,
         status_label,
         insert_button,
         replace_button,
@@ -193,6 +210,8 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
         self.results_box = results_box
         self.alerts_box = alerts_box
         self.detail_box = detail_box
+        self.formulations_box = formulations_box
+        self.formulation_preview = formulation_preview
         self.status_label = status_label
         self.insert_button = insert_button
         self.replace_button = replace_button
@@ -202,6 +221,7 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
         self.scan_alerts = []
         self.current_alert = None
         self.current_found_range = None
+        self.current_formulations = []
         self.refresh()
 
     def _set_insert_enabled(self, enabled):
@@ -218,12 +238,31 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
         if self.alerts_box.ItemCount:
             self.alerts_box.removeItems(0, self.alerts_box.ItemCount)
 
+    def _refresh_formulations(self, entry):
+        if self.formulations_box.ItemCount:
+            self.formulations_box.removeItems(0, self.formulations_box.ItemCount)
+
+        self.current_formulations = _report_formulations(entry)
+        for index, (label, text) in enumerate(self.current_formulations, start=1):
+            self.formulations_box.addItem(
+                label or f"Proposition {index}",
+                self.formulations_box.ItemCount,
+            )
+
+        if self.current_formulations:
+            self.formulations_box.selectItemPos(0, True)
+            self.formulation_preview.Text = self.current_formulations[0][1]
+            self._set_insert_enabled(True)
+        else:
+            self.formulation_preview.Text = "Aucune formulation disponible."
+            self._set_insert_enabled(False)
+
     def _show_search_entry(self, entry):
         self.current = entry
         self.current_alert = None
         self.current_found_range = None
         self.detail_box.Text = _format_entry(entry)
-        self._set_insert_enabled(True)
+        self._refresh_formulations(entry)
         self._set_replace_enabled(False)
 
     def _goto_alert_occurrence(self, alert):
@@ -258,7 +297,7 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
         self.current = alert["entry"]
         self.current_alert = alert
         self.detail_box.Text = _format_entry(self.current, warning=alert)
-        self._set_insert_enabled(True)
+        self._refresh_formulations(self.current)
         self._goto_alert_occurrence(alert)
 
     def _replace_current_occurrence(self):
@@ -343,16 +382,18 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
             self._replace_current_occurrence()
 
         elif cmd == "insert" and self.current:
+            pos = self.formulations_box.SelectedItemPos
+            if 0 <= pos < len(self.current_formulations):
+                text_to_insert = self.current_formulations[pos][1]
+            else:
+                text_to_insert = self.current["terme"]
+
             doc = _desktop().getCurrentComponent()
             if doc and doc.supportsService("com.sun.star.text.TextDocument"):
                 view = doc.getCurrentController().getViewCursor()
-                view.getText().insertString(
-                    view,
-                    _report_example(self.current) or self.current["terme"],
-                    False,
-                )
+                view.getText().insertString(view, text_to_insert, False)
                 self.status_label.getModel().Label = (
-                    "Formulation insérée dans le document"
+                    "Formulation sélectionnée insérée dans le document"
                 )
 
         elif cmd == "close":
@@ -390,7 +431,12 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
         pass
 
     def itemStateChanged(self, event):
-        if event.Source is self.alerts_box:
+        if event.Source is self.formulations_box:
+            pos = self.formulations_box.SelectedItemPos
+            if 0 <= pos < len(self.current_formulations):
+                self.formulation_preview.Text = self.current_formulations[pos][1]
+                self._set_insert_enabled(True)
+        elif event.Source is self.alerts_box:
             pos = self.alerts_box.SelectedItemPos
             if 0 <= pos < len(self.scan_alerts):
                 self._show_scan_alert(self.scan_alerts[pos])
@@ -641,7 +687,7 @@ def open_lexicon(*args):
     model.PositionY = 45
     model.Width = 310
     model.Height = 286
-    model.Title = "Lexique forensique FR — v0.7.7"
+    model.Title = "Lexique forensique FR — v0.7.8"
 
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
@@ -708,7 +754,26 @@ def open_lexicon(*args):
     add(
         "txtDetail",
         "com.sun.star.awt.UnoControlEditModel",
-        118, 46, 184, 190,
+        118, 46, 184, 104,
+        MultiLine=True,
+        ReadOnly=True,
+        VScroll=True,
+    )
+    add(
+        "lblFormulations",
+        "com.sun.star.awt.UnoControlFixedTextModel",
+        118, 154, 184, 10,
+        Label="FORMULATIONS POUR RAPPORT",
+    )
+    add(
+        "lstFormulations",
+        "com.sun.star.awt.UnoControlListBoxModel",
+        118, 166, 184, 34,
+    )
+    add(
+        "txtFormulationPreview",
+        "com.sun.star.awt.UnoControlEditModel",
+        118, 204, 184, 32,
         MultiLine=True,
         ReadOnly=True,
         VScroll=True,
@@ -723,8 +788,8 @@ def open_lexicon(*args):
     add(
         "btnInsert",
         "com.sun.star.awt.UnoControlButtonModel",
-        214, 244, 88, 16,
-        Label="Insérer formule",
+        214, 240, 88, 16,
+        Label="Insérer",
     )
     add(
         "btnClose",
@@ -743,6 +808,8 @@ def open_lexicon(*args):
     results_box = dialog.getControl("lstResults")
     alerts_box = dialog.getControl("lstAlerts")
     detail_box = dialog.getControl("txtDetail")
+    formulations_box = dialog.getControl("lstFormulations")
+    formulation_preview = dialog.getControl("txtFormulationPreview")
     status_label = dialog.getControl("lblStatus")
     insert_button = dialog.getControl("btnInsert")
     replace_button = dialog.getControl("btnReplace")
@@ -753,6 +820,8 @@ def open_lexicon(*args):
         results_box,
         alerts_box,
         detail_box,
+        formulations_box,
+        formulation_preview,
         status_label,
         insert_button,
         replace_button,
@@ -771,6 +840,7 @@ def open_lexicon(*args):
 
     results_box.addItemListener(listener)
     alerts_box.addItemListener(listener)
+    formulations_box.addItemListener(listener)
     dialog.addTopWindowListener(listener)
 
     _OPEN_LEXICON_WINDOWS.append({
