@@ -3,7 +3,7 @@
              xmlns:lo="http://libreoffice.org/extensions/description/2011"
              xmlns:xlink="http://www.w3.org/1999/xlink">
   <identifier value="fr.lexique.forensique"/>
-  <version value="0.7.8"/>
+  <version value="0.7.9"/>
   <display-name>
     <name lang="fr">Lexique forensique FR</name>
   </display-name>
