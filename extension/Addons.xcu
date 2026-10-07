@@ -8,7 +8,7 @@
         </prop>
         <node oor:name="Submenu">
           <node oor:name="m1" oor:op="replace">
-            <prop oor:name="URL" oor:type="xs:string"><value>vnd.sun.star.script:lexique-forensique-fr.oxt|Scripts|python|lexique_forensique.py$open_lexicon?language=Python&amp;location=user:uno_packages</value></prop>
+            <prop oor:name="URL" oor:type="xs:string"><value>vnd.sun.star.script:lexique-forensique-fr-v0.1.2.oxt|Scripts|python|lexique_forensique.py$open_lexicon?language=Python&amp;location=user:uno_packages</value></prop>
             <prop oor:name="Title" oor:type="xs:string"><value xml:lang="fr">Rechercher un terme…</value></prop>
             <prop oor:name="Target" oor:type="xs:string"><value>_self</value></prop>
             <prop oor:name="Context" oor:type="xs:string"><value>com.sun.star.text.TextDocument</value></prop>
