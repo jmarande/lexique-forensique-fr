@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<description xmlns="http://openoffice.org/extensions/description/2006"
+             xmlns:lo="http://libreoffice.org/extensions/description/2011"
+             xmlns:xlink="http://www.w3.org/1999/xlink">
+  <identifier value="fr.lexique.forensique"/>
+  <version value="0.1.1"/>
+  <display-name>
+    <name lang="fr">Lexique forensique FR</name>
+  </display-name>
+  <publisher>
+    <name xlink:href="https://github.com/jmarande/lexique-forensique-fr">Projet Lexique forensique FR</name>
+  </publisher>
+  <dependencies>
+    <lo:LibreOffice-minimal-version value="7.4"/>
+  </dependencies>
+  <extension-description>
+    <src lang="fr" xlink:href="README.txt"/>
+  </extension-description>
+</description>
