@@ -315,5 +315,98 @@
     "sources": [
       "CLARUS D3.2 — Retrieval"
     ]
+  },
+  {
+    "id": "systeme-fichiers",
+    "terme": "Système de fichiers",
+    "anglais": "File system",
+    "categorie": "Technologie numérique",
+    "definition": "Structure utilisée sur un volume physique ou virtuel pour organiser, stocker et retrouver des fichiers utilisateur et système. En criminalistique numérique, son interprétation est essentielle pour reconstituer l’organisation des données qu’il contient.",
+    "synonymes": [
+      "File system"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "L’analyse du système de fichiers permet d’identifier l’organisation des données présentes sur le support.",
+    "sources": [
+      "CLARUS D3.2 — File system"
+    ]
+  },
+  {
+    "id": "memoire",
+    "terme": "Mémoire",
+    "anglais": "Memory",
+    "categorie": "Équipement numérique",
+    "definition": "Zone ou support de stockage susceptible de contenir des données de manière temporaire ou permanente. En criminalistique numérique, la mémoire peut constituer une source d’informations ou de preuves numériques.",
+    "synonymes": [
+      "Mémoire numérique"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "L’examen de la mémoire permet d’identifier des données susceptibles de présenter un intérêt pour l’analyse.",
+    "sources": [
+      "CLARUS D3.2 — Memory"
+    ]
+  },
+  {
+    "id": "memoire-cache",
+    "terme": "Mémoire cache",
+    "anglais": "Cache memory",
+    "categorie": "Preuve numérique",
+    "definition": "Type de mémoire utilisé par un système ou une application pour stocker temporairement des fichiers et d’autres données. Les éléments présents dans le cache peuvent présenter une valeur probatoire.",
+    "synonymes": [
+      "Cache"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "L’analyse de la mémoire cache permet d’identifier des fichiers temporaires et autres éléments résiduels.",
+    "sources": [
+      "CLARUS D3.2 — Cache memory"
+    ]
+  },
+  {
+    "id": "dossier",
+    "terme": "Dossier",
+    "anglais": "Folder",
+    "categorie": "Preuve numérique",
+    "definition": "Structure d’organisation au sein d’un système de fichiers permettant de regrouper et gérer hiérarchiquement des fichiers et d’autres dossiers. Sa structure peut contribuer à renseigner sur l’organisation des données et les pratiques de l’utilisateur.",
+    "synonymes": [
+      "Répertoire"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "Les fichiers identifiés sont regroupés dans plusieurs dossiers dont l’organisation peut renseigner sur l’usage du support.",
+    "sources": [
+      "CLARUS D3.2 — Folder(s)"
+    ]
+  },
+  {
+    "id": "source-donnees",
+    "terme": "Source de données",
+    "anglais": "Data source",
+    "categorie": "Preuve numérique",
+    "definition": "Origine à partir de laquelle des informations ou des preuves numériques peuvent être collectées, par exemple un smartphone, un routeur Wi-Fi, un équipement GPS, un système de vidéoprotection ou une plateforme cloud.",
+    "synonymes": [
+      "Source numérique"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "Plusieurs sources de données sont identifiées et examinées au regard de la mission confiée.",
+    "sources": [
+      "CLARUS D3.2 — Data source/s"
+    ]
+  },
+  {
+    "id": "cle-usb",
+    "terme": "Clé USB",
+    "anglais": "USB stick",
+    "categorie": "Équipement numérique",
+    "definition": "Support de stockage amovible couramment utilisé pour transporter des données ou exécuter certains outils de collecte d’informations.",
+    "synonymes": [
+      "Clé mémoire USB",
+      "Support USB"
+    ],
+    "termes_deconseilles": [
+      "Pen drive"
+    ],
+    "exemple_rapport": "La clé USB est prise en charge comme support de stockage amovible susceptible de contenir des données d’intérêt.",
+    "sources": [
+      "CLARUS D3.2 — USB stick"
+    ]
   }
 ]
