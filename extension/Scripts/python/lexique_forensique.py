@@ -15,7 +15,7 @@ from com.sun.star.awt import XActionListener, XItemListener, XTopWindowListener
 _OPEN_LEXICON_WINDOWS = []
 _OPEN_ABOUT_WINDOWS = []
 
-CURRENT_VERSION = "0.6.0"
+CURRENT_VERSION = "0.6.1"
 GITHUB_URL = "https://github.com/jmarande/lexique-forensique-fr"
 GITHUB_LATEST_RELEASE_API = (
     "https://api.github.com/repos/jmarande/lexique-forensique-fr/releases/latest"
@@ -519,10 +519,8 @@ def show_about(*args):
 
 
 def _download_update(download_url, expected_sha256):
-    target = os.path.join(
-        tempfile.gettempdir(),
-        "lexique-forensique-fr-update.oxt",
-    )
+    update_dir = tempfile.mkdtemp(prefix="lexique-forensique-fr-")
+    target = os.path.join(update_dir, UPDATE_ASSET_NAME)
     request = urllib.request.Request(
         download_url,
         headers={"User-Agent": "Lexique-forensique-FR-LibreOffice"},
@@ -618,7 +616,7 @@ def open_lexicon(*args):
     model.PositionY = 45
     model.Width = 310
     model.Height = 286
-    model.Title = "Lexique forensique FR — v0.6.0"
+    model.Title = "Lexique forensique FR — v0.6.1"
 
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
