@@ -3,6 +3,7 @@ import json
 import os
 import re
 import unicodedata
+import urllib.request
 
 import uno
 import unohelper
@@ -10,6 +11,13 @@ import unohelper
 from com.sun.star.awt import XActionListener, XItemListener
 
 _OPEN_LEXICON_WINDOWS = []
+_OPEN_ABOUT_WINDOWS = []
+
+CURRENT_VERSION = "0.4.2"
+GITHUB_URL = "https://github.com/jmarande/lexique-forensique-fr"
+GITHUB_RELEASES_URL = GITHUB_URL + "/releases"
+GITHUB_LATEST_API = "https://api.github.com/repos/jmarande/lexique-forensique-fr/releases/latest"
+LINKEDIN_URL = "https://www.linkedin.com/in/j%C3%A9r%C3%A9my-m-822ba6151"
 
 
 def _ctx():
@@ -18,6 +26,42 @@ def _ctx():
 
 def _desktop():
     return XSCRIPTCONTEXT.getDesktop()
+
+
+def _open_url(url):
+    ctx = _ctx()
+    smgr = ctx.ServiceManager
+    shell = smgr.createInstanceWithContext(
+        "com.sun.star.system.SystemShellExecute", ctx
+    )
+    shell.execute(url, "", 0)
+
+
+def _message_box(title, message):
+    ctx = _ctx()
+    smgr = ctx.ServiceManager
+    toolkit = smgr.createInstanceWithContext("com.sun.star.awt.Toolkit", ctx)
+    parent = toolkit.getDesktopWindow()
+    box = toolkit.createMessageBox(
+        parent,
+        uno.createUnoStruct("com.sun.star.awt.Rectangle"),
+        "infobox",
+        1,
+        title,
+        message,
+    )
+    box.execute()
+
+
+def _version_tuple(value):
+    value = (value or "").strip().lstrip("vV")
+    parts = []
+    for item in value.split("."):
+        digits = "".join(ch for ch in item if ch.isdigit())
+        if digits == "":
+            break
+        parts.append(int(digits))
+    return tuple(parts or [0])
 
 
 def _extension_root():
@@ -333,6 +377,151 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
         pass
 
 
+class AboutListener(unohelper.Base, XActionListener):
+    def __init__(self, dialog):
+        self.dialog = dialog
+
+    def actionPerformed(self, event):
+        if event.ActionCommand == "linkedin":
+            _open_url(LINKEDIN_URL)
+        elif event.ActionCommand == "github":
+            _open_url(GITHUB_URL)
+        elif event.ActionCommand == "close":
+            try:
+                self.dialog.setVisible(False)
+                self.dialog.dispose()
+            finally:
+                _OPEN_ABOUT_WINDOWS[:] = [
+                    item for item in _OPEN_ABOUT_WINDOWS
+                    if item.get("dialog") is not self.dialog
+                ]
+
+    def disposing(self, event):
+        pass
+
+
+def show_about(*args):
+    ctx = _ctx()
+    smgr = ctx.ServiceManager
+    toolkit = smgr.createInstanceWithContext("com.sun.star.awt.Toolkit", ctx)
+    model = smgr.createInstanceWithContext(
+        "com.sun.star.awt.UnoControlDialogModel", ctx
+    )
+    model.PositionX = 95
+    model.PositionY = 65
+    model.Width = 220
+    model.Height = 102
+    model.Title = "À propos de Lexique forensique FR"
+
+    def add(name, service, x, y, w, h, **props):
+        item = model.createInstance(service)
+        item.Name = name
+        item.PositionX, item.PositionY = x, y
+        item.Width, item.Height = w, h
+        for key, value in props.items():
+            setattr(item, key, value)
+        model.insertByName(name, item)
+
+    add(
+        "txtAbout",
+        "com.sun.star.awt.UnoControlFixedTextModel",
+        10, 10, 200, 42,
+        Label=(
+            "Lexique forensique FR\n"
+            f"Version {CURRENT_VERSION}\n"
+            "Auteur : Jérémy MARANDE\n"
+            "Lexique français de criminalistique numérique"
+        ),
+        MultiLine=True,
+    )
+    add(
+        "btnLinkedIn",
+        "com.sun.star.awt.UnoControlButtonModel",
+        10, 62, 62, 16,
+        Label="LinkedIn",
+    )
+    add(
+        "btnGitHub",
+        "com.sun.star.awt.UnoControlButtonModel",
+        78, 62, 62, 16,
+        Label="GitHub",
+    )
+    add(
+        "btnClose",
+        "com.sun.star.awt.UnoControlButtonModel",
+        158, 62, 52, 16,
+        Label="Fermer",
+    )
+
+    dialog = smgr.createInstanceWithContext(
+        "com.sun.star.awt.UnoControlDialog", ctx
+    )
+    dialog.setModel(model)
+    dialog.createPeer(toolkit, None)
+
+    listener = AboutListener(dialog)
+    for control_name, command in [
+        ("btnLinkedIn", "linkedin"),
+        ("btnGitHub", "github"),
+        ("btnClose", "close"),
+    ]:
+        control = dialog.getControl(control_name)
+        control.setActionCommand(command)
+        control.addActionListener(listener)
+
+    _OPEN_ABOUT_WINDOWS.append({
+        "dialog": dialog,
+        "listener": listener,
+    })
+    dialog.setVisible(True)
+
+
+def check_updates(*args):
+    try:
+        request = urllib.request.Request(
+            GITHUB_LATEST_API,
+            headers={
+                "Accept": "application/vnd.github+json",
+                "User-Agent": "Lexique-forensique-FR-LibreOffice",
+            },
+        )
+        with urllib.request.urlopen(request, timeout=8) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+
+        latest = payload.get("tag_name", "")
+        page = payload.get("html_url") or GITHUB_RELEASES_URL
+
+        if _version_tuple(latest) > _version_tuple(CURRENT_VERSION):
+            _message_box(
+                "Mise à jour disponible",
+                (
+                    f"Version installée : {CURRENT_VERSION}\n"
+                    f"Dernière version : {latest}\n\n"
+                    "La page GitHub de la dernière version va s'ouvrir."
+                ),
+            )
+            _open_url(page)
+        else:
+            _message_box(
+                "Lexique forensique FR",
+                (
+                    f"La version {CURRENT_VERSION} est à jour.\n\n"
+                    "Les versions publiées sont disponibles sur GitHub."
+                ),
+            )
+    except Exception:
+        _message_box(
+            "Mise à jour",
+            (
+                "La vérification automatique n'est pas disponible actuellement.\n"
+                "Aucune release GitHub publique n'est peut-être encore publiée, "
+                "ou le dépôt nécessite une authentification.\n\n"
+                "La page des versions GitHub va s'ouvrir."
+            ),
+        )
+        _open_url(GITHUB_RELEASES_URL)
+
+
 def open_lexicon(*args):
     ctx = _ctx()
     smgr = ctx.ServiceManager
@@ -345,7 +534,7 @@ def open_lexicon(*args):
     model.PositionY = 45
     model.Width = 310
     model.Height = 286
-    model.Title = "Lexique forensique FR — v0.4.1 TEST"
+    model.Title = "Lexique forensique FR — v0.4.2 TEST"
 
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
@@ -483,4 +672,4 @@ def open_lexicon(*args):
     dialog.setVisible(True)
 
 
-g_exportedScripts = (open_lexicon,)
+g_exportedScripts = (open_lexicon, show_about, check_updates)
