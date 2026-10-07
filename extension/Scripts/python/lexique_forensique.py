@@ -13,7 +13,7 @@ from com.sun.star.awt import XActionListener, XItemListener
 _OPEN_LEXICON_WINDOWS = []
 _OPEN_ABOUT_WINDOWS = []
 
-CURRENT_VERSION = "0.4.3"
+CURRENT_VERSION = "0.4.4"
 GITHUB_URL = "https://github.com/jmarande/lexique-forensique-fr"
 GITHUB_RELEASES_URL = GITHUB_URL + "/releases"
 GITHUB_LATEST_API = "https://api.github.com/repos/jmarande/lexique-forensique-fr/releases/latest"
@@ -43,7 +43,6 @@ def _message_box(title, message):
     parent = toolkit.getDesktopWindow()
     box = toolkit.createMessageBox(
         parent,
-        uno.createUnoStruct("com.sun.star.awt.Rectangle"),
         "infobox",
         1,
         title,
@@ -524,7 +523,7 @@ def open_lexicon(*args):
     model.PositionY = 45
     model.Width = 310
     model.Height = 286
-    model.Title = "Lexique forensique FR — v0.4.3 TEST"
+    model.Title = "Lexique forensique FR — v0.4.4 TEST"
 
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
