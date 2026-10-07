@@ -15,7 +15,7 @@ from com.sun.star.awt import XActionListener, XItemListener, XTopWindowListener
 _OPEN_LEXICON_WINDOWS = []
 _OPEN_ABOUT_WINDOWS = []
 
-CURRENT_VERSION = "0.7.1"
+CURRENT_VERSION = "0.7.2"
 GITHUB_URL = "https://github.com/jmarande/lexique-forensique-fr"
 GITHUB_LATEST_RELEASE_API = (
     "https://api.github.com/repos/jmarande/lexique-forensique-fr/releases/latest"
@@ -593,6 +593,31 @@ def show_about(*args):
     dialog.setVisible(True)
 
 
+def _release_notes_text(release):
+    body = (release.get("body") or "").strip()
+    if not body:
+        return "Aucune note de version fournie."
+
+    # Keep the update dialog readable while preserving the useful release summary.
+    body = body.replace("\r\n", "\n").replace("\r", "\n")
+    lines = []
+    for raw in body.split("\n"):
+        line = raw.strip()
+        if not line:
+            continue
+        # Light cleanup of common GitHub Markdown generated for releases.
+        if line.startswith("##"):
+            line = line.lstrip("#").strip()
+        if line.startswith("- "):
+            line = "• " + line[2:].strip()
+        lines.append(line)
+
+    text = "\n".join(lines)
+    if len(text) > 1200:
+        text = text[:1197].rstrip() + "..."
+    return text or "Aucune note de version fournie."
+
+
 def _download_update(download_url, expected_sha256):
     update_dir = tempfile.mkdtemp(prefix="lexique-forensique-fr-")
     target = os.path.join(update_dir, UPDATE_ASSET_NAME)
@@ -656,11 +681,14 @@ def check_updates(*args):
         if digest.lower().startswith("sha256:"):
             expected_sha256 = digest.split(":", 1)[1].strip()
 
+        release_notes = _release_notes_text(release)
         _message_box(
             "Mise à jour disponible",
             (
                 f"Version installée : {CURRENT_VERSION}\n"
                 f"Dernière version : {latest}\n\n"
+                "NOUVEAUTÉS\n"
+                f"{release_notes}\n\n"
                 "La nouvelle extension va être téléchargée."
             ),
         )
@@ -691,7 +719,7 @@ def open_lexicon(*args):
     model.PositionY = 45
     model.Width = 310
     model.Height = 286
-    model.Title = "Lexique forensique FR — v0.7.1"
+    model.Title = "Lexique forensique FR — v0.7.2"
 
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
