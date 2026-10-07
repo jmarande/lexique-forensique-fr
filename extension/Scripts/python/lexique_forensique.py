@@ -135,6 +135,7 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
         dialog,
         search_box,
         results_box,
+        alerts_box,
         detail_box,
         status_label,
         insert_button,
@@ -144,6 +145,7 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
         self.dialog = dialog
         self.search_box = search_box
         self.results_box = results_box
+        self.alerts_box = alerts_box
         self.detail_box = detail_box
         self.status_label = status_label
         self.insert_button = insert_button
@@ -154,7 +156,6 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
         self.scan_alerts = []
         self.current_alert = None
         self.current_found_range = None
-        self.mode = "search"
         self.refresh()
 
     def _set_insert_enabled(self, enabled):
@@ -166,6 +167,10 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
     def _clear_results(self):
         if self.results_box.ItemCount:
             self.results_box.removeItems(0, self.results_box.ItemCount)
+
+    def _clear_alerts(self):
+        if self.alerts_box.ItemCount:
+            self.alerts_box.removeItems(0, self.alerts_box.ItemCount)
 
     def _show_search_entry(self, entry):
         self.current = entry
@@ -224,11 +229,6 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
         self.scan_document()
 
     def refresh(self):
-        self.mode = "search"
-        self.scan_alerts = []
-        self.current_alert = None
-        self.current_found_range = None
-        self._set_replace_enabled(False)
         self.matches = _find_entries(self.search_box.Text, self.data)
 
         self._clear_results()
@@ -255,19 +255,18 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
             self.status_label.getModel().Label = "Aucun document Writer actif"
             return
 
-        self.mode = "scan"
         self.current_alert = None
         self.current_found_range = None
         self._set_replace_enabled(False)
         self.scan_alerts = _scan_document_text(doc.Text.String, self.data)
-        self._clear_results()
+        self._clear_alerts()
 
         for alert in self.scan_alerts:
             label = (
                 f"{alert['found']} → {alert['entry']['terme']} "
                 f"({alert['count']})"
             )
-            self.results_box.addItem(label, self.results_box.ItemCount)
+            self.alerts_box.addItem(label, self.alerts_box.ItemCount)
 
         total = sum(alert["count"] for alert in self.scan_alerts)
 
@@ -277,16 +276,13 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
                 if total == 1
                 else f"{total} occurrences terminologiques"
             )
-            self.results_box.selectItemPos(0, True)
+            self.alerts_box.selectItemPos(0, True)
             self._show_scan_alert(self.scan_alerts[0])
         else:
-            self.current = None
-            self.detail_box.Text = (
-                "Aucun terme déconseillé du lexique n'a été détecté "
-                "dans le document actif."
-            )
+            self.current_alert = None
+            self.current_found_range = None
             self.status_label.getModel().Label = "Aucune alerte terminologique"
-            self._set_insert_enabled(False)
+            self._set_replace_enabled(False)
 
     def actionPerformed(self, event):
         cmd = event.ActionCommand
@@ -324,12 +320,12 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
                 ]
 
     def itemStateChanged(self, event):
-        pos = self.results_box.SelectedItemPos
-
-        if self.mode == "scan":
+        if event.Source is self.alerts_box:
+            pos = self.alerts_box.SelectedItemPos
             if 0 <= pos < len(self.scan_alerts):
                 self._show_scan_alert(self.scan_alerts[pos])
         else:
+            pos = self.results_box.SelectedItemPos
             if 0 <= pos < len(self.matches):
                 self._show_search_entry(self.matches[pos])
 
@@ -348,8 +344,8 @@ def open_lexicon(*args):
     model.PositionX = 70
     model.PositionY = 45
     model.Width = 310
-    model.Height = 254
-    model.Title = "Lexique forensique FR — v0.4.0 TEST"
+    model.Height = 286
+    model.Title = "Lexique forensique FR — v0.4.1 TEST"
 
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
@@ -392,14 +388,31 @@ def open_lexicon(*args):
         Label="",
     )
     add(
+        "lblLexique",
+        "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 44, 105, 10,
+        Label="Lexique",
+    )
+    add(
         "lstResults",
         "com.sun.star.awt.UnoControlListBoxModel",
-        8, 46, 105, 150,
+        8, 56, 105, 116,
+    )
+    add(
+        "lblAlerts",
+        "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 176, 105, 10,
+        Label="Alertes du document",
+    )
+    add(
+        "lstAlerts",
+        "com.sun.star.awt.UnoControlListBoxModel",
+        8, 188, 105, 48,
     )
     add(
         "txtDetail",
         "com.sun.star.awt.UnoControlEditModel",
-        118, 46, 184, 150,
+        118, 46, 184, 190,
         MultiLine=True,
         ReadOnly=True,
         VScroll=True,
@@ -407,20 +420,20 @@ def open_lexicon(*args):
     add(
         "btnReplace",
         "com.sun.star.awt.UnoControlButtonModel",
-        118, 204, 92, 16,
+        118, 244, 92, 16,
         Label="Remplacer occurrence",
         Enabled=False,
     )
     add(
         "btnInsert",
         "com.sun.star.awt.UnoControlButtonModel",
-        214, 204, 88, 16,
+        214, 244, 88, 16,
         Label="Insérer formule",
     )
     add(
         "btnClose",
         "com.sun.star.awt.UnoControlButtonModel",
-        258, 226, 44, 16,
+        258, 266, 44, 16,
         Label="Fermer",
     )
 
@@ -432,6 +445,7 @@ def open_lexicon(*args):
 
     search_box = dialog.getControl("txtSearch")
     results_box = dialog.getControl("lstResults")
+    alerts_box = dialog.getControl("lstAlerts")
     detail_box = dialog.getControl("txtDetail")
     status_label = dialog.getControl("lblStatus")
     insert_button = dialog.getControl("btnInsert")
@@ -441,6 +455,7 @@ def open_lexicon(*args):
         dialog,
         search_box,
         results_box,
+        alerts_box,
         detail_box,
         status_label,
         insert_button,
@@ -459,6 +474,7 @@ def open_lexicon(*args):
         control.addActionListener(listener)
 
     results_box.addItemListener(listener)
+    alerts_box.addItemListener(listener)
 
     _OPEN_LEXICON_WINDOWS.append({
         "dialog": dialog,
