@@ -15,7 +15,7 @@ from com.sun.star.awt import XActionListener, XItemListener, XTopWindowListener
 _OPEN_LEXICON_WINDOWS = []
 _OPEN_ABOUT_WINDOWS = []
 
-CURRENT_VERSION = "0.7.9"
+CURRENT_VERSION = "0.7.10"
 GITHUB_URL = "https://github.com/jmarande/lexique-forensique-fr"
 GITHUB_LATEST_RELEASE_API = (
     "https://api.github.com/repos/jmarande/lexique-forensique-fr/releases/latest"
@@ -86,8 +86,28 @@ def _bad_terms(entry):
     return entry.get("termes_deconseilles", entry.get("deconseilles", []))
 
 
+def _report_formulations(entry):
+    values = entry.get("formulations_rapport")
+    result = []
+    if isinstance(values, list):
+        for item in values:
+            if isinstance(item, dict):
+                text = (item.get("texte") or "").strip()
+                label = (item.get("type") or "").strip()
+                if text:
+                    result.append((label or "Proposition", text))
+            elif isinstance(item, str) and item.strip():
+                result.append(("Proposition", item.strip()))
+    if result:
+        return result
+
+    legacy = (entry.get("exemple_rapport") or entry.get("rapport") or "").strip()
+    return [("Formulation", legacy)] if legacy else []
+
+
 def _report_example(entry):
-    return entry.get("exemple_rapport", entry.get("rapport", ""))
+    formulations = _report_formulations(entry)
+    return formulations[0][1] if formulations else ""
 
 
 def _sources(entry):
@@ -113,6 +133,11 @@ def _format_entry(e, warning=None):
             f"{warning['found']} → {e['terme']}\n"
             f"Occurrences détectées : {warning['count']}\n\n"
         )
+    formulations = _report_formulations(e)
+    report_lines = []
+    for index, (label, text) in enumerate(formulations[:3], start=1):
+        report_lines.append(f"{index}. {label}\n{text}")
+
     return (
         prefix
         + f"{e['terme']}\n"
@@ -122,7 +147,8 @@ def _format_entry(e, warning=None):
         + f"Termes déconseillés : {bad}\n"
         + f"Sources : {_sources(e)}\n\n"
         + f"DÉFINITION\n{e.get('definition', '')}\n\n"
-        + f"FORMULATION POUR RAPPORT\n{_report_example(e)}"
+        + "FORMULATIONS POUR RAPPORT\n"
+        + ("\n\n".join(report_lines) if report_lines else "—")
     )
 
 
@@ -202,6 +228,7 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
         self.scan_alerts = []
         self.current_alert = None
         self.current_found_range = None
+        self.current_formulations = []
         self.refresh()
 
     def _set_insert_enabled(self, enabled):
@@ -222,8 +249,9 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
         self.current = entry
         self.current_alert = None
         self.current_found_range = None
+        self.current_formulations = _report_formulations(entry)
         self.detail_box.Text = _format_entry(entry)
-        self._set_insert_enabled(True)
+        self._set_insert_enabled(bool(self.current_formulations))
         self._set_replace_enabled(False)
 
     def _goto_alert_occurrence(self, alert):
@@ -257,8 +285,9 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
     def _show_scan_alert(self, alert):
         self.current = alert["entry"]
         self.current_alert = alert
+        self.current_formulations = _report_formulations(self.current)
         self.detail_box.Text = _format_entry(self.current, warning=alert)
-        self._set_insert_enabled(True)
+        self._set_insert_enabled(bool(self.current_formulations))
         self._goto_alert_occurrence(alert)
 
     def _replace_current_occurrence(self):
@@ -342,17 +371,25 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
         elif cmd == "replace":
             self._replace_current_occurrence()
 
-        elif cmd == "insert" and self.current:
+        elif cmd.startswith("insert") and self.current:
+            index = 0
+            if cmd != "insert":
+                try:
+                    index = int(cmd.replace("insert", "")) - 1
+                except ValueError:
+                    index = 0
+
+            if 0 <= index < len(self.current_formulations):
+                text_to_insert = self.current_formulations[index][1]
+            else:
+                text_to_insert = _report_example(self.current) or self.current["terme"]
+
             doc = _desktop().getCurrentComponent()
             if doc and doc.supportsService("com.sun.star.text.TextDocument"):
                 view = doc.getCurrentController().getViewCursor()
-                view.getText().insertString(
-                    view,
-                    _report_example(self.current) or self.current["terme"],
-                    False,
-                )
+                view.getText().insertString(view, text_to_insert, False)
                 self.status_label.getModel().Label = (
-                    "Formulation insérée dans le document"
+                    f"Formulation {index + 1} insérée dans le document"
                 )
 
         elif cmd == "close":
@@ -641,7 +678,7 @@ def open_lexicon(*args):
     model.PositionY = 45
     model.Width = 310
     model.Height = 286
-    model.Title = "Lexique forensique FR — v0.7.9"
+    model.Title = "Lexique forensique FR — v0.7.10"
 
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
@@ -723,8 +760,20 @@ def open_lexicon(*args):
     add(
         "btnInsert",
         "com.sun.star.awt.UnoControlButtonModel",
-        214, 244, 88, 16,
-        Label="Insérer formule",
+        214, 244, 28, 16,
+        Label="1",
+    )
+    add(
+        "btnInsert2",
+        "com.sun.star.awt.UnoControlButtonModel",
+        244, 244, 28, 16,
+        Label="2",
+    )
+    add(
+        "btnInsert3",
+        "com.sun.star.awt.UnoControlButtonModel",
+        274, 244, 28, 16,
+        Label="3",
     )
     add(
         "btnClose",
@@ -745,6 +794,8 @@ def open_lexicon(*args):
     detail_box = dialog.getControl("txtDetail")
     status_label = dialog.getControl("lblStatus")
     insert_button = dialog.getControl("btnInsert")
+    insert_button2 = dialog.getControl("btnInsert2")
+    insert_button3 = dialog.getControl("btnInsert3")
     replace_button = dialog.getControl("btnReplace")
 
     listener = DialogListener(
@@ -763,7 +814,9 @@ def open_lexicon(*args):
         (dialog.getControl("btnSearch"), "search"),
         (dialog.getControl("btnScan"), "scan"),
         (replace_button, "replace"),
-        (insert_button, "insert"),
+        (insert_button, "insert1"),
+        (insert_button2, "insert2"),
+        (insert_button3, "insert3"),
         (dialog.getControl("btnClose"), "close"),
     ]:
         control.setActionCommand(command)
