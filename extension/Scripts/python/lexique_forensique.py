@@ -19,10 +19,13 @@ def _desktop():
 
 def _extension_root():
     """Return the installed extension directory from this script location."""
-    # In an installed .oxt, this file lives in:
-    # <extension-root>/Scripts/python/lexique_forensique.py
+    script_path = __file__
+    # LibreOffice may expose Python script paths as file:/// URLs.
+    # Convert the URL before using os.path functions on Windows.
+    if script_path.startswith("file:"):
+        script_path = uno.fileUrlToSystemPath(script_path)
     return os.path.abspath(
-        os.path.join(os.path.dirname(__file__), os.pardir, os.pardir)
+        os.path.join(os.path.dirname(script_path), os.pardir, os.pardir)
     )
 
 
@@ -136,7 +139,7 @@ def open_lexicon(*args):
     model.PositionY = 50
     model.Width = 250
     model.Height = 190
-    model.Title = "Lexique forensique FR — v0.1.2"
+    model.Title = "Lexique forensique FR — v0.1.3"
 
     def add(name, service, x, y, w, h, **props):
         m = model.createInstance(service)
