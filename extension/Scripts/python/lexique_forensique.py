@@ -13,11 +13,10 @@ from com.sun.star.awt import XActionListener, XItemListener
 _OPEN_LEXICON_WINDOWS = []
 _OPEN_ABOUT_WINDOWS = []
 
-CURRENT_VERSION = "0.4.2"
+CURRENT_VERSION = "0.4.3"
 GITHUB_URL = "https://github.com/jmarande/lexique-forensique-fr"
 GITHUB_RELEASES_URL = GITHUB_URL + "/releases"
 GITHUB_LATEST_API = "https://api.github.com/repos/jmarande/lexique-forensique-fr/releases/latest"
-LINKEDIN_URL = "https://www.linkedin.com/in/j%C3%A9r%C3%A9my-m-822ba6151"
 
 
 def _ctx():
@@ -382,9 +381,7 @@ class AboutListener(unohelper.Base, XActionListener):
         self.dialog = dialog
 
     def actionPerformed(self, event):
-        if event.ActionCommand == "linkedin":
-            _open_url(LINKEDIN_URL)
-        elif event.ActionCommand == "github":
+        if event.ActionCommand == "github":
             _open_url(GITHUB_URL)
         elif event.ActionCommand == "close":
             try:
@@ -435,15 +432,9 @@ def show_about(*args):
         MultiLine=True,
     )
     add(
-        "btnLinkedIn",
-        "com.sun.star.awt.UnoControlButtonModel",
-        10, 62, 62, 16,
-        Label="LinkedIn",
-    )
-    add(
         "btnGitHub",
         "com.sun.star.awt.UnoControlButtonModel",
-        78, 62, 62, 16,
+        10, 62, 62, 16,
         Label="GitHub",
     )
     add(
@@ -461,7 +452,6 @@ def show_about(*args):
 
     listener = AboutListener(dialog)
     for control_name, command in [
-        ("btnLinkedIn", "linkedin"),
         ("btnGitHub", "github"),
         ("btnClose", "close"),
     ]:
@@ -534,7 +524,7 @@ def open_lexicon(*args):
     model.PositionY = 45
     model.Width = 310
     model.Height = 286
-    model.Title = "Lexique forensique FR — v0.4.2 TEST"
+    model.Title = "Lexique forensique FR — v0.4.3 TEST"
 
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
