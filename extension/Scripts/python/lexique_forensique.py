@@ -15,7 +15,7 @@ from com.sun.star.awt import XActionListener, XItemListener, XTopWindowListener
 _OPEN_LEXICON_WINDOWS = []
 _OPEN_ABOUT_WINDOWS = []
 
-CURRENT_VERSION = "0.6.1"
+CURRENT_VERSION = "0.6.2"
 GITHUB_URL = "https://github.com/jmarande/lexique-forensique-fr"
 GITHUB_LATEST_RELEASE_API = (
     "https://api.github.com/repos/jmarande/lexique-forensique-fr/releases/latest"
@@ -616,7 +616,7 @@ def open_lexicon(*args):
     model.PositionY = 45
     model.Width = 310
     model.Height = 286
-    model.Title = "Lexique forensique FR — v0.6.1"
+    model.Title = "Lexique forensique FR — v0.6.2"
 
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
@@ -649,7 +649,7 @@ def open_lexicon(*args):
     add(
         "btnScan",
         "com.sun.star.awt.UnoControlButtonModel",
-        8, 24, 90, 16,
+        8, 174, 105, 16,
         Label="Vérifier document",
     )
     add(
@@ -667,18 +667,18 @@ def open_lexicon(*args):
     add(
         "lstResults",
         "com.sun.star.awt.UnoControlListBoxModel",
-        8, 56, 105, 116,
+        8, 56, 105, 112,
     )
     add(
         "lblAlerts",
         "com.sun.star.awt.UnoControlFixedTextModel",
-        8, 176, 105, 10,
+        8, 192, 105, 10,
         Label="Alertes du document",
     )
     add(
         "lstAlerts",
         "com.sun.star.awt.UnoControlListBoxModel",
-        8, 188, 105, 48,
+        8, 204, 105, 32,
     )
     add(
         "txtDetail",
@@ -691,7 +691,7 @@ def open_lexicon(*args):
     add(
         "btnReplace",
         "com.sun.star.awt.UnoControlButtonModel",
-        118, 244, 92, 16,
+        8, 240, 105, 16,
         Label="Remplacer occurrence",
         Enabled=False,
     )
