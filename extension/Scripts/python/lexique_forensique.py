@@ -15,7 +15,7 @@ from com.sun.star.awt import XActionListener, XItemListener, XMouseListener, XTo
 _OPEN_LEXICON_WINDOWS = []
 _OPEN_ABOUT_WINDOWS = []
 
-CURRENT_VERSION = "0.7.14"
+CURRENT_VERSION = "0.7.15"
 GITHUB_URL = "https://github.com/jmarande/lexique-forensique-fr"
 GITHUB_LATEST_RELEASE_API = (
     "https://api.github.com/repos/jmarande/lexique-forensique-fr/releases/latest"
@@ -139,9 +139,7 @@ def _format_entry(e, warning=None):
         + f"{e['terme']}\n"
         + f"Anglais : {e.get('anglais', '—')}\n"
         + f"Catégorie : {e.get('categorie', '—')}\n"
-        + f"Synonymes : {syn}\n"
-        + f"Termes déconseillés : {bad}\n"
-        + f"Sources : {_sources(e)}\n\n"
+        + f"Synonymes : {syn}\n\n"
         + f"DÉFINITION\n{e.get('definition', '')}\n\n"
         + "FORMULATIONS POUR RAPPORT\n"
     )
@@ -153,7 +151,7 @@ def _format_entry(e, warning=None):
     for index, (label, text) in enumerate(formulations, start=1):
         if index > 1:
             parts.append("\n\n")
-        parts.append(f"{index}. {label}\n")
+        parts.append(f"{index}. {label.upper()}\n")
         start = sum(len(part) for part in parts)
         parts.append(text)
         end = start + len(text)
@@ -737,8 +735,8 @@ def open_lexicon(*args):
     model.PositionX = 70
     model.PositionY = 45
     model.Width = 310
-    model.Height = 286
-    model.Title = "Lexique forensique FR — v0.7.14"
+    model.Height = 334
+    model.Title = "Lexique forensique FR — v0.7.15"
 
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
@@ -805,7 +803,7 @@ def open_lexicon(*args):
     add(
         "txtDetail",
         "com.sun.star.awt.UnoControlEditModel",
-        118, 46, 184, 190,
+        118, 46, 184, 236,
         MultiLine=True,
         ReadOnly=True,
         VScroll=True,
@@ -814,20 +812,20 @@ def open_lexicon(*args):
     add(
         "btnReplace",
         "com.sun.star.awt.UnoControlButtonModel",
-        8, 240, 105, 16,
+        8, 288, 105, 16,
         Label="Remplacer occurrence",
         Enabled=False,
     )
     add(
         "btnInsert",
         "com.sun.star.awt.UnoControlButtonModel",
-        214, 244, 88, 16,
+        214, 288, 88, 16,
         Label="Insérer formule",
     )
     add(
         "btnClose",
         "com.sun.star.awt.UnoControlButtonModel",
-        258, 266, 44, 16,
+        258, 314, 44, 16,
         Label="Fermer",
     )
 
