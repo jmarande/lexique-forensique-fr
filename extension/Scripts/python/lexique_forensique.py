@@ -4,7 +4,7 @@ import os
 import uno
 import unohelper
 
-from com.sun.star.awt import XActionListener
+from com.sun.star.awt import XActionListener, XItemListener
 
 EXT_ID = "fr.lexique.forensique"
 
@@ -75,7 +75,7 @@ def _find_entries(query, data):
     return out
 
 
-class DialogListener(unohelper.Base, XActionListener):
+class DialogListener(unohelper.Base, XActionListener, XItemListener):
     def __init__(self, dialog, search_box, results_box, detail_box, insert_button, data):
         self.dialog = dialog
         self.search_box = search_box
@@ -126,6 +126,13 @@ class DialogListener(unohelper.Base, XActionListener):
         elif cmd == "close":
             self.dialog.endExecute()
 
+    def itemStateChanged(self, event):
+        pos = self.results_box.SelectedItemPos
+        if 0 <= pos < len(self.matches):
+            self.current = self.matches[pos]
+            self.detail_box.Text = _format_entry(self.current)
+            self.insert_button.getModel().Enabled = True
+
     def disposing(self, event):
         pass
 
@@ -139,7 +146,7 @@ def open_lexicon(*args):
     model.PositionY = 50
     model.Width = 250
     model.Height = 190
-    model.Title = "Lexique forensique FR — v0.1.4"
+    model.Title = "Lexique forensique FR — v0.1.5"
 
     def add(name, service, x, y, w, h, **props):
         m = model.createInstance(service)
@@ -177,12 +184,13 @@ def open_lexicon(*args):
 
     for control, command in [
         (dialog.getControl("btnSearch"), "search"),
-        (results_box, "select"),
         (insert_button, "insert"),
         (dialog.getControl("btnClose"), "close"),
     ]:
         control.setActionCommand(command)
         control.addActionListener(listener)
+
+    results_box.addItemListener(listener)
 
     dialog.execute()
     dialog.dispose()
