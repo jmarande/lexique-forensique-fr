@@ -1,33 +1,28 @@
-# Distribution publique des mises à jour
+# Distribution des mises à jour
 
-L'extension LibreOffice consulte un dépôt public séparé :
+Le projet utilise désormais **un seul dépôt GitHub**.
 
-`jmarande/lexique-forensique-fr-releases`
+## Publication d'une version
 
-Le dépôt public doit contenir à la racine :
+1. Mettre à jour la version dans `extension/description.xml` et dans `CURRENT_VERSION`.
+2. Fusionner la version validée dans `main`.
+3. Créer puis pousser un tag de version, par exemple `v0.5.0`.
+4. Le workflow GitHub Actions construit automatiquement `lexique-forensique-fr.oxt`.
+5. Une GitHub Release portant le même tag est créée avec l'OXT en pièce jointe.
 
-- `update.json`
-- `lexique-forensique-fr-latest.oxt`
+## Mise à jour dans LibreOffice
 
-## update.json
+Le menu **Lexique forensique > Mettre à jour…** appelle :
 
-```json
-{
-  "version": "0.5.0",
-  "download_url": "https://raw.githubusercontent.com/jmarande/lexique-forensique-fr-releases/main/lexique-forensique-fr-latest.oxt",
-  "sha256": "<empreinte SHA-256 du fichier OXT>"
-}
-```
+`https://api.github.com/repos/jmarande/lexique-forensique-fr/releases/latest`
 
-## Fonctionnement
+L'extension :
 
-Le menu **Lexique forensique > Mettre à jour…** :
-
-1. télécharge `update.json` ;
-2. compare la version publiée à la version installée ;
-3. télécharge le nouvel OXT lorsqu'une version plus récente existe ;
-4. vérifie son SHA-256 ;
-5. ouvre le fichier OXT dans le gestionnaire d'extensions LibreOffice.
+- lit le numéro de la dernière release ;
+- compare ce numéro à la version installée ;
+- cherche l'asset `lexique-forensique-fr.oxt` ;
+- télécharge le nouvel OXT lorsqu'une version plus récente existe ;
+- contrôle le SHA-256 si GitHub fournit un digest pour l'asset ;
+- ouvre ensuite le fichier OXT pour lancer son installation.
 
 Aucun token GitHub n'est embarqué dans l'extension.
-Le dépôt de développement peut donc rester privé.
