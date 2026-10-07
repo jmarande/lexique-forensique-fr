@@ -15,7 +15,7 @@ from com.sun.star.awt import XActionListener, XItemListener, XTopWindowListener
 _OPEN_LEXICON_WINDOWS = []
 _OPEN_ABOUT_WINDOWS = []
 
-CURRENT_VERSION = "0.7.12"
+CURRENT_VERSION = "0.7.13"
 GITHUB_URL = "https://github.com/jmarande/lexique-forensique-fr"
 GITHUB_LATEST_RELEASE_API = (
     "https://api.github.com/repos/jmarande/lexique-forensique-fr/releases/latest"
@@ -249,7 +249,10 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
         self.current_found_range = None
         self.current_formulations = _report_formulations(entry)
         self.detail_box.Text = _format_entry(entry)
-        self.insert_button.getModel().Label = "Formulations"
+        if len(self.current_formulations) > 1:
+            self.insert_button.getModel().Label = "Formulations"
+        else:
+            self.insert_button.getModel().Label = "Insérer formule"
         self.search_button.getModel().Label = "Rechercher"
         self.mode = "lexicon"
         self._set_insert_enabled(bool(self.current_formulations))
@@ -321,7 +324,10 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
         self.current_alert = alert
         self.current_formulations = _report_formulations(self.current)
         self.detail_box.Text = _format_entry(self.current, warning=alert)
-        self.insert_button.getModel().Label = "Formulations"
+        if len(self.current_formulations) > 1:
+            self.insert_button.getModel().Label = "Formulations"
+        else:
+            self.insert_button.getModel().Label = "Insérer formule"
         self.search_button.getModel().Label = "Rechercher"
         self.mode = "lexicon"
         self._set_insert_enabled(bool(self.current_formulations))
@@ -413,10 +419,14 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
 
         elif cmd == "insert" and self.current:
             if self.mode != "formulations":
-                self._open_formulations()
-                return
-
-            if 0 <= self.selected_formulation_index < len(self.current_formulations):
+                if len(self.current_formulations) > 1:
+                    self._open_formulations()
+                    return
+                if self.current_formulations:
+                    text_to_insert = self.current_formulations[0][1]
+                else:
+                    text_to_insert = self.current["terme"]
+            elif 0 <= self.selected_formulation_index < len(self.current_formulations):
                 text_to_insert = self.current_formulations[
                     self.selected_formulation_index
                 ][1]
@@ -729,7 +739,7 @@ def open_lexicon(*args):
     model.PositionY = 45
     model.Width = 310
     model.Height = 286
-    model.Title = "Lexique forensique FR — v0.7.12"
+    model.Title = "Lexique forensique FR — v0.7.13"
 
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
