@@ -1,15 +1,178 @@
 [
   {
-    "id": "preuve-numerique",
-    "terme": "Preuve numérique",
-    "anglais": "Digital evidence",
-    "categorie": "Preuve numérique",
-    "definition": "Information ou donnée stockée ou transmise sous forme numérique pouvant contribuer à établir un fait dans le cadre d'une enquête ou d'une procédure judiciaire.",
+    "id": "acquisition-forensique",
+    "terme": "Acquisition forensique",
+    "anglais": "Forensic acquisition",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Processus systématique consistant à créer une copie ou une image forensique de données numériques tout en préservant les données d’origine et leur intégrité pour les besoins de l’analyse et de la procédure.",
     "synonymes": [
-      "Élément de preuve numérique"
+      "Acquisition numérique forensique"
     ],
     "termes_deconseilles": [],
-    "exemple_rapport": "L'analyse du support a permis d'identifier plusieurs éléments de preuve numérique susceptibles d'éclairer les faits.",
+    "exemple_rapport": "Nous procédons à l’acquisition forensique du support afin de préserver les données d’origine en vue de leur analyse.",
+    "sources": [
+      "CLARUS D3.2 — Forensic acquisition"
+    ]
+  },
+  {
+    "id": "adresse-ip",
+    "terme": "Adresse IP",
+    "anglais": "IP address",
+    "categorie": "Technologie numérique",
+    "definition": "Adresse numérique attribuée à un équipement connecté à un réseau IP ou à Internet et utilisée pour son adressage et son identification au sein du réseau.",
+    "synonymes": [
+      "IP"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "L’adresse IP observée est consignée avec la date et l’heure afin de replacer l’information dans son contexte.",
+    "sources": [
+      "CLARUS D3.2 — IP address"
+    ]
+  },
+  {
+    "id": "authentification",
+    "terme": "Authentification",
+    "anglais": "Authentication",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Processus de vérification de l’identité d’un utilisateur, de la validité de données ou de l’intégrité d’une preuve numérique.",
+    "synonymes": [
+      "Vérification d’identité"
+    ],
+    "termes_deconseilles": [
+      "Authentification d’identité"
+    ],
+    "exemple_rapport": "L’accès au service est soumis à une procédure d’authentification.",
+    "sources": [
+      "CLARUS D3.2 — Authentication"
+    ]
+  },
+  {
+    "id": "base-de-donnees",
+    "terme": "Base de données",
+    "anglais": "Database",
+    "categorie": "Preuve numérique",
+    "definition": "Collection structurée d'informations organisée afin de permettre la recherche, la comparaison, l'identification et la récupération d'enregistrements.",
+    "synonymes": [],
+    "termes_deconseilles": [],
+    "exemple_rapport": "Les enregistrements pertinents ont été recherchés dans la base de données de l'application.",
+    "sources": [
+      "CLARUS D3.2"
+    ]
+  },
+  {
+    "id": "carte-sim",
+    "terme": "Carte SIM",
+    "anglais": "SIM card",
+    "categorie": "Preuve numérique",
+    "definition": "Carte à puce amovible utilisée par les équipements mobiles pour l’identification et l’authentification sur les réseaux cellulaires et pouvant contenir notamment l’IMSI ainsi que d’autres données associées à l’abonné.",
+    "synonymes": [
+      "SIM"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "La carte SIM est extraite du terminal et fait l’objet d’un examen distinct.",
+    "sources": [
+      "CLARUS D3.2 — SIM card"
+    ]
+  },
+  {
+    "id": "chaine-tracabilite",
+    "terme": "Chaîne de traçabilité",
+    "anglais": "Chain of custody",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Ensemble des enregistrements permettant de documenter chronologiquement la prise en charge, les transferts, les opérations, le stockage et, le cas échéant, la restitution ou la destruction d’un élément de preuve afin d’en assurer la traçabilité et l’intégrité.",
+    "synonymes": [
+      "Chaîne de possession",
+      "Traçabilité du scellé"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "Les différentes opérations réalisées sur le scellé sont consignées afin d’en assurer la traçabilité.",
+    "sources": [
+      "CLARUS D3.2 — Chain of custody"
+    ]
+  },
+  {
+    "id": "chiffrement",
+    "terme": "Chiffrement",
+    "anglais": "Encryption / Encrypted",
+    "categorie": "Cryptographie",
+    "definition": "Procédé cryptographique transformant des données afin de les rendre inintelligibles sans la clé, le mot de passe ou le mécanisme cryptographique approprié.",
+    "synonymes": [
+      "Données chiffrées"
+    ],
+    "termes_deconseilles": [
+      "Cryptage"
+    ],
+    "exemple_rapport": "Les données présentes sur le support sont protégées par chiffrement.",
+    "sources": [
+      "CLARUS D3.2"
+    ]
+  },
+  {
+    "id": "cle-usb",
+    "terme": "Clé USB",
+    "anglais": "USB stick",
+    "categorie": "Équipement numérique",
+    "definition": "Support de stockage amovible couramment utilisé pour transporter des données ou exécuter certains outils de collecte d’informations.",
+    "synonymes": [
+      "Clé mémoire USB",
+      "Support USB"
+    ],
+    "termes_deconseilles": [
+      "Pen drive"
+    ],
+    "exemple_rapport": "La clé USB est prise en charge comme support de stockage amovible susceptible de contenir des données d’intérêt.",
+    "sources": [
+      "CLARUS D3.2 — USB stick"
+    ]
+  },
+  {
+    "id": "copie-forensique",
+    "terme": "Copie forensique",
+    "anglais": "Forensic copy / Forensic image",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Copie de données numériques réalisée au moyen de procédures contrôlées afin de préserver les données d’origine pour leur examen et leur analyse.",
+    "synonymes": [
+      "Image forensique",
+      "Copie de travail forensique"
+    ],
+    "termes_deconseilles": [
+      "Copie simple"
+    ],
+    "exemple_rapport": "Nous réalisons une copie forensique du support afin de préserver les données d’origine lors des opérations d’analyse.",
+    "sources": [
+      "CLARUS D3.2 — Forensic copy"
+    ]
+  },
+  {
+    "id": "criminalistique-numerique",
+    "terme": "Criminalistique numérique",
+    "anglais": "Digital forensics",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Discipline couvrant la récupération, l’examen et l’interprétation de données provenant d’ordinateurs, de téléphones mobiles, de réseaux et d’autres supports de stockage numérique dans le cadre d’enquêtes et de procédures judiciaires.",
+    "synonymes": [
+      "Forensique numérique",
+      "Informatique forensique"
+    ],
+    "termes_deconseilles": [
+      "Forensic informatique"
+    ],
+    "exemple_rapport": "Les opérations réalisées relèvent de la criminalistique numérique et portent sur la récupération, l’examen et l’interprétation des données accessibles.",
+    "sources": [
+      "CLARUS D3.2 — Digital forensics"
+    ]
+  },
+  {
+    "id": "disque-dur",
+    "terme": "Disque dur",
+    "anglais": "Hard disk / Hard drive / HDD",
+    "categorie": "Équipement numérique",
+    "definition": "Support physique de stockage de données utilisé notamment dans les ordinateurs et autres dispositifs numériques.",
+    "synonymes": [
+      "HDD",
+      "Disque dur mécanique"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "Le disque dur est pris en charge en vue de son acquisition et de son analyse.",
     "sources": [
       "CLARUS D3.2"
     ]
@@ -32,18 +195,50 @@
     ]
   },
   {
-    "id": "investigation-numerique",
-    "terme": "Investigation numérique",
-    "anglais": "Digital investigation",
-    "categorie": "Méthode de criminalistique numérique",
-    "definition": "Processus méthodique de recherche, d'examen et d'analyse de données ou de preuves numériques provenant de dispositifs et systèmes électroniques.",
+    "id": "dossier",
+    "terme": "Dossier",
+    "anglais": "Folder",
+    "categorie": "Preuve numérique",
+    "definition": "Structure d’organisation au sein d’un système de fichiers permettant de regrouper et gérer hiérarchiquement des fichiers et d’autres dossiers. Sa structure peut contribuer à renseigner sur l’organisation des données et les pratiques de l’utilisateur.",
     "synonymes": [
-      "Enquête numérique"
+      "Répertoire"
     ],
     "termes_deconseilles": [],
-    "exemple_rapport": "Les opérations réalisées s'inscrivent dans le cadre d'une investigation numérique du support.",
+    "exemple_rapport": "Les fichiers identifiés sont regroupés dans plusieurs dossiers dont l’organisation peut renseigner sur l’usage du support.",
     "sources": [
-      "CLARUS D3.2"
+      "CLARUS D3.2 — Folder(s)"
+    ]
+  },
+  {
+    "id": "empreinte-numerique",
+    "terme": "Empreinte numérique",
+    "anglais": "Digital fingerprint",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Valeur de hachage calculée à partir d’un fichier, d’un équipement ou d’un ensemble de données et utilisée comme identifiant vérifiable de son contenu et de son intégrité.",
+    "synonymes": [
+      "Empreinte cryptographique"
+    ],
+    "termes_deconseilles": [
+      "Empreinte digitale"
+    ],
+    "exemple_rapport": "Une empreinte numérique est calculée afin de disposer d’un identifiant vérifiable du contenu acquis.",
+    "sources": [
+      "CLARUS D3.2 — Digital fingerprint"
+    ]
+  },
+  {
+    "id": "exif",
+    "terme": "EXIF",
+    "anglais": "Exchangeable Image File Format (EXIF)",
+    "categorie": "Preuve numérique",
+    "definition": "Format normalisé de métadonnées intégré notamment à des fichiers d’image et pouvant contenir des informations techniques relatives aux conditions, à la date, à l’heure ou au lieu de création du fichier.",
+    "synonymes": [
+      "Métadonnées EXIF"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "L’examen des métadonnées EXIF fournit des informations techniques complémentaires relatives au fichier.",
+    "sources": [
+      "CLARUS D3.2 — EXIF"
     ]
   },
   {
@@ -55,23 +250,6 @@
     "synonymes": [],
     "termes_deconseilles": [],
     "exemple_rapport": "Nous procédons à l'extraction des données accessibles présentes sur le support.",
-    "sources": [
-      "CLARUS D3.2"
-    ]
-  },
-  {
-    "id": "chiffrement",
-    "terme": "Chiffrement",
-    "anglais": "Encryption / Encrypted",
-    "categorie": "Cryptographie",
-    "definition": "Procédé cryptographique transformant des données afin de les rendre inintelligibles sans la clé, le mot de passe ou le mécanisme cryptographique approprié.",
-    "synonymes": [
-      "Données chiffrées"
-    ],
-    "termes_deconseilles": [
-      "Cryptage"
-    ],
-    "exemple_rapport": "Les données présentes sur le support sont protégées par chiffrement.",
     "sources": [
       "CLARUS D3.2"
     ]
@@ -92,63 +270,19 @@
     ]
   },
   {
-    "id": "systeme-exploitation",
-    "terme": "Système d'exploitation",
-    "anglais": "Operating system (OS)",
+    "id": "fai",
+    "terme": "Fournisseur d’accès à Internet",
+    "anglais": "Internet Service Provider (ISP)",
     "categorie": "Technologie numérique",
-    "definition": "Logiciel fondamental assurant la gestion des ressources matérielles et logicielles d'un appareil numérique et générant notamment des données système, journaux et métadonnées.",
+    "definition": "Entreprise fournissant une connectivité Internet à ses utilisateurs et susceptible de conserver des journaux relatifs notamment aux dates, heures et abonnés auxquels des adresses IP ont été attribuées.",
     "synonymes": [
-      "OS"
+      "FAI",
+      "ISP"
     ],
     "termes_deconseilles": [],
-    "exemple_rapport": "Le support fonctionne sous un système d'exploitation dont les artefacts ont été examinés.",
+    "exemple_rapport": "L’attribution de l’adresse IP peut nécessiter l’exploitation des informations conservées par le fournisseur d’accès à Internet.",
     "sources": [
-      "CLARUS D3.2"
-    ]
-  },
-  {
-    "id": "disque-dur",
-    "terme": "Disque dur",
-    "anglais": "Hard disk / Hard drive / HDD",
-    "categorie": "Équipement numérique",
-    "definition": "Support physique de stockage de données utilisé notamment dans les ordinateurs et autres dispositifs numériques.",
-    "synonymes": [
-      "HDD",
-      "Disque dur mécanique"
-    ],
-    "termes_deconseilles": [],
-    "exemple_rapport": "Le disque dur est pris en charge en vue de son acquisition et de son analyse.",
-    "sources": [
-      "CLARUS D3.2"
-    ]
-  },
-  {
-    "id": "base-de-donnees",
-    "terme": "Base de données",
-    "anglais": "Database",
-    "categorie": "Preuve numérique",
-    "definition": "Collection structurée d'informations organisée afin de permettre la recherche, la comparaison, l'identification et la récupération d'enregistrements.",
-    "synonymes": [],
-    "termes_deconseilles": [],
-    "exemple_rapport": "Les enregistrements pertinents ont été recherchés dans la base de données de l'application.",
-    "sources": [
-      "CLARUS D3.2"
-    ]
-  },
-  {
-    "id": "stockage-cloud",
-    "terme": "Stockage dans le cloud",
-    "anglais": "Cloud storage",
-    "categorie": "Technologie numérique",
-    "definition": "Mode de stockage dans lequel les données sont hébergées sur des serveurs distants accessibles par réseau, généralement au moyen d'un compte utilisateur.",
-    "synonymes": [
-      "Stockage en nuage",
-      "Stockage distant"
-    ],
-    "termes_deconseilles": [],
-    "exemple_rapport": "Certaines données peuvent être conservées dans un espace de stockage distant et ne pas être présentes localement sur le support.",
-    "sources": [
-      "CLARUS D3.2"
+      "CLARUS D3.2 — ISP"
     ]
   },
   {
@@ -170,83 +304,49 @@
     ]
   },
   {
-    "id": "valeur-hachage",
-    "terme": "Valeur de hachage",
-    "anglais": "Hash value",
+    "id": "horodatage",
+    "terme": "Horodatage",
+    "anglais": "Timestamp",
     "categorie": "Preuve numérique",
-    "definition": "Valeur obtenue par l’application d’une fonction de hachage à un ensemble de données. La comparaison de valeurs de hachage permet notamment de vérifier qu’une copie n’a pas été modifiée par rapport à la donnée de référence.",
+    "definition": "Marque enregistrée indiquant une date et une heure associées à un événement numérique ou à une opération portant sur des données, par exemple leur création, modification, accès ou transmission.",
     "synonymes": [
-      "Empreinte numérique",
-      "Hash"
+      "Marque temporelle",
+      "Timestamp"
     ],
-    "termes_deconseilles": [
-      "Checksum cryptographique"
-    ],
-    "exemple_rapport": "Les valeurs de hachage calculées avant et après l’opération sont identiques, ce qui permet de vérifier l’intégrité de la copie.",
+    "termes_deconseilles": [],
+    "exemple_rapport": "L’horodatage associé au fichier indique la date et l’heure enregistrées pour sa création ou sa modification.",
     "sources": [
-      "CLARUS D3.2 — Hash/Hashing"
+      "CLARUS D3.2 — Timestamp"
     ]
   },
   {
-    "id": "metadonnees",
-    "terme": "Métadonnées",
-    "anglais": "Metadata",
+    "id": "iccid",
+    "terme": "ICCID",
+    "anglais": "Integrated Circuit Card Identifier (ICCID)",
     "categorie": "Preuve numérique",
-    "definition": "Données décrivant d’autres données, notamment leurs caractéristiques, propriétés, contexte ou structure. En criminalistique numérique, elles peuvent contribuer à établir l’origine, l’historique ou les attributs d’un fichier ou d’un système.",
-    "synonymes": [],
+    "definition": "Identifiant numérique unique d’une carte SIM, généralement composé de 19 chiffres selon la description de CLARUS, utilisable comme identifiant principal de la carte dans le cadre d’une investigation numérique.",
+    "synonymes": [
+      "Identifiant de carte SIM"
+    ],
     "termes_deconseilles": [],
-    "exemple_rapport": "L’examen des métadonnées permet d’apporter des éléments complémentaires sur l’origine et l’historique du fichier.",
+    "exemple_rapport": "L’ICCID de la carte SIM est relevé afin d’identifier précisément le support.",
     "sources": [
-      "CLARUS D3.2 — Metadata"
+      "CLARUS D3.2 — ICCID"
     ]
   },
   {
-    "id": "copie-forensique",
-    "terme": "Copie forensique",
-    "anglais": "Forensic copy / Forensic image",
-    "categorie": "Méthode de criminalistique numérique",
-    "definition": "Copie de données numériques réalisée au moyen de procédures contrôlées afin de préserver les données d’origine pour leur examen et leur analyse.",
+    "id": "imei",
+    "terme": "IMEI",
+    "anglais": "International Mobile Equipment Identity (IMEI)",
+    "categorie": "Preuve numérique",
+    "definition": "Identifiant de quinze chiffres associé à un équipement mobile et permettant notamment d’identifier le fabricant et le modèle de l’appareil.",
     "synonymes": [
-      "Image forensique",
-      "Copie de travail forensique"
-    ],
-    "termes_deconseilles": [
-      "Copie simple"
-    ],
-    "exemple_rapport": "Nous réalisons une copie forensique du support afin de préserver les données d’origine lors des opérations d’analyse.",
-    "sources": [
-      "CLARUS D3.2 — Forensic copy"
-    ]
-  },
-  {
-    "id": "chaine-tracabilite",
-    "terme": "Chaîne de traçabilité",
-    "anglais": "Chain of custody",
-    "categorie": "Méthode de criminalistique numérique",
-    "definition": "Ensemble des enregistrements permettant de documenter chronologiquement la prise en charge, les transferts, les opérations, le stockage et, le cas échéant, la restitution ou la destruction d’un élément de preuve afin d’en assurer la traçabilité et l’intégrité.",
-    "synonymes": [
-      "Chaîne de possession",
-      "Traçabilité du scellé"
+      "Numéro IMEI"
     ],
     "termes_deconseilles": [],
-    "exemple_rapport": "Les différentes opérations réalisées sur le scellé sont consignées afin d’en assurer la traçabilité.",
+    "exemple_rapport": "Le numéro IMEI du terminal est relevé afin de contribuer à son identification.",
     "sources": [
-      "CLARUS D3.2 — Chain of custody"
-    ]
-  },
-  {
-    "id": "acquisition-forensique",
-    "terme": "Acquisition forensique",
-    "anglais": "Forensic acquisition",
-    "categorie": "Méthode de criminalistique numérique",
-    "definition": "Processus systématique consistant à créer une copie ou une image forensique de données numériques tout en préservant les données d’origine et leur intégrité pour les besoins de l’analyse et de la procédure.",
-    "synonymes": [
-      "Acquisition numérique forensique"
-    ],
-    "termes_deconseilles": [],
-    "exemple_rapport": "Nous procédons à l’acquisition forensique du support afin de préserver les données d’origine en vue de leur analyse.",
-    "sources": [
-      "CLARUS D3.2 — Forensic acquisition"
+      "CLARUS D3.2 — IMEI"
     ]
   },
   {
@@ -267,19 +367,18 @@
     ]
   },
   {
-    "id": "horodatage",
-    "terme": "Horodatage",
-    "anglais": "Timestamp",
-    "categorie": "Preuve numérique",
-    "definition": "Marque enregistrée indiquant une date et une heure associées à un événement numérique ou à une opération portant sur des données, par exemple leur création, modification, accès ou transmission.",
+    "id": "investigation-numerique",
+    "terme": "Investigation numérique",
+    "anglais": "Digital investigation",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Processus méthodique de recherche, d'examen et d'analyse de données ou de preuves numériques provenant de dispositifs et systèmes électroniques.",
     "synonymes": [
-      "Marque temporelle",
-      "Timestamp"
+      "Enquête numérique"
     ],
     "termes_deconseilles": [],
-    "exemple_rapport": "L’horodatage associé au fichier indique la date et l’heure enregistrées pour sa création ou sa modification.",
+    "exemple_rapport": "Les opérations réalisées s'inscrivent dans le cadre d'une investigation numérique du support.",
     "sources": [
-      "CLARUS D3.2 — Timestamp"
+      "CLARUS D3.2"
     ]
   },
   {
@@ -298,37 +397,6 @@
     "sources": [
       "CLARUS D3.2 — Logs",
       "CLARUS D3.2 — Log files"
-    ]
-  },
-  {
-    "id": "recuperation-donnees",
-    "terme": "Récupération de données",
-    "anglais": "Retrieval / Data recovery",
-    "categorie": "Méthode de criminalistique numérique",
-    "definition": "Processus consistant à accéder à des informations numériques et à les obtenir ou les restaurer depuis un support, un système de stockage ou une archive. Il peut inclure la récupération de contenus supprimés, cachés ou archivés.",
-    "synonymes": [
-      "Restauration de données",
-      "Récupération de fichiers"
-    ],
-    "termes_deconseilles": [],
-    "exemple_rapport": "Nous procédons à la récupération des données accessibles, y compris lorsque cela est techniquement possible des éléments supprimés ou archivés.",
-    "sources": [
-      "CLARUS D3.2 — Retrieval"
-    ]
-  },
-  {
-    "id": "systeme-fichiers",
-    "terme": "Système de fichiers",
-    "anglais": "File system",
-    "categorie": "Technologie numérique",
-    "definition": "Structure utilisée sur un volume physique ou virtuel pour organiser, stocker et retrouver des fichiers utilisateur et système. En criminalistique numérique, son interprétation est essentielle pour reconstituer l’organisation des données qu’il contient.",
-    "synonymes": [
-      "File system"
-    ],
-    "termes_deconseilles": [],
-    "exemple_rapport": "L’analyse du système de fichiers permet d’identifier l’organisation des données présentes sur le support.",
-    "sources": [
-      "CLARUS D3.2 — File system"
     ]
   },
   {
@@ -362,18 +430,125 @@
     ]
   },
   {
-    "id": "dossier",
-    "terme": "Dossier",
-    "anglais": "Folder",
+    "id": "metadonnees",
+    "terme": "Métadonnées",
+    "anglais": "Metadata",
     "categorie": "Preuve numérique",
-    "definition": "Structure d’organisation au sein d’un système de fichiers permettant de regrouper et gérer hiérarchiquement des fichiers et d’autres dossiers. Sa structure peut contribuer à renseigner sur l’organisation des données et les pratiques de l’utilisateur.",
+    "definition": "Données décrivant d’autres données, notamment leurs caractéristiques, propriétés, contexte ou structure. En criminalistique numérique, elles peuvent contribuer à établir l’origine, l’historique ou les attributs d’un fichier ou d’un système.",
+    "synonymes": [],
+    "termes_deconseilles": [],
+    "exemple_rapport": "L’examen des métadonnées permet d’apporter des éléments complémentaires sur l’origine et l’historique du fichier.",
+    "sources": [
+      "CLARUS D3.2 — Metadata"
+    ]
+  },
+  {
+    "id": "mode-avion",
+    "terme": "Mode avion",
+    "anglais": "Airplane mode",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Réglage d’un appareil qui désactive ses fonctions de communication sans fil afin d’empêcher l’accès aux réseaux. Il peut être utilisé, lorsque les conditions le permettent, pour contribuer à préserver l’intégrité des données d’un appareil mobile.",
     "synonymes": [
-      "Répertoire"
+      "Mode hors-ligne"
     ],
     "termes_deconseilles": [],
-    "exemple_rapport": "Les fichiers identifiés sont regroupés dans plusieurs dossiers dont l’organisation peut renseigner sur l’usage du support.",
+    "exemple_rapport": "Lorsque les conditions techniques le permettent, le terminal est placé en mode avion afin de limiter les communications avec les réseaux.",
     "sources": [
-      "CLARUS D3.2 — Folder(s)"
+      "CLARUS D3.2 — Airplane mode"
+    ]
+  },
+  {
+    "id": "msisdn",
+    "terme": "MSISDN",
+    "anglais": "Mobile Station Integrated Services Digital Network (MSISDN)",
+    "categorie": "Preuve numérique",
+    "definition": "Information pouvant être enregistrée sur une carte SIM par l’opérateur et correspondant au numéro de téléphone associé à l’abonné. Cette valeur peut être modifiée et ne doit pas être considérée isolément comme la confirmation du numéro actuellement utilisé.",
+    "synonymes": [
+      "Numéro d’abonné mobile"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "Le MSISDN identifié sur la carte SIM est relevé à titre d’information et ne permet pas, à lui seul, de confirmer le numéro actuellement attribué.",
+    "sources": [
+      "CLARUS D3.2 — MSISDN"
+    ]
+  },
+  {
+    "id": "numero-serie",
+    "terme": "Numéro de série",
+    "anglais": "Serial number",
+    "categorie": "Preuve numérique",
+    "definition": "Identifiant unique attribué à un objet physique, un équipement ou un élément enregistré afin d’en permettre l’identification et le suivi.",
+    "synonymes": [
+      "Serial"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "Le numéro de série du support est relevé et consigné afin de permettre son identification.",
+    "sources": [
+      "CLARUS D3.2 — Serial number"
+    ]
+  },
+  {
+    "id": "preuve-numerique",
+    "terme": "Preuve numérique",
+    "anglais": "Digital evidence",
+    "categorie": "Preuve numérique",
+    "definition": "Information ou donnée stockée ou transmise sous forme numérique pouvant contribuer à établir un fait dans le cadre d'une enquête ou d'une procédure judiciaire.",
+    "synonymes": [
+      "Élément de preuve numérique"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "L'analyse du support a permis d'identifier plusieurs éléments de preuve numérique susceptibles d'éclairer les faits.",
+    "sources": [
+      "CLARUS D3.2"
+    ]
+  },
+  {
+    "id": "recuperation-donnees",
+    "terme": "Récupération de données",
+    "anglais": "Retrieval / Data recovery",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Processus consistant à accéder à des informations numériques et à les obtenir ou les restaurer depuis un support, un système de stockage ou une archive. Il peut inclure la récupération de contenus supprimés, cachés ou archivés.",
+    "synonymes": [
+      "Restauration de données",
+      "Récupération de fichiers"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "Nous procédons à la récupération des données accessibles, y compris lorsque cela est techniquement possible des éléments supprimés ou archivés.",
+    "sources": [
+      "CLARUS D3.2 — Retrieval"
+    ]
+  },
+  {
+    "id": "reseau-communications",
+    "terme": "Réseau de communications",
+    "anglais": "Communications network",
+    "categorie": "Technologie numérique",
+    "definition": "Système permettant le transfert d’informations entre équipements ou points terminaux, depuis les réseaux locaux jusqu’aux réseaux étendus et à Internet, avec l’infrastructure et les équipements nécessaires à son fonctionnement.",
+    "synonymes": [
+      "Réseau de communication",
+      "Réseau informatique"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "Les communications observées sont replacées dans le contexte du réseau de communications auquel le support était connecté.",
+    "sources": [
+      "CLARUS D3.2 — Communications network"
+    ]
+  },
+  {
+    "id": "reseau-sans-fil",
+    "terme": "Réseau sans fil",
+    "anglais": "Wireless network",
+    "categorie": "Technologie numérique",
+    "definition": "Infrastructure réseau permettant à des équipements de se connecter et de communiquer sans liaison câblée, au moyen de protocoles sans fil tels que le Wi-Fi ou le Bluetooth.",
+    "synonymes": [
+      "Réseau wireless"
+    ],
+    "termes_deconseilles": [
+      "Réseau wifi"
+    ],
+    "exemple_rapport": "Le terminal est susceptible de communiquer au moyen d’un réseau sans fil.",
+    "sources": [
+      "CLARUS D3.2 — Wireless network"
     ]
   },
   {
@@ -392,21 +567,116 @@
     ]
   },
   {
-    "id": "cle-usb",
-    "terme": "Clé USB",
-    "anglais": "USB stick",
-    "categorie": "Équipement numérique",
-    "definition": "Support de stockage amovible couramment utilisé pour transporter des données ou exécuter certains outils de collecte d’informations.",
+    "id": "stockage-cloud",
+    "terme": "Stockage dans le cloud",
+    "anglais": "Cloud storage",
+    "categorie": "Technologie numérique",
+    "definition": "Mode de stockage dans lequel les données sont hébergées sur des serveurs distants accessibles par réseau, généralement au moyen d'un compte utilisateur.",
     "synonymes": [
-      "Clé mémoire USB",
-      "Support USB"
+      "Stockage en nuage",
+      "Stockage distant"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "Certaines données peuvent être conservées dans un espace de stockage distant et ne pas être présentes localement sur le support.",
+    "sources": [
+      "CLARUS D3.2"
+    ]
+  },
+  {
+    "id": "stockage-donnees",
+    "terme": "Stockage de données",
+    "anglais": "Data storage",
+    "categorie": "Technologie numérique",
+    "definition": "Conservation et enregistrement d’informations numériques sur des supports physiques, des équipements ou des systèmes distants depuis lesquels elles peuvent être extraites, récupérées et traitées aux fins d’examen.",
+    "synonymes": [
+      "Stockage numérique"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "Les données peuvent être réparties entre plusieurs espaces de stockage locaux ou distants.",
+    "sources": [
+      "CLARUS D3.2 — Data storage"
+    ]
+  },
+  {
+    "id": "support-stockage",
+    "terme": "Support de stockage",
+    "anglais": "Storage media",
+    "categorie": "Équipement numérique",
+    "definition": "Équipement ou matériau utilisé pour stocker des données numériques. La notion peut également inclure, dans le contexte décrit par CLARUS, des données stockées à distance et accessibles au moyen d’un équipement soumis à examen.",
+    "synonymes": [
+      "Média de stockage"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "Le support de stockage est identifié, documenté et examiné selon les procédures applicables.",
+    "sources": [
+      "CLARUS D3.2 — Storage media"
+    ]
+  },
+  {
+    "id": "support-numerique",
+    "terme": "Support numérique",
+    "anglais": "Digital media / Media",
+    "categorie": "Équipement numérique",
+    "definition": "Équipement, matériau ou système utilisé pour stocker, enregistrer ou transmettre des informations numériques et susceptible d’être rencontré lors d’une investigation.",
+    "synonymes": [
+      "Média numérique",
+      "Support de données"
     ],
     "termes_deconseilles": [
-      "Pen drive"
+      "Media"
     ],
-    "exemple_rapport": "La clé USB est prise en charge comme support de stockage amovible susceptible de contenir des données d’intérêt.",
+    "exemple_rapport": "Le support numérique est pris en charge en vue de son acquisition et de son analyse.",
     "sources": [
-      "CLARUS D3.2 — USB stick"
+      "CLARUS D3.2 — Media",
+      "CLARUS D3.2 — Digital media"
+    ]
+  },
+  {
+    "id": "systeme-exploitation",
+    "terme": "Système d'exploitation",
+    "anglais": "Operating system (OS)",
+    "categorie": "Technologie numérique",
+    "definition": "Logiciel fondamental assurant la gestion des ressources matérielles et logicielles d'un appareil numérique et générant notamment des données système, journaux et métadonnées.",
+    "synonymes": [
+      "OS"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "Le support fonctionne sous un système d'exploitation dont les artefacts ont été examinés.",
+    "sources": [
+      "CLARUS D3.2"
+    ]
+  },
+  {
+    "id": "systeme-fichiers",
+    "terme": "Système de fichiers",
+    "anglais": "File system",
+    "categorie": "Technologie numérique",
+    "definition": "Structure utilisée sur un volume physique ou virtuel pour organiser, stocker et retrouver des fichiers utilisateur et système. En criminalistique numérique, son interprétation est essentielle pour reconstituer l’organisation des données qu’il contient.",
+    "synonymes": [
+      "File system"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "L’analyse du système de fichiers permet d’identifier l’organisation des données présentes sur le support.",
+    "sources": [
+      "CLARUS D3.2 — File system"
+    ]
+  },
+  {
+    "id": "valeur-hachage",
+    "terme": "Valeur de hachage",
+    "anglais": "Hash value",
+    "categorie": "Preuve numérique",
+    "definition": "Valeur obtenue par l’application d’une fonction de hachage à un ensemble de données. La comparaison de valeurs de hachage permet notamment de vérifier qu’une copie n’a pas été modifiée par rapport à la donnée de référence.",
+    "synonymes": [
+      "Empreinte numérique",
+      "Hash"
+    ],
+    "termes_deconseilles": [
+      "Checksum cryptographique"
+    ],
+    "exemple_rapport": "Les valeurs de hachage calculées avant et après l’opération sont identiques, ce qui permet de vérifier l’intégrité de la copie.",
+    "sources": [
+      "CLARUS D3.2 — Hash/Hashing"
     ]
   }
 ]
