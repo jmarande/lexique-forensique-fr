@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 import os
+import re
 import unicodedata
 
 import uno
@@ -56,18 +57,26 @@ def _normalize(value):
     return value.casefold().strip()
 
 
-def _format_entry(e):
+def _format_entry(e, warning=None):
     syn = ", ".join(e.get("synonymes", [])) or "—"
     bad = ", ".join(_bad_terms(e)) or "—"
+    prefix = ""
+    if warning:
+        prefix = (
+            f"ALERTE TERMINOLOGIQUE\n"
+            f"{warning['found']} → {e['terme']}\n"
+            f"Occurrences détectées : {warning['count']}\n\n"
+        )
     return (
-        f"{e['terme']}\n"
-        f"Anglais : {e.get('anglais', '—')}\n"
-        f"Catégorie : {e.get('categorie', '—')}\n"
-        f"Synonymes : {syn}\n"
-        f"Termes déconseillés : {bad}\n"
-        f"Sources : {_sources(e)}\n\n"
-        f"DÉFINITION\n{e.get('definition', '')}\n\n"
-        f"FORMULATION POUR RAPPORT\n{_report_example(e)}"
+        prefix
+        + f"{e['terme']}\n"
+        + f"Anglais : {e.get('anglais', '—')}\n"
+        + f"Catégorie : {e.get('categorie', '—')}\n"
+        + f"Synonymes : {syn}\n"
+        + f"Termes déconseillés : {bad}\n"
+        + f"Sources : {_sources(e)}\n\n"
+        + f"DÉFINITION\n{e.get('definition', '')}\n\n"
+        + f"FORMULATION POUR RAPPORT\n{_report_example(e)}"
     )
 
 
@@ -92,6 +101,34 @@ def _find_entries(query, data):
     return sorted(results, key=lambda e: _normalize(e.get("terme", "")))
 
 
+def _scan_document_text(text, data):
+    normalized_text = _normalize(text)
+    alerts = []
+
+    for entry in data:
+        for bad in _bad_terms(entry):
+            normalized_bad = _normalize(bad)
+            if not normalized_bad:
+                continue
+
+            pattern = r"(?<!\w)" + re.escape(normalized_bad) + r"(?!\w)"
+            count = len(re.findall(pattern, normalized_text))
+            if count:
+                alerts.append({
+                    "entry": entry,
+                    "found": bad,
+                    "count": count,
+                })
+
+    return sorted(
+        alerts,
+        key=lambda item: (
+            _normalize(item["entry"].get("terme", "")),
+            _normalize(item["found"]),
+        ),
+    )
+
+
 class DialogListener(unohelper.Base, XActionListener, XItemListener):
     def __init__(
         self,
@@ -112,21 +149,33 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
         self.data = data
         self.current = None
         self.matches = []
+        self.scan_alerts = []
+        self.mode = "search"
         self.refresh()
 
-    def _set_buttons(self, enabled):
+    def _set_insert_enabled(self, enabled):
         self.insert_button.getModel().Enabled = enabled
 
-    def _show_current(self, entry):
-        self.current = entry
-        self.detail_box.Text = _format_entry(entry)
-        self._set_buttons(True)
-
-    def refresh(self):
-        self.matches = _find_entries(self.search_box.Text, self.data)
-
+    def _clear_results(self):
         if self.results_box.ItemCount:
             self.results_box.removeItems(0, self.results_box.ItemCount)
+
+    def _show_search_entry(self, entry):
+        self.current = entry
+        self.detail_box.Text = _format_entry(entry)
+        self._set_insert_enabled(True)
+
+    def _show_scan_alert(self, alert):
+        self.current = alert["entry"]
+        self.detail_box.Text = _format_entry(self.current, warning=alert)
+        self._set_insert_enabled(True)
+
+    def refresh(self):
+        self.mode = "search"
+        self.scan_alerts = []
+        self.matches = _find_entries(self.search_box.Text, self.data)
+
+        self._clear_results()
 
         for entry in self.matches:
             self.results_box.addItem(entry["terme"], self.results_box.ItemCount)
@@ -138,17 +187,56 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
 
         if self.matches:
             self.results_box.selectItemPos(0, True)
-            self._show_current(self.matches[0])
+            self._show_search_entry(self.matches[0])
         else:
             self.current = None
             self.detail_box.Text = "Aucun terme trouvé."
-            self._set_buttons(False)
+            self._set_insert_enabled(False)
+
+    def scan_document(self):
+        doc = _desktop().getCurrentComponent()
+        if not doc or not doc.supportsService("com.sun.star.text.TextDocument"):
+            self.status_label.getModel().Label = "Aucun document Writer actif"
+            return
+
+        self.mode = "scan"
+        self.scan_alerts = _scan_document_text(doc.Text.String, self.data)
+        self._clear_results()
+
+        for alert in self.scan_alerts:
+            label = (
+                f"{alert['found']} → {alert['entry']['terme']} "
+                f"({alert['count']})"
+            )
+            self.results_box.addItem(label, self.results_box.ItemCount)
+
+        total = sum(alert["count"] for alert in self.scan_alerts)
+
+        if self.scan_alerts:
+            self.status_label.getModel().Label = (
+                f"{total} occurrence"
+                if total == 1
+                else f"{total} occurrences terminologiques"
+            )
+            self.results_box.selectItemPos(0, True)
+            self._show_scan_alert(self.scan_alerts[0])
+        else:
+            self.current = None
+            self.detail_box.Text = (
+                "Aucun terme déconseillé du lexique n'a été détecté "
+                "dans le document actif."
+            )
+            self.status_label.getModel().Label = "Aucune alerte terminologique"
+            self._set_insert_enabled(False)
 
     def actionPerformed(self, event):
         cmd = event.ActionCommand
 
         if cmd == "search":
             self.refresh()
+
+        elif cmd == "scan":
+            self.scan_document()
 
         elif cmd == "insert" and self.current:
             doc = _desktop().getCurrentComponent()
@@ -159,7 +247,9 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
                     _report_example(self.current) or self.current["terme"],
                     False,
                 )
-                self.status_label.getModel().Label = "Formulation insérée dans le document"
+                self.status_label.getModel().Label = (
+                    "Formulation insérée dans le document"
+                )
 
         elif cmd == "close":
             try:
@@ -173,8 +263,13 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
 
     def itemStateChanged(self, event):
         pos = self.results_box.SelectedItemPos
-        if 0 <= pos < len(self.matches):
-            self._show_current(self.matches[pos])
+
+        if self.mode == "scan":
+            if 0 <= pos < len(self.scan_alerts):
+                self._show_scan_alert(self.scan_alerts[pos])
+        else:
+            if 0 <= pos < len(self.matches):
+                self._show_search_entry(self.matches[pos])
 
     def disposing(self, event):
         pass
@@ -191,8 +286,8 @@ def open_lexicon(*args):
     model.PositionX = 70
     model.PositionY = 45
     model.Width = 310
-    model.Height = 218
-    model.Title = "Lexique forensique FR — v0.2.1"
+    model.Height = 236
+    model.Title = "Lexique forensique FR — v0.3.0 TEST"
 
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
@@ -223,20 +318,26 @@ def open_lexicon(*args):
         Label="Rechercher",
     )
     add(
+        "btnScan",
+        "com.sun.star.awt.UnoControlButtonModel",
+        8, 24, 90, 16,
+        Label="Vérifier document",
+    )
+    add(
         "lblStatus",
         "com.sun.star.awt.UnoControlFixedTextModel",
-        8, 23, 294, 10,
+        104, 27, 198, 10,
         Label="",
     )
     add(
         "lstResults",
         "com.sun.star.awt.UnoControlListBoxModel",
-        8, 36, 105, 142,
+        8, 46, 105, 148,
     )
     add(
         "txtDetail",
         "com.sun.star.awt.UnoControlEditModel",
-        118, 36, 184, 142,
+        118, 46, 184, 148,
         MultiLine=True,
         ReadOnly=True,
         VScroll=True,
@@ -244,13 +345,13 @@ def open_lexicon(*args):
     add(
         "btnInsert",
         "com.sun.star.awt.UnoControlButtonModel",
-        180, 186, 74, 16,
+        180, 202, 74, 16,
         Label="Insérer formule",
     )
     add(
         "btnClose",
         "com.sun.star.awt.UnoControlButtonModel",
-        258, 186, 44, 16,
+        258, 202, 44, 16,
         Label="Fermer",
     )
 
@@ -278,6 +379,7 @@ def open_lexicon(*args):
 
     for control, command in [
         (dialog.getControl("btnSearch"), "search"),
+        (dialog.getControl("btnScan"), "scan"),
         (insert_button, "insert"),
         (dialog.getControl("btnClose"), "close"),
     ]:
@@ -286,8 +388,6 @@ def open_lexicon(*args):
 
     results_box.addItemListener(listener)
 
-    # Fenêtre non modale : Writer reste entièrement utilisable pendant
-    # que le lexique est ouvert.
     _OPEN_LEXICON_WINDOWS.append({
         "dialog": dialog,
         "listener": listener,
