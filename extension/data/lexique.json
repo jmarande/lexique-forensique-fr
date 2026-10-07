@@ -584,6 +584,73 @@
     ]
   },
   {
+    "id": "snapchat",
+    "terme": "Snapchat",
+    "anglais": "Snapchat",
+    "categorie": "Application — Messagerie et réseau social",
+    "editeur": "Snap Inc.",
+    "plateformes": [
+      "Android",
+      "iOS",
+      "Web"
+    ],
+    "definition": "Application de communication et de partage de contenus permettant notamment l’échange de messages, de photographies et de vidéos, ainsi que la publication de Stories et l’enregistrement de contenus dans les Souvenirs. Certaines données peuvent être configurées pour être supprimées automatiquement après consultation ou expiration.",
+    "synonymes": [],
+    "termes_deconseilles": [],
+    "donnees_potentielles": [
+      "Messages et conversations (Chats)",
+      "Photographies et vidéos échangées (Snaps)",
+      "Stories",
+      "Souvenirs (Memories)",
+      "Identifiants de comptes et noms affichés",
+      "Contacts et relations entre comptes",
+      "Métadonnées et éléments de contexte",
+      "Fichiers temporaires et données de cache",
+      "Éléments supprimés ou reconstruits lorsque l’extraction et l’outil d’analyse le permettent"
+    ],
+    "points_attention": [
+      "La présence d’un fichier dans un répertoire ou un cache associé à Snapchat ne suffit pas, à elle seule, à attribuer avec certitude son origine ou son envoi à un utilisateur.",
+      "Une extraction peut être partielle : l’absence d’un message ou d’un média dans les données extraites ne démontre pas nécessairement son absence historique.",
+      "Certaines données Snapchat sont conçues pour être supprimées automatiquement après consultation ou expiration ; d’autres peuvent être conservées selon les réglages ou les actions des utilisateurs.",
+      "Les données reconstruites automatiquement par un logiciel d’analyse doivent être distinguées des données directement présentes dans l’extraction."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Application identifiée",
+        "texte": "Nous identifions la présence de l’application Snapchat sur le support examiné."
+      },
+      {
+        "type": "Données associées à Snapchat",
+        "texte": "L’examen des données extraites met en évidence des éléments associés à l’application Snapchat."
+      },
+      {
+        "type": "Conversations identifiées",
+        "texte": "Nous identifions plusieurs échanges issus de l’application Snapchat susceptibles de présenter un intérêt au regard de la mission confiée."
+      },
+      {
+        "type": "Médias identifiés",
+        "texte": "Nous identifions plusieurs fichiers multimédias associés à l’application Snapchat."
+      },
+      {
+        "type": "Extraction partielle",
+        "texte": "Les données accessibles pour l’application Snapchat sont partielles et ne permettent pas d’affirmer que l’ensemble des échanges a été récupéré."
+      },
+      {
+        "type": "Données reconstruites",
+        "texte": "Certains éléments associés à l’application Snapchat ont été reconstruits automatiquement par le logiciel d’analyse et doivent être interprétés avec prudence."
+      },
+      {
+        "type": "Média non disponible",
+        "texte": "Un emplacement correspondant à un média associé à l’application Snapchat est identifié, sans que le contenu du fichier soit disponible dans les données extraites."
+      }
+    ],
+    "sources": [
+      "Assistance Snapchat — Quand est-ce que Snapchat efface les Snaps et les Chats ?",
+      "Assistance Snapchat — Comment sauvegarder ou supprimer des messages d’un Chat Snapchat ?",
+      "Assistance Snapchat — Souvenirs (Memories)"
+    ]
+  },
+  {
     "id": "source-donnees",
     "terme": "Source de données",
     "anglais": "Data source",
