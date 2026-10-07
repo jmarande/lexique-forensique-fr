@@ -2,30 +2,25 @@
 
 Extension Writer du **Lexique forensique FR**.
 
-## Version 0.3.0 — branche de test
+## Version 0.4.1 — branche de test
 
-Cette version part de la v0.2.1 validée et ajoute un premier **contrôle terminologique du document**.
+Cette version corrige l'ergonomie du contrôle terminologique.
 
-### Fonctionnement
+### Séparation du lexique et des alertes
 
-Le bouton **Vérifier document** :
+Le panneau de gauche est maintenant divisé en deux zones :
 
-- parcourt le texte du document Writer actif ;
-- recherche les entrées présentes dans `termes_deconseilles` du lexique ;
-- compte les occurrences ;
-- affiche la forme détectée et le terme français recommandé ;
-- conserve la fenêtre non modale pour permettre de continuer à modifier le document.
+- **Lexique** : conserve en permanence la liste des termes disponibles ;
+- **Alertes du document** : affiche uniquement les termes déconseillés détectés dans le document actif.
 
-Exemple actuel :
+Le bouton **Vérifier document** ne remplace donc plus la liste du lexique par les alertes.
 
-`cryptage → chiffrement`
+### Comportement
 
-Le contrôle est alimenté directement par `data/lexique.json` : les futurs termes déconseillés ajoutés au lexique seront donc pris en compte sans modifier le moteur de vérification.
+- rechercher un terme continue d'afficher sa définition ;
+- vérifier le document remplit uniquement la zone d'alertes ;
+- sélectionner une alerte affiche la fiche du terme recommandé et sélectionne l'occurrence dans Writer ;
+- **Remplacer occurrence** corrige uniquement l'occurrence sélectionnée ;
+- après correction, la liste d'alertes est actualisée sans effacer le lexique.
 
-## Limites de cette première version
-
-- aucune modification automatique du document ;
-- pas encore de surlignage ni de navigation vers l'occurrence ;
-- l'opérateur reste maître de la rédaction.
-
-Ces fonctions seront étudiées après validation de cette première détection.
+La fenêtre reste non modale afin de permettre la modification du document pendant son utilisation.

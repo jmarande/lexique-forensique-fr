@@ -3,13 +3,26 @@ import json
 import os
 import re
 import unicodedata
+import urllib.request
+import hashlib
+import tempfile
 
 import uno
 import unohelper
 
-from com.sun.star.awt import XActionListener, XItemListener
+from com.sun.star.awt import XActionListener, XItemListener, XTopWindowListener
 
 _OPEN_LEXICON_WINDOWS = []
+_OPEN_ABOUT_WINDOWS = []
+
+CURRENT_VERSION = "0.5.0"
+GITHUB_URL = "https://github.com/jmarande/lexique-forensique-fr"
+PUBLIC_UPDATE_REPO = "jmarande/lexique-forensique-fr-releases"
+UPDATE_MANIFEST_URL = (
+    "https://raw.githubusercontent.com/"
+    + PUBLIC_UPDATE_REPO
+    + "/main/update.json"
+)
 
 
 def _ctx():
@@ -18,6 +31,41 @@ def _ctx():
 
 def _desktop():
     return XSCRIPTCONTEXT.getDesktop()
+
+
+def _open_url(url):
+    ctx = _ctx()
+    smgr = ctx.ServiceManager
+    shell = smgr.createInstanceWithContext(
+        "com.sun.star.system.SystemShellExecute", ctx
+    )
+    shell.execute(url, "", 0)
+
+
+def _message_box(title, message):
+    ctx = _ctx()
+    smgr = ctx.ServiceManager
+    toolkit = smgr.createInstanceWithContext("com.sun.star.awt.Toolkit", ctx)
+    parent = toolkit.getDesktopWindow()
+    box = toolkit.createMessageBox(
+        parent,
+        "infobox",
+        1,
+        title,
+        message,
+    )
+    box.execute()
+
+
+def _version_tuple(value):
+    value = (value or "").strip().lstrip("vV")
+    parts = []
+    for item in value.split("."):
+        digits = "".join(ch for ch in item if ch.isdigit())
+        if digits == "":
+            break
+        parts.append(int(digits))
+    return tuple(parts or [0])
 
 
 def _extension_root():
@@ -129,50 +177,106 @@ def _scan_document_text(text, data):
     )
 
 
-class DialogListener(unohelper.Base, XActionListener, XItemListener):
+class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowListener):
     def __init__(
         self,
         dialog,
         search_box,
         results_box,
+        alerts_box,
         detail_box,
         status_label,
         insert_button,
+        replace_button,
         data,
     ):
         self.dialog = dialog
         self.search_box = search_box
         self.results_box = results_box
+        self.alerts_box = alerts_box
         self.detail_box = detail_box
         self.status_label = status_label
         self.insert_button = insert_button
+        self.replace_button = replace_button
         self.data = data
         self.current = None
         self.matches = []
         self.scan_alerts = []
-        self.mode = "search"
+        self.current_alert = None
+        self.current_found_range = None
         self.refresh()
 
     def _set_insert_enabled(self, enabled):
         self.insert_button.getModel().Enabled = enabled
 
+    def _set_replace_enabled(self, enabled):
+        self.replace_button.getModel().Enabled = enabled
+
     def _clear_results(self):
         if self.results_box.ItemCount:
             self.results_box.removeItems(0, self.results_box.ItemCount)
 
+    def _clear_alerts(self):
+        if self.alerts_box.ItemCount:
+            self.alerts_box.removeItems(0, self.alerts_box.ItemCount)
+
     def _show_search_entry(self, entry):
         self.current = entry
+        self.current_alert = None
+        self.current_found_range = None
         self.detail_box.Text = _format_entry(entry)
         self._set_insert_enabled(True)
+        self._set_replace_enabled(False)
+
+    def _goto_alert_occurrence(self, alert):
+        doc = _desktop().getCurrentComponent()
+        if not doc or not doc.supportsService("com.sun.star.text.TextDocument"):
+            self.current_found_range = None
+            self._set_replace_enabled(False)
+            return
+
+        descriptor = doc.createSearchDescriptor()
+        descriptor.SearchString = alert["found"]
+        descriptor.SearchCaseSensitive = False
+        descriptor.SearchWords = True
+
+        found = doc.findFirst(descriptor)
+        self.current_found_range = found
+
+        if found:
+            doc.getCurrentController().select(found)
+            self._set_replace_enabled(True)
+            self.status_label.getModel().Label = (
+                f"Occurrence sélectionnée : {alert['found']} → "
+                f"{alert['entry']['terme']}"
+            )
+        else:
+            self._set_replace_enabled(False)
+            self.status_label.getModel().Label = (
+                "Occurrence introuvable dans le document actif"
+            )
 
     def _show_scan_alert(self, alert):
         self.current = alert["entry"]
+        self.current_alert = alert
         self.detail_box.Text = _format_entry(self.current, warning=alert)
         self._set_insert_enabled(True)
+        self._goto_alert_occurrence(alert)
+
+    def _replace_current_occurrence(self):
+        if not self.current_alert or not self.current_found_range:
+            self.status_label.getModel().Label = "Aucune occurrence sélectionnée"
+            return
+
+        replacement = self.current_alert["entry"]["terme"]
+        self.current_found_range.String = replacement
+        self.current_found_range = None
+        self.status_label.getModel().Label = (
+            f"Occurrence remplacée par : {replacement}"
+        )
+        self.scan_document()
 
     def refresh(self):
-        self.mode = "search"
-        self.scan_alerts = []
         self.matches = _find_entries(self.search_box.Text, self.data)
 
         self._clear_results()
@@ -199,16 +303,18 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
             self.status_label.getModel().Label = "Aucun document Writer actif"
             return
 
-        self.mode = "scan"
+        self.current_alert = None
+        self.current_found_range = None
+        self._set_replace_enabled(False)
         self.scan_alerts = _scan_document_text(doc.Text.String, self.data)
-        self._clear_results()
+        self._clear_alerts()
 
         for alert in self.scan_alerts:
             label = (
                 f"{alert['found']} → {alert['entry']['terme']} "
                 f"({alert['count']})"
             )
-            self.results_box.addItem(label, self.results_box.ItemCount)
+            self.alerts_box.addItem(label, self.alerts_box.ItemCount)
 
         total = sum(alert["count"] for alert in self.scan_alerts)
 
@@ -218,16 +324,13 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
                 if total == 1
                 else f"{total} occurrences terminologiques"
             )
-            self.results_box.selectItemPos(0, True)
+            self.alerts_box.selectItemPos(0, True)
             self._show_scan_alert(self.scan_alerts[0])
         else:
-            self.current = None
-            self.detail_box.Text = (
-                "Aucun terme déconseillé du lexique n'a été détecté "
-                "dans le document actif."
-            )
+            self.current_alert = None
+            self.current_found_range = None
             self.status_label.getModel().Label = "Aucune alerte terminologique"
-            self._set_insert_enabled(False)
+            self._set_replace_enabled(False)
 
     def actionPerformed(self, event):
         cmd = event.ActionCommand
@@ -237,6 +340,9 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
 
         elif cmd == "scan":
             self.scan_document()
+
+        elif cmd == "replace":
+            self._replace_current_occurrence()
 
         elif cmd == "insert" and self.current:
             doc = _desktop().getCurrentComponent()
@@ -252,27 +358,238 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
                 )
 
         elif cmd == "close":
-            try:
-                self.dialog.setVisible(False)
-                self.dialog.dispose()
-            finally:
-                _OPEN_LEXICON_WINDOWS[:] = [
-                    item for item in _OPEN_LEXICON_WINDOWS
-                    if item.get("dialog") is not self.dialog
-                ]
+            self._close_dialog()
+
+    def _close_dialog(self):
+        try:
+            self.dialog.setVisible(False)
+            self.dialog.dispose()
+        finally:
+            _OPEN_LEXICON_WINDOWS[:] = [
+                item for item in _OPEN_LEXICON_WINDOWS
+                if item.get("dialog") is not self.dialog
+            ]
+
+    def windowClosing(self, event):
+        self._close_dialog()
+
+    def windowOpened(self, event):
+        pass
+
+    def windowClosed(self, event):
+        pass
+
+    def windowMinimized(self, event):
+        pass
+
+    def windowNormalized(self, event):
+        pass
+
+    def windowActivated(self, event):
+        pass
+
+    def windowDeactivated(self, event):
+        pass
 
     def itemStateChanged(self, event):
-        pos = self.results_box.SelectedItemPos
-
-        if self.mode == "scan":
+        if event.Source is self.alerts_box:
+            pos = self.alerts_box.SelectedItemPos
             if 0 <= pos < len(self.scan_alerts):
                 self._show_scan_alert(self.scan_alerts[pos])
         else:
+            pos = self.results_box.SelectedItemPos
             if 0 <= pos < len(self.matches):
                 self._show_search_entry(self.matches[pos])
 
     def disposing(self, event):
         pass
+
+
+class AboutListener(unohelper.Base, XActionListener, XTopWindowListener):
+    def __init__(self, dialog):
+        self.dialog = dialog
+
+    def actionPerformed(self, event):
+        if event.ActionCommand == "github":
+            _open_url(GITHUB_URL)
+        elif event.ActionCommand == "close":
+            self._close_dialog()
+
+    def _close_dialog(self):
+        try:
+            self.dialog.setVisible(False)
+            self.dialog.dispose()
+        finally:
+            _OPEN_ABOUT_WINDOWS[:] = [
+                item for item in _OPEN_ABOUT_WINDOWS
+                if item.get("dialog") is not self.dialog
+            ]
+
+    def windowClosing(self, event):
+        self._close_dialog()
+
+    def windowOpened(self, event):
+        pass
+
+    def windowClosed(self, event):
+        pass
+
+    def windowMinimized(self, event):
+        pass
+
+    def windowNormalized(self, event):
+        pass
+
+    def windowActivated(self, event):
+        pass
+
+    def windowDeactivated(self, event):
+        pass
+
+    def disposing(self, event):
+        pass
+
+
+def show_about(*args):
+    ctx = _ctx()
+    smgr = ctx.ServiceManager
+    toolkit = smgr.createInstanceWithContext("com.sun.star.awt.Toolkit", ctx)
+    model = smgr.createInstanceWithContext(
+        "com.sun.star.awt.UnoControlDialogModel", ctx
+    )
+    model.PositionX = 95
+    model.PositionY = 65
+    model.Width = 220
+    model.Height = 102
+    model.Title = "À propos de Lexique forensique FR"
+
+    def add(name, service, x, y, w, h, **props):
+        item = model.createInstance(service)
+        item.Name = name
+        item.PositionX, item.PositionY = x, y
+        item.Width, item.Height = w, h
+        for key, value in props.items():
+            setattr(item, key, value)
+        model.insertByName(name, item)
+
+    add(
+        "txtAbout",
+        "com.sun.star.awt.UnoControlFixedTextModel",
+        10, 10, 200, 42,
+        Label=(
+            "Lexique forensique FR\n"
+            f"Version {CURRENT_VERSION}\n"
+            "Auteur : Jérémy MARANDE\n"
+            "Lexique français de criminalistique numérique"
+        ),
+        MultiLine=True,
+    )
+    add(
+        "btnGitHub",
+        "com.sun.star.awt.UnoControlButtonModel",
+        10, 62, 62, 16,
+        Label="GitHub",
+    )
+    add(
+        "btnClose",
+        "com.sun.star.awt.UnoControlButtonModel",
+        158, 62, 52, 16,
+        Label="Fermer",
+    )
+
+    dialog = smgr.createInstanceWithContext(
+        "com.sun.star.awt.UnoControlDialog", ctx
+    )
+    dialog.setModel(model)
+    dialog.createPeer(toolkit, None)
+
+    listener = AboutListener(dialog)
+    dialog.addTopWindowListener(listener)
+    for control_name, command in [
+        ("btnGitHub", "github"),
+        ("btnClose", "close"),
+    ]:
+        control = dialog.getControl(control_name)
+        control.setActionCommand(command)
+        control.addActionListener(listener)
+
+    _OPEN_ABOUT_WINDOWS.append({
+        "dialog": dialog,
+        "listener": listener,
+    })
+    dialog.setVisible(True)
+
+
+def _download_update(download_url, expected_sha256):
+    target = os.path.join(
+        tempfile.gettempdir(),
+        "lexique-forensique-fr-update.oxt",
+    )
+    request = urllib.request.Request(
+        download_url,
+        headers={"User-Agent": "Lexique-forensique-FR-LibreOffice"},
+    )
+    with urllib.request.urlopen(request, timeout=30) as response:
+        data = response.read()
+
+    digest = hashlib.sha256(data).hexdigest().lower()
+    if expected_sha256 and digest != expected_sha256.lower():
+        raise RuntimeError("L'empreinte SHA-256 de la mise à jour ne correspond pas.")
+
+    with open(target, "wb") as f:
+        f.write(data)
+
+    return target
+
+
+def check_updates(*args):
+    try:
+        request = urllib.request.Request(
+            UPDATE_MANIFEST_URL,
+            headers={
+                "Accept": "application/json",
+                "User-Agent": "Lexique-forensique-FR-LibreOffice",
+            },
+        )
+        with urllib.request.urlopen(request, timeout=8) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+
+        latest = payload.get("version", "")
+        download_url = payload.get("download_url", "")
+        sha256 = payload.get("sha256", "")
+
+        if not latest or not download_url:
+            raise RuntimeError("Manifest de mise à jour incomplet.")
+
+        if _version_tuple(latest) <= _version_tuple(CURRENT_VERSION):
+            _message_box(
+                "Lexique forensique FR",
+                f"La version {CURRENT_VERSION} est à jour.",
+            )
+            return
+
+        _message_box(
+            "Mise à jour disponible",
+            (
+                f"Version installée : {CURRENT_VERSION}\n"
+                f"Dernière version : {latest}\n\n"
+                "Le fichier de mise à jour va être téléchargé puis ouvert "
+                "dans le gestionnaire d'extensions LibreOffice."
+            ),
+        )
+
+        package_path = _download_update(download_url, sha256)
+        _open_url(uno.systemPathToFileUrl(package_path))
+
+    except Exception as exc:
+        _message_box(
+            "Mise à jour",
+            (
+                "Impossible d'effectuer la mise à jour automatique.\n\n"
+                f"Détail : {exc}\n\n"
+                "Aucune page web ne sera ouverte automatiquement."
+            ),
+        )
 
 
 def open_lexicon(*args):
@@ -286,8 +603,8 @@ def open_lexicon(*args):
     model.PositionX = 70
     model.PositionY = 45
     model.Width = 310
-    model.Height = 236
-    model.Title = "Lexique forensique FR — v0.3.0 TEST"
+    model.Height = 286
+    model.Title = "Lexique forensique FR — v0.5.0 TEST"
 
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
@@ -330,28 +647,52 @@ def open_lexicon(*args):
         Label="",
     )
     add(
+        "lblLexique",
+        "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 44, 105, 10,
+        Label="Lexique",
+    )
+    add(
         "lstResults",
         "com.sun.star.awt.UnoControlListBoxModel",
-        8, 46, 105, 148,
+        8, 56, 105, 116,
+    )
+    add(
+        "lblAlerts",
+        "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 176, 105, 10,
+        Label="Alertes du document",
+    )
+    add(
+        "lstAlerts",
+        "com.sun.star.awt.UnoControlListBoxModel",
+        8, 188, 105, 48,
     )
     add(
         "txtDetail",
         "com.sun.star.awt.UnoControlEditModel",
-        118, 46, 184, 148,
+        118, 46, 184, 190,
         MultiLine=True,
         ReadOnly=True,
         VScroll=True,
     )
     add(
+        "btnReplace",
+        "com.sun.star.awt.UnoControlButtonModel",
+        118, 244, 92, 16,
+        Label="Remplacer occurrence",
+        Enabled=False,
+    )
+    add(
         "btnInsert",
         "com.sun.star.awt.UnoControlButtonModel",
-        180, 202, 74, 16,
+        214, 244, 88, 16,
         Label="Insérer formule",
     )
     add(
         "btnClose",
         "com.sun.star.awt.UnoControlButtonModel",
-        258, 202, 44, 16,
+        258, 266, 44, 16,
         Label="Fermer",
     )
 
@@ -363,23 +704,28 @@ def open_lexicon(*args):
 
     search_box = dialog.getControl("txtSearch")
     results_box = dialog.getControl("lstResults")
+    alerts_box = dialog.getControl("lstAlerts")
     detail_box = dialog.getControl("txtDetail")
     status_label = dialog.getControl("lblStatus")
     insert_button = dialog.getControl("btnInsert")
+    replace_button = dialog.getControl("btnReplace")
 
     listener = DialogListener(
         dialog,
         search_box,
         results_box,
+        alerts_box,
         detail_box,
         status_label,
         insert_button,
+        replace_button,
         _load_data(),
     )
 
     for control, command in [
         (dialog.getControl("btnSearch"), "search"),
         (dialog.getControl("btnScan"), "scan"),
+        (replace_button, "replace"),
         (insert_button, "insert"),
         (dialog.getControl("btnClose"), "close"),
     ]:
@@ -387,6 +733,8 @@ def open_lexicon(*args):
         control.addActionListener(listener)
 
     results_box.addItemListener(listener)
+    alerts_box.addItemListener(listener)
+    dialog.addTopWindowListener(listener)
 
     _OPEN_LEXICON_WINDOWS.append({
         "dialog": dialog,
@@ -395,4 +743,4 @@ def open_lexicon(*args):
     dialog.setVisible(True)
 
 
-g_exportedScripts = (open_lexicon,)
+g_exportedScripts = (open_lexicon, show_about, check_updates)
