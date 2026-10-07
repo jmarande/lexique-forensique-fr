@@ -6,12 +6,27 @@
     "categorie": "Méthode de criminalistique numérique",
     "definition": "Processus systématique consistant à créer une copie ou une image forensique de données numériques tout en préservant les données d’origine et leur intégrité pour les besoins de l’analyse et de la procédure.",
     "synonymes": [
-      "Acquisition numérique forensique"
+      "Acquisition numérique forensique",
+      "Extraction"
     ],
     "termes_deconseilles": [],
     "exemple_rapport": "Nous procédons à l’acquisition forensique du support afin de préserver les données d’origine en vue de leur analyse.",
     "sources": [
       "CLARUS D3.2 — Forensic acquisition"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Acquisition réalisée",
+        "texte": "Nous procédons à l’acquisition forensique du support afin d’en extraire les données accessibles tout en préservant les données d’origine."
+      },
+      {
+        "type": "Acquisition partielle",
+        "texte": "Nos moyens techniques ne nous permettent de procéder qu’à une acquisition partielle des données du support."
+      },
+      {
+        "type": "Acquisition impossible",
+        "texte": "Nos moyens techniques ne nous permettent pas de procéder à l’acquisition des données du support."
+      }
     ]
   },
   {
