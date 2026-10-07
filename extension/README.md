@@ -2,30 +2,32 @@
 
 Extension Writer du **Lexique forensique FR**.
 
-## Version 0.3.0 — branche de test
+## Version 0.4.0 — branche de test
 
-Cette version part de la v0.2.1 validée et ajoute un premier **contrôle terminologique du document**.
+Cette version part de la v0.3.0 validée et ajoute le traitement ciblé des alertes terminologiques.
 
-### Fonctionnement
+### Contrôle terminologique
 
 Le bouton **Vérifier document** :
 
-- parcourt le texte du document Writer actif ;
-- recherche les entrées présentes dans `termes_deconseilles` du lexique ;
+- recherche les termes présents dans `termes_deconseilles` ;
 - compte les occurrences ;
-- affiche la forme détectée et le terme français recommandé ;
-- conserve la fenêtre non modale pour permettre de continuer à modifier le document.
+- affiche le terme détecté et le terme recommandé.
 
-Exemple actuel :
+### Navigation dans le document
 
-`cryptage → chiffrement`
+Quand l'opérateur sélectionne une alerte, Writer sélectionne automatiquement la première occurrence correspondante dans le document.
 
-Le contrôle est alimenté directement par `data/lexique.json` : les futurs termes déconseillés ajoutés au lexique seront donc pris en compte sans modifier le moteur de vérification.
+Exemple :
 
-## Limites de cette première version
+`cryptage → Chiffrement`
 
-- aucune modification automatique du document ;
-- pas encore de surlignage ni de navigation vers l'occurrence ;
-- l'opérateur reste maître de la rédaction.
+L'occurrence de `cryptage` est sélectionnée directement dans Writer.
 
-Ces fonctions seront étudiées après validation de cette première détection.
+### Remplacement ciblé
+
+Le bouton **Remplacer occurrence** remplace uniquement l'occurrence actuellement sélectionnée par le terme recommandé.
+
+Il n'existe volontairement pas encore de remplacement global : l'opérateur garde la maîtrise de chaque correction.
+
+Après un remplacement, le document est analysé à nouveau et le nombre d'occurrences restantes est actualisé.
