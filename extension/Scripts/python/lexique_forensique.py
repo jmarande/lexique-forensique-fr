@@ -17,12 +17,10 @@ _OPEN_ABOUT_WINDOWS = []
 
 CURRENT_VERSION = "0.5.0"
 GITHUB_URL = "https://github.com/jmarande/lexique-forensique-fr"
-PUBLIC_UPDATE_REPO = "jmarande/lexique-forensique-fr-releases"
-UPDATE_MANIFEST_URL = (
-    "https://raw.githubusercontent.com/"
-    + PUBLIC_UPDATE_REPO
-    + "/main/update.json"
+GITHUB_LATEST_RELEASE_API = (
+    "https://api.github.com/repos/jmarande/lexique-forensique-fr/releases/latest"
 )
+UPDATE_ASSET_NAME = "lexique-forensique-fr.oxt"
 
 
 def _ctx():
@@ -545,21 +543,18 @@ def _download_update(download_url, expected_sha256):
 def check_updates(*args):
     try:
         request = urllib.request.Request(
-            UPDATE_MANIFEST_URL,
+            GITHUB_LATEST_RELEASE_API,
             headers={
-                "Accept": "application/json",
+                "Accept": "application/vnd.github+json",
                 "User-Agent": "Lexique-forensique-FR-LibreOffice",
             },
         )
         with urllib.request.urlopen(request, timeout=8) as response:
-            payload = json.loads(response.read().decode("utf-8"))
+            release = json.loads(response.read().decode("utf-8"))
 
-        latest = payload.get("version", "")
-        download_url = payload.get("download_url", "")
-        sha256 = payload.get("sha256", "")
-
-        if not latest or not download_url:
-            raise RuntimeError("Manifest de mise à jour incomplet.")
+        latest = release.get("tag_name", "")
+        if not latest:
+            raise RuntimeError("La dernière release GitHub ne fournit pas de version.")
 
         if _version_tuple(latest) <= _version_tuple(CURRENT_VERSION):
             _message_box(
@@ -568,17 +563,36 @@ def check_updates(*args):
             )
             return
 
+        asset = None
+        for item in release.get("assets", []):
+            if item.get("name") == UPDATE_ASSET_NAME:
+                asset = item
+                break
+
+        if not asset:
+            raise RuntimeError(
+                f"Le fichier {UPDATE_ASSET_NAME} est absent de la release {latest}."
+            )
+
+        download_url = asset.get("browser_download_url", "")
+        if not download_url:
+            raise RuntimeError("URL de téléchargement de la mise à jour introuvable.")
+
+        expected_sha256 = ""
+        digest = asset.get("digest") or ""
+        if digest.lower().startswith("sha256:"):
+            expected_sha256 = digest.split(":", 1)[1].strip()
+
         _message_box(
             "Mise à jour disponible",
             (
                 f"Version installée : {CURRENT_VERSION}\n"
                 f"Dernière version : {latest}\n\n"
-                "Le fichier de mise à jour va être téléchargé puis ouvert "
-                "dans le gestionnaire d'extensions LibreOffice."
+                "La nouvelle extension va être téléchargée."
             ),
         )
 
-        package_path = _download_update(download_url, sha256)
+        package_path = _download_update(download_url, expected_sha256)
         _open_url(uno.systemPathToFileUrl(package_path))
 
     except Exception as exc:
