@@ -97,11 +97,11 @@ class DialogListener(unohelper.Base, XActionListener):
             self.results_box.selectItemPos(0, True)
             self.current = matches[0]
             self.detail_box.Text = _format_entry(self.current)
-            self.insert_button.Enabled = True
+            self.insert_button.getModel().Enabled = True
         else:
             self.current = None
             self.detail_box.Text = "Aucun terme trouvé."
-            self.insert_button.Enabled = False
+            self.insert_button.getModel().Enabled = False
 
     def actionPerformed(self, event):
         cmd = event.ActionCommand
@@ -139,7 +139,7 @@ def open_lexicon(*args):
     model.PositionY = 50
     model.Width = 250
     model.Height = 190
-    model.Title = "Lexique forensique FR — v0.1.3"
+    model.Title = "Lexique forensique FR — v0.1.4"
 
     def add(name, service, x, y, w, h, **props):
         m = model.createInstance(service)
