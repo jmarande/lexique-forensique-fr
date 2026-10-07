@@ -4,6 +4,8 @@ import os
 import re
 import unicodedata
 import urllib.request
+import hashlib
+import tempfile
 
 import uno
 import unohelper
@@ -13,10 +15,14 @@ from com.sun.star.awt import XActionListener, XItemListener, XTopWindowListener
 _OPEN_LEXICON_WINDOWS = []
 _OPEN_ABOUT_WINDOWS = []
 
-CURRENT_VERSION = "0.4.5"
+CURRENT_VERSION = "0.5.0"
 GITHUB_URL = "https://github.com/jmarande/lexique-forensique-fr"
-GITHUB_RELEASES_URL = GITHUB_URL + "/releases"
-GITHUB_LATEST_API = "https://api.github.com/repos/jmarande/lexique-forensique-fr/releases/latest"
+PUBLIC_UPDATE_REPO = "jmarande/lexique-forensique-fr-releases"
+UPDATE_MANIFEST_URL = (
+    "https://raw.githubusercontent.com/"
+    + PUBLIC_UPDATE_REPO
+    + "/main/update.json"
+)
 
 
 def _ctx():
@@ -514,46 +520,73 @@ def show_about(*args):
     dialog.setVisible(True)
 
 
+def _download_update(download_url, expected_sha256):
+    target = os.path.join(
+        tempfile.gettempdir(),
+        "lexique-forensique-fr-update.oxt",
+    )
+    request = urllib.request.Request(
+        download_url,
+        headers={"User-Agent": "Lexique-forensique-FR-LibreOffice"},
+    )
+    with urllib.request.urlopen(request, timeout=30) as response:
+        data = response.read()
+
+    digest = hashlib.sha256(data).hexdigest().lower()
+    if expected_sha256 and digest != expected_sha256.lower():
+        raise RuntimeError("L'empreinte SHA-256 de la mise à jour ne correspond pas.")
+
+    with open(target, "wb") as f:
+        f.write(data)
+
+    return target
+
+
 def check_updates(*args):
     try:
         request = urllib.request.Request(
-            GITHUB_LATEST_API,
+            UPDATE_MANIFEST_URL,
             headers={
-                "Accept": "application/vnd.github+json",
+                "Accept": "application/json",
                 "User-Agent": "Lexique-forensique-FR-LibreOffice",
             },
         )
         with urllib.request.urlopen(request, timeout=8) as response:
             payload = json.loads(response.read().decode("utf-8"))
 
-        latest = payload.get("tag_name", "")
-        page = payload.get("html_url") or GITHUB_RELEASES_URL
+        latest = payload.get("version", "")
+        download_url = payload.get("download_url", "")
+        sha256 = payload.get("sha256", "")
 
-        if _version_tuple(latest) > _version_tuple(CURRENT_VERSION):
-            _message_box(
-                "Mise à jour disponible",
-                (
-                    f"Version installée : {CURRENT_VERSION}\n"
-                    f"Dernière version : {latest}\n\n"
-                    "La page GitHub de la dernière version va s'ouvrir."
-                ),
-            )
-            _open_url(page)
-        else:
+        if not latest or not download_url:
+            raise RuntimeError("Manifest de mise à jour incomplet.")
+
+        if _version_tuple(latest) <= _version_tuple(CURRENT_VERSION):
             _message_box(
                 "Lexique forensique FR",
-                (
-                    f"La version {CURRENT_VERSION} est à jour.\n\n"
-                    "Les versions publiées sont disponibles sur GitHub."
-                ),
+                f"La version {CURRENT_VERSION} est à jour.",
             )
-    except Exception:
+            return
+
+        _message_box(
+            "Mise à jour disponible",
+            (
+                f"Version installée : {CURRENT_VERSION}\n"
+                f"Dernière version : {latest}\n\n"
+                "Le fichier de mise à jour va être téléchargé puis ouvert "
+                "dans le gestionnaire d'extensions LibreOffice."
+            ),
+        )
+
+        package_path = _download_update(download_url, sha256)
+        _open_url(uno.systemPathToFileUrl(package_path))
+
+    except Exception as exc:
         _message_box(
             "Mise à jour",
             (
-                "Impossible de vérifier automatiquement les mises à jour.\n\n"
-                "Le dépôt GitHub est peut-être privé, aucune release publique "
-                "n'est disponible, ou la connexion Internet est indisponible.\n\n"
+                "Impossible d'effectuer la mise à jour automatique.\n\n"
+                f"Détail : {exc}\n\n"
                 "Aucune page web ne sera ouverte automatiquement."
             ),
         )
@@ -571,7 +604,7 @@ def open_lexicon(*args):
     model.PositionY = 45
     model.Width = 310
     model.Height = 286
-    model.Title = "Lexique forensique FR — v0.4.5 TEST"
+    model.Title = "Lexique forensique FR — v0.5.0 TEST"
 
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
