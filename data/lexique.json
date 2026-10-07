@@ -233,5 +233,87 @@
     "sources": [
       "CLARUS D3.2 — Chain of custody"
     ]
+  },
+  {
+    "id": "acquisition-forensique",
+    "terme": "Acquisition forensique",
+    "anglais": "Forensic acquisition",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Processus systématique consistant à créer une copie ou une image forensique de données numériques tout en préservant les données d’origine et leur intégrité pour les besoins de l’analyse et de la procédure.",
+    "synonymes": [
+      "Acquisition numérique forensique"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "Nous procédons à l’acquisition forensique du support afin de préserver les données d’origine en vue de leur analyse.",
+    "sources": [
+      "CLARUS D3.2 — Forensic acquisition"
+    ]
+  },
+  {
+    "id": "integrite-donnees",
+    "terme": "Intégrité des données",
+    "anglais": "Data integrity / Evidence integrity",
+    "categorie": "Principe de criminalistique numérique",
+    "definition": "Propriété selon laquelle les données demeurent complètes et non altérées au cours des opérations de collecte, copie, stockage, analyse ou transfert. En criminalistique numérique, son contrôle repose notamment sur des procédures adaptées et sur la comparaison de valeurs de hachage.",
+    "synonymes": [
+      "Intégrité de la preuve numérique"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "L’intégrité des données est contrôlée par comparaison des valeurs de hachage calculées avant et après l’opération.",
+    "sources": [
+      "CLARUS D3.2 — Forensic acquisition",
+      "CLARUS D3.2 — Hash/Hashing",
+      "CLARUS D3.2 — Digital fingerprint"
+    ]
+  },
+  {
+    "id": "horodatage",
+    "terme": "Horodatage",
+    "anglais": "Timestamp",
+    "categorie": "Preuve numérique",
+    "definition": "Marque enregistrée indiquant une date et une heure associées à un événement numérique ou à une opération portant sur des données, par exemple leur création, modification, accès ou transmission.",
+    "synonymes": [
+      "Marque temporelle",
+      "Timestamp"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "L’horodatage associé au fichier indique la date et l’heure enregistrées pour sa création ou sa modification.",
+    "sources": [
+      "CLARUS D3.2 — Timestamp"
+    ]
+  },
+  {
+    "id": "journaux-systeme",
+    "terme": "Journaux système",
+    "anglais": "Logs / Log files",
+    "categorie": "Preuve numérique",
+    "definition": "Enregistrements produits par un système afin de conserver la trace d’événements significatifs, tels que des connexions utilisateur, l’utilisation de périphériques, des connexions réseau ou d’autres activités du système.",
+    "synonymes": [
+      "Fichiers journaux",
+      "Logs",
+      "Journaux d’événements"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "L’examen des journaux système met en évidence plusieurs événements susceptibles de contribuer à la chronologie des faits.",
+    "sources": [
+      "CLARUS D3.2 — Logs",
+      "CLARUS D3.2 — Log files"
+    ]
+  },
+  {
+    "id": "recuperation-donnees",
+    "terme": "Récupération de données",
+    "anglais": "Retrieval / Data recovery",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Processus consistant à accéder à des informations numériques et à les obtenir ou les restaurer depuis un support, un système de stockage ou une archive. Il peut inclure la récupération de contenus supprimés, cachés ou archivés.",
+    "synonymes": [
+      "Restauration de données",
+      "Récupération de fichiers"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "Nous procédons à la récupération des données accessibles, y compris lorsque cela est techniquement possible des éléments supprimés ou archivés.",
+    "sources": [
+      "CLARUS D3.2 — Retrieval"
+    ]
   }
 ]
