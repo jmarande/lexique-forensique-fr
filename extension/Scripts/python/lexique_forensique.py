@@ -7,7 +7,8 @@ import uno
 import unohelper
 
 from com.sun.star.awt import XActionListener, XItemListener
-from com.sun.star.datatransfer import XTransferable, DataFlavor
+
+_OPEN_LEXICON_WINDOWS = []
 
 
 def _ctx():
@@ -91,35 +92,6 @@ def _find_entries(query, data):
     return sorted(results, key=lambda e: _normalize(e.get("terme", "")))
 
 
-class TextTransferable(unohelper.Base, XTransferable):
-    def __init__(self, text):
-        self.text = text
-        self.flavor = DataFlavor()
-        self.flavor.MimeType = "text/plain;charset=utf-16"
-        self.flavor.HumanPresentableName = "Texte Unicode"
-        self.flavor.DataType = uno.getTypeByName("string")
-
-    def getTransferDataFlavors(self):
-        return (self.flavor,)
-
-    def isDataFlavorSupported(self, flavor):
-        return flavor.MimeType.startswith("text/plain")
-
-    def getTransferData(self, flavor):
-        if self.isDataFlavorSupported(flavor):
-            return self.text
-        raise RuntimeError("Format de presse-papiers non pris en charge")
-
-
-def _copy_to_clipboard(text):
-    ctx = _ctx()
-    smgr = ctx.ServiceManager
-    clipboard = smgr.createInstanceWithContext(
-        "com.sun.star.datatransfer.clipboard.SystemClipboard", ctx
-    )
-    clipboard.setContents(TextTransferable(text), None)
-
-
 class DialogListener(unohelper.Base, XActionListener, XItemListener):
     def __init__(
         self,
@@ -128,7 +100,6 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
         results_box,
         detail_box,
         status_label,
-        copy_button,
         insert_button,
         data,
     ):
@@ -137,7 +108,6 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
         self.results_box = results_box
         self.detail_box = detail_box
         self.status_label = status_label
-        self.copy_button = copy_button
         self.insert_button = insert_button
         self.data = data
         self.current = None
@@ -145,7 +115,6 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
         self.refresh()
 
     def _set_buttons(self, enabled):
-        self.copy_button.getModel().Enabled = enabled
         self.insert_button.getModel().Enabled = enabled
 
     def _show_current(self, entry):
@@ -181,10 +150,6 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
         if cmd == "search":
             self.refresh()
 
-        elif cmd == "copy" and self.current:
-            _copy_to_clipboard(self.current["terme"])
-            self.status_label.getModel().Label = "Terme copié dans le presse-papiers"
-
         elif cmd == "insert" and self.current:
             doc = _desktop().getCurrentComponent()
             if doc and doc.supportsService("com.sun.star.text.TextDocument"):
@@ -197,7 +162,14 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
                 self.status_label.getModel().Label = "Formulation insérée dans le document"
 
         elif cmd == "close":
-            self.dialog.endExecute()
+            try:
+                self.dialog.setVisible(False)
+                self.dialog.dispose()
+            finally:
+                _OPEN_LEXICON_WINDOWS[:] = [
+                    item for item in _OPEN_LEXICON_WINDOWS
+                    if item.get("dialog") is not self.dialog
+                ]
 
     def itemStateChanged(self, event):
         pos = self.results_box.SelectedItemPos
@@ -220,7 +192,7 @@ def open_lexicon(*args):
     model.PositionY = 45
     model.Width = 310
     model.Height = 218
-    model.Title = "Lexique forensique FR — v0.2.0"
+    model.Title = "Lexique forensique FR — v0.2.1"
 
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
@@ -270,12 +242,6 @@ def open_lexicon(*args):
         VScroll=True,
     )
     add(
-        "btnCopy",
-        "com.sun.star.awt.UnoControlButtonModel",
-        118, 186, 58, 16,
-        Label="Copier terme",
-    )
-    add(
         "btnInsert",
         "com.sun.star.awt.UnoControlButtonModel",
         180, 186, 74, 16,
@@ -298,7 +264,6 @@ def open_lexicon(*args):
     results_box = dialog.getControl("lstResults")
     detail_box = dialog.getControl("txtDetail")
     status_label = dialog.getControl("lblStatus")
-    copy_button = dialog.getControl("btnCopy")
     insert_button = dialog.getControl("btnInsert")
 
     listener = DialogListener(
@@ -307,14 +272,12 @@ def open_lexicon(*args):
         results_box,
         detail_box,
         status_label,
-        copy_button,
         insert_button,
         _load_data(),
     )
 
     for control, command in [
         (dialog.getControl("btnSearch"), "search"),
-        (copy_button, "copy"),
         (insert_button, "insert"),
         (dialog.getControl("btnClose"), "close"),
     ]:
@@ -323,8 +286,13 @@ def open_lexicon(*args):
 
     results_box.addItemListener(listener)
 
-    dialog.execute()
-    dialog.dispose()
+    # Fenêtre non modale : Writer reste entièrement utilisable pendant
+    # que le lexique est ouvert.
+    _OPEN_LEXICON_WINDOWS.append({
+        "dialog": dialog,
+        "listener": listener,
+    })
+    dialog.setVisible(True)
 
 
 g_exportedScripts = (open_lexicon,)
