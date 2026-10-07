@@ -2,24 +2,30 @@
 
 Extension Writer du **Lexique forensique FR**.
 
-## Version 0.2.0 — branche de test
+## Version 0.3.0 — branche de test
 
-Cette version conserve le socle validé de la v0.1.5 et ajoute :
+Cette version part de la v0.2.1 validée et ajoute un premier **contrôle terminologique du document**.
 
-- recherche insensible à la casse et aux accents ;
-- recherche dans le terme, l'anglais, la catégorie, la définition, les synonymes et les termes déconseillés ;
-- résultats triés alphabétiquement ;
-- compteur de résultats ;
-- affichage de la source dans la fiche ;
-- fenêtre agrandie ;
-- bouton **Copier terme** ;
-- bouton **Insérer formule** dans Writer.
+### Fonctionnement
 
-La branche `v0.2-ui-search` reste séparée de `main` tant que la version n'a pas été validée sous LibreOffice Windows.
+Le bouton **Vérifier document** :
 
-## Étape suivante
+- parcourt le texte du document Writer actif ;
+- recherche les entrées présentes dans `termes_deconseilles` du lexique ;
+- compte les occurrences ;
+- affiche la forme détectée et le terme français recommandé ;
+- conserve la fenêtre non modale pour permettre de continuer à modifier le document.
 
-Après validation de la v0.2.0 :
+Exemple actuel :
 
-- fusion vers `main` ;
-- puis développement du contrôle terminologique du document.
+`cryptage → chiffrement`
+
+Le contrôle est alimenté directement par `data/lexique.json` : les futurs termes déconseillés ajoutés au lexique seront donc pris en compte sans modifier le moteur de vérification.
+
+## Limites de cette première version
+
+- aucune modification automatique du document ;
+- pas encore de surlignage ni de navigation vers l'occurrence ;
+- l'opérateur reste maître de la rédaction.
+
+Ces fonctions seront étudiées après validation de cette première détection.
