@@ -1,0 +1,154 @@
+[
+  {
+    "id": "preuve-numerique",
+    "terme": "Preuve numérique",
+    "anglais": "Digital evidence",
+    "categorie": "Preuve numérique",
+    "definition": "Information ou donnée stockée ou transmise sous forme numérique pouvant contribuer à établir un fait dans le cadre d'une enquête ou d'une procédure judiciaire.",
+    "synonymes": [
+      "Élément de preuve numérique"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "L'analyse du support a permis d'identifier plusieurs éléments de preuve numérique susceptibles d'éclairer les faits.",
+    "sources": [
+      "CLARUS D3.2"
+    ]
+  },
+  {
+    "id": "donnees-numeriques",
+    "terme": "Données numériques",
+    "anglais": "Digital data",
+    "categorie": "Preuve numérique",
+    "definition": "Données sous forme numérique pouvant présenter un intérêt d'investigation ou probatoire et devant être identifiées, préservées, collectées et analysées selon des procédures adaptées.",
+    "synonymes": [
+      "Données digitales"
+    ],
+    "termes_deconseilles": [
+      "Données digitales"
+    ],
+    "exemple_rapport": "Les données numériques extraites ont été conservées dans un format exploitable.",
+    "sources": [
+      "CLARUS D3.2"
+    ]
+  },
+  {
+    "id": "investigation-numerique",
+    "terme": "Investigation numérique",
+    "anglais": "Digital investigation",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Processus méthodique de recherche, d'examen et d'analyse de données ou de preuves numériques provenant de dispositifs et systèmes électroniques.",
+    "synonymes": [
+      "Enquête numérique"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "Les opérations réalisées s'inscrivent dans le cadre d'une investigation numérique du support.",
+    "sources": [
+      "CLARUS D3.2"
+    ]
+  },
+  {
+    "id": "extraction",
+    "terme": "Extraction",
+    "anglais": "Extract",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Opération consistant à récupérer ou obtenir des données à partir d'un dispositif numérique, d'un support de stockage ou d'un système afin de les rendre accessibles à des fins d'analyse ou d'exploitation.",
+    "synonymes": [],
+    "termes_deconseilles": [],
+    "exemple_rapport": "Nous procédons à l'extraction des données accessibles présentes sur le support.",
+    "sources": [
+      "CLARUS D3.2"
+    ]
+  },
+  {
+    "id": "chiffrement",
+    "terme": "Chiffrement",
+    "anglais": "Encryption / Encrypted",
+    "categorie": "Cryptographie",
+    "definition": "Procédé cryptographique transformant des données afin de les rendre inintelligibles sans la clé, le mot de passe ou le mécanisme cryptographique approprié.",
+    "synonymes": [
+      "Données chiffrées"
+    ],
+    "termes_deconseilles": [
+      "Cryptage"
+    ],
+    "exemple_rapport": "Les données présentes sur le support sont protégées par chiffrement.",
+    "sources": [
+      "CLARUS D3.2"
+    ]
+  },
+  {
+    "id": "force-brute",
+    "terme": "Force brute",
+    "anglais": "Brute force",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Méthode consistant à tester systématiquement un ensemble de clés, mots de passe ou combinaisons possibles afin de tenter d'accéder à des données ou à un système protégé.",
+    "synonymes": [
+      "Attaque par force brute"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "Une tentative d'accès par force brute peut être mise en œuvre lorsque le cadre technique et juridique le permet.",
+    "sources": [
+      "CLARUS D3.2"
+    ]
+  },
+  {
+    "id": "systeme-exploitation",
+    "terme": "Système d'exploitation",
+    "anglais": "Operating system (OS)",
+    "categorie": "Technologie numérique",
+    "definition": "Logiciel fondamental assurant la gestion des ressources matérielles et logicielles d'un appareil numérique et générant notamment des données système, journaux et métadonnées.",
+    "synonymes": [
+      "OS"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "Le support fonctionne sous un système d'exploitation dont les artefacts ont été examinés.",
+    "sources": [
+      "CLARUS D3.2"
+    ]
+  },
+  {
+    "id": "disque-dur",
+    "terme": "Disque dur",
+    "anglais": "Hard disk / Hard drive / HDD",
+    "categorie": "Équipement numérique",
+    "definition": "Support physique de stockage de données utilisé notamment dans les ordinateurs et autres dispositifs numériques.",
+    "synonymes": [
+      "HDD",
+      "Disque dur mécanique"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "Le disque dur est pris en charge en vue de son acquisition et de son analyse.",
+    "sources": [
+      "CLARUS D3.2"
+    ]
+  },
+  {
+    "id": "base-de-donnees",
+    "terme": "Base de données",
+    "anglais": "Database",
+    "categorie": "Preuve numérique",
+    "definition": "Collection structurée d'informations organisée afin de permettre la recherche, la comparaison, l'identification et la récupération d'enregistrements.",
+    "synonymes": [],
+    "termes_deconseilles": [],
+    "exemple_rapport": "Les enregistrements pertinents ont été recherchés dans la base de données de l'application.",
+    "sources": [
+      "CLARUS D3.2"
+    ]
+  },
+  {
+    "id": "stockage-cloud",
+    "terme": "Stockage dans le cloud",
+    "anglais": "Cloud storage",
+    "categorie": "Technologie numérique",
+    "definition": "Mode de stockage dans lequel les données sont hébergées sur des serveurs distants accessibles par réseau, généralement au moyen d'un compte utilisateur.",
+    "synonymes": [
+      "Stockage en nuage",
+      "Stockage distant"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "Certaines données peuvent être conservées dans un espace de stockage distant et ne pas être présentes localement sur le support.",
+    "sources": [
+      "CLARUS D3.2"
+    ]
+  }
+]
