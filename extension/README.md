@@ -2,32 +2,25 @@
 
 Extension Writer du **Lexique forensique FR**.
 
-## Version 0.4.0 — branche de test
+## Version 0.4.1 — branche de test
 
-Cette version part de la v0.3.0 validée et ajoute le traitement ciblé des alertes terminologiques.
+Cette version corrige l'ergonomie du contrôle terminologique.
 
-### Contrôle terminologique
+### Séparation du lexique et des alertes
 
-Le bouton **Vérifier document** :
+Le panneau de gauche est maintenant divisé en deux zones :
 
-- recherche les termes présents dans `termes_deconseilles` ;
-- compte les occurrences ;
-- affiche le terme détecté et le terme recommandé.
+- **Lexique** : conserve en permanence la liste des termes disponibles ;
+- **Alertes du document** : affiche uniquement les termes déconseillés détectés dans le document actif.
 
-### Navigation dans le document
+Le bouton **Vérifier document** ne remplace donc plus la liste du lexique par les alertes.
 
-Quand l'opérateur sélectionne une alerte, Writer sélectionne automatiquement la première occurrence correspondante dans le document.
+### Comportement
 
-Exemple :
+- rechercher un terme continue d'afficher sa définition ;
+- vérifier le document remplit uniquement la zone d'alertes ;
+- sélectionner une alerte affiche la fiche du terme recommandé et sélectionne l'occurrence dans Writer ;
+- **Remplacer occurrence** corrige uniquement l'occurrence sélectionnée ;
+- après correction, la liste d'alertes est actualisée sans effacer le lexique.
 
-`cryptage → Chiffrement`
-
-L'occurrence de `cryptage` est sélectionnée directement dans Writer.
-
-### Remplacement ciblé
-
-Le bouton **Remplacer occurrence** remplace uniquement l'occurrence actuellement sélectionnée par le terme recommandé.
-
-Il n'existe volontairement pas encore de remplacement global : l'opérateur garde la maîtrise de chaque correction.
-
-Après un remplacement, le document est analysé à nouveau et le nombre d'occurrences restantes est actualisé.
+La fenêtre reste non modale afin de permettre la modification du document pendant son utilisation.
