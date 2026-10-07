@@ -15,7 +15,7 @@ from com.sun.star.awt import XActionListener, XItemListener, XTopWindowListener
 _OPEN_LEXICON_WINDOWS = []
 _OPEN_ABOUT_WINDOWS = []
 
-CURRENT_VERSION = "0.7.11"
+CURRENT_VERSION = "0.7.12"
 GITHUB_URL = "https://github.com/jmarande/lexique-forensique-fr"
 GITHUB_LATEST_RELEASE_API = (
     "https://api.github.com/repos/jmarande/lexique-forensique-fr/releases/latest"
@@ -470,7 +470,11 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
             pos = self.alerts_box.SelectedItemPos
             if 0 <= pos < len(self.scan_alerts):
                 self._show_scan_alert(self.scan_alerts[pos])
-        elif event.Source is self.results_box:
+        else:
+            # LibreOffice peut fournir un proxy UNO différent pour la source
+            # de l'événement. Comme seuls results_box et alerts_box émettent
+            # ici des ItemEvents, traiter le second cas comme results_box
+            # évite de perdre les changements de sélection.
             pos = self.results_box.SelectedItemPos
             if self.mode == "formulations":
                 if 0 <= pos < len(self.current_formulations):
@@ -725,7 +729,7 @@ def open_lexicon(*args):
     model.PositionY = 45
     model.Width = 310
     model.Height = 286
-    model.Title = "Lexique forensique FR — v0.7.11"
+    model.Title = "Lexique forensique FR — v0.7.12"
 
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
