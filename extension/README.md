@@ -1,16 +1,25 @@
 # Extension LibreOffice
 
-Cette partie du projet accueillera l'extension LibreOffice Writer du Lexique forensique FR.
+Extension Writer du **Lexique forensique FR**.
 
-## Cible v0.1
+## Version 0.2.0 — branche de test
 
-- recherche d'un terme ;
-- affichage de la fiche terminologique ;
-- insertion d'une formulation recommandée dans Writer.
+Cette version conserve le socle validé de la v0.1.5 et ajoute :
 
-## Évolutions prévues
+- recherche insensible à la casse et aux accents ;
+- recherche dans le terme, l'anglais, la catégorie, la définition, les synonymes et les termes déconseillés ;
+- résultats triés alphabétiquement ;
+- compteur de résultats ;
+- affichage de la source dans la fiche ;
+- fenêtre agrandie ;
+- bouton **Copier terme** ;
+- bouton **Insérer formule** dans Writer.
 
-- analyse terminologique du document ;
-- détection des termes déconseillés ;
-- propositions de remplacement ;
-- mise à jour du lexique depuis le dépôt GitHub.
+La branche `v0.2-ui-search` reste séparée de `main` tant que la version n'a pas été validée sous LibreOffice Windows.
+
+## Étape suivante
+
+Après validation de la v0.2.0 :
+
+- fusion vers `main` ;
+- puis développement du contrôle terminologique du document.
