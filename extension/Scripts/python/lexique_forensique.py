@@ -15,7 +15,7 @@ from com.sun.star.awt import XActionListener, XItemListener, XTopWindowListener
 _OPEN_LEXICON_WINDOWS = []
 _OPEN_ABOUT_WINDOWS = []
 
-CURRENT_VERSION = "0.7.2"
+CURRENT_VERSION = "0.7.3"
 GITHUB_URL = "https://github.com/jmarande/lexique-forensique-fr"
 GITHUB_LATEST_RELEASE_API = (
     "https://api.github.com/repos/jmarande/lexique-forensique-fr/releases/latest"
@@ -272,8 +272,8 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
         formulations = _report_formulations(entry)
         self.current_formulations = formulations
 
-        for label, text in formulations:
-            display = f"{label.capitalize()} — {text}" if label else text
+        for index, (label, text) in enumerate(formulations, start=1):
+            display = label if label else f"Proposition {index}"
             self.formulations_box.addItem(display, self.formulations_box.ItemCount)
 
         if formulations:
@@ -719,7 +719,7 @@ def open_lexicon(*args):
     model.PositionY = 45
     model.Width = 310
     model.Height = 286
-    model.Title = "Lexique forensique FR — v0.7.2"
+    model.Title = "Lexique forensique FR — v0.7.3"
 
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
