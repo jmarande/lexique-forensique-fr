@@ -737,7 +737,7 @@ def open_lexicon(*args):
         "lblFormulations",
         "com.sun.star.awt.UnoControlFixedTextModel",
         118, 178, 184, 10,
-        Label="Propositions pour le rapport",
+        Label="FORMULATIONS POUR RAPPORT",
     )
     add(
         "lstFormulations",
