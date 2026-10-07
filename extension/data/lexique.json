@@ -455,6 +455,24 @@
     "exemple_rapport": "Lorsque les conditions techniques le permettent, le terminal est placé en mode avion afin de limiter les communications avec les réseaux.",
     "sources": [
       "CLARUS D3.2 — Airplane mode"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Déjà en mode avion",
+        "texte": "Lors de notre prise en charge, nous constatons que le support est déjà configuré en mode avion."
+      },
+      {
+        "type": "Activation par l’opérateur",
+        "texte": "Lors de notre prise en charge, nous plaçons le support en mode avion afin de limiter ses communications avec les réseaux."
+      },
+      {
+        "type": "Activation techniquement impossible",
+        "texte": "Les conditions techniques rencontrées ne nous permettent pas de placer le support en mode avion."
+      },
+      {
+        "type": "Activation non réalisée pour préserver l’état du support",
+        "texte": "Afin de préserver l’état du support et de ne pas compromettre l’accès aux données, nous ne procédons pas à l’activation du mode avion."
+      }
     ]
   },
   {
