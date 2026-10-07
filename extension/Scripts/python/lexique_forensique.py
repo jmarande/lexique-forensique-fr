@@ -15,7 +15,7 @@ from com.sun.star.awt import XActionListener, XItemListener, XTopWindowListener
 _OPEN_LEXICON_WINDOWS = []
 _OPEN_ABOUT_WINDOWS = []
 
-CURRENT_VERSION = "0.7.0"
+CURRENT_VERSION = "0.7.1"
 GITHUB_URL = "https://github.com/jmarande/lexique-forensique-fr"
 GITHUB_LATEST_RELEASE_API = (
     "https://api.github.com/repos/jmarande/lexique-forensique-fr/releases/latest"
@@ -128,16 +128,46 @@ def _format_entry(e, warning=None):
             f"{warning['found']} → {e['terme']}\n"
             f"Occurrences détectées : {warning['count']}\n\n"
         )
-    return (
-        prefix
-        + f"{e['terme']}\n"
-        + f"Anglais : {e.get('anglais', '—')}\n"
-        + f"Catégorie : {e.get('categorie', '—')}\n"
-        + f"Synonymes : {syn}\n"
-        + f"Termes déconseillés : {bad}\n"
-        + f"Sources : {_sources(e)}\n\n"
-        + f"DÉFINITION\n{e.get('definition', '')}"
-    )
+
+    lines = [
+        prefix + e["terme"],
+        f"Anglais : {e.get('anglais', '—')}",
+        f"Catégorie : {e.get('categorie', '—')}",
+    ]
+
+    if e.get("editeur"):
+        lines.append(f"Éditeur : {e['editeur']}")
+    if e.get("plateformes"):
+        values = e["plateformes"]
+        lines.append(
+            "Plateformes : "
+            + (", ".join(values) if isinstance(values, list) else str(values))
+        )
+
+    lines.extend([
+        f"Synonymes : {syn}",
+        f"Termes déconseillés : {bad}",
+        f"Sources : {_sources(e)}",
+        "",
+        "DÉFINITION",
+        e.get("definition", ""),
+    ])
+
+    if e.get("donnees_potentielles"):
+        lines.extend([
+            "",
+            "DONNÉES POTENTIELLEMENT RENCONTRÉES",
+            " • " + "\n • ".join(e["donnees_potentielles"]),
+        ])
+
+    if e.get("points_attention"):
+        lines.extend([
+            "",
+            "POINTS D’ATTENTION",
+            " • " + "\n • ".join(e["points_attention"]),
+        ])
+
+    return "\n".join(lines)
 
 
 def _find_entries(query, data):
@@ -661,7 +691,7 @@ def open_lexicon(*args):
     model.PositionY = 45
     model.Width = 310
     model.Height = 286
-    model.Title = "Lexique forensique FR — v0.7.0"
+    model.Title = "Lexique forensique FR — v0.7.1"
 
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
