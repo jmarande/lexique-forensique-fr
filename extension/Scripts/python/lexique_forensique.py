@@ -249,7 +249,10 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
         self.current_found_range = None
         self.current_formulations = _report_formulations(entry)
         self.detail_box.Text = _format_entry(entry)
-        self.insert_button.getModel().Label = "Formulations"
+        if len(self.current_formulations) > 1:
+            self.insert_button.getModel().Label = "Formulations"
+        else:
+            self.insert_button.getModel().Label = "Insérer formule"
         self.search_button.getModel().Label = "Rechercher"
         self.mode = "lexicon"
         self._set_insert_enabled(bool(self.current_formulations))
@@ -321,7 +324,10 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
         self.current_alert = alert
         self.current_formulations = _report_formulations(self.current)
         self.detail_box.Text = _format_entry(self.current, warning=alert)
-        self.insert_button.getModel().Label = "Formulations"
+        if len(self.current_formulations) > 1:
+            self.insert_button.getModel().Label = "Formulations"
+        else:
+            self.insert_button.getModel().Label = "Insérer formule"
         self.search_button.getModel().Label = "Rechercher"
         self.mode = "lexicon"
         self._set_insert_enabled(bool(self.current_formulations))
@@ -413,10 +419,14 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
 
         elif cmd == "insert" and self.current:
             if self.mode != "formulations":
-                self._open_formulations()
-                return
-
-            if 0 <= self.selected_formulation_index < len(self.current_formulations):
+                if len(self.current_formulations) > 1:
+                    self._open_formulations()
+                    return
+                if self.current_formulations:
+                    text_to_insert = self.current_formulations[0][1]
+                else:
+                    text_to_insert = self.current["terme"]
+            elif 0 <= self.selected_formulation_index < len(self.current_formulations):
                 text_to_insert = self.current_formulations[
                     self.selected_formulation_index
                 ][1]
