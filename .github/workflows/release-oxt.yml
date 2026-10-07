@@ -1,0 +1,40 @@
+name: Build and publish LibreOffice extension
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build OXT
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import zipfile
+
+          source = Path("extension")
+          target = Path("lexique-forensique-fr.oxt")
+
+          with zipfile.ZipFile(target, "w", zipfile.ZIP_DEFLATED) as z:
+              for path in source.rglob("*"):
+                  if path.is_file():
+                      z.write(path, path.relative_to(source).as_posix())
+
+          print(target)
+          PY
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}"             lexique-forensique-fr.oxt             --repo "${GITHUB_REPOSITORY}"             --title "${GITHUB_REF_NAME}"             --generate-notes
