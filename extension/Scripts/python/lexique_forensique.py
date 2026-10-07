@@ -8,12 +8,12 @@ import urllib.request
 import uno
 import unohelper
 
-from com.sun.star.awt import XActionListener, XItemListener
+from com.sun.star.awt import XActionListener, XItemListener, XTopWindowListener
 
 _OPEN_LEXICON_WINDOWS = []
 _OPEN_ABOUT_WINDOWS = []
 
-CURRENT_VERSION = "0.4.4"
+CURRENT_VERSION = "0.4.5"
 GITHUB_URL = "https://github.com/jmarande/lexique-forensique-fr"
 GITHUB_RELEASES_URL = GITHUB_URL + "/releases"
 GITHUB_LATEST_API = "https://api.github.com/repos/jmarande/lexique-forensique-fr/releases/latest"
@@ -171,7 +171,7 @@ def _scan_document_text(text, data):
     )
 
 
-class DialogListener(unohelper.Base, XActionListener, XItemListener):
+class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowListener):
     def __init__(
         self,
         dialog,
@@ -352,14 +352,38 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
                 )
 
         elif cmd == "close":
-            try:
-                self.dialog.setVisible(False)
-                self.dialog.dispose()
-            finally:
-                _OPEN_LEXICON_WINDOWS[:] = [
-                    item for item in _OPEN_LEXICON_WINDOWS
-                    if item.get("dialog") is not self.dialog
-                ]
+            self._close_dialog()
+
+    def _close_dialog(self):
+        try:
+            self.dialog.setVisible(False)
+            self.dialog.dispose()
+        finally:
+            _OPEN_LEXICON_WINDOWS[:] = [
+                item for item in _OPEN_LEXICON_WINDOWS
+                if item.get("dialog") is not self.dialog
+            ]
+
+    def windowClosing(self, event):
+        self._close_dialog()
+
+    def windowOpened(self, event):
+        pass
+
+    def windowClosed(self, event):
+        pass
+
+    def windowMinimized(self, event):
+        pass
+
+    def windowNormalized(self, event):
+        pass
+
+    def windowActivated(self, event):
+        pass
+
+    def windowDeactivated(self, event):
+        pass
 
     def itemStateChanged(self, event):
         if event.Source is self.alerts_box:
@@ -375,7 +399,7 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
         pass
 
 
-class AboutListener(unohelper.Base, XActionListener):
+class AboutListener(unohelper.Base, XActionListener, XTopWindowListener):
     def __init__(self, dialog):
         self.dialog = dialog
 
@@ -383,14 +407,38 @@ class AboutListener(unohelper.Base, XActionListener):
         if event.ActionCommand == "github":
             _open_url(GITHUB_URL)
         elif event.ActionCommand == "close":
-            try:
-                self.dialog.setVisible(False)
-                self.dialog.dispose()
-            finally:
-                _OPEN_ABOUT_WINDOWS[:] = [
-                    item for item in _OPEN_ABOUT_WINDOWS
-                    if item.get("dialog") is not self.dialog
-                ]
+            self._close_dialog()
+
+    def _close_dialog(self):
+        try:
+            self.dialog.setVisible(False)
+            self.dialog.dispose()
+        finally:
+            _OPEN_ABOUT_WINDOWS[:] = [
+                item for item in _OPEN_ABOUT_WINDOWS
+                if item.get("dialog") is not self.dialog
+            ]
+
+    def windowClosing(self, event):
+        self._close_dialog()
+
+    def windowOpened(self, event):
+        pass
+
+    def windowClosed(self, event):
+        pass
+
+    def windowMinimized(self, event):
+        pass
+
+    def windowNormalized(self, event):
+        pass
+
+    def windowActivated(self, event):
+        pass
+
+    def windowDeactivated(self, event):
+        pass
 
     def disposing(self, event):
         pass
@@ -450,6 +498,7 @@ def show_about(*args):
     dialog.createPeer(toolkit, None)
 
     listener = AboutListener(dialog)
+    dialog.addTopWindowListener(listener)
     for control_name, command in [
         ("btnGitHub", "github"),
         ("btnClose", "close"),
@@ -502,13 +551,12 @@ def check_updates(*args):
         _message_box(
             "Mise à jour",
             (
-                "La vérification automatique n'est pas disponible actuellement.\n"
-                "Aucune release GitHub publique n'est peut-être encore publiée, "
-                "ou le dépôt nécessite une authentification.\n\n"
-                "La page des versions GitHub va s'ouvrir."
+                "Impossible de vérifier automatiquement les mises à jour.\n\n"
+                "Le dépôt GitHub est peut-être privé, aucune release publique "
+                "n'est disponible, ou la connexion Internet est indisponible.\n\n"
+                "Aucune page web ne sera ouverte automatiquement."
             ),
         )
-        _open_url(GITHUB_RELEASES_URL)
 
 
 def open_lexicon(*args):
@@ -523,7 +571,7 @@ def open_lexicon(*args):
     model.PositionY = 45
     model.Width = 310
     model.Height = 286
-    model.Title = "Lexique forensique FR — v0.4.4 TEST"
+    model.Title = "Lexique forensique FR — v0.4.5 TEST"
 
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
@@ -653,6 +701,7 @@ def open_lexicon(*args):
 
     results_box.addItemListener(listener)
     alerts_box.addItemListener(listener)
+    dialog.addTopWindowListener(listener)
 
     _OPEN_LEXICON_WINDOWS.append({
         "dialog": dialog,
