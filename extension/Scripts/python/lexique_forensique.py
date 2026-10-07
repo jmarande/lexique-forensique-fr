@@ -138,6 +138,7 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
         detail_box,
         status_label,
         insert_button,
+        replace_button,
         data,
     ):
         self.dialog = dialog
@@ -146,15 +147,21 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
         self.detail_box = detail_box
         self.status_label = status_label
         self.insert_button = insert_button
+        self.replace_button = replace_button
         self.data = data
         self.current = None
         self.matches = []
         self.scan_alerts = []
+        self.current_alert = None
+        self.current_found_range = None
         self.mode = "search"
         self.refresh()
 
     def _set_insert_enabled(self, enabled):
         self.insert_button.getModel().Enabled = enabled
+
+    def _set_replace_enabled(self, enabled):
+        self.replace_button.getModel().Enabled = enabled
 
     def _clear_results(self):
         if self.results_box.ItemCount:
@@ -162,17 +169,66 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
 
     def _show_search_entry(self, entry):
         self.current = entry
+        self.current_alert = None
+        self.current_found_range = None
         self.detail_box.Text = _format_entry(entry)
         self._set_insert_enabled(True)
+        self._set_replace_enabled(False)
+
+    def _goto_alert_occurrence(self, alert):
+        doc = _desktop().getCurrentComponent()
+        if not doc or not doc.supportsService("com.sun.star.text.TextDocument"):
+            self.current_found_range = None
+            self._set_replace_enabled(False)
+            return
+
+        descriptor = doc.createSearchDescriptor()
+        descriptor.SearchString = alert["found"]
+        descriptor.SearchCaseSensitive = False
+        descriptor.SearchWords = True
+
+        found = doc.findFirst(descriptor)
+        self.current_found_range = found
+
+        if found:
+            doc.getCurrentController().select(found)
+            self._set_replace_enabled(True)
+            self.status_label.getModel().Label = (
+                f"Occurrence sélectionnée : {alert['found']} → "
+                f"{alert['entry']['terme']}"
+            )
+        else:
+            self._set_replace_enabled(False)
+            self.status_label.getModel().Label = (
+                "Occurrence introuvable dans le document actif"
+            )
 
     def _show_scan_alert(self, alert):
         self.current = alert["entry"]
+        self.current_alert = alert
         self.detail_box.Text = _format_entry(self.current, warning=alert)
         self._set_insert_enabled(True)
+        self._goto_alert_occurrence(alert)
+
+    def _replace_current_occurrence(self):
+        if not self.current_alert or not self.current_found_range:
+            self.status_label.getModel().Label = "Aucune occurrence sélectionnée"
+            return
+
+        replacement = self.current_alert["entry"]["terme"]
+        self.current_found_range.String = replacement
+        self.current_found_range = None
+        self.status_label.getModel().Label = (
+            f"Occurrence remplacée par : {replacement}"
+        )
+        self.scan_document()
 
     def refresh(self):
         self.mode = "search"
         self.scan_alerts = []
+        self.current_alert = None
+        self.current_found_range = None
+        self._set_replace_enabled(False)
         self.matches = _find_entries(self.search_box.Text, self.data)
 
         self._clear_results()
@@ -200,6 +256,9 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
             return
 
         self.mode = "scan"
+        self.current_alert = None
+        self.current_found_range = None
+        self._set_replace_enabled(False)
         self.scan_alerts = _scan_document_text(doc.Text.String, self.data)
         self._clear_results()
 
@@ -237,6 +296,9 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener):
 
         elif cmd == "scan":
             self.scan_document()
+
+        elif cmd == "replace":
+            self._replace_current_occurrence()
 
         elif cmd == "insert" and self.current:
             doc = _desktop().getCurrentComponent()
@@ -286,8 +348,8 @@ def open_lexicon(*args):
     model.PositionX = 70
     model.PositionY = 45
     model.Width = 310
-    model.Height = 236
-    model.Title = "Lexique forensique FR — v0.3.0 TEST"
+    model.Height = 254
+    model.Title = "Lexique forensique FR — v0.4.0 TEST"
 
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
@@ -332,26 +394,33 @@ def open_lexicon(*args):
     add(
         "lstResults",
         "com.sun.star.awt.UnoControlListBoxModel",
-        8, 46, 105, 148,
+        8, 46, 105, 150,
     )
     add(
         "txtDetail",
         "com.sun.star.awt.UnoControlEditModel",
-        118, 46, 184, 148,
+        118, 46, 184, 150,
         MultiLine=True,
         ReadOnly=True,
         VScroll=True,
     )
     add(
+        "btnReplace",
+        "com.sun.star.awt.UnoControlButtonModel",
+        118, 204, 92, 16,
+        Label="Remplacer occurrence",
+        Enabled=False,
+    )
+    add(
         "btnInsert",
         "com.sun.star.awt.UnoControlButtonModel",
-        180, 202, 74, 16,
+        214, 204, 88, 16,
         Label="Insérer formule",
     )
     add(
         "btnClose",
         "com.sun.star.awt.UnoControlButtonModel",
-        258, 202, 44, 16,
+        258, 226, 44, 16,
         Label="Fermer",
     )
 
@@ -366,6 +435,7 @@ def open_lexicon(*args):
     detail_box = dialog.getControl("txtDetail")
     status_label = dialog.getControl("lblStatus")
     insert_button = dialog.getControl("btnInsert")
+    replace_button = dialog.getControl("btnReplace")
 
     listener = DialogListener(
         dialog,
@@ -374,12 +444,14 @@ def open_lexicon(*args):
         detail_box,
         status_label,
         insert_button,
+        replace_button,
         _load_data(),
     )
 
     for control, command in [
         (dialog.getControl("btnSearch"), "search"),
         (dialog.getControl("btnScan"), "scan"),
+        (replace_button, "replace"),
         (insert_button, "insert"),
         (dialog.getControl("btnClose"), "close"),
     ]:
