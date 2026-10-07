@@ -10,12 +10,12 @@ import tempfile
 import uno
 import unohelper
 
-from com.sun.star.awt import XActionListener, XItemListener, XTopWindowListener
+from com.sun.star.awt import XActionListener, XItemListener, XMouseListener, XTopWindowListener
 
 _OPEN_LEXICON_WINDOWS = []
 _OPEN_ABOUT_WINDOWS = []
 
-CURRENT_VERSION = "0.7.13"
+CURRENT_VERSION = "0.7.14"
 GITHUB_URL = "https://github.com/jmarande/lexique-forensique-fr"
 GITHUB_LATEST_RELEASE_API = (
     "https://api.github.com/repos/jmarande/lexique-forensique-fr/releases/latest"
@@ -133,7 +133,8 @@ def _format_entry(e, warning=None):
             f"{warning['found']} → {e['terme']}\n"
             f"Occurrences détectées : {warning['count']}\n\n"
         )
-    return (
+
+    base = (
         prefix
         + f"{e['terme']}\n"
         + f"Anglais : {e.get('anglais', '—')}\n"
@@ -142,10 +143,31 @@ def _format_entry(e, warning=None):
         + f"Termes déconseillés : {bad}\n"
         + f"Sources : {_sources(e)}\n\n"
         + f"DÉFINITION\n{e.get('definition', '')}\n\n"
-        + f"FORMULATION POUR RAPPORT\n{_report_example(e)}"
+        + "FORMULATIONS POUR RAPPORT\n"
     )
 
+    formulations = _report_formulations(e)
+    ranges = []
+    parts = [base]
 
+    for index, (label, text) in enumerate(formulations, start=1):
+        if index > 1:
+            parts.append("\n\n")
+        parts.append(f"{index}. {label}\n")
+        start = sum(len(part) for part in parts)
+        parts.append(text)
+        end = start + len(text)
+        ranges.append({
+            "start": start,
+            "end": end,
+            "label": label,
+            "text": text,
+        })
+
+    if not formulations:
+        parts.append("—")
+
+    return "".join(parts), ranges
 def _find_entries(query, data):
     q = _normalize(query)
     if not q:
@@ -195,7 +217,13 @@ def _scan_document_text(text, data):
     )
 
 
-class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowListener):
+class DialogListener(
+    unohelper.Base,
+    XActionListener,
+    XItemListener,
+    XMouseListener,
+    XTopWindowListener,
+):
     def __init__(
         self,
         dialog,
@@ -206,7 +234,6 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
         status_label,
         insert_button,
         replace_button,
-        search_button,
         data,
     ):
         self.dialog = dialog
@@ -217,16 +244,14 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
         self.status_label = status_label
         self.insert_button = insert_button
         self.replace_button = replace_button
-        self.search_button = search_button
         self.data = data
         self.current = None
         self.matches = []
         self.scan_alerts = []
         self.current_alert = None
         self.current_found_range = None
-        self.current_formulations = []
+        self.formulation_ranges = []
         self.selected_formulation_index = 0
-        self.mode = "lexicon"
         self.refresh()
 
     def _set_insert_enabled(self, enabled):
@@ -243,53 +268,38 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
         if self.alerts_box.ItemCount:
             self.alerts_box.removeItems(0, self.alerts_box.ItemCount)
 
+    def _display_entry(self, entry, warning=None):
+        text, ranges = _format_entry(entry, warning=warning)
+        self.detail_box.Text = text
+        self.formulation_ranges = ranges
+        self.selected_formulation_index = 0
+
+        if ranges:
+            self._select_formulation(0)
+            self._set_insert_enabled(True)
+        else:
+            self._set_insert_enabled(False)
+
+    def _select_formulation(self, index):
+        if not (0 <= index < len(self.formulation_ranges)):
+            return
+
+        self.selected_formulation_index = index
+        item = self.formulation_ranges[index]
+        selection = uno.createUnoStruct("com.sun.star.awt.Selection")
+        selection.Min = item["start"]
+        selection.Max = item["end"]
+        self.detail_box.setSelection(selection)
+        self.status_label.getModel().Label = (
+            f"Formulation sélectionnée : {item['label']}"
+        )
+
     def _show_search_entry(self, entry):
         self.current = entry
         self.current_alert = None
         self.current_found_range = None
-        self.current_formulations = _report_formulations(entry)
-        self.detail_box.Text = _format_entry(entry)
-        if len(self.current_formulations) > 1:
-            self.insert_button.getModel().Label = "Formulations"
-        else:
-            self.insert_button.getModel().Label = "Insérer formule"
-        self.search_button.getModel().Label = "Rechercher"
-        self.mode = "lexicon"
-        self._set_insert_enabled(bool(self.current_formulations))
+        self._display_entry(entry)
         self._set_replace_enabled(False)
-
-    def _open_formulations(self):
-        if not self.current:
-            return
-
-        self.current_formulations = _report_formulations(self.current)
-        if not self.current_formulations:
-            self.status_label.getModel().Label = "Aucune formulation disponible"
-            return
-
-        self.mode = "formulations"
-        self.selected_formulation_index = 0
-        self._clear_results()
-
-        for index, (label, text) in enumerate(self.current_formulations, start=1):
-            self.results_box.addItem(
-                f"{index}. {label}",
-                self.results_box.ItemCount,
-            )
-
-        self.results_box.selectItemPos(0, True)
-        self.detail_box.Text = self.current_formulations[0][1]
-        self.insert_button.getModel().Label = "Insérer"
-        self.search_button.getModel().Label = "Retour"
-        self.status_label.getModel().Label = (
-            f"{len(self.current_formulations)} formulation(s)"
-        )
-
-    def _return_to_lexicon(self):
-        self.mode = "lexicon"
-        self.search_button.getModel().Label = "Rechercher"
-        self.insert_button.getModel().Label = "Formulations"
-        self.refresh()
 
     def _goto_alert_occurrence(self, alert):
         doc = _desktop().getCurrentComponent()
@@ -322,15 +332,7 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
     def _show_scan_alert(self, alert):
         self.current = alert["entry"]
         self.current_alert = alert
-        self.current_formulations = _report_formulations(self.current)
-        self.detail_box.Text = _format_entry(self.current, warning=alert)
-        if len(self.current_formulations) > 1:
-            self.insert_button.getModel().Label = "Formulations"
-        else:
-            self.insert_button.getModel().Label = "Insérer formule"
-        self.search_button.getModel().Label = "Rechercher"
-        self.mode = "lexicon"
-        self._set_insert_enabled(bool(self.current_formulations))
+        self._display_entry(self.current, warning=alert)
         self._goto_alert_occurrence(alert)
 
     def _replace_current_occurrence(self):
@@ -348,7 +350,6 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
 
     def refresh(self):
         self.matches = _find_entries(self.search_box.Text, self.data)
-
         self._clear_results()
 
         for entry in self.matches:
@@ -364,6 +365,7 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
             self._show_search_entry(self.matches[0])
         else:
             self.current = None
+            self.formulation_ranges = []
             self.detail_box.Text = "Aucun terme trouvé."
             self._set_insert_enabled(False)
 
@@ -406,10 +408,7 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
         cmd = event.ActionCommand
 
         if cmd == "search":
-            if self.mode == "formulations":
-                self._return_to_lexicon()
-            else:
-                self.refresh()
+            self.refresh()
 
         elif cmd == "scan":
             self.scan_document()
@@ -418,31 +417,43 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
             self._replace_current_occurrence()
 
         elif cmd == "insert" and self.current:
-            if self.mode != "formulations":
-                if len(self.current_formulations) > 1:
-                    self._open_formulations()
-                    return
-                if self.current_formulations:
-                    text_to_insert = self.current_formulations[0][1]
-                else:
-                    text_to_insert = self.current["terme"]
-            elif 0 <= self.selected_formulation_index < len(self.current_formulations):
-                text_to_insert = self.current_formulations[
-                    self.selected_formulation_index
-                ][1]
+            if self.formulation_ranges:
+                item = self.formulation_ranges[self.selected_formulation_index]
+                text_to_insert = item["text"]
             else:
-                text_to_insert = _report_example(self.current) or self.current["terme"]
+                text_to_insert = self.current["terme"]
 
             doc = _desktop().getCurrentComponent()
             if doc and doc.supportsService("com.sun.star.text.TextDocument"):
                 view = doc.getCurrentController().getViewCursor()
                 view.getText().insertString(view, text_to_insert, False)
                 self.status_label.getModel().Label = (
-                    "Formulation insérée dans le document"
+                    "Formulation sélectionnée insérée dans le document"
                 )
 
         elif cmd == "close":
             self._close_dialog()
+
+    def mouseReleased(self, event):
+        if not self.formulation_ranges:
+            return
+
+        selection = self.detail_box.getSelection()
+        position = selection.Min
+
+        for index, item in enumerate(self.formulation_ranges):
+            if item["start"] <= position <= item["end"]:
+                self._select_formulation(index)
+                return
+
+    def mousePressed(self, event):
+        pass
+
+    def mouseEntered(self, event):
+        pass
+
+    def mouseExited(self, event):
+        pass
 
     def _close_dialog(self):
         try:
@@ -481,20 +492,8 @@ class DialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowL
             if 0 <= pos < len(self.scan_alerts):
                 self._show_scan_alert(self.scan_alerts[pos])
         else:
-            # LibreOffice peut fournir un proxy UNO différent pour la source
-            # de l'événement. Comme seuls results_box et alerts_box émettent
-            # ici des ItemEvents, traiter le second cas comme results_box
-            # évite de perdre les changements de sélection.
             pos = self.results_box.SelectedItemPos
-            if self.mode == "formulations":
-                if 0 <= pos < len(self.current_formulations):
-                    self.selected_formulation_index = pos
-                    label, text = self.current_formulations[pos]
-                    self.detail_box.Text = text
-                    self.status_label.getModel().Label = (
-                        f"Formulation sélectionnée : {label}"
-                    )
-            elif 0 <= pos < len(self.matches):
+            if 0 <= pos < len(self.matches):
                 self._show_search_entry(self.matches[pos])
 
     def disposing(self, event):
@@ -739,7 +738,7 @@ def open_lexicon(*args):
     model.PositionY = 45
     model.Width = 310
     model.Height = 286
-    model.Title = "Lexique forensique FR — v0.7.13"
+    model.Title = "Lexique forensique FR — v0.7.14"
 
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
@@ -810,6 +809,7 @@ def open_lexicon(*args):
         MultiLine=True,
         ReadOnly=True,
         VScroll=True,
+        HideInactiveSelection=False,
     )
     add(
         "btnReplace",
@@ -822,7 +822,7 @@ def open_lexicon(*args):
         "btnInsert",
         "com.sun.star.awt.UnoControlButtonModel",
         214, 244, 88, 16,
-        Label="Formulations",
+        Label="Insérer formule",
     )
     add(
         "btnClose",
@@ -844,8 +844,6 @@ def open_lexicon(*args):
     status_label = dialog.getControl("lblStatus")
     insert_button = dialog.getControl("btnInsert")
     replace_button = dialog.getControl("btnReplace")
-    search_button = dialog.getControl("btnSearch")
-
     listener = DialogListener(
         dialog,
         search_box,
@@ -855,7 +853,6 @@ def open_lexicon(*args):
         status_label,
         insert_button,
         replace_button,
-        search_button,
         _load_data(),
     )
 
@@ -871,6 +868,7 @@ def open_lexicon(*args):
 
     results_box.addItemListener(listener)
     alerts_box.addItemListener(listener)
+    detail_box.addMouseListener(listener)
     dialog.addTopWindowListener(listener)
 
     _OPEN_LEXICON_WINDOWS.append({
