@@ -350,6 +350,74 @@
     ]
   },
   {
+    "id": "instagram-direct",
+    "terme": "Instagram Direct",
+    "anglais": "Instagram Direct",
+    "categorie": "Application — Messagerie et réseau social",
+    "editeur": "Meta Platforms",
+    "plateformes": [
+      "Android",
+      "iOS",
+      "Web"
+    ],
+    "definition": "Fonction de messagerie intégrée à Instagram permettant notamment l’échange de messages, de photographies, de vidéos, de publications, de Reels et d’autres contenus entre comptes.",
+    "synonymes": [
+      "Messages Instagram",
+      "DM Instagram",
+      "Instagram DM"
+    ],
+    "termes_deconseilles": [],
+    "donnees_potentielles": [
+      "Messages privés individuels et de groupe",
+      "Photographies et vidéos échangées",
+      "Publications, Reels et autres contenus partagés",
+      "Informations de comptes et noms affichés",
+      "Métadonnées de conversations et de médias",
+      "Données de cache et fichiers locaux",
+      "Éléments supprimés ou reconstruits lorsque l’extraction et l’outil d’analyse le permettent"
+    ],
+    "points_attention": [
+      "Instagram Direct est une fonction de l’application Instagram et non une application distincte sur le support.",
+      "Le nom affiché ou le nom d’utilisateur d’un compte ne suffit pas à lui seul à établir l’identité réelle de son utilisateur.",
+      "Une extraction peut être partielle et ne pas restituer l’ensemble des messages ou médias historiques.",
+      "Les données reconstruites automatiquement par un logiciel d’analyse doivent être distinguées des données directement présentes dans l’extraction."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Application identifiée",
+        "texte": "Nous identifions la présence de l’application Instagram sur le support examiné."
+      },
+      {
+        "type": "Données associées",
+        "texte": "L’examen des données extraites met en évidence des éléments associés à l’application Instagram."
+      },
+      {
+        "type": "Conversations identifiées",
+        "texte": "Nous identifions plusieurs échanges issus de l’application Instagram susceptibles de présenter un intérêt au regard de la mission confiée."
+      },
+      {
+        "type": "Médias identifiés",
+        "texte": "Nous identifions plusieurs fichiers multimédias associés à l’application Instagram."
+      },
+      {
+        "type": "Extraction partielle",
+        "texte": "Les données accessibles pour l’application Instagram sont partielles et ne permettent pas d’affirmer que l’ensemble des échanges a été récupéré."
+      },
+      {
+        "type": "Données reconstruites",
+        "texte": "Certains éléments associés à l’application Instagram ont été reconstruits automatiquement par le logiciel d’analyse et doivent être interprétés avec prudence."
+      },
+      {
+        "type": "Élément non disponible",
+        "texte": "Un emplacement correspondant à un élément associé à l’application Instagram est identifié, sans que son contenu soit disponible dans les données extraites."
+      }
+    ],
+    "sources": [
+      "Centre d’aide Instagram — Messagerie",
+      "Centre d’aide Instagram — Messages et médias"
+    ]
+  },
+  {
     "id": "integrite-donnees",
     "terme": "Intégrité des données",
     "anglais": "Data integrity / Evidence integrity",
@@ -427,6 +495,140 @@
     "exemple_rapport": "L’analyse de la mémoire cache permet d’identifier des fichiers temporaires et autres éléments résiduels.",
     "sources": [
       "CLARUS D3.2 — Cache memory"
+    ]
+  },
+  {
+    "id": "messages-apple",
+    "terme": "Messages (Apple)",
+    "anglais": "Messages",
+    "categorie": "Application — Messagerie",
+    "editeur": "Apple Inc.",
+    "plateformes": [
+      "iOS",
+      "iPadOS",
+      "macOS",
+      "watchOS"
+    ],
+    "definition": "Application de messagerie d’Apple permettant notamment l’échange de SMS, MMS et messages iMessage selon le contexte, ainsi que de photographies, vidéos, pièces jointes et autres contenus.",
+    "synonymes": [
+      "iMessage",
+      "Messages iOS"
+    ],
+    "termes_deconseilles": [],
+    "donnees_potentielles": [
+      "SMS et MMS",
+      "Messages iMessage",
+      "Photographies, vidéos et autres pièces jointes",
+      "Informations de correspondants et groupes",
+      "Horodatages et métadonnées de messages",
+      "Messages récemment supprimés selon la version du système et le contexte",
+      "Éléments reconstruits lorsque l’extraction et l’outil d’analyse le permettent"
+    ],
+    "points_attention": [
+      "L’application Messages peut contenir à la fois des SMS/MMS et des messages iMessage ; leur nature doit être distinguée lorsque les données disponibles le permettent.",
+      "Des messages supprimés peuvent rester récupérables pendant une durée limitée selon la version du système et les conditions du support.",
+      "Une extraction peut être partielle et ne pas restituer l’ensemble des conversations historiques.",
+      "Les données reconstruites automatiquement par un logiciel d’analyse doivent être distinguées des données directement présentes dans l’extraction."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Application identifiée",
+        "texte": "Nous identifions la présence de l’application Messages sur le support examiné."
+      },
+      {
+        "type": "Données associées",
+        "texte": "L’examen des données extraites met en évidence des éléments associés à l’application Messages."
+      },
+      {
+        "type": "Conversations identifiées",
+        "texte": "Nous identifions plusieurs échanges issus de l’application Messages susceptibles de présenter un intérêt au regard de la mission confiée."
+      },
+      {
+        "type": "Médias identifiés",
+        "texte": "Nous identifions plusieurs fichiers multimédias associés à l’application Messages."
+      },
+      {
+        "type": "Extraction partielle",
+        "texte": "Les données accessibles pour l’application Messages sont partielles et ne permettent pas d’affirmer que l’ensemble des échanges a été récupéré."
+      },
+      {
+        "type": "Données reconstruites",
+        "texte": "Certains éléments associés à l’application Messages ont été reconstruits automatiquement par le logiciel d’analyse et doivent être interprétés avec prudence."
+      },
+      {
+        "type": "Élément non disponible",
+        "texte": "Un emplacement correspondant à un élément associé à l’application Messages est identifié, sans que son contenu soit disponible dans les données extraites."
+      }
+    ],
+    "sources": [
+      "Assistance Apple — Messages sur iPhone",
+      "Assistance Apple — Récupérer les messages texte supprimés sur iPhone ou iPad"
+    ]
+  },
+  {
+    "id": "messenger",
+    "terme": "Messenger",
+    "anglais": "Messenger",
+    "categorie": "Application — Messagerie",
+    "editeur": "Meta Platforms",
+    "plateformes": [
+      "Android",
+      "iOS",
+      "Web"
+    ],
+    "definition": "Service de messagerie de Meta permettant notamment l’échange de messages, de photographies, de vidéos, de fichiers ainsi que les appels audio et vidéo, en lien avec des comptes Meta.",
+    "synonymes": [
+      "Facebook Messenger"
+    ],
+    "termes_deconseilles": [],
+    "donnees_potentielles": [
+      "Messages individuels et de groupe",
+      "Photographies, vidéos, fichiers et messages vocaux",
+      "Informations de comptes, contacts et groupes",
+      "Appels et éléments associés lorsqu’ils sont disponibles",
+      "Métadonnées de conversations et de pièces jointes",
+      "Données de cache et fichiers locaux",
+      "Éléments supprimés ou reconstruits lorsque l’extraction et l’outil d’analyse le permettent"
+    ],
+    "points_attention": [
+      "Le nom affiché d’un compte ne suffit pas à lui seul à identifier avec certitude son utilisateur.",
+      "Une extraction peut être partielle et ne pas restituer l’intégralité des conversations ou médias.",
+      "La présence d’un fichier dans un cache associé à Messenger ne permet pas, à elle seule, d’en déterminer l’auteur ou le destinataire.",
+      "Les données reconstruites automatiquement par un logiciel d’analyse doivent être distinguées des données directement présentes dans l’extraction."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Application identifiée",
+        "texte": "Nous identifions la présence de l’application Messenger sur le support examiné."
+      },
+      {
+        "type": "Données associées",
+        "texte": "L’examen des données extraites met en évidence des éléments associés à l’application Messenger."
+      },
+      {
+        "type": "Conversations identifiées",
+        "texte": "Nous identifions plusieurs échanges issus de l’application Messenger susceptibles de présenter un intérêt au regard de la mission confiée."
+      },
+      {
+        "type": "Médias identifiés",
+        "texte": "Nous identifions plusieurs fichiers multimédias associés à l’application Messenger."
+      },
+      {
+        "type": "Extraction partielle",
+        "texte": "Les données accessibles pour l’application Messenger sont partielles et ne permettent pas d’affirmer que l’ensemble des échanges a été récupéré."
+      },
+      {
+        "type": "Données reconstruites",
+        "texte": "Certains éléments associés à l’application Messenger ont été reconstruits automatiquement par le logiciel d’analyse et doivent être interprétés avec prudence."
+      },
+      {
+        "type": "Élément non disponible",
+        "texte": "Un emplacement correspondant à un élément associé à l’application Messenger est identifié, sans que son contenu soit disponible dans les données extraites."
+      }
+    ],
+    "sources": [
+      "Centre d’aide Meta — Messenger",
+      "Centre d’aide Messenger — Messages et conversations"
     ]
   },
   {
@@ -581,6 +783,72 @@
     "exemple_rapport": "Le terminal est susceptible de communiquer au moyen d’un réseau sans fil.",
     "sources": [
       "CLARUS D3.2 — Wireless network"
+    ]
+  },
+  {
+    "id": "signal",
+    "terme": "Signal",
+    "anglais": "Signal",
+    "categorie": "Application — Messagerie",
+    "editeur": "Signal Messenger LLC / Signal Foundation",
+    "plateformes": [
+      "Android",
+      "iOS",
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "definition": "Application de messagerie axée sur la confidentialité permettant l’échange de messages, de médias et de fichiers ainsi que les appels audio et vidéo. Elle propose notamment des messages éphémères pouvant être supprimés automatiquement après expiration du délai configuré.",
+    "synonymes": [],
+    "termes_deconseilles": [],
+    "donnees_potentielles": [
+      "Messages individuels et de groupe",
+      "Photographies, vidéos, documents et messages vocaux",
+      "Informations de contacts et de groupes",
+      "Appels et éléments associés lorsqu’ils sont disponibles",
+      "Métadonnées locales liées aux conversations",
+      "Éléments présents sur les appareils associés selon le contexte",
+      "Éléments supprimés ou reconstruits lorsque l’extraction et l’outil d’analyse le permettent"
+    ],
+    "points_attention": [
+      "Les messages éphémères peuvent être supprimés automatiquement après expiration du délai configuré.",
+      "La quantité de données accessibles dépend fortement du support, de son état, du niveau d’accès obtenu et du type d’extraction.",
+      "L’absence d’un message dans les données extraites ne démontre pas nécessairement son absence historique.",
+      "Les données reconstruites automatiquement par un logiciel d’analyse doivent être distinguées des données directement présentes dans l’extraction."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Application identifiée",
+        "texte": "Nous identifions la présence de l’application Signal sur le support examiné."
+      },
+      {
+        "type": "Données associées",
+        "texte": "L’examen des données extraites met en évidence des éléments associés à l’application Signal."
+      },
+      {
+        "type": "Conversations identifiées",
+        "texte": "Nous identifions plusieurs échanges issus de l’application Signal susceptibles de présenter un intérêt au regard de la mission confiée."
+      },
+      {
+        "type": "Médias identifiés",
+        "texte": "Nous identifions plusieurs fichiers multimédias associés à l’application Signal."
+      },
+      {
+        "type": "Extraction partielle",
+        "texte": "Les données accessibles pour l’application Signal sont partielles et ne permettent pas d’affirmer que l’ensemble des échanges a été récupéré."
+      },
+      {
+        "type": "Données reconstruites",
+        "texte": "Certains éléments associés à l’application Signal ont été reconstruits automatiquement par le logiciel d’analyse et doivent être interprétés avec prudence."
+      },
+      {
+        "type": "Élément non disponible",
+        "texte": "Un emplacement correspondant à un élément associé à l’application Signal est identifié, sans que son contenu soit disponible dans les données extraites."
+      }
+    ],
+    "sources": [
+      "Assistance Signal — Configurer et gérer les messages éphémères",
+      "Assistance Signal — Messages éphémères et appareils associés"
     ]
   },
   {
@@ -761,6 +1029,73 @@
     ]
   },
   {
+    "id": "telegram",
+    "terme": "Telegram",
+    "anglais": "Telegram",
+    "categorie": "Application — Messagerie",
+    "editeur": "Telegram Messenger Inc.",
+    "plateformes": [
+      "Android",
+      "iOS",
+      "Web",
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "definition": "Application de messagerie permettant l’échange de messages, médias et fichiers, les conversations de groupe et les canaux. Telegram distingue notamment les conversations cloud des Secret Chats, ces derniers étant liés aux appareils d’origine et pouvant utiliser des messages à autodestruction.",
+    "synonymes": [],
+    "termes_deconseilles": [],
+    "donnees_potentielles": [
+      "Messages individuels et de groupe",
+      "Photographies, vidéos, documents et messages vocaux",
+      "Canaux et groupes",
+      "Informations de comptes et de contacts",
+      "Métadonnées et éléments de contexte liés aux conversations",
+      "Données de cache et fichiers locaux",
+      "Éléments supprimés ou reconstruits lorsque l’extraction et l’outil d’analyse le permettent"
+    ],
+    "points_attention": [
+      "Les Secret Chats sont distincts des conversations cloud et sont liés aux appareils sur lesquels ils ont été créés.",
+      "Des messages ou médias peuvent être configurés pour s’autodétruire.",
+      "La présence locale d’un fichier ou d’un cache Telegram ne suffit pas, à elle seule, à établir son auteur ou son destinataire.",
+      "Les données reconstruites automatiquement par un logiciel d’analyse doivent être distinguées des données directement présentes dans l’extraction."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Application identifiée",
+        "texte": "Nous identifions la présence de l’application Telegram sur le support examiné."
+      },
+      {
+        "type": "Données associées",
+        "texte": "L’examen des données extraites met en évidence des éléments associés à l’application Telegram."
+      },
+      {
+        "type": "Conversations identifiées",
+        "texte": "Nous identifions plusieurs échanges issus de l’application Telegram susceptibles de présenter un intérêt au regard de la mission confiée."
+      },
+      {
+        "type": "Médias identifiés",
+        "texte": "Nous identifions plusieurs fichiers multimédias associés à l’application Telegram."
+      },
+      {
+        "type": "Extraction partielle",
+        "texte": "Les données accessibles pour l’application Telegram sont partielles et ne permettent pas d’affirmer que l’ensemble des échanges a été récupéré."
+      },
+      {
+        "type": "Données reconstruites",
+        "texte": "Certains éléments associés à l’application Telegram ont été reconstruits automatiquement par le logiciel d’analyse et doivent être interprétés avec prudence."
+      },
+      {
+        "type": "Élément non disponible",
+        "texte": "Un emplacement correspondant à un élément associé à l’application Telegram est identifié, sans que son contenu soit disponible dans les données extraites."
+      }
+    ],
+    "sources": [
+      "Telegram FAQ — Secret Chats",
+      "Telegram Privacy Policy — Self-Destructing Messages"
+    ]
+  },
+  {
     "id": "valeur-hachage",
     "terme": "Valeur de hachage",
     "anglais": "Hash value",
@@ -776,6 +1111,72 @@
     "exemple_rapport": "Les valeurs de hachage calculées avant et après l’opération sont identiques, ce qui permet de vérifier l’intégrité de la copie.",
     "sources": [
       "CLARUS D3.2 — Hash/Hashing"
+    ]
+  },
+  {
+    "id": "whatsapp",
+    "terme": "WhatsApp",
+    "anglais": "WhatsApp",
+    "categorie": "Application — Messagerie",
+    "editeur": "WhatsApp LLC / Meta Platforms",
+    "plateformes": [
+      "Android",
+      "iOS",
+      "Web",
+      "Windows",
+      "macOS"
+    ],
+    "definition": "Application de messagerie permettant notamment l’échange de messages, de photographies, de vidéos, de documents, de messages vocaux ainsi que les appels audio et vidéo. Certaines conversations peuvent utiliser des messages éphémères selon les réglages appliqués.",
+    "synonymes": [],
+    "termes_deconseilles": [],
+    "donnees_potentielles": [
+      "Messages individuels et de groupe",
+      "Photographies, vidéos, documents et messages vocaux",
+      "Informations de contacts et de groupes",
+      "Appels et éléments associés lorsqu’ils sont disponibles",
+      "Métadonnées de messages et de pièces jointes",
+      "Sauvegardes ou bases de données locales selon le support et le type d’extraction",
+      "Éléments supprimés ou reconstruits lorsque l’extraction et l’outil d’analyse le permettent"
+    ],
+    "points_attention": [
+      "Une extraction peut être partielle et ne pas restituer l’ensemble des conversations ou médias historiques.",
+      "Les messages éphémères peuvent être configurés pour disparaître après un délai ; leur absence dans l’extraction ne permet pas à elle seule de conclure qu’ils n’ont jamais existé.",
+      "L’association d’un numéro, d’un nom affiché ou d’un compte à une personne doit être corroborée par d’autres éléments.",
+      "Les données reconstruites automatiquement par un logiciel d’analyse doivent être distinguées des données directement présentes dans l’extraction."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Application identifiée",
+        "texte": "Nous identifions la présence de l’application WhatsApp sur le support examiné."
+      },
+      {
+        "type": "Données associées",
+        "texte": "L’examen des données extraites met en évidence des éléments associés à l’application WhatsApp."
+      },
+      {
+        "type": "Conversations identifiées",
+        "texte": "Nous identifions plusieurs échanges issus de l’application WhatsApp susceptibles de présenter un intérêt au regard de la mission confiée."
+      },
+      {
+        "type": "Médias identifiés",
+        "texte": "Nous identifions plusieurs fichiers multimédias associés à l’application WhatsApp."
+      },
+      {
+        "type": "Extraction partielle",
+        "texte": "Les données accessibles pour l’application WhatsApp sont partielles et ne permettent pas d’affirmer que l’ensemble des échanges a été récupéré."
+      },
+      {
+        "type": "Données reconstruites",
+        "texte": "Certains éléments associés à l’application WhatsApp ont été reconstruits automatiquement par le logiciel d’analyse et doivent être interprétés avec prudence."
+      },
+      {
+        "type": "Élément non disponible",
+        "texte": "Un emplacement correspondant à un élément associé à l’application WhatsApp est identifié, sans que son contenu soit disponible dans les données extraites."
+      }
+    ],
+    "sources": [
+      "Centre d’aide WhatsApp — Messages éphémères",
+      "Centre d’aide WhatsApp — Utilisation de WhatsApp"
     ]
   }
 ]
