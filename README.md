@@ -1,5 +1,9 @@
 # Lexique forensique FR
 
+<p align="center">
+  <img src="docs/images/logo.png" alt="Logo Lexique forensique FR" width="140">
+</p>
+
 Lexique français collaboratif de **criminalistique numérique** accompagné d’une extension **LibreOffice Writer** destinée à la recherche terminologique, à la normalisation des rapports et à la francisation de libellés issus d’exports de logiciels forensiques.
 
 ## Objectifs
@@ -36,6 +40,20 @@ L’extension propose actuellement :
 - vérification et installation des mises à jour depuis GitHub.
 
 Les fenêtres principales de travail sont non modales lorsque cela est utile afin de pouvoir continuer à rédiger dans Writer.
+
+## Captures d’écran
+
+### Fenêtre principale du lexique
+
+<p align="center">
+  <img src="docs/images/capture-lexique.jpg" alt="Fenêtre principale du Lexique forensique FR" width="620">
+</p>
+
+### Scénarios de rédaction
+
+<p align="center">
+  <img src="docs/images/capture-scenarios.jpg" alt="Fenêtre des scénarios de rédaction" width="700">
+</p>
 
 ## Données officielles et données utilisateur
 
@@ -148,6 +166,11 @@ lexique-forensique-fr/
 ├── README.md
 ├── CONTRIBUTING.md
 ├── ROADMAP.md
+├── docs/
+│   └── images/
+│       ├── logo.png
+│       ├── capture-lexique.jpg
+│       └── capture-scenarios.jpg
 ├── data/
 │   ├── lexique.json
 │   ├── scenarios.json
@@ -156,6 +179,7 @@ lexique-forensique-fr/
 │   ├── Addons.xcu
 │   ├── META-INF/manifest.xml
 │   ├── Scripts/python/lexique_forensique.py
+│   ├── images/logo.png
 │   ├── data/
 │   │   ├── lexique.json
 │   │   ├── scenarios.json
