@@ -298,9 +298,6 @@ class DialogListener(
         selection.Min = item["start"]
         selection.Max = item["end"]
         self.detail_box.setSelection(selection)
-        self.status_label.getModel().Label = (
-            f"Formulation sélectionnée : {item['label']}"
-        )
 
     def _show_search_entry(self, entry):
         self.current = entry
@@ -507,7 +504,12 @@ class DialogListener(
 
         if source_name == "cmbCategory":
             value = (event.Source.getText() or "").strip()
-            self.current_category = None if value == "Toutes" else value
+            if value == "Toutes":
+                self.current_category = None
+            elif value in self.categories:
+                self.current_category = value
+            else:
+                return
             self.refresh()
         elif source_name == "lstAlerts":
             pos = self.alerts_box.SelectedItemPos
@@ -813,7 +815,6 @@ def open_lexicon(*args):
         "com.sun.star.awt.UnoControlComboBoxModel",
         50, 25, 104, 14,
         Dropdown=True,
-        ReadOnly=True,
         StringItemList=tuple(["Toutes"] + categories),
         Text="Toutes",
     )
