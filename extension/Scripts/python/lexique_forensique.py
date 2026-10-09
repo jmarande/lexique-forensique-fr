@@ -614,24 +614,32 @@ class ScenarioListener(
         self.current = scenario
         steps = _scenario_steps(scenario, self.data)
         parts = [
-            scenario.get("titre", "Scénario"),
+            scenario.get("titre", "Scénario").upper(),
             f"Catégorie : {scenario.get('categorie', '—')}",
             "",
             scenario.get("description", ""),
             "",
-            "PHRASES INSÉRÉES",
+            (
+                f"COMPOSITION — {len(steps)} PHRASE"
+                if len(steps) == 1
+                else f"COMPOSITION — {len(steps)} PHRASES"
+            ),
         ]
         if steps:
             for number, step in enumerate(steps, start=1):
                 parts.append("")
-                parts.append(f"{number}. {step['terme']} — {step['formulation']}")
+                parts.append(
+                    f"{number}. {step['terme']} / {step['formulation']}"
+                )
                 parts.append(step["texte"])
         else:
             parts.append("")
             parts.append("Aucune formulation valide dans ce scénario.")
         self.detail_box.Text = "\n".join(parts)
         self.status_label.getModel().Label = (
-            f"{len(steps)} phrase" if len(steps) == 1 else f"{len(steps)} phrases"
+            "Prêt à insérer"
+            if steps
+            else "Scénario incomplet"
         )
 
     def insert_current(self):
@@ -815,8 +823,8 @@ def open_scenarios(*args):
     )
     model.PositionX = 90
     model.PositionY = 55
-    model.Width = 330
-    model.Height = 270
+    model.Width = 390
+    model.Height = 292
     model.Title = "Scénarios de rédaction"
 
     def add(name, service, x, y, w, h, **props):
@@ -829,17 +837,17 @@ def open_scenarios(*args):
         model.insertByName(name, item)
 
     add("lblScenarios", "com.sun.star.awt.UnoControlFixedTextModel",
-        8, 8, 116, 10, Label="Scénarios")
+        8, 8, 142, 10, Label="Choisir un scénario")
     add("lstScenarios", "com.sun.star.awt.UnoControlListBoxModel",
-        8, 20, 116, 210)
+        8, 20, 142, 232)
     add("txtScenarioDetail", "com.sun.star.awt.UnoControlEditModel",
-        130, 20, 192, 210, MultiLine=True, ReadOnly=True, VScroll=True)
+        158, 20, 224, 232, MultiLine=True, ReadOnly=True, VScroll=True)
     add("lblScenarioStatus", "com.sun.star.awt.UnoControlFixedTextModel",
-        130, 234, 90, 10, Label="")
+        158, 258, 110, 10, Label="")
     add("btnScenarioInsert", "com.sun.star.awt.UnoControlButtonModel",
-        224, 232, 98, 16, Label="Insérer le scénario")
+        274, 256, 108, 16, Label="Insérer le scénario")
     add("btnScenarioClose", "com.sun.star.awt.UnoControlButtonModel",
-        270, 252, 52, 14, Label="Fermer")
+        330, 274, 52, 14, Label="Fermer")
 
     dialog = smgr.createInstanceWithContext(
         "com.sun.star.awt.UnoControlDialog", ctx
