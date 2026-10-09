@@ -1382,6 +1382,7 @@ class TermEditorListener(
         definition_box,
         formulations_box,
         formulation_text_box,
+        add_button,
         status_label,
     ):
         self.dialog = dialog
@@ -1394,6 +1395,7 @@ class TermEditorListener(
         self.definition_box = definition_box
         self.formulations_box = formulations_box
         self.formulation_text_box = formulation_text_box
+        self.add_button = add_button
         self.status_label = status_label
         self._closing = False
         self.formulations = [
@@ -1423,6 +1425,7 @@ class TermEditorListener(
             self._load_formulation(select_index)
         else:
             self.formulation_text_box.Text = ""
+            self.add_button.getModel().Label = "Ajouter"
         self.status_label.getModel().Label = (
             f"{len(self.formulations)} formulation"
             if len(self.formulations) == 1
@@ -1438,6 +1441,7 @@ class TermEditorListener(
             return
         item = self.formulations[index]
         self.formulation_text_box.Text = item.get("texte", "")
+        self.add_button.getModel().Label = "Mettre à jour"
 
     def _commit_current_formulation(self):
         index = self._selected_formulation_index()
@@ -1449,22 +1453,29 @@ class TermEditorListener(
 
     def add_formulation(self):
         current_text = (self.formulation_text_box.Text or "").strip()
-        index = self._selected_formulation_index()
-        if index >= 0:
-            self._commit_current_formulation()
-        elif current_text:
-            self.formulations.append({
-                "type": "Formulation",
-                "texte": current_text,
-            })
-            self._populate_formulations(len(self.formulations) - 1)
-            self.formulation_text_box.Text = ""
+        if not current_text:
+            self.status_label.getModel().Label = "Saisissez une formulation"
             return
+
+        index = self._selected_formulation_index()
+        if index >= 0 and self.add_button.getModel().Label == "Mettre à jour":
+            label = self.formulations[index].get("type") or "Formulation"
+            self.formulations[index] = {
+                "type": label,
+                "texte": current_text,
+            }
+            self._populate_formulations(index)
+            self.status_label.getModel().Label = "Formulation mise à jour"
+            return
+
         self.formulations.append({
             "type": "Formulation",
-            "texte": "",
+            "texte": current_text,
         })
         self._populate_formulations(len(self.formulations) - 1)
+        self.formulation_text_box.Text = ""
+        self.add_button.getModel().Label = "Ajouter"
+        self.status_label.getModel().Label = "Formulation ajoutée"
 
     def remove_formulation(self):
         index = self._selected_formulation_index()
@@ -1472,6 +1483,8 @@ class TermEditorListener(
             return
         self.formulations.pop(index)
         self._populate_formulations(max(index - 1, 0))
+        if not self.formulations:
+            self.add_button.getModel().Label = "Ajouter"
 
     def move_formulation(self, delta):
         index = self._selected_formulation_index()
@@ -1936,26 +1949,26 @@ def open_term_editor(parent_listener, entry):
         8, 80, 414, 60, MultiLine=True, VScroll=True,
         Text=entry.get("definition", ""))
 
-    add("lblFormText", "com.sun.star.awt.UnoControlFixedTextModel",
-        8, 148, 150, 10, Label="Formulation pour rapport :")
-    add("txtFormText", "com.sun.star.awt.UnoControlEditModel",
-        8, 160, 414, 62, MultiLine=True, VScroll=True)
-    add("btnTermFormAdd", "com.sun.star.awt.UnoControlButtonModel",
-        300, 226, 122, 16, Label="Ajouter la formulation")
-
     add("lblFormulations", "com.sun.star.awt.UnoControlFixedTextModel",
-        8, 248, 120, 10, Label="Formulations ajoutées")
+        8, 148, 150, 10, Label="Formulations pour rapport")
     add("lstTermFormulations", "com.sun.star.awt.UnoControlListBoxModel",
-        8, 260, 414, 64)
+        8, 160, 414, 72)
     add("btnTermFormUp", "com.sun.star.awt.UnoControlButtonModel",
-        8, 328, 34, 16, Label="↑")
+        8, 236, 46, 16, Label="Monter")
     add("btnTermFormDown", "com.sun.star.awt.UnoControlButtonModel",
-        46, 328, 34, 16, Label="↓")
+        58, 236, 56, 16, Label="Descendre")
     add("btnTermFormRemove", "com.sun.star.awt.UnoControlButtonModel",
-        84, 328, 50, 16, Label="Retirer")
+        118, 236, 56, 16, Label="Supprimer")
+
+    add("lblFormText", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 262, 150, 10, Label="Créer une formulation")
+    add("txtFormText", "com.sun.star.awt.UnoControlEditModel",
+        8, 274, 414, 50, MultiLine=True, VScroll=True)
+    add("btnTermFormAdd", "com.sun.star.awt.UnoControlButtonModel",
+        300, 328, 122, 16, Label="Ajouter")
 
     add("lblTermEditStatus", "com.sun.star.awt.UnoControlFixedTextModel",
-        144, 331, 140, 10, Label="")
+        8, 350, 180, 10, Label="")
     add("btnTermEditCancel", "com.sun.star.awt.UnoControlButtonModel",
         300, 346, 54, 18, Label="Annuler")
     add("btnTermEditSave", "com.sun.star.awt.UnoControlButtonModel",
@@ -1986,6 +1999,7 @@ def open_term_editor(parent_listener, entry):
         dialog.getControl("txtTermDefinition"),
         dialog.getControl("lstTermFormulations"),
         dialog.getControl("txtFormText"),
+        dialog.getControl("btnTermFormAdd"),
         dialog.getControl("lblTermEditStatus"),
     )
 
