@@ -87,7 +87,43 @@ def _load_data():
 def _load_scenarios():
     path = os.path.join(_extension_root(), "data", "scenarios.json")
     with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
+        scenarios = json.load(f)
+    for item in scenarios:
+        item["_source"] = "builtin"
+    return scenarios
+
+
+def _user_scenarios_path():
+    base = os.path.join(os.path.expanduser("~"), ".lexique-forensique-fr")
+    os.makedirs(base, exist_ok=True)
+    return os.path.join(base, "scenarios-utilisateur.json")
+
+
+def _load_user_scenarios():
+    path = _user_scenarios_path()
+    if not os.path.exists(path):
+        return []
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            scenarios = json.load(f)
+    except Exception:
+        return []
+    if not isinstance(scenarios, list):
+        return []
+    for item in scenarios:
+        item["_source"] = "user"
+    return scenarios
+
+
+def _save_user_scenarios(scenarios):
+    path = _user_scenarios_path()
+    payload = []
+    for item in scenarios:
+        clean = {k: v for k, v in item.items() if not k.startswith("_")}
+        payload.append(clean)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
+        f.write("\n")
 
 
 def _scenario_steps(scenario, data):
@@ -587,25 +623,44 @@ class ScenarioListener(
     XItemListener,
     XTopWindowListener,
 ):
-    def __init__(self, dialog, scenarios_box, detail_box, status_label, data, scenarios):
+    def __init__(
+        self,
+        dialog,
+        scenarios_box,
+        detail_box,
+        status_label,
+        data,
+        builtin_scenarios,
+        user_scenarios,
+    ):
         self.dialog = dialog
         self.scenarios_box = scenarios_box
         self.detail_box = detail_box
         self.status_label = status_label
         self.data = data
-        self.scenarios = scenarios
+        self.builtin_scenarios = builtin_scenarios
+        self.user_scenarios = user_scenarios
+        self.scenarios = self.builtin_scenarios + self.user_scenarios
         self.current = None
         self._populate()
 
-    def _populate(self):
+    def _populate(self, select_index=0):
+        if self.scenarios_box.ItemCount:
+            self.scenarios_box.removeItems(0, self.scenarios_box.ItemCount)
+        self.scenarios = self.builtin_scenarios + self.user_scenarios
         for scenario in self.scenarios:
+            prefix = "★ " if scenario.get("_source") == "user" else ""
             self.scenarios_box.addItem(
-                scenario.get("titre", "Scénario"),
+                prefix + scenario.get("titre", "Scénario"),
                 self.scenarios_box.ItemCount,
             )
         if self.scenarios:
-            self.scenarios_box.selectItemPos(0, True)
-            self._show(0)
+            select_index = min(max(select_index, 0), len(self.scenarios) - 1)
+            self.scenarios_box.selectItemPos(select_index, True)
+            self._show(select_index)
+        else:
+            self.current = None
+            self.detail_box.Text = "Aucun scénario disponible."
 
     def _show(self, index):
         if not (0 <= index < len(self.scenarios)):
@@ -613,9 +668,15 @@ class ScenarioListener(
         scenario = self.scenarios[index]
         self.current = scenario
         steps = _scenario_steps(scenario, self.data)
+        origin = (
+            "Scénario utilisateur"
+            if scenario.get("_source") == "user"
+            else "Scénario fourni avec l’extension"
+        )
         parts = [
             scenario.get("titre", "Scénario").upper(),
             f"Catégorie : {scenario.get('categorie', '—')}",
+            f"Origine : {origin}",
             "",
             scenario.get("description", ""),
             "",
@@ -657,9 +718,74 @@ class ScenarioListener(
         view.getText().insertString(view, text_to_insert, False)
         self.status_label.getModel().Label = "Scénario inséré dans le document"
 
+    def _current_index(self):
+        pos = self.scenarios_box.SelectedItemPos
+        return pos if 0 <= pos < len(self.scenarios) else -1
+
+    def duplicate_current(self):
+        index = self._current_index()
+        if index < 0:
+            return
+        source = self.scenarios[index]
+        duplicate = {
+            "id": "user-" + str(len(self.user_scenarios) + 1),
+            "titre": source.get("titre", "Scénario") + " — copie",
+            "categorie": source.get("categorie", "Personnalisé"),
+            "description": source.get("description", ""),
+            "etapes": list(source.get("etapes", [])),
+            "_source": "user",
+        }
+        self.user_scenarios.append(duplicate)
+        _save_user_scenarios(self.user_scenarios)
+        self._populate(len(self.builtin_scenarios) + len(self.user_scenarios) - 1)
+        self.status_label.getModel().Label = "Scénario dupliqué"
+
+    def new_from_current(self):
+        index = self._current_index()
+        if index >= 0:
+            source = self.scenarios[index]
+            steps = list(source.get("etapes", []))
+            category = source.get("categorie", "Personnalisé")
+        else:
+            steps = []
+            category = "Personnalisé"
+        item = {
+            "id": "user-" + str(len(self.user_scenarios) + 1),
+            "titre": "Nouveau scénario",
+            "categorie": category,
+            "description": "Scénario utilisateur à personnaliser.",
+            "etapes": steps,
+            "_source": "user",
+        }
+        self.user_scenarios.append(item)
+        _save_user_scenarios(self.user_scenarios)
+        self._populate(len(self.builtin_scenarios) + len(self.user_scenarios) - 1)
+        self.status_label.getModel().Label = "Nouveau scénario créé"
+
+    def delete_current(self):
+        index = self._current_index()
+        if index < len(self.builtin_scenarios):
+            self.status_label.getModel().Label = (
+                "Les scénarios fournis ne peuvent pas être supprimés"
+            )
+            return
+        user_index = index - len(self.builtin_scenarios)
+        if not (0 <= user_index < len(self.user_scenarios)):
+            return
+        self.user_scenarios.pop(user_index)
+        _save_user_scenarios(self.user_scenarios)
+        self._populate(max(index - 1, 0))
+        self.status_label.getModel().Label = "Scénario utilisateur supprimé"
+
     def actionPerformed(self, event):
         if event.ActionCommand == "insert":
             self.insert_current()
+        elif event.ActionCommand == "new":
+            self.new_from_current()
+        elif event.ActionCommand == "duplicate":
+            self.duplicate_current()
+        elif event.ActionCommand == "delete":
+            self.delete_current()
         elif event.ActionCommand == "close":
             self._close_dialog()
 
@@ -843,7 +969,13 @@ def open_scenarios(*args):
     add("txtScenarioDetail", "com.sun.star.awt.UnoControlEditModel",
         158, 20, 224, 232, MultiLine=True, ReadOnly=True, VScroll=True)
     add("lblScenarioStatus", "com.sun.star.awt.UnoControlFixedTextModel",
-        158, 258, 110, 10, Label="")
+        158, 258, 96, 10, Label="")
+    add("btnScenarioNew", "com.sun.star.awt.UnoControlButtonModel",
+        8, 256, 44, 16, Label="Nouveau")
+    add("btnScenarioDuplicate", "com.sun.star.awt.UnoControlButtonModel",
+        56, 256, 50, 16, Label="Dupliquer")
+    add("btnScenarioDelete", "com.sun.star.awt.UnoControlButtonModel",
+        110, 256, 40, 16, Label="Supprimer")
     add("btnScenarioInsert", "com.sun.star.awt.UnoControlButtonModel",
         274, 256, 108, 16, Label="Insérer le scénario")
     add("btnScenarioClose", "com.sun.star.awt.UnoControlButtonModel",
@@ -862,8 +994,12 @@ def open_scenarios(*args):
         dialog.getControl("lblScenarioStatus"),
         _load_data(),
         _load_scenarios(),
+        _load_user_scenarios(),
     )
     for control_name, command in [
+        ("btnScenarioNew", "new"),
+        ("btnScenarioDuplicate", "duplicate"),
+        ("btnScenarioDelete", "delete"),
         ("btnScenarioInsert", "insert"),
         ("btnScenarioClose", "close"),
     ]:
