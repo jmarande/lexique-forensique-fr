@@ -1383,6 +1383,7 @@ class TermEditorListener(
         formulations_box,
         formulation_text_box,
         add_button,
+        update_button,
         status_label,
     ):
         self.dialog = dialog
@@ -1396,6 +1397,7 @@ class TermEditorListener(
         self.formulations_box = formulations_box
         self.formulation_text_box = formulation_text_box
         self.add_button = add_button
+        self.update_button = update_button
         self.status_label = status_label
         self._closing = False
         self.formulations = [
@@ -1425,7 +1427,7 @@ class TermEditorListener(
             self._load_formulation(select_index)
         else:
             self.formulation_text_box.Text = ""
-            self.add_button.getModel().Label = "Ajouter"
+            self.update_button.getModel().Enabled = False
         self.status_label.getModel().Label = (
             f"{len(self.formulations)} formulation"
             if len(self.formulations) == 1
@@ -1439,7 +1441,9 @@ class TermEditorListener(
     def _load_formulation(self, index):
         if not (0 <= index < len(self.formulations)):
             return
-        self.add_button.getModel().Label = "Ajouter"
+        item = self.formulations[index]
+        self.formulation_text_box.Text = item.get("texte", "")
+        self.update_button.getModel().Enabled = True
 
     def _commit_current_formulation(self):
         index = self._selected_formulation_index()
@@ -1461,8 +1465,33 @@ class TermEditorListener(
         })
         self._populate_formulations(len(self.formulations) - 1)
         self.formulation_text_box.Text = ""
-        self.add_button.getModel().Label = "Ajouter"
+        self.update_button.getModel().Enabled = False
+        try:
+            self.formulations_box.selectItemPos(-1, False)
+        except Exception:
+            pass
         self.status_label.getModel().Label = "Formulation ajoutée"
+
+    def update_formulation(self):
+        index = self._selected_formulation_index()
+        if index < 0:
+            self.status_label.getModel().Label = (
+                "Sélectionnez une formulation à mettre à jour"
+            )
+            return
+
+        current_text = (self.formulation_text_box.Text or "").strip()
+        if not current_text:
+            self.status_label.getModel().Label = "Saisissez une formulation"
+            return
+
+        label = self.formulations[index].get("type") or "Formulation"
+        self.formulations[index] = {
+            "type": label,
+            "texte": current_text,
+        }
+        self._populate_formulations(index)
+        self.status_label.getModel().Label = "Formulation mise à jour"
 
     def remove_formulation(self):
         index = self._selected_formulation_index()
@@ -1529,6 +1558,8 @@ class TermEditorListener(
         cmd = event.ActionCommand
         if cmd == "add":
             self.add_formulation()
+        elif cmd == "update":
+            self.update_formulation()
         elif cmd == "remove":
             self.remove_formulation()
         elif cmd == "up":
@@ -1948,8 +1979,10 @@ def open_term_editor(parent_listener, entry):
         8, 262, 150, 10, Label="Créer une formulation")
     add("txtFormText", "com.sun.star.awt.UnoControlEditModel",
         8, 274, 414, 50, MultiLine=True, VScroll=True)
+    add("btnTermFormUpdate", "com.sun.star.awt.UnoControlButtonModel",
+        238, 328, 84, 16, Label="Mettre à jour", Enabled=False)
     add("btnTermFormAdd", "com.sun.star.awt.UnoControlButtonModel",
-        300, 328, 122, 16, Label="Ajouter")
+        328, 328, 94, 16, Label="Ajouter")
 
     add("lblTermEditStatus", "com.sun.star.awt.UnoControlFixedTextModel",
         8, 350, 180, 10, Label="")
@@ -1984,11 +2017,13 @@ def open_term_editor(parent_listener, entry):
         dialog.getControl("lstTermFormulations"),
         dialog.getControl("txtFormText"),
         dialog.getControl("btnTermFormAdd"),
+        dialog.getControl("btnTermFormUpdate"),
         dialog.getControl("lblTermEditStatus"),
     )
 
     for control_name, command in [
         ("btnTermFormAdd", "add"),
+        ("btnTermFormUpdate", "update"),
         ("btnTermFormRemove", "remove"),
         ("btnTermFormUp", "up"),
         ("btnTermFormDown", "down"),
