@@ -876,6 +876,7 @@ class ScenarioEditorListener(
         self.formulation_box = formulation_box
         self.status_label = status_label
         self.data = parent_listener.data
+        self._closing = False
         self.entries = sorted(
             [e for e in self.data if _report_formulations(e)],
             key=lambda e: _normalize(e.get("terme", "")),
@@ -1026,7 +1027,14 @@ class ScenarioEditorListener(
                 self._populate_formulations(entry_index)
 
     def _close_dialog(self):
+        if self._closing:
+            return
+        self._closing = True
         try:
+            try:
+                self.dialog.removeTopWindowListener(self)
+            except Exception:
+                pass
             self.dialog.setVisible(False)
             self.dialog.dispose()
         finally:
