@@ -1,0 +1,106 @@
+[
+  {
+    "id": "telephone-eteint-code-inconnu-extraction-partielle",
+    "titre": "Téléphone éteint — code inconnu — extraction partielle",
+    "categorie": "Téléphonie mobile",
+    "description": "Prise en charge d’un téléphone éteint dont le code de déverrouillage n’est pas connu et pour lequel seule une extraction partielle est obtenue.",
+    "etapes": [
+      {
+        "terme": "etat-support",
+        "formulation": "Support éteint"
+      },
+      {
+        "terme": "code-deverrouillage",
+        "formulation": "Code inconnu"
+      },
+      {
+        "terme": "extraction",
+        "formulation": "Extraction partielle"
+      },
+      {
+        "terme": "remise-resultats",
+        "formulation": "Remise dans un format exploitable"
+      }
+    ]
+  },
+  {
+    "id": "support-endommage-reparation-extraction",
+    "titre": "Support endommagé — réparation — extraction",
+    "categorie": "Prise en charge",
+    "description": "Support présentant des dommages physiques nécessitant une réparation sommaire avant les opérations d’extraction.",
+    "etapes": [
+      {
+        "terme": "etat-support",
+        "formulation": "Support endommagé"
+      },
+      {
+        "terme": "reparation-support",
+        "formulation": "Réparation sommaire"
+      },
+      {
+        "terme": "extraction",
+        "formulation": "Extraction réalisée"
+      },
+      {
+        "terme": "remise-resultats",
+        "formulation": "Remise dans un format exploitable"
+      }
+    ]
+  },
+  {
+    "id": "sim-pin-inconnu",
+    "titre": "Carte SIM — code PIN inconnu",
+    "categorie": "Téléphonie mobile",
+    "description": "Examen d’une carte SIM dont le code PIN n’est pas connu et pour laquelle seules les données accessibles peuvent être extraites.",
+    "etapes": [
+      {
+        "terme": "carte-sim",
+        "formulation": "Code PIN inconnu"
+      },
+      {
+        "terme": "remise-resultats",
+        "formulation": "Remise dans un format exploitable"
+      }
+    ]
+  },
+  {
+    "id": "extraction-decodage-remise",
+    "titre": "Extraction — décodage — remise des résultats",
+    "categorie": "Examen forensique",
+    "description": "Chaîne générique d’extraction, de décodage et de remise des résultats.",
+    "etapes": [
+      {
+        "terme": "extraction",
+        "formulation": "Extraction réalisée"
+      },
+      {
+        "terme": "decodage-donnees",
+        "formulation": "Décodage réalisé"
+      },
+      {
+        "terme": "remise-resultats",
+        "formulation": "Extraction et décodage"
+      }
+    ]
+  },
+  {
+    "id": "filesystem-partiel",
+    "titre": "Extraction du système de fichiers — partielle",
+    "categorie": "Examen forensique",
+    "description": "Obtention partielle du système de fichiers d’un support.",
+    "etapes": [
+      {
+        "terme": "extraction-systeme-fichiers",
+        "formulation": "Extraction partielle"
+      },
+      {
+        "terme": "analyse-donnees",
+        "formulation": "Éléments susceptibles d’éclairer l’affaire"
+      },
+      {
+        "terme": "remise-resultats",
+        "formulation": "Remise dans un format exploitable"
+      }
+    ]
+  }
+]
