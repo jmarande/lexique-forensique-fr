@@ -13,6 +13,8 @@ import unohelper
 from com.sun.star.awt import XActionListener, XItemListener, XMouseListener, XTopWindowListener
 
 _OPEN_LEXICON_WINDOWS = []
+_OPEN_VERIFY_WINDOWS = []
+_OPEN_SCENARIO_WINDOWS = []
 _OPEN_ABOUT_WINDOWS = []
 
 CURRENT_VERSION = "0.7.16"
@@ -80,6 +82,34 @@ def _load_data():
     path = os.path.join(_extension_root(), "data", "lexique.json")
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
+
+
+def _load_scenarios():
+    path = os.path.join(_extension_root(), "data", "scenarios.json")
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def _scenario_steps(scenario, data):
+    entries = {entry.get("id"): entry for entry in data}
+    resolved = []
+    for step in scenario.get("etapes", []):
+        entry = entries.get(step.get("terme"))
+        if not entry:
+            continue
+        wanted = (step.get("formulation") or "").strip()
+        selected = None
+        for label, text in _report_formulations(entry):
+            if label == wanted:
+                selected = text
+                break
+        if selected:
+            resolved.append({
+                "terme": entry.get("terme", step.get("terme", "")),
+                "formulation": wanted,
+                "texte": selected,
+            })
+    return resolved
 
 
 def _bad_terms(entry):
@@ -230,22 +260,18 @@ class DialogListener(
         dialog,
         search_box,
         results_box,
-        alerts_box,
         detail_box,
         status_label,
         insert_button,
-        replace_button,
         category_box,
         data,
     ):
         self.dialog = dialog
         self.search_box = search_box
         self.results_box = results_box
-        self.alerts_box = alerts_box
         self.detail_box = detail_box
         self.status_label = status_label
         self.insert_button = insert_button
-        self.replace_button = replace_button
         self.category_box = category_box
         self.data = data
         self.categories = sorted(
@@ -255,9 +281,6 @@ class DialogListener(
         self.current_category = None
         self.current = None
         self.matches = []
-        self.scan_alerts = []
-        self.current_alert = None
-        self.current_found_range = None
         self.formulation_ranges = []
         self.selected_formulation_index = 0
         self.refresh()
@@ -265,23 +288,15 @@ class DialogListener(
     def _set_insert_enabled(self, enabled):
         self.insert_button.getModel().Enabled = enabled
 
-    def _set_replace_enabled(self, enabled):
-        self.replace_button.getModel().Enabled = enabled
-
     def _clear_results(self):
         if self.results_box.ItemCount:
             self.results_box.removeItems(0, self.results_box.ItemCount)
 
-    def _clear_alerts(self):
-        if self.alerts_box.ItemCount:
-            self.alerts_box.removeItems(0, self.alerts_box.ItemCount)
-
-    def _display_entry(self, entry, warning=None):
-        text, ranges = _format_entry(entry, warning=warning)
+    def _display_entry(self, entry):
+        text, ranges = _format_entry(entry)
         self.detail_box.Text = text
         self.formulation_ranges = ranges
         self.selected_formulation_index = 0
-
         if ranges:
             self._select_formulation(0)
             self._set_insert_enabled(True)
@@ -291,7 +306,6 @@ class DialogListener(
     def _select_formulation(self, index):
         if not (0 <= index < len(self.formulation_ranges)):
             return
-
         self.selected_formulation_index = index
         item = self.formulation_ranges[index]
         selection = uno.createUnoStruct("com.sun.star.awt.Selection")
@@ -299,59 +313,9 @@ class DialogListener(
         selection.Max = item["end"]
         self.detail_box.setSelection(selection)
 
-    def _show_search_entry(self, entry):
+    def _show_entry(self, entry):
         self.current = entry
-        self.current_alert = None
-        self.current_found_range = None
         self._display_entry(entry)
-        self._set_replace_enabled(False)
-
-    def _goto_alert_occurrence(self, alert):
-        doc = _desktop().getCurrentComponent()
-        if not doc or not doc.supportsService("com.sun.star.text.TextDocument"):
-            self.current_found_range = None
-            self._set_replace_enabled(False)
-            return
-
-        descriptor = doc.createSearchDescriptor()
-        descriptor.SearchString = alert["found"]
-        descriptor.SearchCaseSensitive = False
-        descriptor.SearchWords = True
-
-        found = doc.findFirst(descriptor)
-        self.current_found_range = found
-
-        if found:
-            doc.getCurrentController().select(found)
-            self._set_replace_enabled(True)
-            self.status_label.getModel().Label = (
-                f"Occurrence sélectionnée : {alert['found']} → "
-                f"{alert['entry']['terme']}"
-            )
-        else:
-            self._set_replace_enabled(False)
-            self.status_label.getModel().Label = (
-                "Occurrence introuvable dans le document actif"
-            )
-
-    def _show_scan_alert(self, alert):
-        self.current = alert["entry"]
-        self.current_alert = alert
-        self._display_entry(self.current, warning=alert)
-        self._goto_alert_occurrence(alert)
-
-    def _replace_current_occurrence(self):
-        if not self.current_alert or not self.current_found_range:
-            self.status_label.getModel().Label = "Aucune occurrence sélectionnée"
-            return
-
-        replacement = self.current_alert["entry"]["terme"]
-        self.current_found_range.String = replacement
-        self.current_found_range = None
-        self.status_label.getModel().Label = (
-            f"Occurrence remplacée par : {replacement}"
-        )
-        self.scan_document()
 
     def refresh(self):
         self.matches = _find_entries(
@@ -360,7 +324,6 @@ class DialogListener(
             category=self.current_category,
         )
         self._clear_results()
-
         for entry in self.matches:
             self.results_box.addItem(entry["terme"], self.results_box.ItemCount)
 
@@ -368,88 +331,44 @@ class DialogListener(
         self.status_label.getModel().Label = (
             f"{count} résultat" if count == 1 else f"{count} résultats"
         )
-
         if self.matches:
             self.results_box.selectItemPos(0, True)
-            self._show_search_entry(self.matches[0])
+            self._show_entry(self.matches[0])
         else:
             self.current = None
             self.formulation_ranges = []
             self.detail_box.Text = "Aucun terme trouvé."
             self._set_insert_enabled(False)
 
-    def scan_document(self):
-        doc = _desktop().getCurrentComponent()
-        if not doc or not doc.supportsService("com.sun.star.text.TextDocument"):
-            self.status_label.getModel().Label = "Aucun document Writer actif"
-            return
-
-        self.current_alert = None
-        self.current_found_range = None
-        self._set_replace_enabled(False)
-        self.scan_alerts = _scan_document_text(doc.Text.String, self.data)
-        self._clear_alerts()
-
-        for alert in self.scan_alerts:
-            label = (
-                f"{alert['found']} → {alert['entry']['terme']} "
-                f"({alert['count']})"
-            )
-            self.alerts_box.addItem(label, self.alerts_box.ItemCount)
-
-        total = sum(alert["count"] for alert in self.scan_alerts)
-
-        if self.scan_alerts:
-            self.status_label.getModel().Label = (
-                f"{total} occurrence"
-                if total == 1
-                else f"{total} occurrences terminologiques"
-            )
-            self.alerts_box.selectItemPos(0, True)
-            self._show_scan_alert(self.scan_alerts[0])
-        else:
-            self.current_alert = None
-            self.current_found_range = None
-            self.status_label.getModel().Label = "Aucune alerte terminologique"
-            self._set_replace_enabled(False)
-
     def actionPerformed(self, event):
         cmd = event.ActionCommand
-
         if cmd == "search":
             self.refresh()
-
-        elif cmd == "scan":
-            self.scan_document()
-
-        elif cmd == "replace":
-            self._replace_current_occurrence()
-
+        elif cmd == "verify":
+            open_verification()
+        elif cmd == "scenarios":
+            open_scenarios()
         elif cmd == "insert" and self.current:
             if self.formulation_ranges:
                 item = self.formulation_ranges[self.selected_formulation_index]
                 text_to_insert = item["text"]
             else:
                 text_to_insert = self.current["terme"]
-
             doc = _desktop().getCurrentComponent()
             if doc and doc.supportsService("com.sun.star.text.TextDocument"):
                 view = doc.getCurrentController().getViewCursor()
                 view.getText().insertString(view, text_to_insert, False)
                 self.status_label.getModel().Label = (
-                    "Formulation sélectionnée insérée dans le document"
+                    "Formulation insérée dans le document"
                 )
-
         elif cmd == "close":
             self._close_dialog()
 
     def mouseReleased(self, event):
         if not self.formulation_ranges:
             return
-
         selection = self.detail_box.getSelection()
         position = selection.Min
-
         for index, item in enumerate(self.formulation_ranges):
             if item["start"] <= position <= item["end"]:
                 self._select_formulation(index)
@@ -463,6 +382,26 @@ class DialogListener(
 
     def mouseExited(self, event):
         pass
+
+    def itemStateChanged(self, event):
+        source_name = ""
+        try:
+            source_name = event.Source.getModel().Name
+        except Exception:
+            pass
+        if source_name == "cmbCategory":
+            value = (event.Source.getText() or "").strip()
+            if value == "Toutes":
+                self.current_category = None
+            elif value in self.categories:
+                self.current_category = value
+            else:
+                return
+            self.refresh()
+        else:
+            pos = self.results_box.SelectedItemPos
+            if 0 <= pos < len(self.matches):
+                self._show_entry(self.matches[pos])
 
     def _close_dialog(self):
         try:
@@ -495,30 +434,262 @@ class DialogListener(
     def windowDeactivated(self, event):
         pass
 
-    def itemStateChanged(self, event):
-        source_name = ""
-        try:
-            source_name = event.Source.getModel().Name
-        except Exception:
-            pass
+    def disposing(self, event):
+        pass
 
-        if source_name == "cmbCategory":
-            value = (event.Source.getText() or "").strip()
-            if value == "Toutes":
-                self.current_category = None
-            elif value in self.categories:
-                self.current_category = value
-            else:
-                return
-            self.refresh()
-        elif source_name == "lstAlerts":
-            pos = self.alerts_box.SelectedItemPos
-            if 0 <= pos < len(self.scan_alerts):
-                self._show_scan_alert(self.scan_alerts[pos])
+
+class VerificationListener(
+    unohelper.Base,
+    XActionListener,
+    XItemListener,
+    XTopWindowListener,
+):
+    def __init__(self, dialog, alerts_box, detail_box, status_label, replace_button, data):
+        self.dialog = dialog
+        self.alerts_box = alerts_box
+        self.detail_box = detail_box
+        self.status_label = status_label
+        self.replace_button = replace_button
+        self.data = data
+        self.alerts = []
+        self.current_alert = None
+        self.current_found_range = None
+        self.scan()
+
+    def _clear_alerts(self):
+        if self.alerts_box.ItemCount:
+            self.alerts_box.removeItems(0, self.alerts_box.ItemCount)
+
+    def _set_replace_enabled(self, enabled):
+        self.replace_button.getModel().Enabled = enabled
+
+    def _goto_occurrence(self, alert):
+        doc = _desktop().getCurrentComponent()
+        if not doc or not doc.supportsService("com.sun.star.text.TextDocument"):
+            self.current_found_range = None
+            self._set_replace_enabled(False)
+            return
+
+        descriptor = doc.createSearchDescriptor()
+        descriptor.SearchString = alert["found"]
+        descriptor.SearchCaseSensitive = False
+        descriptor.SearchWords = True
+        found = doc.findFirst(descriptor)
+        self.current_found_range = found
+
+        if found:
+            doc.getCurrentController().select(found)
+            self._set_replace_enabled(True)
+            self.status_label.getModel().Label = (
+                f"Occurrence sélectionnée : {alert['found']}"
+            )
         else:
-            pos = self.results_box.SelectedItemPos
-            if 0 <= pos < len(self.matches):
-                self._show_search_entry(self.matches[pos])
+            self._set_replace_enabled(False)
+            self.status_label.getModel().Label = "Occurrence introuvable"
+
+    def _show_alert(self, alert):
+        self.current_alert = alert
+        text, _ = _format_entry(alert["entry"], warning=alert)
+        self.detail_box.Text = text
+        self._goto_occurrence(alert)
+
+    def scan(self):
+        doc = _desktop().getCurrentComponent()
+        if not doc or not doc.supportsService("com.sun.star.text.TextDocument"):
+            self.status_label.getModel().Label = "Aucun document Writer actif"
+            return
+
+        self.current_alert = None
+        self.current_found_range = None
+        self._set_replace_enabled(False)
+        self.alerts = _scan_document_text(doc.Text.String, self.data)
+        self._clear_alerts()
+
+        for alert in self.alerts:
+            self.alerts_box.addItem(
+                f"{alert['found']} → {alert['entry']['terme']} ({alert['count']})",
+                self.alerts_box.ItemCount,
+            )
+
+        total = sum(alert["count"] for alert in self.alerts)
+        if self.alerts:
+            self.status_label.getModel().Label = (
+                f"{total} occurrence" if total == 1
+                else f"{total} occurrences terminologiques"
+            )
+            self.alerts_box.selectItemPos(0, True)
+            self._show_alert(self.alerts[0])
+        else:
+            self.detail_box.Text = (
+                "Aucune alerte terminologique détectée dans le document actif."
+            )
+            self.status_label.getModel().Label = "Aucune alerte terminologique"
+
+    def replace_current(self):
+        if not self.current_alert or not self.current_found_range:
+            return
+        replacement = self.current_alert["entry"]["terme"]
+        self.current_found_range.String = replacement
+        self.current_found_range = None
+        self.scan()
+
+    def actionPerformed(self, event):
+        if event.ActionCommand == "rescan":
+            self.scan()
+        elif event.ActionCommand == "replace":
+            self.replace_current()
+        elif event.ActionCommand == "close":
+            self._close_dialog()
+
+    def itemStateChanged(self, event):
+        pos = self.alerts_box.SelectedItemPos
+        if 0 <= pos < len(self.alerts):
+            self._show_alert(self.alerts[pos])
+
+    def _close_dialog(self):
+        try:
+            self.dialog.setVisible(False)
+            self.dialog.dispose()
+        finally:
+            _OPEN_VERIFY_WINDOWS[:] = [
+                item for item in _OPEN_VERIFY_WINDOWS
+                if item.get("dialog") is not self.dialog
+            ]
+
+    def windowClosing(self, event):
+        self._close_dialog()
+
+    def windowOpened(self, event):
+        pass
+
+    def windowClosed(self, event):
+        pass
+
+    def windowMinimized(self, event):
+        pass
+
+    def windowNormalized(self, event):
+        pass
+
+    def windowActivated(self, event):
+        pass
+
+    def windowDeactivated(self, event):
+        pass
+
+    def disposing(self, event):
+        pass
+
+
+class ScenarioListener(
+    unohelper.Base,
+    XActionListener,
+    XItemListener,
+    XTopWindowListener,
+):
+    def __init__(self, dialog, scenarios_box, detail_box, status_label, data, scenarios):
+        self.dialog = dialog
+        self.scenarios_box = scenarios_box
+        self.detail_box = detail_box
+        self.status_label = status_label
+        self.data = data
+        self.scenarios = scenarios
+        self.current = None
+        self._populate()
+
+    def _populate(self):
+        for scenario in self.scenarios:
+            self.scenarios_box.addItem(
+                scenario.get("titre", "Scénario"),
+                self.scenarios_box.ItemCount,
+            )
+        if self.scenarios:
+            self.scenarios_box.selectItemPos(0, True)
+            self._show(0)
+
+    def _show(self, index):
+        if not (0 <= index < len(self.scenarios)):
+            return
+        scenario = self.scenarios[index]
+        self.current = scenario
+        steps = _scenario_steps(scenario, self.data)
+        parts = [
+            scenario.get("titre", "Scénario"),
+            f"Catégorie : {scenario.get('categorie', '—')}",
+            "",
+            scenario.get("description", ""),
+            "",
+            "PHRASES INSÉRÉES",
+        ]
+        if steps:
+            for number, step in enumerate(steps, start=1):
+                parts.append("")
+                parts.append(f"{number}. {step['terme']} — {step['formulation']}")
+                parts.append(step["texte"])
+        else:
+            parts.append("")
+            parts.append("Aucune formulation valide dans ce scénario.")
+        self.detail_box.Text = "\n".join(parts)
+        self.status_label.getModel().Label = (
+            f"{len(steps)} phrase" if len(steps) == 1 else f"{len(steps)} phrases"
+        )
+
+    def insert_current(self):
+        if not self.current:
+            return
+        steps = _scenario_steps(self.current, self.data)
+        if not steps:
+            return
+        doc = _desktop().getCurrentComponent()
+        if not doc or not doc.supportsService("com.sun.star.text.TextDocument"):
+            self.status_label.getModel().Label = "Aucun document Writer actif"
+            return
+        text_to_insert = "\n\n".join(step["texte"] for step in steps)
+        view = doc.getCurrentController().getViewCursor()
+        view.getText().insertString(view, text_to_insert, False)
+        self.status_label.getModel().Label = "Scénario inséré dans le document"
+
+    def actionPerformed(self, event):
+        if event.ActionCommand == "insert":
+            self.insert_current()
+        elif event.ActionCommand == "close":
+            self._close_dialog()
+
+    def itemStateChanged(self, event):
+        pos = self.scenarios_box.SelectedItemPos
+        if 0 <= pos < len(self.scenarios):
+            self._show(pos)
+
+    def _close_dialog(self):
+        try:
+            self.dialog.setVisible(False)
+            self.dialog.dispose()
+        finally:
+            _OPEN_SCENARIO_WINDOWS[:] = [
+                item for item in _OPEN_SCENARIO_WINDOWS
+                if item.get("dialog") is not self.dialog
+            ]
+
+    def windowClosing(self, event):
+        self._close_dialog()
+
+    def windowOpened(self, event):
+        pass
+
+    def windowClosed(self, event):
+        pass
+
+    def windowMinimized(self, event):
+        pass
+
+    def windowNormalized(self, event):
+        pass
+
+    def windowActivated(self, event):
+        pass
+
+    def windowDeactivated(self, event):
+        pass
 
     def disposing(self, event):
         pass
@@ -567,6 +738,135 @@ class AboutListener(unohelper.Base, XActionListener, XTopWindowListener):
 
     def disposing(self, event):
         pass
+
+
+def open_verification(*args):
+    ctx = _ctx()
+    smgr = ctx.ServiceManager
+    toolkit = smgr.createInstanceWithContext("com.sun.star.awt.Toolkit", ctx)
+    model = smgr.createInstanceWithContext(
+        "com.sun.star.awt.UnoControlDialogModel", ctx
+    )
+    model.PositionX = 92
+    model.PositionY = 58
+    model.Width = 300
+    model.Height = 250
+    model.Title = "Vérification du document"
+
+    def add(name, service, x, y, w, h, **props):
+        item = model.createInstance(service)
+        item.Name = name
+        item.PositionX, item.PositionY = x, y
+        item.Width, item.Height = w, h
+        for key, value in props.items():
+            setattr(item, key, value)
+        model.insertByName(name, item)
+
+    add("lblAlerts", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 8, 104, 10, Label="Alertes détectées")
+    add("lstVerifyAlerts", "com.sun.star.awt.UnoControlListBoxModel",
+        8, 20, 104, 164)
+    add("txtVerifyDetail", "com.sun.star.awt.UnoControlEditModel",
+        118, 20, 174, 164, MultiLine=True, ReadOnly=True, VScroll=True)
+    add("lblVerifyStatus", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 190, 284, 10, Label="")
+    add("btnVerifyReplace", "com.sun.star.awt.UnoControlButtonModel",
+        8, 208, 104, 16, Label="Remplacer occurrence", Enabled=False)
+    add("btnVerifyRescan", "com.sun.star.awt.UnoControlButtonModel",
+        118, 208, 78, 16, Label="Revérifier")
+    add("btnVerifyClose", "com.sun.star.awt.UnoControlButtonModel",
+        240, 228, 52, 16, Label="Fermer")
+
+    dialog = smgr.createInstanceWithContext(
+        "com.sun.star.awt.UnoControlDialog", ctx
+    )
+    dialog.setModel(model)
+    dialog.createPeer(toolkit, None)
+
+    listener = VerificationListener(
+        dialog,
+        dialog.getControl("lstVerifyAlerts"),
+        dialog.getControl("txtVerifyDetail"),
+        dialog.getControl("lblVerifyStatus"),
+        dialog.getControl("btnVerifyReplace"),
+        _load_data(),
+    )
+    for control_name, command in [
+        ("btnVerifyReplace", "replace"),
+        ("btnVerifyRescan", "rescan"),
+        ("btnVerifyClose", "close"),
+    ]:
+        control = dialog.getControl(control_name)
+        control.setActionCommand(command)
+        control.addActionListener(listener)
+
+    dialog.getControl("lstVerifyAlerts").addItemListener(listener)
+    dialog.addTopWindowListener(listener)
+    _OPEN_VERIFY_WINDOWS.append({"dialog": dialog, "listener": listener})
+    dialog.setVisible(True)
+
+
+def open_scenarios(*args):
+    ctx = _ctx()
+    smgr = ctx.ServiceManager
+    toolkit = smgr.createInstanceWithContext("com.sun.star.awt.Toolkit", ctx)
+    model = smgr.createInstanceWithContext(
+        "com.sun.star.awt.UnoControlDialogModel", ctx
+    )
+    model.PositionX = 90
+    model.PositionY = 55
+    model.Width = 330
+    model.Height = 270
+    model.Title = "Scénarios de rédaction"
+
+    def add(name, service, x, y, w, h, **props):
+        item = model.createInstance(service)
+        item.Name = name
+        item.PositionX, item.PositionY = x, y
+        item.Width, item.Height = w, h
+        for key, value in props.items():
+            setattr(item, key, value)
+        model.insertByName(name, item)
+
+    add("lblScenarios", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 8, 116, 10, Label="Scénarios")
+    add("lstScenarios", "com.sun.star.awt.UnoControlListBoxModel",
+        8, 20, 116, 210)
+    add("txtScenarioDetail", "com.sun.star.awt.UnoControlEditModel",
+        130, 20, 192, 210, MultiLine=True, ReadOnly=True, VScroll=True)
+    add("lblScenarioStatus", "com.sun.star.awt.UnoControlFixedTextModel",
+        130, 234, 90, 10, Label="")
+    add("btnScenarioInsert", "com.sun.star.awt.UnoControlButtonModel",
+        224, 232, 98, 16, Label="Insérer le scénario")
+    add("btnScenarioClose", "com.sun.star.awt.UnoControlButtonModel",
+        270, 252, 52, 14, Label="Fermer")
+
+    dialog = smgr.createInstanceWithContext(
+        "com.sun.star.awt.UnoControlDialog", ctx
+    )
+    dialog.setModel(model)
+    dialog.createPeer(toolkit, None)
+
+    listener = ScenarioListener(
+        dialog,
+        dialog.getControl("lstScenarios"),
+        dialog.getControl("txtScenarioDetail"),
+        dialog.getControl("lblScenarioStatus"),
+        _load_data(),
+        _load_scenarios(),
+    )
+    for control_name, command in [
+        ("btnScenarioInsert", "insert"),
+        ("btnScenarioClose", "close"),
+    ]:
+        control = dialog.getControl(control_name)
+        control.setActionCommand(command)
+        control.addActionListener(listener)
+
+    dialog.getControl("lstScenarios").addItemListener(listener)
+    dialog.addTopWindowListener(listener)
+    _OPEN_SCENARIO_WINDOWS.append({"dialog": dialog, "listener": listener})
+    dialog.setVisible(True)
 
 
 def show_about(*args):
@@ -799,10 +1099,16 @@ def open_lexicon(*args):
         Label="Rechercher",
     )
     add(
-        "btnScan",
+        "btnVerify",
         "com.sun.star.awt.UnoControlButtonModel",
         8, 174, 105, 16,
-        Label="Vérifier document",
+        Label="Vérifier le document",
+    )
+    add(
+        "btnScenarios",
+        "com.sun.star.awt.UnoControlButtonModel",
+        8, 194, 105, 16,
+        Label="Scénarios",
     )
     add(
         "lblCategory",
@@ -836,17 +1142,6 @@ def open_lexicon(*args):
         8, 56, 105, 112,
     )
     add(
-        "lblAlerts",
-        "com.sun.star.awt.UnoControlFixedTextModel",
-        8, 192, 105, 10,
-        Label="Alertes du document",
-    )
-    add(
-        "lstAlerts",
-        "com.sun.star.awt.UnoControlListBoxModel",
-        8, 204, 105, 32,
-    )
-    add(
         "txtDetail",
         "com.sun.star.awt.UnoControlEditModel",
         118, 46, 184, 236,
@@ -854,13 +1149,6 @@ def open_lexicon(*args):
         ReadOnly=True,
         VScroll=True,
         HideInactiveSelection=False,
-    )
-    add(
-        "btnReplace",
-        "com.sun.star.awt.UnoControlButtonModel",
-        8, 288, 105, 16,
-        Label="Remplacer occurrence",
-        Enabled=False,
     )
     add(
         "btnInsert",
@@ -883,29 +1171,25 @@ def open_lexicon(*args):
 
     search_box = dialog.getControl("txtSearch")
     results_box = dialog.getControl("lstResults")
-    alerts_box = dialog.getControl("lstAlerts")
     detail_box = dialog.getControl("txtDetail")
     status_label = dialog.getControl("lblStatus")
     insert_button = dialog.getControl("btnInsert")
-    replace_button = dialog.getControl("btnReplace")
     category_box = dialog.getControl("cmbCategory")
     listener = DialogListener(
         dialog,
         search_box,
         results_box,
-        alerts_box,
         detail_box,
         status_label,
         insert_button,
-        replace_button,
         category_box,
         data,
     )
 
     for control, command in [
         (dialog.getControl("btnSearch"), "search"),
-        (dialog.getControl("btnScan"), "scan"),
-        (replace_button, "replace"),
+        (dialog.getControl("btnVerify"), "verify"),
+        (dialog.getControl("btnScenarios"), "scenarios"),
         (insert_button, "insert"),
         (dialog.getControl("btnClose"), "close"),
     ]:
@@ -913,7 +1197,6 @@ def open_lexicon(*args):
         control.addActionListener(listener)
 
     results_box.addItemListener(listener)
-    alerts_box.addItemListener(listener)
     category_box.addItemListener(listener)
     detail_box.addMouseListener(listener)
     dialog.addTopWindowListener(listener)
@@ -925,4 +1208,10 @@ def open_lexicon(*args):
     dialog.setVisible(True)
 
 
-g_exportedScripts = (open_lexicon, show_about, check_updates)
+g_exportedScripts = (
+    open_lexicon,
+    open_verification,
+    open_scenarios,
+    show_about,
+    check_updates,
+)
