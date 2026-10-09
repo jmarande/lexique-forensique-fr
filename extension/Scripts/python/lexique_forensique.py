@@ -16,6 +16,8 @@ _OPEN_LEXICON_WINDOWS = []
 _OPEN_VERIFY_WINDOWS = []
 _OPEN_SCENARIO_WINDOWS = []
 _OPEN_SCENARIO_EDITOR_WINDOWS = []
+_OPEN_TERM_WINDOWS = []
+_OPEN_TERM_EDITOR_WINDOWS = []
 _OPEN_ABOUT_WINDOWS = []
 
 CURRENT_VERSION = "0.7.20"
@@ -79,10 +81,53 @@ def _extension_root():
     )
 
 
-def _load_data():
+def _user_data_dir():
+    base = os.path.join(os.path.expanduser("~"), ".lexique-forensique-fr")
+    os.makedirs(base, exist_ok=True)
+    return base
+
+
+def _user_lexicon_path():
+    return os.path.join(_user_data_dir(), "lexique-utilisateur.json")
+
+
+def _load_builtin_data():
     path = os.path.join(_extension_root(), "data", "lexique.json")
     with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
+        data = json.load(f)
+    for item in data:
+        item["_source"] = "builtin"
+    return data
+
+
+def _load_user_data():
+    path = _user_lexicon_path()
+    if not os.path.exists(path):
+        return []
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except Exception:
+        return []
+    if not isinstance(data, list):
+        return []
+    for item in data:
+        item["_source"] = "user"
+    return data
+
+
+def _save_user_data(data):
+    payload = []
+    for item in data:
+        clean = {k: v for k, v in item.items() if not k.startswith("_")}
+        payload.append(clean)
+    with open(_user_lexicon_path(), "w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
+        f.write("\n")
+
+
+def _load_data():
+    return _load_builtin_data() + _load_user_data()
 
 
 def _load_scenarios():
@@ -95,9 +140,7 @@ def _load_scenarios():
 
 
 def _user_scenarios_path():
-    base = os.path.join(os.path.expanduser("~"), ".lexique-forensique-fr")
-    os.makedirs(base, exist_ok=True)
-    return os.path.join(base, "scenarios-utilisateur.json")
+    return os.path.join(_user_data_dir(), "scenarios-utilisateur.json")
 
 
 def _load_user_scenarios():
@@ -385,6 +428,8 @@ class DialogListener(
             open_verification()
         elif cmd == "scenarios":
             open_scenarios()
+        elif cmd == "manage_terms":
+            open_term_manager()
         elif cmd == "insert" and self.current:
             if self.formulation_ranges:
                 item = self.formulation_ranges[self.selected_formulation_index]
@@ -1060,6 +1105,427 @@ class ScenarioEditorListener(
         pass
 
 
+class TermManagerListener(
+    unohelper.Base,
+    XActionListener,
+    XItemListener,
+    XTopWindowListener,
+):
+    def __init__(
+        self,
+        dialog,
+        terms_box,
+        detail_box,
+        status_label,
+        builtin_data,
+        user_data,
+    ):
+        self.dialog = dialog
+        self.terms_box = terms_box
+        self.detail_box = detail_box
+        self.status_label = status_label
+        self.builtin_data = builtin_data
+        self.user_data = user_data
+        self.data = []
+        self.current = None
+        self._closing = False
+        self._populate()
+
+    def _populate(self, select_index=0):
+        if self.terms_box.ItemCount:
+            self.terms_box.removeItems(0, self.terms_box.ItemCount)
+        self.data = sorted(
+            self.builtin_data + self.user_data,
+            key=lambda e: _normalize(e.get("terme", "")),
+        )
+        for entry in self.data:
+            prefix = "★ " if entry.get("_source") == "user" else ""
+            self.terms_box.addItem(
+                prefix + entry.get("terme", "Terme"),
+                self.terms_box.ItemCount,
+            )
+        if self.data:
+            select_index = min(max(select_index, 0), len(self.data) - 1)
+            self.terms_box.selectItemPos(select_index, True)
+            self._show(select_index)
+        else:
+            self.current = None
+            self.detail_box.Text = "Aucun terme disponible."
+
+    def _show(self, index):
+        if not (0 <= index < len(self.data)):
+            return
+        entry = self.data[index]
+        self.current = entry
+        text, _ranges = _format_entry(entry)
+        origin = (
+            "Terme utilisateur"
+            if entry.get("_source") == "user"
+            else "Terme fourni avec l’extension"
+        )
+        self.detail_box.Text = (
+            f"ORIGINE\n{origin}\n\n" + text
+        )
+        self.status_label.getModel().Label = origin
+
+    def _current_index(self):
+        pos = self.terms_box.SelectedItemPos
+        return pos if 0 <= pos < len(self.data) else -1
+
+    def _new_id(self):
+        existing = {e.get("id") for e in self.builtin_data + self.user_data}
+        number = 1
+        while f"user-term-{number}" in existing:
+            number += 1
+        return f"user-term-{number}"
+
+    def new_term(self):
+        entry = {
+            "id": self._new_id(),
+            "terme": "Nouveau terme",
+            "anglais": "",
+            "categorie": "Personnalisé",
+            "definition": "",
+            "synonymes": [],
+            "termes_deconseilles": [],
+            "formulations_rapport": [],
+            "sources": [],
+            "_source": "user",
+        }
+        self.user_data.append(entry)
+        _save_user_data(self.user_data)
+        open_term_editor(self, entry)
+
+    def duplicate_current(self):
+        index = self._current_index()
+        if index < 0:
+            return
+        source = self.data[index]
+        duplicate = {
+            "id": self._new_id(),
+            "terme": source.get("terme", "Terme") + " — copie",
+            "anglais": source.get("anglais", ""),
+            "categorie": source.get("categorie", "Personnalisé"),
+            "definition": source.get("definition", ""),
+            "synonymes": list(source.get("synonymes", [])),
+            "termes_deconseilles": list(_bad_terms(source)),
+            "formulations_rapport": [
+                {"type": label, "texte": text}
+                for label, text in _report_formulations(source)
+            ],
+            "points_attention": list(source.get("points_attention", [])),
+            "sources": [],
+            "_source": "user",
+        }
+        self.user_data.append(duplicate)
+        _save_user_data(self.user_data)
+        self._populate()
+        self.status_label.getModel().Label = "Terme dupliqué"
+
+    def edit_current(self):
+        index = self._current_index()
+        if index < 0:
+            return
+        entry = self.data[index]
+        if entry.get("_source") != "user":
+            source = entry
+            entry = {
+                "id": self._new_id(),
+                "terme": source.get("terme", "Terme") + " — personnalisé",
+                "anglais": source.get("anglais", ""),
+                "categorie": source.get("categorie", "Personnalisé"),
+                "definition": source.get("definition", ""),
+                "synonymes": list(source.get("synonymes", [])),
+                "termes_deconseilles": list(_bad_terms(source)),
+                "formulations_rapport": [
+                    {"type": label, "texte": text}
+                    for label, text in _report_formulations(source)
+                ],
+                "points_attention": list(source.get("points_attention", [])),
+                "sources": [],
+                "_source": "user",
+            }
+            self.user_data.append(entry)
+            _save_user_data(self.user_data)
+        open_term_editor(self, entry)
+
+    def delete_current(self):
+        index = self._current_index()
+        if index < 0:
+            return
+        entry = self.data[index]
+        if entry.get("_source") != "user":
+            self.status_label.getModel().Label = (
+                "Les termes fournis ne peuvent pas être supprimés"
+            )
+            return
+        try:
+            self.user_data.remove(entry)
+        except ValueError:
+            return
+        _save_user_data(self.user_data)
+        self._populate(max(index - 1, 0))
+        self.status_label.getModel().Label = "Terme utilisateur supprimé"
+
+    def refresh_after_edit(self, entry):
+        self._populate()
+        for index, item in enumerate(self.data):
+            if item is entry or item.get("id") == entry.get("id"):
+                self.terms_box.selectItemPos(index, True)
+                self._show(index)
+                break
+
+    def actionPerformed(self, event):
+        cmd = event.ActionCommand
+        if cmd == "new":
+            self.new_term()
+        elif cmd == "duplicate":
+            self.duplicate_current()
+        elif cmd == "edit":
+            self.edit_current()
+        elif cmd == "delete":
+            self.delete_current()
+        elif cmd == "close":
+            self._close_dialog()
+
+    def itemStateChanged(self, event):
+        pos = self.terms_box.SelectedItemPos
+        if 0 <= pos < len(self.data):
+            self._show(pos)
+
+    def _close_dialog(self):
+        if self._closing:
+            return
+        self._closing = True
+        try:
+            try:
+                self.dialog.removeTopWindowListener(self)
+            except Exception:
+                pass
+            self.dialog.setVisible(False)
+            self.dialog.dispose()
+        finally:
+            _OPEN_TERM_WINDOWS[:] = [
+                item for item in _OPEN_TERM_WINDOWS
+                if item.get("dialog") is not self.dialog
+            ]
+
+    def windowClosing(self, event):
+        self._close_dialog()
+
+    def windowOpened(self, event):
+        pass
+    def windowClosed(self, event):
+        pass
+    def windowMinimized(self, event):
+        pass
+    def windowNormalized(self, event):
+        pass
+    def windowActivated(self, event):
+        pass
+    def windowDeactivated(self, event):
+        pass
+    def disposing(self, event):
+        pass
+
+
+class TermEditorListener(
+    unohelper.Base,
+    XActionListener,
+    XItemListener,
+    XTopWindowListener,
+):
+    def __init__(
+        self,
+        dialog,
+        parent_listener,
+        entry,
+        term_box,
+        english_box,
+        category_box,
+        synonyms_box,
+        definition_box,
+        formulations_box,
+        formulation_type_box,
+        formulation_text_box,
+        status_label,
+    ):
+        self.dialog = dialog
+        self.parent_listener = parent_listener
+        self.entry = entry
+        self.term_box = term_box
+        self.english_box = english_box
+        self.category_box = category_box
+        self.synonyms_box = synonyms_box
+        self.definition_box = definition_box
+        self.formulations_box = formulations_box
+        self.formulation_type_box = formulation_type_box
+        self.formulation_text_box = formulation_text_box
+        self.status_label = status_label
+        self._closing = False
+        self.formulations = [
+            {"type": label, "texte": text}
+            for label, text in _report_formulations(entry)
+        ]
+        self._populate_formulations()
+
+    def _clear(self, control):
+        if control.ItemCount:
+            control.removeItems(0, control.ItemCount)
+
+    def _populate_formulations(self, select_index=None):
+        self._clear(self.formulations_box)
+        for item in self.formulations:
+            self.formulations_box.addItem(
+                item.get("type", "Proposition"),
+                self.formulations_box.ItemCount,
+            )
+        if self.formulations:
+            if select_index is None:
+                select_index = 0
+            select_index = min(max(select_index, 0), len(self.formulations) - 1)
+            self.formulations_box.selectItemPos(select_index, True)
+            self._load_formulation(select_index)
+        else:
+            self.formulation_type_box.Text = ""
+            self.formulation_text_box.Text = ""
+        self.status_label.getModel().Label = (
+            f"{len(self.formulations)} formulation"
+            if len(self.formulations) == 1
+            else f"{len(self.formulations)} formulations"
+        )
+
+    def _selected_formulation_index(self):
+        pos = self.formulations_box.SelectedItemPos
+        return pos if 0 <= pos < len(self.formulations) else -1
+
+    def _load_formulation(self, index):
+        if not (0 <= index < len(self.formulations)):
+            return
+        item = self.formulations[index]
+        self.formulation_type_box.Text = item.get("type", "")
+        self.formulation_text_box.Text = item.get("texte", "")
+
+    def _commit_current_formulation(self):
+        index = self._selected_formulation_index()
+        if index < 0:
+            return
+        label = (self.formulation_type_box.Text or "").strip() or "Proposition"
+        text = (self.formulation_text_box.Text or "").strip()
+        self.formulations[index] = {"type": label, "texte": text}
+
+    def add_formulation(self):
+        self._commit_current_formulation()
+        self.formulations.append({
+            "type": "Nouvelle formulation",
+            "texte": "",
+        })
+        self._populate_formulations(len(self.formulations) - 1)
+
+    def remove_formulation(self):
+        index = self._selected_formulation_index()
+        if index < 0:
+            return
+        self.formulations.pop(index)
+        self._populate_formulations(max(index - 1, 0))
+
+    def move_formulation(self, delta):
+        index = self._selected_formulation_index()
+        target = index + delta
+        if index < 0 or not (0 <= target < len(self.formulations)):
+            return
+        self._commit_current_formulation()
+        self.formulations[index], self.formulations[target] = (
+            self.formulations[target],
+            self.formulations[index],
+        )
+        self._populate_formulations(target)
+
+    def save(self):
+        term = (self.term_box.Text or "").strip()
+        if not term:
+            self.status_label.getModel().Label = "Le terme est obligatoire"
+            return
+        self._commit_current_formulation()
+        self.entry["terme"] = term
+        self.entry["anglais"] = (self.english_box.Text or "").strip()
+        self.entry["categorie"] = (
+            (self.category_box.Text or "").strip() or "Personnalisé"
+        )
+        self.entry["definition"] = (self.definition_box.Text or "").strip()
+        self.entry["synonymes"] = [
+            value.strip()
+            for value in (self.synonyms_box.Text or "").split(",")
+            if value.strip()
+        ]
+        self.entry["formulations_rapport"] = [
+            item for item in self.formulations
+            if (item.get("texte") or "").strip()
+        ]
+        self.entry["_source"] = "user"
+        _save_user_data(self.parent_listener.user_data)
+        self.parent_listener.refresh_after_edit(self.entry)
+        self.parent_listener.status_label.getModel().Label = (
+            "Terme utilisateur enregistré"
+        )
+        self._close_dialog()
+
+    def actionPerformed(self, event):
+        cmd = event.ActionCommand
+        if cmd == "add":
+            self.add_formulation()
+        elif cmd == "remove":
+            self.remove_formulation()
+        elif cmd == "up":
+            self.move_formulation(-1)
+        elif cmd == "down":
+            self.move_formulation(1)
+        elif cmd == "save":
+            self.save()
+        elif cmd == "cancel":
+            self._close_dialog()
+
+    def itemStateChanged(self, event):
+        index = self._selected_formulation_index()
+        if index >= 0:
+            self._load_formulation(index)
+
+    def _close_dialog(self):
+        if self._closing:
+            return
+        self._closing = True
+        try:
+            try:
+                self.dialog.removeTopWindowListener(self)
+            except Exception:
+                pass
+            self.dialog.setVisible(False)
+            self.dialog.dispose()
+        finally:
+            _OPEN_TERM_EDITOR_WINDOWS[:] = [
+                item for item in _OPEN_TERM_EDITOR_WINDOWS
+                if item.get("dialog") is not self.dialog
+            ]
+
+    def windowClosing(self, event):
+        self._close_dialog()
+
+    def windowOpened(self, event):
+        pass
+    def windowClosed(self, event):
+        pass
+    def windowMinimized(self, event):
+        pass
+    def windowNormalized(self, event):
+        pass
+    def windowActivated(self, event):
+        pass
+    def windowDeactivated(self, event):
+        pass
+    def disposing(self, event):
+        pass
+
+
 class AboutListener(unohelper.Base, XActionListener, XTopWindowListener):
     def __init__(self, dialog):
         self.dialog = dialog
@@ -1355,6 +1821,193 @@ def open_scenarios(*args):
     dialog.setVisible(True)
 
 
+def open_term_editor(parent_listener, entry):
+    ctx = _ctx()
+    smgr = ctx.ServiceManager
+    toolkit = smgr.createInstanceWithContext("com.sun.star.awt.Toolkit", ctx)
+    model = smgr.createInstanceWithContext(
+        "com.sun.star.awt.UnoControlDialogModel", ctx
+    )
+    model.PositionX = 105
+    model.PositionY = 55
+    model.Width = 430
+    model.Height = 340
+    model.Title = "Éditer un terme utilisateur"
+
+    def add(name, service, x, y, w, h, **props):
+        item = model.createInstance(service)
+        item.Name = name
+        item.PositionX, item.PositionY = x, y
+        item.Width, item.Height = w, h
+        for key, value in props.items():
+            setattr(item, key, value)
+        model.insertByName(name, item)
+
+    add("lblTerm", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 8, 44, 10, Label="Terme :")
+    add("txtTerm", "com.sun.star.awt.UnoControlEditModel",
+        54, 6, 368, 14, Text=entry.get("terme", ""))
+    add("lblEnglish", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 28, 44, 10, Label="Anglais :")
+    add("txtEnglish", "com.sun.star.awt.UnoControlEditModel",
+        54, 26, 156, 14, Text=entry.get("anglais", ""))
+    add("lblTermCategory", "com.sun.star.awt.UnoControlFixedTextModel",
+        220, 28, 50, 10, Label="Catégorie :")
+    add("txtTermCategory", "com.sun.star.awt.UnoControlEditModel",
+        272, 26, 150, 14, Text=entry.get("categorie", "Personnalisé"))
+    add("lblSynonyms", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 48, 54, 10, Label="Synonymes :")
+    add("txtSynonyms", "com.sun.star.awt.UnoControlEditModel",
+        64, 46, 358, 14, Text=", ".join(entry.get("synonymes", [])))
+    add("lblDefinition", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 68, 54, 10, Label="Définition :")
+    add("txtTermDefinition", "com.sun.star.awt.UnoControlEditModel",
+        8, 80, 414, 60, MultiLine=True, VScroll=True,
+        Text=entry.get("definition", ""))
+
+    add("lblFormulations", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 148, 110, 10, Label="Formulations de rapport")
+    add("lstTermFormulations", "com.sun.star.awt.UnoControlListBoxModel",
+        8, 160, 156, 122)
+    add("btnTermFormUp", "com.sun.star.awt.UnoControlButtonModel",
+        8, 286, 34, 16, Label="↑")
+    add("btnTermFormDown", "com.sun.star.awt.UnoControlButtonModel",
+        46, 286, 34, 16, Label="↓")
+    add("btnTermFormRemove", "com.sun.star.awt.UnoControlButtonModel",
+        84, 286, 50, 16, Label="Retirer")
+    add("btnTermFormAdd", "com.sun.star.awt.UnoControlButtonModel",
+        138, 286, 26, 16, Label="+")
+
+    add("lblFormType", "com.sun.star.awt.UnoControlFixedTextModel",
+        174, 160, 54, 10, Label="Intitulé :")
+    add("txtFormType", "com.sun.star.awt.UnoControlEditModel",
+        174, 172, 248, 14)
+    add("lblFormText", "com.sun.star.awt.UnoControlFixedTextModel",
+        174, 194, 80, 10, Label="Phrase du rapport :")
+    add("txtFormText", "com.sun.star.awt.UnoControlEditModel",
+        174, 206, 248, 76, MultiLine=True, VScroll=True)
+
+    add("lblTermEditStatus", "com.sun.star.awt.UnoControlFixedTextModel",
+        174, 288, 120, 10, Label="")
+    add("btnTermEditCancel", "com.sun.star.awt.UnoControlButtonModel",
+        300, 308, 54, 18, Label="Annuler")
+    add("btnTermEditSave", "com.sun.star.awt.UnoControlButtonModel",
+        360, 308, 62, 18, Label="Enregistrer")
+
+    dialog = smgr.createInstanceWithContext(
+        "com.sun.star.awt.UnoControlDialog", ctx
+    )
+    dialog.setModel(model)
+    dialog.createPeer(toolkit, None)
+
+    listener = TermEditorListener(
+        dialog,
+        parent_listener,
+        entry,
+        dialog.getControl("txtTerm"),
+        dialog.getControl("txtEnglish"),
+        dialog.getControl("txtTermCategory"),
+        dialog.getControl("txtSynonyms"),
+        dialog.getControl("txtTermDefinition"),
+        dialog.getControl("lstTermFormulations"),
+        dialog.getControl("txtFormType"),
+        dialog.getControl("txtFormText"),
+        dialog.getControl("lblTermEditStatus"),
+    )
+
+    for control_name, command in [
+        ("btnTermFormAdd", "add"),
+        ("btnTermFormRemove", "remove"),
+        ("btnTermFormUp", "up"),
+        ("btnTermFormDown", "down"),
+        ("btnTermEditSave", "save"),
+        ("btnTermEditCancel", "cancel"),
+    ]:
+        control = dialog.getControl(control_name)
+        control.setActionCommand(command)
+        control.addActionListener(listener)
+
+    dialog.getControl("lstTermFormulations").addItemListener(listener)
+    dialog.addTopWindowListener(listener)
+    _OPEN_TERM_EDITOR_WINDOWS.append({
+        "dialog": dialog,
+        "listener": listener,
+    })
+    dialog.setVisible(True)
+
+
+def open_term_manager(*args):
+    ctx = _ctx()
+    smgr = ctx.ServiceManager
+    toolkit = smgr.createInstanceWithContext("com.sun.star.awt.Toolkit", ctx)
+    model = smgr.createInstanceWithContext(
+        "com.sun.star.awt.UnoControlDialogModel", ctx
+    )
+    model.PositionX = 90
+    model.PositionY = 52
+    model.Width = 390
+    model.Height = 292
+    model.Title = "Gestion des termes"
+
+    def add(name, service, x, y, w, h, **props):
+        item = model.createInstance(service)
+        item.Name = name
+        item.PositionX, item.PositionY = x, y
+        item.Width, item.Height = w, h
+        for key, value in props.items():
+            setattr(item, key, value)
+        model.insertByName(name, item)
+
+    add("lblManagedTerms", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 8, 142, 10, Label="Termes du lexique")
+    add("lstManagedTerms", "com.sun.star.awt.UnoControlListBoxModel",
+        8, 20, 142, 232)
+    add("txtManagedTermDetail", "com.sun.star.awt.UnoControlEditModel",
+        158, 20, 224, 232, MultiLine=True, ReadOnly=True, VScroll=True)
+    add("lblManagedTermStatus", "com.sun.star.awt.UnoControlFixedTextModel",
+        158, 258, 104, 10, Label="")
+    add("btnManagedTermNew", "com.sun.star.awt.UnoControlButtonModel",
+        8, 256, 42, 16, Label="Nouveau")
+    add("btnManagedTermDuplicate", "com.sun.star.awt.UnoControlButtonModel",
+        54, 256, 48, 16, Label="Dupliquer")
+    add("btnManagedTermEdit", "com.sun.star.awt.UnoControlButtonModel",
+        106, 256, 44, 16, Label="Modifier")
+    add("btnManagedTermDelete", "com.sun.star.awt.UnoControlButtonModel",
+        8, 276, 48, 14, Label="Supprimer")
+    add("btnManagedTermClose", "com.sun.star.awt.UnoControlButtonModel",
+        330, 274, 52, 14, Label="Fermer")
+
+    dialog = smgr.createInstanceWithContext(
+        "com.sun.star.awt.UnoControlDialog", ctx
+    )
+    dialog.setModel(model)
+    dialog.createPeer(toolkit, None)
+
+    listener = TermManagerListener(
+        dialog,
+        dialog.getControl("lstManagedTerms"),
+        dialog.getControl("txtManagedTermDetail"),
+        dialog.getControl("lblManagedTermStatus"),
+        _load_builtin_data(),
+        _load_user_data(),
+    )
+    for control_name, command in [
+        ("btnManagedTermNew", "new"),
+        ("btnManagedTermDuplicate", "duplicate"),
+        ("btnManagedTermEdit", "edit"),
+        ("btnManagedTermDelete", "delete"),
+        ("btnManagedTermClose", "close"),
+    ]:
+        control = dialog.getControl(control_name)
+        control.setActionCommand(command)
+        control.addActionListener(listener)
+
+    dialog.getControl("lstManagedTerms").addItemListener(listener)
+    dialog.addTopWindowListener(listener)
+    _OPEN_TERM_WINDOWS.append({"dialog": dialog, "listener": listener})
+    dialog.setVisible(True)
+
+
 def show_about(*args):
     ctx = _ctx()
     smgr = ctx.ServiceManager
@@ -1616,6 +2269,12 @@ def open_lexicon(*args):
         Label="Scénarios",
     )
     add(
+        "btnManageTerms",
+        "com.sun.star.awt.UnoControlButtonModel",
+        8, 214, 105, 16,
+        Label="Gérer les termes",
+    )
+    add(
         "lblCategory",
         "com.sun.star.awt.UnoControlFixedTextModel",
         8, 27, 42, 10,
@@ -1695,6 +2354,7 @@ def open_lexicon(*args):
         (dialog.getControl("btnSearch"), "search"),
         (dialog.getControl("btnVerify"), "verify"),
         (dialog.getControl("btnScenarios"), "scenarios"),
+        (dialog.getControl("btnManageTerms"), "manage_terms"),
         (insert_button, "insert"),
         (dialog.getControl("btnClose"), "close"),
     ]:
@@ -1717,6 +2377,7 @@ g_exportedScripts = (
     open_lexicon,
     open_verification,
     open_scenarios,
+    open_term_manager,
     show_about,
     check_updates,
 )
