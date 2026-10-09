@@ -1,7 +1,7 @@
 [
   {
     "id": "telephone-eteint-code-inconnu-extraction-partielle",
-    "titre": "Téléphone éteint — code inconnu — extraction partielle",
+    "titre": "Téléphone éteint — extraction partielle",
     "categorie": "Téléphonie mobile",
     "description": "Prise en charge d’un téléphone éteint dont le code de déverrouillage n’est pas connu et pour lequel seule une extraction partielle est obtenue.",
     "etapes": [
@@ -25,7 +25,7 @@
   },
   {
     "id": "support-endommage-reparation-extraction",
-    "titre": "Support endommagé — réparation — extraction",
+    "titre": "Support endommagé — réparation",
     "categorie": "Prise en charge",
     "description": "Support présentant des dommages physiques nécessitant une réparation sommaire avant les opérations d’extraction.",
     "etapes": [
@@ -49,7 +49,7 @@
   },
   {
     "id": "sim-pin-inconnu",
-    "titre": "Carte SIM — code PIN inconnu",
+    "titre": "Carte SIM — PIN inconnu",
     "categorie": "Téléphonie mobile",
     "description": "Examen d’une carte SIM dont le code PIN n’est pas connu et pour laquelle seules les données accessibles peuvent être extraites.",
     "etapes": [
@@ -65,7 +65,7 @@
   },
   {
     "id": "extraction-decodage-remise",
-    "titre": "Extraction — décodage — remise des résultats",
+    "titre": "Extraction — décodage — remise",
     "categorie": "Examen forensique",
     "description": "Chaîne générique d’extraction, de décodage et de remise des résultats.",
     "etapes": [
@@ -85,7 +85,7 @@
   },
   {
     "id": "filesystem-partiel",
-    "titre": "Extraction du système de fichiers — partielle",
+    "titre": "Système de fichiers — extraction partielle",
     "categorie": "Examen forensique",
     "description": "Obtention partielle du système de fichiers d’un support.",
     "etapes": [
