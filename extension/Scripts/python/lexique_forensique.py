@@ -14,6 +14,8 @@ from com.sun.star.awt import XActionListener, XItemListener, XMouseListener, XTo
 
 _OPEN_LEXICON_WINDOWS = []
 _OPEN_VERIFY_WINDOWS = []
+_OPEN_OCCURRENCE_WINDOWS = []
+_OPEN_OCCURRENCE_EDITOR_WINDOWS = []
 _OPEN_SCENARIO_WINDOWS = []
 _OPEN_SCENARIO_EDITOR_WINDOWS = []
 _OPEN_TERM_WINDOWS = []
@@ -130,14 +132,87 @@ def _load_data():
     return _load_builtin_data() + _load_user_data()
 
 
-def _load_translations():
+def _user_occurrences_path():
+    return os.path.join(_user_data_dir(), "occurrences-utilisateur.json")
+
+
+def _normalize_occurrence_item(item, source):
+    occurrence = (
+        item.get("occurrence")
+        or item.get("anglais")
+        or ""
+    ).strip()
+    replacements = item.get("remplacements")
+    if not isinstance(replacements, list):
+        replacement = (item.get("francais") or "").strip()
+        replacements = [replacement] if replacement else []
+    replacements = [
+        str(value).strip()
+        for value in replacements
+        if str(value).strip()
+    ]
+    preferred = (item.get("prefere") or "").strip()
+    if not preferred and replacements:
+        preferred = replacements[0]
+    return {
+        "occurrence": occurrence,
+        "remplacements": replacements,
+        "prefere": preferred,
+        "note": (item.get("note") or "").strip(),
+        "_source": source,
+    }
+
+
+def _load_builtin_occurrences():
     path = os.path.join(_extension_root(), "data", "traductions.json")
     try:
         with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
     except Exception:
         return []
-    return data if isinstance(data, list) else []
+    if not isinstance(data, list):
+        return []
+    return [
+        _normalize_occurrence_item(item, "builtin")
+        for item in data
+        if isinstance(item, dict)
+    ]
+
+
+def _load_user_occurrences():
+    path = _user_occurrences_path()
+    if not os.path.exists(path):
+        return []
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except Exception:
+        return []
+    if not isinstance(data, list):
+        return []
+    return [
+        _normalize_occurrence_item(item, "user")
+        for item in data
+        if isinstance(item, dict)
+    ]
+
+
+def _save_user_occurrences(data):
+    payload = []
+    for item in data:
+        payload.append({
+            "occurrence": (item.get("occurrence") or "").strip(),
+            "remplacements": list(item.get("remplacements") or []),
+            "prefere": (item.get("prefere") or "").strip(),
+            "note": (item.get("note") or "").strip(),
+        })
+    with open(_user_occurrences_path(), "w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
+        f.write("\n")
+
+
+def _load_translations():
+    return _load_builtin_occurrences() + _load_user_occurrences()
 
 
 def _load_scenarios():
@@ -332,9 +407,18 @@ def _scan_document_text(text, data, translations=None):
                 })
 
     for item in translations or []:
-        source = (item.get("anglais") or "").strip()
-        replacement = (item.get("francais") or "").strip()
-        if not source or not replacement or _normalize(source) == _normalize(replacement):
+        source = (item.get("occurrence") or "").strip()
+        replacements = [
+            value.strip()
+            for value in item.get("remplacements", [])
+            if value and value.strip()
+        ]
+        preferred = (item.get("prefere") or "").strip()
+        if preferred and preferred not in replacements:
+            replacements.insert(0, preferred)
+        if not preferred and replacements:
+            preferred = replacements[0]
+        if not source or not preferred or _normalize(source) == _normalize(preferred):
             continue
 
         normalized_source = _normalize(source)
@@ -345,9 +429,11 @@ def _scan_document_text(text, data, translations=None):
                 "kind": "traduction",
                 "entry": None,
                 "found": source,
-                "replacement": replacement,
+                "replacement": preferred,
+                "replacements": replacements,
                 "count": count,
                 "note": (item.get("note") or "").strip(),
+                "source": item.get("_source", "builtin"),
             })
 
     return sorted(
@@ -640,10 +726,22 @@ class VerificationListener(
                 "Terme anglais détecté dans le document. "
                 "La traduction proposée vise à franciser l’export."
             )
+            alternatives = alert.get("replacements", [])
+            proposals = "\n".join(
+                f"• {value}" for value in alternatives
+            ) or f"• {alert['replacement']}"
+            origin = (
+                "Occurrence utilisateur"
+                if alert.get("source") == "user"
+                else "Occurrence fournie avec l’extension"
+            )
             self.detail_box.Text = (
-                "TRADUCTION\n"
-                f"{alert['found']} → {alert['replacement']}\n\n"
-                f"Occurrences détectées : {alert['count']}\n\n"
+                "TRADUCTION / NORMALISATION\n"
+                f"{alert['found']}\n\n"
+                f"Remplacement préféré : {alert['replacement']}\n\n"
+                f"Remplacements possibles :\n{proposals}\n\n"
+                f"Occurrences détectées : {alert['count']}\n"
+                f"Origine : {origin}\n\n"
                 f"{note}"
             )
         else:
@@ -693,6 +791,10 @@ class VerificationListener(
             )
             self.status_label.getModel().Label = "Aucune alerte"
 
+    def reload_occurrences(self):
+        self.translations = _load_translations()
+        self.scan()
+
     def replace_current(self):
         if not self.current_alert or not self.current_found_range:
             return
@@ -706,6 +808,8 @@ class VerificationListener(
             self.scan()
         elif event.ActionCommand == "replace":
             self.replace_current()
+        elif event.ActionCommand == "manage_occurrences":
+            open_occurrence_manager(self)
         elif event.ActionCommand == "close":
             self._close_dialog()
 
@@ -747,6 +851,275 @@ class VerificationListener(
 
     def disposing(self, event):
         pass
+
+
+class OccurrenceManagerListener(
+    unohelper.Base,
+    XActionListener,
+    XItemListener,
+    XTopWindowListener,
+):
+    def __init__(
+        self,
+        dialog,
+        items_box,
+        detail_box,
+        status_label,
+        verification_listener,
+        builtin_items,
+        user_items,
+    ):
+        self.dialog = dialog
+        self.items_box = items_box
+        self.detail_box = detail_box
+        self.status_label = status_label
+        self.verification_listener = verification_listener
+        self.builtin_items = builtin_items
+        self.user_items = user_items
+        self.items = []
+        self._closing = False
+        self._populate()
+
+    def _populate(self, select_index=0):
+        if self.items_box.ItemCount:
+            self.items_box.removeItems(0, self.items_box.ItemCount)
+        self.items = sorted(
+            self.builtin_items + self.user_items,
+            key=lambda item: _normalize(item.get("occurrence", "")),
+        )
+        for item in self.items:
+            prefix = "★ " if item.get("_source") == "user" else ""
+            self.items_box.addItem(
+                prefix + item.get("occurrence", "Occurrence"),
+                self.items_box.ItemCount,
+            )
+        if self.items:
+            select_index = min(max(select_index, 0), len(self.items) - 1)
+            self.items_box.selectItemPos(select_index, True)
+            self._show(select_index)
+        else:
+            self.detail_box.Text = "Aucune occurrence enregistrée."
+
+    def _show(self, index):
+        if not (0 <= index < len(self.items)):
+            return
+        item = self.items[index]
+        origin = (
+            "Occurrence utilisateur"
+            if item.get("_source") == "user"
+            else "Occurrence fournie avec l’extension"
+        )
+        replacements = item.get("remplacements", [])
+        lines = "\n".join(f"• {value}" for value in replacements) or "—"
+        self.detail_box.Text = (
+            f"{item.get('occurrence', '').upper()}\n"
+            f"Origine : {origin}\n\n"
+            f"Remplacements possibles :\n{lines}\n\n"
+            f"Remplacement préféré : {item.get('prefere') or '—'}"
+        )
+        note = item.get("note")
+        if note:
+            self.detail_box.Text += f"\n\nNOTE\n{note}"
+        self.status_label.getModel().Label = origin
+
+    def _current(self):
+        pos = self.items_box.SelectedItemPos
+        if 0 <= pos < len(self.items):
+            return pos, self.items[pos]
+        return -1, None
+
+    def new_item(self):
+        item = {
+            "occurrence": "",
+            "remplacements": [],
+            "prefere": "",
+            "note": "",
+            "_source": "user",
+        }
+        open_occurrence_editor(self, item, True)
+
+    def edit_current(self):
+        _index, item = self._current()
+        if not item:
+            return
+        if item.get("_source") != "user":
+            self.status_label.getModel().Label = (
+                "Les occurrences fournies sont protégées"
+            )
+            return
+        open_occurrence_editor(self, item, False)
+
+    def delete_current(self):
+        index, item = self._current()
+        if not item:
+            return
+        if item.get("_source") != "user":
+            self.status_label.getModel().Label = (
+                "Les occurrences fournies ne peuvent pas être supprimées"
+            )
+            return
+        try:
+            self.user_items.remove(item)
+        except ValueError:
+            return
+        _save_user_occurrences(self.user_items)
+        self._populate(max(index - 1, 0))
+        self._notify_verification()
+        self.status_label.getModel().Label = "Occurrence utilisateur supprimée"
+
+    def save_from_editor(self, item, is_new):
+        if is_new:
+            self.user_items.append(item)
+        _save_user_occurrences(self.user_items)
+        self._populate()
+        self._notify_verification()
+        for index, current in enumerate(self.items):
+            if current is item:
+                self.items_box.selectItemPos(index, True)
+                self._show(index)
+                break
+
+    def _notify_verification(self):
+        if self.verification_listener is not None:
+            try:
+                self.verification_listener.reload_occurrences()
+            except Exception:
+                pass
+
+    def actionPerformed(self, event):
+        if event.ActionCommand == "new":
+            self.new_item()
+        elif event.ActionCommand == "edit":
+            self.edit_current()
+        elif event.ActionCommand == "delete":
+            self.delete_current()
+        elif event.ActionCommand == "close":
+            self._close_dialog()
+
+    def itemStateChanged(self, event):
+        pos = self.items_box.SelectedItemPos
+        if 0 <= pos < len(self.items):
+            self._show(pos)
+
+    def _close_dialog(self):
+        if self._closing:
+            return
+        self._closing = True
+        try:
+            try:
+                self.dialog.removeTopWindowListener(self)
+            except Exception:
+                pass
+            self.dialog.setVisible(False)
+            self.dialog.dispose()
+        finally:
+            _OPEN_OCCURRENCE_WINDOWS[:] = [
+                item for item in _OPEN_OCCURRENCE_WINDOWS
+                if item.get("dialog") is not self.dialog
+            ]
+
+    def windowClosing(self, event):
+        self._close_dialog()
+    def windowOpened(self, event): pass
+    def windowClosed(self, event): pass
+    def windowMinimized(self, event): pass
+    def windowNormalized(self, event): pass
+    def windowActivated(self, event): pass
+    def windowDeactivated(self, event): pass
+    def disposing(self, event): pass
+
+
+class OccurrenceEditorListener(
+    unohelper.Base,
+    XActionListener,
+    XTopWindowListener,
+):
+    def __init__(
+        self,
+        dialog,
+        parent_listener,
+        item,
+        is_new,
+        occurrence_box,
+        replacements_box,
+        preferred_box,
+        note_box,
+        status_label,
+    ):
+        self.dialog = dialog
+        self.parent_listener = parent_listener
+        self.item = item
+        self.is_new = is_new
+        self.occurrence_box = occurrence_box
+        self.replacements_box = replacements_box
+        self.preferred_box = preferred_box
+        self.note_box = note_box
+        self.status_label = status_label
+        self._closing = False
+
+    def save(self):
+        occurrence = (self.occurrence_box.Text or "").strip()
+        replacements = [
+            line.strip()
+            for line in (self.replacements_box.Text or "").splitlines()
+            if line.strip()
+        ]
+        preferred = (self.preferred_box.Text or "").strip()
+        if not occurrence:
+            self.status_label.getModel().Label = (
+                "L’occurrence à détecter est obligatoire"
+            )
+            return
+        if not replacements:
+            self.status_label.getModel().Label = (
+                "Ajoutez au moins un remplacement"
+            )
+            return
+        if not preferred:
+            preferred = replacements[0]
+        if preferred not in replacements:
+            replacements.insert(0, preferred)
+
+        self.item["occurrence"] = occurrence
+        self.item["remplacements"] = replacements
+        self.item["prefere"] = preferred
+        self.item["note"] = (self.note_box.Text or "").strip()
+        self.item["_source"] = "user"
+        self.parent_listener.save_from_editor(self.item, self.is_new)
+        self._close_dialog()
+
+    def actionPerformed(self, event):
+        if event.ActionCommand == "save":
+            self.save()
+        elif event.ActionCommand == "cancel":
+            self._close_dialog()
+
+    def _close_dialog(self):
+        if self._closing:
+            return
+        self._closing = True
+        try:
+            try:
+                self.dialog.removeTopWindowListener(self)
+            except Exception:
+                pass
+            self.dialog.setVisible(False)
+            self.dialog.dispose()
+        finally:
+            _OPEN_OCCURRENCE_EDITOR_WINDOWS[:] = [
+                item for item in _OPEN_OCCURRENCE_EDITOR_WINDOWS
+                if item.get("dialog") is not self.dialog
+            ]
+
+    def windowClosing(self, event):
+        self._close_dialog()
+    def windowOpened(self, event): pass
+    def windowClosed(self, event): pass
+    def windowMinimized(self, event): pass
+    def windowNormalized(self, event): pass
+    def windowActivated(self, event): pass
+    def windowDeactivated(self, event): pass
+    def disposing(self, event): pass
 
 
 class ScenarioListener(
@@ -1754,6 +2127,8 @@ def open_verification(*args):
         8, 208, 104, 16, Label="Remplacer cette occurrence", Enabled=False)
     add("btnVerifyRescan", "com.sun.star.awt.UnoControlButtonModel",
         118, 208, 78, 16, Label="Revérifier")
+    add("btnVerifyManage", "com.sun.star.awt.UnoControlButtonModel",
+        202, 208, 90, 16, Label="Gérer les occurrences")
     add("btnVerifyClose", "com.sun.star.awt.UnoControlButtonModel",
         240, 228, 52, 16, Label="Fermer")
 
@@ -1775,6 +2150,7 @@ def open_verification(*args):
     for control_name, command in [
         ("btnVerifyReplace", "replace"),
         ("btnVerifyRescan", "rescan"),
+        ("btnVerifyManage", "manage_occurrences"),
         ("btnVerifyClose", "close"),
     ]:
         control = dialog.getControl(control_name)
@@ -1784,6 +2160,159 @@ def open_verification(*args):
     dialog.getControl("lstVerifyAlerts").addItemListener(listener)
     dialog.addTopWindowListener(listener)
     _OPEN_VERIFY_WINDOWS.append({"dialog": dialog, "listener": listener})
+    dialog.setVisible(True)
+
+
+def open_occurrence_editor(parent_listener, item, is_new=False):
+    ctx = _ctx()
+    smgr = ctx.ServiceManager
+    toolkit = smgr.createInstanceWithContext("com.sun.star.awt.Toolkit", ctx)
+    model = smgr.createInstanceWithContext(
+        "com.sun.star.awt.UnoControlDialogModel", ctx
+    )
+    model.PositionX = 108
+    model.PositionY = 62
+    model.Width = 360
+    model.Height = 250
+    model.Title = "Occurrence utilisateur"
+
+    def add(name, service, x, y, w, h, **props):
+        control = model.createInstance(service)
+        control.Name = name
+        control.PositionX, control.PositionY = x, y
+        control.Width, control.Height = w, h
+        for key, value in props.items():
+            setattr(control, key, value)
+        model.insertByName(name, control)
+
+    add("lblOccurrence", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 8, 100, 10, Label="Occurrence à détecter :")
+    add("txtOccurrence", "com.sun.star.awt.UnoControlEditModel",
+        8, 20, 344, 16, Text=item.get("occurrence", ""))
+    add("lblReplacements", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 46, 180, 10, Label="Remplacements possibles — un par ligne :")
+    add("txtReplacements", "com.sun.star.awt.UnoControlEditModel",
+        8, 58, 344, 70, MultiLine=True, VScroll=True,
+        Text="\n".join(item.get("remplacements", [])))
+    add("lblPreferred", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 138, 100, 10, Label="Remplacement préféré :")
+    add("txtPreferred", "com.sun.star.awt.UnoControlEditModel",
+        8, 150, 344, 16, Text=item.get("prefere", ""))
+    add("lblOccurrenceNote", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 176, 80, 10, Label="Note facultative :")
+    add("txtOccurrenceNote", "com.sun.star.awt.UnoControlEditModel",
+        8, 188, 344, 30, MultiLine=True, VScroll=True,
+        Text=item.get("note", ""))
+    add("lblOccurrenceEditStatus", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 224, 190, 10, Label="")
+    add("btnOccurrenceCancel", "com.sun.star.awt.UnoControlButtonModel",
+        232, 226, 54, 18, Label="Annuler")
+    add("btnOccurrenceSave", "com.sun.star.awt.UnoControlButtonModel",
+        292, 226, 60, 18, Label="Enregistrer")
+
+    dialog = smgr.createInstanceWithContext(
+        "com.sun.star.awt.UnoControlDialog", ctx
+    )
+    dialog.setModel(model)
+    dialog.createPeer(toolkit, None)
+
+    listener = OccurrenceEditorListener(
+        dialog,
+        parent_listener,
+        item,
+        is_new,
+        dialog.getControl("txtOccurrence"),
+        dialog.getControl("txtReplacements"),
+        dialog.getControl("txtPreferred"),
+        dialog.getControl("txtOccurrenceNote"),
+        dialog.getControl("lblOccurrenceEditStatus"),
+    )
+    for control_name, command in [
+        ("btnOccurrenceSave", "save"),
+        ("btnOccurrenceCancel", "cancel"),
+    ]:
+        control = dialog.getControl(control_name)
+        control.setActionCommand(command)
+        control.addActionListener(listener)
+
+    dialog.addTopWindowListener(listener)
+    _OPEN_OCCURRENCE_EDITOR_WINDOWS.append({
+        "dialog": dialog,
+        "listener": listener,
+    })
+    dialog.setVisible(True)
+
+
+def open_occurrence_manager(verification_listener=None):
+    ctx = _ctx()
+    smgr = ctx.ServiceManager
+    toolkit = smgr.createInstanceWithContext("com.sun.star.awt.Toolkit", ctx)
+    model = smgr.createInstanceWithContext(
+        "com.sun.star.awt.UnoControlDialogModel", ctx
+    )
+    model.PositionX = 96
+    model.PositionY = 58
+    model.Width = 390
+    model.Height = 292
+    model.Title = "Gestion des occurrences"
+
+    def add(name, service, x, y, w, h, **props):
+        control = model.createInstance(service)
+        control.Name = name
+        control.PositionX, control.PositionY = x, y
+        control.Width, control.Height = w, h
+        for key, value in props.items():
+            setattr(control, key, value)
+        model.insertByName(name, control)
+
+    add("lblOccurrences", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 8, 142, 10, Label="Occurrences à détecter")
+    add("lstOccurrences", "com.sun.star.awt.UnoControlListBoxModel",
+        8, 20, 142, 232)
+    add("txtOccurrenceDetail", "com.sun.star.awt.UnoControlEditModel",
+        158, 20, 224, 232, MultiLine=True, ReadOnly=True, VScroll=True)
+    add("lblOccurrenceStatus", "com.sun.star.awt.UnoControlFixedTextModel",
+        158, 258, 150, 10, Label="")
+    add("btnOccurrenceNew", "com.sun.star.awt.UnoControlButtonModel",
+        8, 256, 52, 16, Label="Nouveau")
+    add("btnOccurrenceEdit", "com.sun.star.awt.UnoControlButtonModel",
+        64, 256, 52, 16, Label="Modifier")
+    add("btnOccurrenceDelete", "com.sun.star.awt.UnoControlButtonModel",
+        120, 256, 58, 16, Label="Supprimer")
+    add("btnOccurrenceClose", "com.sun.star.awt.UnoControlButtonModel",
+        330, 274, 52, 14, Label="Fermer")
+
+    dialog = smgr.createInstanceWithContext(
+        "com.sun.star.awt.UnoControlDialog", ctx
+    )
+    dialog.setModel(model)
+    dialog.createPeer(toolkit, None)
+
+    listener = OccurrenceManagerListener(
+        dialog,
+        dialog.getControl("lstOccurrences"),
+        dialog.getControl("txtOccurrenceDetail"),
+        dialog.getControl("lblOccurrenceStatus"),
+        verification_listener,
+        _load_builtin_occurrences(),
+        _load_user_occurrences(),
+    )
+    for control_name, command in [
+        ("btnOccurrenceNew", "new"),
+        ("btnOccurrenceEdit", "edit"),
+        ("btnOccurrenceDelete", "delete"),
+        ("btnOccurrenceClose", "close"),
+    ]:
+        control = dialog.getControl(control_name)
+        control.setActionCommand(command)
+        control.addActionListener(listener)
+
+    dialog.getControl("lstOccurrences").addItemListener(listener)
+    dialog.addTopWindowListener(listener)
+    _OPEN_OCCURRENCE_WINDOWS.append({
+        "dialog": dialog,
+        "listener": listener,
+    })
     dialog.setVisible(True)
 
 
