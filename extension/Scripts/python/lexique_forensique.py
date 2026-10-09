@@ -15,6 +15,7 @@ from com.sun.star.awt import XActionListener, XItemListener, XMouseListener, XTo
 _OPEN_LEXICON_WINDOWS = []
 _OPEN_VERIFY_WINDOWS = []
 _OPEN_SCENARIO_WINDOWS = []
+_OPEN_SCENARIO_EDITOR_WINDOWS = []
 _OPEN_ABOUT_WINDOWS = []
 
 CURRENT_VERSION = "0.7.16"
@@ -741,26 +742,40 @@ class ScenarioListener(
         self.status_label.getModel().Label = "Scénario dupliqué"
 
     def new_from_current(self):
-        index = self._current_index()
-        if index >= 0:
-            source = self.scenarios[index]
-            steps = list(source.get("etapes", []))
-            category = source.get("categorie", "Personnalisé")
-        else:
-            steps = []
-            category = "Personnalisé"
         item = {
             "id": "user-" + str(len(self.user_scenarios) + 1),
             "titre": "Nouveau scénario",
-            "categorie": category,
-            "description": "Scénario utilisateur à personnaliser.",
-            "etapes": steps,
+            "categorie": "Personnalisé",
+            "description": "",
+            "etapes": [],
             "_source": "user",
         }
         self.user_scenarios.append(item)
         _save_user_scenarios(self.user_scenarios)
-        self._populate(len(self.builtin_scenarios) + len(self.user_scenarios) - 1)
-        self.status_label.getModel().Label = "Nouveau scénario créé"
+        index = len(self.builtin_scenarios) + len(self.user_scenarios) - 1
+        self._populate(index)
+        open_scenario_editor(self, item)
+
+    def edit_current(self):
+        index = self._current_index()
+        if index < 0:
+            return
+        scenario = self.scenarios[index]
+        if scenario.get("_source") != "user":
+            duplicate = {
+                "id": "user-" + str(len(self.user_scenarios) + 1),
+                "titre": scenario.get("titre", "Scénario") + " — personnalisé",
+                "categorie": scenario.get("categorie", "Personnalisé"),
+                "description": scenario.get("description", ""),
+                "etapes": [dict(step) for step in scenario.get("etapes", [])],
+                "_source": "user",
+            }
+            self.user_scenarios.append(duplicate)
+            _save_user_scenarios(self.user_scenarios)
+            scenario = duplicate
+            index = len(self.builtin_scenarios) + len(self.user_scenarios) - 1
+            self._populate(index)
+        open_scenario_editor(self, scenario)
 
     def delete_current(self):
         index = self._current_index()
@@ -784,6 +799,8 @@ class ScenarioListener(
             self.new_from_current()
         elif event.ActionCommand == "duplicate":
             self.duplicate_current()
+        elif event.ActionCommand == "edit":
+            self.edit_current()
         elif event.ActionCommand == "delete":
             self.delete_current()
         elif event.ActionCommand == "close":
@@ -801,6 +818,210 @@ class ScenarioListener(
         finally:
             _OPEN_SCENARIO_WINDOWS[:] = [
                 item for item in _OPEN_SCENARIO_WINDOWS
+                if item.get("dialog") is not self.dialog
+            ]
+
+    def windowClosing(self, event):
+        self._close_dialog()
+
+    def windowOpened(self, event):
+        pass
+
+    def windowClosed(self, event):
+        pass
+
+    def windowMinimized(self, event):
+        pass
+
+    def windowNormalized(self, event):
+        pass
+
+    def windowActivated(self, event):
+        pass
+
+    def windowDeactivated(self, event):
+        pass
+
+    def disposing(self, event):
+        pass
+
+
+class ScenarioEditorListener(
+    unohelper.Base,
+    XActionListener,
+    XItemListener,
+    XTopWindowListener,
+):
+    def __init__(
+        self,
+        dialog,
+        parent_listener,
+        scenario,
+        title_box,
+        category_box,
+        description_box,
+        steps_box,
+        term_box,
+        formulation_box,
+        status_label,
+    ):
+        self.dialog = dialog
+        self.parent_listener = parent_listener
+        self.scenario = scenario
+        self.title_box = title_box
+        self.category_box = category_box
+        self.description_box = description_box
+        self.steps_box = steps_box
+        self.term_box = term_box
+        self.formulation_box = formulation_box
+        self.status_label = status_label
+        self.data = parent_listener.data
+        self.entries = sorted(
+            [e for e in self.data if _report_formulations(e)],
+            key=lambda e: _normalize(e.get("terme", "")),
+        )
+        self.steps = [dict(step) for step in scenario.get("etapes", [])]
+        self._populate_terms()
+        self._populate_steps()
+
+    def _clear(self, control):
+        if control.ItemCount:
+            control.removeItems(0, control.ItemCount)
+
+    def _populate_terms(self):
+        self._clear(self.term_box)
+        for entry in self.entries:
+            self.term_box.addItem(entry.get("terme", ""), self.term_box.ItemCount)
+        if self.entries:
+            self.term_box.selectItemPos(0, True)
+            self._populate_formulations(0)
+
+    def _populate_formulations(self, entry_index):
+        self._clear(self.formulation_box)
+        if not (0 <= entry_index < len(self.entries)):
+            return
+        for label, _text in _report_formulations(self.entries[entry_index]):
+            self.formulation_box.addItem(label, self.formulation_box.ItemCount)
+        if self.formulation_box.ItemCount:
+            self.formulation_box.selectItemPos(0, True)
+
+    def _step_label(self, step):
+        entry = next(
+            (e for e in self.data if e.get("id") == step.get("terme")),
+            None,
+        )
+        term = entry.get("terme", step.get("terme", "Terme")) if entry else step.get("terme", "Terme")
+        return f"{term} — {step.get('formulation', '')}"
+
+    def _populate_steps(self, select_index=None):
+        self._clear(self.steps_box)
+        for step in self.steps:
+            self.steps_box.addItem(
+                self._step_label(step),
+                self.steps_box.ItemCount,
+            )
+        if self.steps:
+            if select_index is None:
+                select_index = 0
+            select_index = min(max(select_index, 0), len(self.steps) - 1)
+            self.steps_box.selectItemPos(select_index, True)
+        self.status_label.getModel().Label = (
+            f"{len(self.steps)} phrase" if len(self.steps) == 1
+            else f"{len(self.steps)} phrases"
+        )
+
+    def _selected_term_index(self):
+        pos = self.term_box.SelectedItemPos
+        return pos if 0 <= pos < len(self.entries) else -1
+
+    def _selected_step_index(self):
+        pos = self.steps_box.SelectedItemPos
+        return pos if 0 <= pos < len(self.steps) else -1
+
+    def add_step(self):
+        entry_index = self._selected_term_index()
+        if entry_index < 0:
+            return
+        form_pos = self.formulation_box.SelectedItemPos
+        formulations = _report_formulations(self.entries[entry_index])
+        if not (0 <= form_pos < len(formulations)):
+            return
+        label, _text = formulations[form_pos]
+        self.steps.append({
+            "terme": self.entries[entry_index].get("id"),
+            "formulation": label,
+        })
+        self._populate_steps(len(self.steps) - 1)
+
+    def remove_step(self):
+        index = self._selected_step_index()
+        if index < 0:
+            return
+        self.steps.pop(index)
+        self._populate_steps(max(index - 1, 0))
+
+    def move_step(self, delta):
+        index = self._selected_step_index()
+        target = index + delta
+        if index < 0 or not (0 <= target < len(self.steps)):
+            return
+        self.steps[index], self.steps[target] = self.steps[target], self.steps[index]
+        self._populate_steps(target)
+
+    def save(self):
+        title = (self.title_box.Text or "").strip()
+        if not title:
+            self.status_label.getModel().Label = "Le titre est obligatoire"
+            return
+        self.scenario["titre"] = title
+        self.scenario["categorie"] = (
+            (self.category_box.Text or "").strip() or "Personnalisé"
+        )
+        self.scenario["description"] = (self.description_box.Text or "").strip()
+        self.scenario["etapes"] = [dict(step) for step in self.steps]
+        self.scenario["_source"] = "user"
+        _save_user_scenarios(self.parent_listener.user_scenarios)
+        selected = (
+            len(self.parent_listener.builtin_scenarios)
+            + self.parent_listener.user_scenarios.index(self.scenario)
+        )
+        self.parent_listener._populate(selected)
+        self.parent_listener.status_label.getModel().Label = (
+            "Scénario personnalisé enregistré"
+        )
+        self._close_dialog()
+
+    def actionPerformed(self, event):
+        cmd = event.ActionCommand
+        if cmd == "add":
+            self.add_step()
+        elif cmd == "remove":
+            self.remove_step()
+        elif cmd == "up":
+            self.move_step(-1)
+        elif cmd == "down":
+            self.move_step(1)
+        elif cmd == "save":
+            self.save()
+        elif cmd == "cancel":
+            self._close_dialog()
+
+    def itemStateChanged(self, event):
+        source_name = ""
+        try:
+            source_name = event.Source.getModel().Name
+        except Exception:
+            pass
+        if source_name == "cmbEditTerm":
+            self._populate_formulations(event.Source.SelectedItemPos)
+
+    def _close_dialog(self):
+        try:
+            self.dialog.setVisible(False)
+            self.dialog.dispose()
+        finally:
+            _OPEN_SCENARIO_EDITOR_WINDOWS[:] = [
+                item for item in _OPEN_SCENARIO_EDITOR_WINDOWS
                 if item.get("dialog") is not self.dialog
             ]
 
@@ -940,6 +1161,113 @@ def open_verification(*args):
     dialog.setVisible(True)
 
 
+def open_scenario_editor(parent_listener, scenario):
+    ctx = _ctx()
+    smgr = ctx.ServiceManager
+    toolkit = smgr.createInstanceWithContext("com.sun.star.awt.Toolkit", ctx)
+    model = smgr.createInstanceWithContext(
+        "com.sun.star.awt.UnoControlDialogModel", ctx
+    )
+    model.PositionX = 105
+    model.PositionY = 60
+    model.Width = 420
+    model.Height = 320
+    model.Title = "Personnaliser le scénario"
+
+    def add(name, service, x, y, w, h, **props):
+        item = model.createInstance(service)
+        item.Name = name
+        item.PositionX, item.PositionY = x, y
+        item.Width, item.Height = w, h
+        for key, value in props.items():
+            setattr(item, key, value)
+        model.insertByName(name, item)
+
+    add("lblEditTitle", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 8, 44, 10, Label="Titre :")
+    add("txtEditTitle", "com.sun.star.awt.UnoControlEditModel",
+        54, 6, 358, 14, Text=scenario.get("titre", ""))
+    add("lblEditCategory", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 28, 44, 10, Label="Catégorie :")
+    add("txtEditCategory", "com.sun.star.awt.UnoControlEditModel",
+        54, 26, 160, 14, Text=scenario.get("categorie", "Personnalisé"))
+    add("lblEditDescription", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 48, 52, 10, Label="Description :")
+    add("txtEditDescription", "com.sun.star.awt.UnoControlEditModel",
+        8, 60, 404, 42, MultiLine=True, VScroll=True,
+        Text=scenario.get("description", ""))
+
+    add("lblEditSteps", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 110, 150, 10, Label="Composition du scénario")
+    add("lstEditSteps", "com.sun.star.awt.UnoControlListBoxModel",
+        8, 122, 202, 142)
+    add("btnStepUp", "com.sun.star.awt.UnoControlButtonModel",
+        8, 268, 34, 16, Label="↑")
+    add("btnStepDown", "com.sun.star.awt.UnoControlButtonModel",
+        46, 268, 34, 16, Label="↓")
+    add("btnStepRemove", "com.sun.star.awt.UnoControlButtonModel",
+        84, 268, 58, 16, Label="Retirer")
+
+    add("lblAddTerm", "com.sun.star.awt.UnoControlFixedTextModel",
+        220, 110, 70, 10, Label="Ajouter une phrase")
+    add("lblEditTerm", "com.sun.star.awt.UnoControlFixedTextModel",
+        220, 130, 42, 10, Label="Terme :")
+    add("cmbEditTerm", "com.sun.star.awt.UnoControlComboBoxModel",
+        220, 142, 192, 14, Dropdown=True)
+    add("lblEditFormulation", "com.sun.star.awt.UnoControlFixedTextModel",
+        220, 164, 60, 10, Label="Formulation :")
+    add("cmbEditFormulation", "com.sun.star.awt.UnoControlComboBoxModel",
+        220, 176, 192, 14, Dropdown=True)
+    add("btnStepAdd", "com.sun.star.awt.UnoControlButtonModel",
+        318, 198, 94, 16, Label="Ajouter la phrase")
+
+    add("lblEditStatus", "com.sun.star.awt.UnoControlFixedTextModel",
+        220, 226, 192, 10, Label="")
+    add("btnEditSave", "com.sun.star.awt.UnoControlButtonModel",
+        304, 286, 108, 18, Label="Enregistrer")
+    add("btnEditCancel", "com.sun.star.awt.UnoControlButtonModel",
+        242, 286, 56, 18, Label="Annuler")
+
+    dialog = smgr.createInstanceWithContext(
+        "com.sun.star.awt.UnoControlDialog", ctx
+    )
+    dialog.setModel(model)
+    dialog.createPeer(toolkit, None)
+
+    listener = ScenarioEditorListener(
+        dialog,
+        parent_listener,
+        scenario,
+        dialog.getControl("txtEditTitle"),
+        dialog.getControl("txtEditCategory"),
+        dialog.getControl("txtEditDescription"),
+        dialog.getControl("lstEditSteps"),
+        dialog.getControl("cmbEditTerm"),
+        dialog.getControl("cmbEditFormulation"),
+        dialog.getControl("lblEditStatus"),
+    )
+
+    for control_name, command in [
+        ("btnStepAdd", "add"),
+        ("btnStepRemove", "remove"),
+        ("btnStepUp", "up"),
+        ("btnStepDown", "down"),
+        ("btnEditSave", "save"),
+        ("btnEditCancel", "cancel"),
+    ]:
+        control = dialog.getControl(control_name)
+        control.setActionCommand(command)
+        control.addActionListener(listener)
+
+    dialog.getControl("cmbEditTerm").addItemListener(listener)
+    dialog.addTopWindowListener(listener)
+    _OPEN_SCENARIO_EDITOR_WINDOWS.append({
+        "dialog": dialog,
+        "listener": listener,
+    })
+    dialog.setVisible(True)
+
+
 def open_scenarios(*args):
     ctx = _ctx()
     smgr = ctx.ServiceManager
@@ -971,11 +1299,13 @@ def open_scenarios(*args):
     add("lblScenarioStatus", "com.sun.star.awt.UnoControlFixedTextModel",
         158, 258, 96, 10, Label="")
     add("btnScenarioNew", "com.sun.star.awt.UnoControlButtonModel",
-        8, 256, 44, 16, Label="Nouveau")
+        8, 256, 42, 16, Label="Nouveau")
     add("btnScenarioDuplicate", "com.sun.star.awt.UnoControlButtonModel",
-        56, 256, 50, 16, Label="Dupliquer")
+        54, 256, 48, 16, Label="Dupliquer")
+    add("btnScenarioEdit", "com.sun.star.awt.UnoControlButtonModel",
+        106, 256, 44, 16, Label="Modifier")
     add("btnScenarioDelete", "com.sun.star.awt.UnoControlButtonModel",
-        110, 256, 40, 16, Label="Supprimer")
+        8, 276, 48, 14, Label="Supprimer")
     add("btnScenarioInsert", "com.sun.star.awt.UnoControlButtonModel",
         274, 256, 108, 16, Label="Insérer le scénario")
     add("btnScenarioClose", "com.sun.star.awt.UnoControlButtonModel",
@@ -999,6 +1329,7 @@ def open_scenarios(*args):
     for control_name, command in [
         ("btnScenarioNew", "new"),
         ("btnScenarioDuplicate", "duplicate"),
+        ("btnScenarioEdit", "edit"),
         ("btnScenarioDelete", "delete"),
         ("btnScenarioInsert", "insert"),
         ("btnScenarioClose", "close"),
