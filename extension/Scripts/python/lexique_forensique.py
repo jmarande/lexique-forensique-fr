@@ -1108,21 +1108,40 @@ def _release_notes_text(release):
 def _download_update(download_url, expected_sha256):
     update_dir = tempfile.mkdtemp(prefix="lexique-forensique-fr-")
     target = os.path.join(update_dir, UPDATE_ASSET_NAME)
-    request = urllib.request.Request(
-        download_url,
-        headers={"User-Agent": "Lexique-forensique-FR-LibreOffice"},
+
+    urls = [download_url]
+    if expected_sha256:
+        separator = "&" if "?" in download_url else "?"
+        urls.append(
+            download_url
+            + separator
+            + "lexique_sha256="
+            + expected_sha256[:12]
+        )
+
+    last_digest = ""
+    for url in urls:
+        request = urllib.request.Request(
+            url,
+            headers={
+                "User-Agent": "Lexique-forensique-FR-LibreOffice",
+                "Cache-Control": "no-cache",
+                "Pragma": "no-cache",
+            },
+        )
+        with urllib.request.urlopen(request, timeout=30) as response:
+            data = response.read()
+
+        last_digest = hashlib.sha256(data).hexdigest().lower()
+        if not expected_sha256 or last_digest == expected_sha256.lower():
+            with open(target, "wb") as f:
+                f.write(data)
+            return target
+
+    raise RuntimeError(
+        "L'empreinte SHA-256 de la mise à jour ne correspond pas "
+        "(téléchargement possiblement mis en cache par GitHub)."
     )
-    with urllib.request.urlopen(request, timeout=30) as response:
-        data = response.read()
-
-    digest = hashlib.sha256(data).hexdigest().lower()
-    if expected_sha256 and digest != expected_sha256.lower():
-        raise RuntimeError("L'empreinte SHA-256 de la mise à jour ne correspond pas.")
-
-    with open(target, "wb") as f:
-        f.write(data)
-
-    return target
 
 
 def check_updates(*args):
