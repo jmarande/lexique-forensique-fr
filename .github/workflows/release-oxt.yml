@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Version à publier (ex. 0.6.0 ou v0.6.0)"
+        description: "Version à publier (ex. 0.7.20 ou v0.7.20)"
         required: true
         type: string
 
@@ -48,7 +48,7 @@ jobs:
         shell: bash
         run: |
           VERSION="${RELEASE_TAG#v}"
-          python - "$VERSION" <<'PY'
+          python - "${VERSION}" <<'PY'
           from pathlib import Path
           import re
           import sys
@@ -58,27 +58,7 @@ jobs:
           script = Path("extension/Scripts/python/lexique_forensique.py")
           text = script.read_text(encoding="utf-8")
           text, count = re.subn(
-              r'^CURRENT_VERSION = "[^"]+"
-      - name: Publish or update GitHub release
-        env:
-          GH_TOKEN: ${{ github.token }}
-          RELEASE_TAG: ${{ steps.version.outputs.tag }}
-        shell: bash
-        run: |
-          if gh release view "${RELEASE_TAG}" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1; then
-            gh release upload "${RELEASE_TAG}" \
-              lexique-forensique-fr.oxt \
-              --repo "${GITHUB_REPOSITORY}" \
-              --clobber
-          else
-            gh release create "${RELEASE_TAG}" \
-              lexique-forensique-fr.oxt \
-              --repo "${GITHUB_REPOSITORY}" \
-              --target "${GITHUB_SHA}" \
-              --title "${RELEASE_TAG}" \
-              --generate-notes
-          fi
-,
+              r'^CURRENT_VERSION = "[^"]+"$',
               f'CURRENT_VERSION = "{version}"',
               text,
               count=1,
@@ -109,8 +89,8 @@ jobs:
         shell: bash
         run: |
           VERSION="${RELEASE_TAG#v}"
-          grep -F "CURRENT_VERSION = \"${VERSION}\""             extension/Scripts/python/lexique_forensique.py
-          grep -F "<version value=\"${VERSION}\"/>"             extension/description.xml
+          grep -F "CURRENT_VERSION = \"${VERSION}\"" extension/Scripts/python/lexique_forensique.py
+          grep -F "<version value=\"${VERSION}\"/>" extension/description.xml
 
       - name: Build OXT
         run: |
