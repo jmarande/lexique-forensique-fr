@@ -14,7 +14,12 @@ Le projet français vise à :
 
 - conserver l’équivalence avec le terme anglais lorsqu’elle est pertinente ;
 - adapter la définition au contexte professionnel francophone ;
-- conserver dans les données les synonymes, termes déconseillés et sources utiles ;
-- fournir des formulations adaptées à la rédaction de rapports.
+- conserver synonymes, termes déconseillés, points d’attention et sources utiles ;
+- fournir des formulations adaptées à la rédaction de rapports ;
+- distinguer les concepts terminologiques du mécanisme de francisation des libellés d’exports.
 
 La provenance reste enregistrée dans les entrées dérivées du document, même si les sources ne sont pas affichées dans la fiche principale de l’extension.
+
+## Limite
+
+CLARUS constitue une source terminologique de référence, mais ne couvre pas à lui seul toutes les formulations, applications, libellés logiciels ou usages professionnels ajoutés au projet. Les ajouts non directement dérivés de CLARUS doivent conserver leur propre justification ou source lorsqu’elle est disponible.
