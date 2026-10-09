@@ -1346,7 +1346,6 @@ class TermEditorListener(
         synonyms_box,
         definition_box,
         formulations_box,
-        formulation_type_box,
         formulation_text_box,
         status_label,
     ):
@@ -1359,12 +1358,11 @@ class TermEditorListener(
         self.synonyms_box = synonyms_box
         self.definition_box = definition_box
         self.formulations_box = formulations_box
-        self.formulation_type_box = formulation_type_box
         self.formulation_text_box = formulation_text_box
         self.status_label = status_label
         self._closing = False
         self.formulations = [
-            {"type": label, "texte": text}
+            {"type": label or "Formulation", "texte": text}
             for label, text in _report_formulations(entry)
         ]
         self._populate_formulations()
@@ -1376,8 +1374,10 @@ class TermEditorListener(
     def _populate_formulations(self, select_index=None):
         self._clear(self.formulations_box)
         for item in self.formulations:
+            text = (item.get("texte") or "").strip()
+            label = text if len(text) <= 52 else text[:49].rstrip() + "…"
             self.formulations_box.addItem(
-                item.get("type", "Proposition"),
+                label or "(formulation vide)",
                 self.formulations_box.ItemCount,
             )
         if self.formulations:
@@ -1387,7 +1387,6 @@ class TermEditorListener(
             self.formulations_box.selectItemPos(select_index, True)
             self._load_formulation(select_index)
         else:
-            self.formulation_type_box.Text = ""
             self.formulation_text_box.Text = ""
         self.status_label.getModel().Label = (
             f"{len(self.formulations)} formulation"
@@ -1403,21 +1402,30 @@ class TermEditorListener(
         if not (0 <= index < len(self.formulations)):
             return
         item = self.formulations[index]
-        self.formulation_type_box.Text = item.get("type", "")
         self.formulation_text_box.Text = item.get("texte", "")
 
     def _commit_current_formulation(self):
         index = self._selected_formulation_index()
         if index < 0:
             return
-        label = (self.formulation_type_box.Text or "").strip() or "Proposition"
         text = (self.formulation_text_box.Text or "").strip()
+        label = self.formulations[index].get("type") or "Formulation"
         self.formulations[index] = {"type": label, "texte": text}
 
     def add_formulation(self):
-        self._commit_current_formulation()
+        current_text = (self.formulation_text_box.Text or "").strip()
+        index = self._selected_formulation_index()
+        if index >= 0:
+            self._commit_current_formulation()
+        elif current_text:
+            self.formulations.append({
+                "type": "Formulation",
+                "texte": current_text,
+            })
+            self._populate_formulations(len(self.formulations) - 1)
+            return
         self.formulations.append({
-            "type": "Nouvelle formulation",
+            "type": "Formulation",
             "texte": "",
         })
         self._populate_formulations(len(self.formulations) - 1)
@@ -1446,12 +1454,26 @@ class TermEditorListener(
         if not term:
             self.status_label.getModel().Label = "Le terme est obligatoire"
             return
-        self._commit_current_formulation()
+        index = self._selected_formulation_index()
+        current_text = (self.formulation_text_box.Text or "").strip()
+        if index >= 0:
+            self._commit_current_formulation()
+        elif current_text:
+            self.formulations.append({
+                "type": "Formulation",
+                "texte": current_text,
+            })
         self.entry["terme"] = term
         self.entry["anglais"] = (self.english_box.Text or "").strip()
-        self.entry["categorie"] = (
-            (self.category_box.Text or "").strip() or "Personnalisé"
-        )
+        category = ""
+        try:
+            category = (self.category_box.getSelectedItem() or "").strip()
+        except Exception:
+            try:
+                category = (self.category_box.getText() or "").strip()
+            except Exception:
+                category = ""
+        self.entry["categorie"] = category or "Personnalisé"
         self.entry["definition"] = (self.definition_box.Text or "").strip()
         self.entry["synonymes"] = [
             value.strip()
@@ -1847,14 +1869,27 @@ def open_term_editor(parent_listener, entry):
         8, 8, 44, 10, Label="Terme :")
     add("txtTerm", "com.sun.star.awt.UnoControlEditModel",
         54, 6, 368, 14, Text=entry.get("terme", ""))
+    categories = sorted(
+        {
+            e.get("categorie", "")
+            for e in parent_listener.builtin_data + parent_listener.user_data
+            if e.get("categorie", "")
+        },
+        key=_normalize,
+    )
+    if "Personnalisé" not in categories:
+        categories.append("Personnalisé")
+
     add("lblEnglish", "com.sun.star.awt.UnoControlFixedTextModel",
         8, 28, 44, 10, Label="Anglais :")
     add("txtEnglish", "com.sun.star.awt.UnoControlEditModel",
         54, 26, 156, 14, Text=entry.get("anglais", ""))
     add("lblTermCategory", "com.sun.star.awt.UnoControlFixedTextModel",
         220, 28, 50, 10, Label="Catégorie :")
-    add("txtTermCategory", "com.sun.star.awt.UnoControlEditModel",
-        272, 26, 150, 14, Text=entry.get("categorie", "Personnalisé"))
+    add("lstTermCategory", "com.sun.star.awt.UnoControlListBoxModel",
+        272, 26, 150, 14,
+        Dropdown=True,
+        StringItemList=tuple(categories))
     add("lblSynonyms", "com.sun.star.awt.UnoControlFixedTextModel",
         8, 48, 54, 10, Label="Synonymes :")
     add("txtSynonyms", "com.sun.star.awt.UnoControlEditModel",
@@ -1878,14 +1913,10 @@ def open_term_editor(parent_listener, entry):
     add("btnTermFormAdd", "com.sun.star.awt.UnoControlButtonModel",
         138, 286, 26, 16, Label="+")
 
-    add("lblFormType", "com.sun.star.awt.UnoControlFixedTextModel",
-        174, 160, 54, 10, Label="Intitulé :")
-    add("txtFormType", "com.sun.star.awt.UnoControlEditModel",
-        174, 172, 248, 14)
     add("lblFormText", "com.sun.star.awt.UnoControlFixedTextModel",
-        174, 194, 80, 10, Label="Phrase du rapport :")
+        174, 160, 120, 10, Label="Formulation pour rapport :")
     add("txtFormText", "com.sun.star.awt.UnoControlEditModel",
-        174, 206, 248, 76, MultiLine=True, VScroll=True)
+        174, 174, 248, 108, MultiLine=True, VScroll=True)
 
     add("lblTermEditStatus", "com.sun.star.awt.UnoControlFixedTextModel",
         174, 288, 120, 10, Label="")
@@ -1900,17 +1931,24 @@ def open_term_editor(parent_listener, entry):
     dialog.setModel(model)
     dialog.createPeer(toolkit, None)
 
+    category_control = dialog.getControl("lstTermCategory")
+    current_category = entry.get("categorie", "Personnalisé")
+    try:
+        category_control.selectItem(current_category, True)
+    except Exception:
+        if category_control.ItemCount:
+            category_control.selectItemPos(0, True)
+
     listener = TermEditorListener(
         dialog,
         parent_listener,
         entry,
         dialog.getControl("txtTerm"),
         dialog.getControl("txtEnglish"),
-        dialog.getControl("txtTermCategory"),
+        dialog.getControl("lstTermCategory"),
         dialog.getControl("txtSynonyms"),
         dialog.getControl("txtTermDefinition"),
         dialog.getControl("lstTermFormulations"),
-        dialog.getControl("txtFormType"),
         dialog.getControl("txtFormText"),
         dialog.getControl("lblTermEditStatus"),
     )
