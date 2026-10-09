@@ -77,6 +77,34 @@
     ]
   },
   {
+    "id": "artefact-forensique",
+    "terme": "Artefact forensique",
+    "anglais": "Forensic artifact",
+    "categorie": "Preuve numérique",
+    "definition": "Élément d’information interprété à partir de données numériques et présentant un intérêt pour l’examen forensique, par exemple un message, un appel, un compte, une localisation ou une activité applicative.",
+    "synonymes": [
+      "Artefact numérique"
+    ],
+    "termes_deconseilles": [],
+    "points_attention": [
+      "Un artefact résulte de l’interprétation de données présentes dans une source et doit être replacé dans son contexte.",
+      "Un artefact identifié par un logiciel ne permet pas toujours, à lui seul, d’attribuer une action à une personne."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Artefacts identifiés",
+        "texte": "L’examen des données extraites met en évidence plusieurs artefacts numériques susceptibles de présenter un intérêt au regard de la mission confiée."
+      },
+      {
+        "type": "Interprétation prudente",
+        "texte": "Les artefacts identifiés sont interprétés au regard de leur source, de leur contexte et des autres éléments disponibles."
+      }
+    ],
+    "sources": [
+      "Lexique forensique FR — usage professionnel"
+    ]
+  },
+  {
     "id": "authentification",
     "terme": "Authentification",
     "anglais": "Authentication",
@@ -267,6 +295,38 @@
     ]
   },
   {
+    "id": "decodage-donnees",
+    "terme": "Décodage des données",
+    "anglais": "Data decoding",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Opération consistant à interpréter des données brutes ou structurées afin de les rendre lisibles et exploitables pour l’analyse.",
+    "synonymes": [
+      "Décodage"
+    ],
+    "termes_deconseilles": [],
+    "points_attention": [
+      "Le décodage peut être complet ou partiel selon le format, l’état des données et les capacités de l’outil utilisé.",
+      "Une donnée décodée automatiquement doit être distinguée d’une donnée reconstruite lorsque le logiciel procède à une reconstitution."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Décodage réalisé",
+        "texte": "Nous procédons au décodage des données extraites afin de les rendre exploitables pour l’analyse."
+      },
+      {
+        "type": "Décodage partiel",
+        "texte": "Les données extraites ne peuvent être que partiellement décodées au moyen de nos outils."
+      },
+      {
+        "type": "Décodage impossible",
+        "texte": "Nos moyens techniques ne permettent pas de décoder les données extraites."
+      }
+    ],
+    "sources": [
+      "Lexique forensique FR — usage professionnel"
+    ]
+  },
+  {
     "id": "disque-dur",
     "terme": "Disque dur",
     "anglais": "Hard disk / Hard drive / HDD",
@@ -334,6 +394,10 @@
         "type": "Média supprimé",
         "texte": "Un média supprimé est identifié ; son contenu n’est pas disponible dans les données extraites."
       }
+    ],
+    "points_attention": [
+      "La présence d’une trace supprimée ne permet pas nécessairement de déterminer la date ou les circonstances de sa suppression.",
+      "Le contenu peut être partiellement ou totalement indisponible alors que des métadonnées ou références persistent."
     ]
   },
   {
@@ -469,6 +533,108 @@
     ]
   },
   {
+    "id": "extraction-systeme-fichiers",
+    "terme": "Extraction du système de fichiers",
+    "anglais": "File system extraction",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Méthode d’extraction visant à obtenir tout ou partie de la structure du système de fichiers et des fichiers accessibles d’un support ou d’un appareil.",
+    "synonymes": [
+      "Extraction filesystem",
+      "File system extraction"
+    ],
+    "termes_deconseilles": [],
+    "points_attention": [
+      "L’étendue des données obtenues dépend du niveau d’accès, du système, du chiffrement et de l’outil utilisé.",
+      "Une extraction du système de fichiers peut contenir des bases de données, fichiers applicatifs, journaux, caches et métadonnées."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Extraction réalisée",
+        "texte": "Nous procédons à une extraction du système de fichiers du support afin d’examiner les données accessibles."
+      },
+      {
+        "type": "Extraction partielle",
+        "texte": "Nos moyens techniques ne permettent d’obtenir qu’une extraction partielle du système de fichiers."
+      },
+      {
+        "type": "Extraction impossible",
+        "texte": "Nos moyens techniques ne permettent pas de procéder à l’extraction du système de fichiers du support."
+      }
+    ],
+    "sources": [
+      "Lexique forensique FR — usage professionnel"
+    ]
+  },
+  {
+    "id": "extraction-logique",
+    "terme": "Extraction logique",
+    "anglais": "Logical extraction",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Méthode d’extraction obtenant les données accessibles par les interfaces logiques du système, de l’application ou du protocole utilisé.",
+    "synonymes": [
+      "Acquisition logique"
+    ],
+    "termes_deconseilles": [],
+    "points_attention": [
+      "Une extraction logique ne restitue pas nécessairement l’ensemble des données présentes sur le support.",
+      "Le contenu obtenu dépend notamment de l’état du support, du niveau d’accès et des interfaces disponibles."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Extraction logique réalisée",
+        "texte": "Nous procédons à une extraction logique des données accessibles du support."
+      },
+      {
+        "type": "Extraction logique partielle",
+        "texte": "Nos moyens techniques ne permettent d’obtenir qu’une extraction logique partielle des données du support."
+      },
+      {
+        "type": "Échec de l’extraction logique",
+        "texte": "La tentative d’extraction logique des données du support échoue."
+      }
+    ],
+    "sources": [
+      "Lexique forensique FR — usage professionnel"
+    ]
+  },
+  {
+    "id": "fichier-multimedia",
+    "terme": "Fichier multimédia",
+    "anglais": "Media file",
+    "categorie": "Preuve numérique",
+    "definition": "Fichier contenant un contenu visuel ou sonore, notamment une photographie, une vidéo ou un enregistrement audio.",
+    "synonymes": [
+      "Média",
+      "Fichier média"
+    ],
+    "termes_deconseilles": [],
+    "points_attention": [
+      "La présence d’un fichier multimédia sur un support ne suffit pas, à elle seule, à établir son auteur, son origine ou les circonstances de sa création.",
+      "Les métadonnées associées peuvent contribuer à préciser le contexte mais doivent être interprétées avec prudence."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Fichiers identifiés",
+        "texte": "Nous identifions plusieurs fichiers multimédias susceptibles de présenter un intérêt au regard de la mission confiée."
+      },
+      {
+        "type": "Photographie identifiée",
+        "texte": "Nous identifions une photographie susceptible de présenter un intérêt au regard de la mission confiée."
+      },
+      {
+        "type": "Vidéo identifiée",
+        "texte": "Nous identifions une vidéo susceptible de présenter un intérêt au regard de la mission confiée."
+      },
+      {
+        "type": "Audio identifié",
+        "texte": "Nous identifions un enregistrement audio susceptible de présenter un intérêt au regard de la mission confiée."
+      }
+    ],
+    "sources": [
+      "Lexique forensique FR — usage professionnel"
+    ]
+  },
+  {
     "id": "force-brute",
     "terme": "Force brute",
     "anglais": "Brute force",
@@ -561,6 +727,10 @@
     "exemple_rapport": "Le numéro IMEI du terminal est relevé afin de contribuer à son identification.",
     "sources": [
       "CLARUS D3.2 — IMEI"
+    ],
+    "points_attention": [
+      "L’IMEI identifie un équipement ou une interface cellulaire et ne permet pas, à lui seul, d’identifier son utilisateur.",
+      "Certains appareils disposent de plusieurs IMEI, notamment lorsqu’ils prennent en charge plusieurs lignes ou eSIM."
     ]
   },
   {
@@ -924,6 +1094,10 @@
     "exemple_rapport": "Le MSISDN identifié sur la carte SIM est relevé à titre d’information et ne permet pas, à lui seul, de confirmer le numéro actuellement attribué.",
     "sources": [
       "CLARUS D3.2 — MSISDN"
+    ],
+    "points_attention": [
+      "La valeur MSISDN présente sur une carte SIM peut être absente, obsolète ou modifiée.",
+      "Elle doit être corroborée par d’autres éléments avant d’être utilisée pour attribuer un numéro à un abonnement ou à un utilisateur."
     ]
   },
   {
@@ -1449,6 +1623,10 @@
         "type": "Valeurs concordantes",
         "texte": "Les valeurs de hachage calculées sont identiques, permettant de vérifier l’intégrité des données comparées."
       }
+    ],
+    "points_attention": [
+      "Une valeur de hachage permet de comparer l’intégrité de données, mais ne décrit pas leur contenu.",
+      "L’algorithme utilisé doit être identifié dans le rapport ou la documentation technique lorsqu’il présente un intérêt pour la traçabilité."
     ]
   },
   {
