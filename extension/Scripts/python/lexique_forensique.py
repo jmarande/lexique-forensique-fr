@@ -6,6 +6,8 @@ import unicodedata
 import urllib.request
 import hashlib
 import tempfile
+import shutil
+import time
 
 import uno
 import unohelper
@@ -20,6 +22,7 @@ _OPEN_SCENARIO_WINDOWS = []
 _OPEN_SCENARIO_EDITOR_WINDOWS = []
 _OPEN_TERM_WINDOWS = []
 _OPEN_TERM_EDITOR_WINDOWS = []
+_OPEN_DATA_TRANSFER_WINDOWS = []
 _OPEN_ABOUT_WINDOWS = []
 
 CURRENT_VERSION = "0.7.20"
@@ -209,6 +212,159 @@ def _save_user_occurrences(data):
     with open(_user_occurrences_path(), "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=2)
         f.write("\n")
+
+
+def _clean_user_items(items):
+    return [
+        {key: value for key, value in item.items() if not key.startswith("_")}
+        for item in items
+    ]
+
+
+def _export_user_payload():
+    return {
+        "format": "lexique-forensique-fr-user-data",
+        "version": 1,
+        "lexique": _clean_user_items(_load_user_data()),
+        "scenarios": _clean_user_items(_load_user_scenarios()),
+        "occurrences": _clean_user_items(_load_user_occurrences()),
+    }
+
+
+def _validate_user_payload(payload):
+    if not isinstance(payload, dict):
+        raise ValueError("Le fichier importé n’est pas un objet JSON valide.")
+    if payload.get("format") != "lexique-forensique-fr-user-data":
+        raise ValueError("Ce fichier n’est pas une base utilisateur Lexique forensique FR.")
+    if payload.get("version") != 1:
+        raise ValueError("Version de fichier utilisateur non prise en charge.")
+    for key in ("lexique", "scenarios", "occurrences"):
+        if key not in payload or not isinstance(payload[key], list):
+            raise ValueError(f"Section obligatoire invalide : {key}.")
+        if not all(isinstance(item, dict) for item in payload[key]):
+            raise ValueError(f"Contenu invalide dans la section : {key}.")
+    return payload
+
+
+def _merge_user_items(local_items, imported_items, kind):
+    merged = list(local_items)
+    existing_ids = {
+        str(item.get("id"))
+        for item in merged
+        if item.get("id") not in (None, "")
+    }
+
+    def natural_key(item):
+        if kind == "lexique":
+            return _normalize(item.get("terme", ""))
+        if kind == "scenarios":
+            return _normalize(item.get("titre", ""))
+        return _normalize(
+            item.get("occurrence")
+            or item.get("anglais")
+            or ""
+        )
+
+    existing_natural = {
+        natural_key(item)
+        for item in merged
+        if natural_key(item)
+    }
+    added = 0
+    skipped = 0
+    for raw in imported_items:
+        item = dict(raw)
+        item_id = str(item.get("id")) if item.get("id") not in (None, "") else ""
+        key = natural_key(item)
+        if (item_id and item_id in existing_ids) or (key and key in existing_natural):
+            skipped += 1
+            continue
+        merged.append(item)
+        if item_id:
+            existing_ids.add(item_id)
+        if key:
+            existing_natural.add(key)
+        added += 1
+    return merged, added, skipped
+
+
+def _backup_current_user_data():
+    stamp = time.strftime("%Y%m%d-%H%M%S")
+    backup_dir = os.path.join(_user_data_dir(), "sauvegardes", stamp)
+    os.makedirs(backup_dir, exist_ok=True)
+    for source in (
+        _user_lexicon_path(),
+        _user_scenarios_path(),
+        _user_occurrences_path(),
+    ):
+        if os.path.exists(source):
+            shutil.copy2(source, os.path.join(backup_dir, os.path.basename(source)))
+    return backup_dir
+
+
+def _refresh_user_data_windows():
+    for item in list(_OPEN_LEXICON_WINDOWS):
+        try:
+            item["listener"].reload_data()
+        except Exception:
+            pass
+    for item in list(_OPEN_TERM_WINDOWS):
+        try:
+            listener = item["listener"]
+            listener.user_data = _load_user_data()
+            listener._populate()
+        except Exception:
+            pass
+    for item in list(_OPEN_SCENARIO_WINDOWS):
+        try:
+            listener = item["listener"]
+            listener.data = _load_data()
+            listener.user_scenarios = _load_user_scenarios()
+            listener._populate()
+        except Exception:
+            pass
+    for item in list(_OPEN_VERIFY_WINDOWS):
+        try:
+            item["listener"].reload_occurrences()
+        except Exception:
+            pass
+    for item in list(_OPEN_OCCURRENCE_WINDOWS):
+        try:
+            listener = item["listener"]
+            listener.builtin_items = _load_builtin_occurrences()
+            listener.user_items = _load_user_occurrences()
+            listener._populate()
+        except Exception:
+            pass
+
+
+def _pick_json_file(save=False):
+    ctx = _ctx()
+    smgr = ctx.ServiceManager
+    picker = smgr.createInstanceWithContext(
+        "com.sun.star.ui.dialogs.FilePicker", ctx
+    )
+    picker.initialize((10 if save else 0,))
+    try:
+        picker.appendFilter("Fichier JSON (*.json)", "*.json")
+        picker.setCurrentFilter("Fichier JSON (*.json)")
+    except Exception:
+        pass
+    if save:
+        try:
+            picker.setDefaultName("lexique-forensique-utilisateur.json")
+        except Exception:
+            pass
+    if picker.execute() != 1:
+        return None
+    files = picker.getFiles()
+    if not files:
+        return None
+    url = files[0]
+    path = uno.fileUrlToSystemPath(url)
+    if save and not path.lower().endswith(".json"):
+        path += ".json"
+    return path
 
 
 def _load_translations():
@@ -2048,6 +2204,145 @@ class TermEditorListener(
         pass
 
 
+class DataTransferListener(
+    unohelper.Base,
+    XActionListener,
+    XTopWindowListener,
+):
+    def __init__(self, dialog, status_label):
+        self.dialog = dialog
+        self.status_label = status_label
+        self._closing = False
+
+    def export_data(self):
+        try:
+            path = _pick_json_file(save=True)
+            if not path:
+                self.status_label.getModel().Label = "Export annulé"
+                return
+            payload = _export_user_payload()
+            with open(path, "w", encoding="utf-8") as f:
+                json.dump(payload, f, ensure_ascii=False, indent=2)
+                f.write("\n")
+            self.status_label.getModel().Label = "Base utilisateur exportée"
+            _message_box(
+                "Export des données utilisateur",
+                "La base utilisateur a été exportée avec succès.",
+            )
+        except Exception as exc:
+            _message_box(
+                "Export des données utilisateur",
+                f"Impossible d’exporter la base utilisateur.\n\nDétail : {exc}",
+            )
+
+    def import_data(self, mode):
+        try:
+            path = _pick_json_file(save=False)
+            if not path:
+                self.status_label.getModel().Label = "Import annulé"
+                return
+            with open(path, "r", encoding="utf-8") as f:
+                payload = _validate_user_payload(json.load(f))
+
+            backup_dir = _backup_current_user_data()
+
+            if mode == "replace":
+                lexique = payload["lexique"]
+                scenarios = payload["scenarios"]
+                occurrences = [
+                    _normalize_occurrence_item(item, "user")
+                    for item in payload["occurrences"]
+                ]
+                summary = (
+                    f"{len(lexique)} terme(s), "
+                    f"{len(scenarios)} scénario(s), "
+                    f"{len(occurrences)} occurrence(s) importés."
+                )
+            else:
+                lexique, l_added, l_skipped = _merge_user_items(
+                    _load_user_data(), payload["lexique"], "lexique"
+                )
+                scenarios, s_added, s_skipped = _merge_user_items(
+                    _load_user_scenarios(), payload["scenarios"], "scenarios"
+                )
+                imported_occurrences = [
+                    _normalize_occurrence_item(item, "user")
+                    for item in payload["occurrences"]
+                ]
+                occurrences, o_added, o_skipped = _merge_user_items(
+                    _load_user_occurrences(), imported_occurrences, "occurrences"
+                )
+                summary = (
+                    f"Ajoutés : {l_added} terme(s), {s_added} scénario(s), "
+                    f"{o_added} occurrence(s).\n"
+                    f"Conservés car déjà présents : "
+                    f"{l_skipped + s_skipped + o_skipped}."
+                )
+
+            _save_user_data(lexique)
+            _save_user_scenarios(scenarios)
+            _save_user_occurrences(occurrences)
+            _refresh_user_data_windows()
+            self.status_label.getModel().Label = (
+                "Import fusionné" if mode == "merge" else "Base remplacée"
+            )
+            action = "fusionnée avec" if mode == "merge" else "remplacée par"
+            _message_box(
+                "Import des données utilisateur",
+                (
+                    f"La base utilisateur a été {action} le fichier importé.\n\n"
+                    f"{summary}\n\n"
+                    "Une sauvegarde de la base précédente a été créée dans :\n"
+                    f"{backup_dir}"
+                ),
+            )
+        except Exception as exc:
+            _message_box(
+                "Import des données utilisateur",
+                (
+                    "Aucune donnée n’a été importée.\n\n"
+                    f"Détail : {exc}"
+                ),
+            )
+
+    def actionPerformed(self, event):
+        if event.ActionCommand == "export":
+            self.export_data()
+        elif event.ActionCommand == "merge":
+            self.import_data("merge")
+        elif event.ActionCommand == "replace":
+            self.import_data("replace")
+        elif event.ActionCommand == "close":
+            self._close_dialog()
+
+    def _close_dialog(self):
+        if self._closing:
+            return
+        self._closing = True
+        try:
+            try:
+                self.dialog.removeTopWindowListener(self)
+            except Exception:
+                pass
+            self.dialog.setVisible(False)
+            self.dialog.dispose()
+        finally:
+            _OPEN_DATA_TRANSFER_WINDOWS[:] = [
+                item for item in _OPEN_DATA_TRANSFER_WINDOWS
+                if item.get("dialog") is not self.dialog
+            ]
+
+    def windowClosing(self, event):
+        self._close_dialog()
+    def windowOpened(self, event): pass
+    def windowClosed(self, event): pass
+    def windowMinimized(self, event): pass
+    def windowNormalized(self, event): pass
+    def windowActivated(self, event): pass
+    def windowDeactivated(self, event): pass
+    def disposing(self, event): pass
+
+
 class AboutListener(unohelper.Base, XActionListener, XTopWindowListener):
     def __init__(self, dialog):
         self.dialog = dialog
@@ -2709,6 +3004,92 @@ def open_term_manager(lexicon_listener=None, *args):
     dialog.setVisible(True)
 
 
+def open_user_data_transfer(*args):
+    ctx = _ctx()
+    smgr = ctx.ServiceManager
+    toolkit = smgr.createInstanceWithContext("com.sun.star.awt.Toolkit", ctx)
+    model = smgr.createInstanceWithContext(
+        "com.sun.star.awt.UnoControlDialogModel", ctx
+    )
+    model.PositionX = 105
+    model.PositionY = 70
+    model.Width = 340
+    model.Height = 190
+    model.Title = "Exporter / Importer les données utilisateur"
+
+    def add(name, service, x, y, w, h, **props):
+        item = model.createInstance(service)
+        item.Name = name
+        item.PositionX, item.PositionY = x, y
+        item.Width, item.Height = w, h
+        for key, value in props.items():
+            setattr(item, key, value)
+        model.insertByName(name, item)
+
+    add(
+        "txtTransferInfo",
+        "com.sun.star.awt.UnoControlFixedTextModel",
+        10, 10, 320, 38,
+        Label=(
+            "Sauvegardez ou transférez vos termes, scénarios et occurrences "
+            "personnalisés dans un seul fichier JSON."
+        ),
+        MultiLine=True,
+    )
+    add("lblExport", "com.sun.star.awt.UnoControlFixedTextModel",
+        10, 56, 70, 10, Label="EXPORTER")
+    add("btnUserExport", "com.sun.star.awt.UnoControlButtonModel",
+        10, 70, 150, 20, Label="Exporter ma base utilisateur")
+
+    add("lblImport", "com.sun.star.awt.UnoControlFixedTextModel",
+        10, 102, 70, 10, Label="IMPORTER")
+    add(
+        "txtImportInfo",
+        "com.sun.star.awt.UnoControlFixedTextModel",
+        10, 114, 320, 22,
+        Label=(
+            "Fusionner conserve vos données actuelles. "
+            "Remplacer écrase uniquement vos données utilisateur."
+        ),
+        MultiLine=True,
+    )
+    add("btnUserImportMerge", "com.sun.star.awt.UnoControlButtonModel",
+        10, 140, 150, 20, Label="Importer et fusionner")
+    add("btnUserImportReplace", "com.sun.star.awt.UnoControlButtonModel",
+        168, 140, 162, 20, Label="Importer et remplacer")
+    add("lblTransferStatus", "com.sun.star.awt.UnoControlFixedTextModel",
+        10, 166, 220, 10, Label="")
+    add("btnTransferClose", "com.sun.star.awt.UnoControlButtonModel",
+        278, 166, 52, 16, Label="Fermer")
+
+    dialog = smgr.createInstanceWithContext(
+        "com.sun.star.awt.UnoControlDialog", ctx
+    )
+    dialog.setModel(model)
+    dialog.createPeer(toolkit, None)
+
+    listener = DataTransferListener(
+        dialog,
+        dialog.getControl("lblTransferStatus"),
+    )
+    for control_name, command in [
+        ("btnUserExport", "export"),
+        ("btnUserImportMerge", "merge"),
+        ("btnUserImportReplace", "replace"),
+        ("btnTransferClose", "close"),
+    ]:
+        control = dialog.getControl(control_name)
+        control.setActionCommand(command)
+        control.addActionListener(listener)
+
+    dialog.addTopWindowListener(listener)
+    _OPEN_DATA_TRANSFER_WINDOWS.append({
+        "dialog": dialog,
+        "listener": listener,
+    })
+    dialog.setVisible(True)
+
+
 def show_about(*args):
     ctx = _ctx()
     smgr = ctx.ServiceManager
@@ -3079,6 +3460,7 @@ g_exportedScripts = (
     open_verification,
     open_scenarios,
     open_term_manager,
+    open_user_data_transfer,
     show_about,
     check_updates,
 )
