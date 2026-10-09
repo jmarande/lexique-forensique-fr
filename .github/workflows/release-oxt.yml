@@ -42,6 +42,76 @@ jobs:
           echo "tag=${TAG}" >> "${GITHUB_OUTPUT}"
           echo "Publication de ${TAG}"
 
+      - name: Synchronize internal extension version
+        env:
+          RELEASE_TAG: ${{ steps.version.outputs.tag }}
+        shell: bash
+        run: |
+          VERSION="${RELEASE_TAG#v}"
+          python - "$VERSION" <<'PY'
+          from pathlib import Path
+          import re
+          import sys
+
+          version = sys.argv[1]
+
+          script = Path("extension/Scripts/python/lexique_forensique.py")
+          text = script.read_text(encoding="utf-8")
+          text, count = re.subn(
+              r'^CURRENT_VERSION = "[^"]+"
+      - name: Publish or update GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.version.outputs.tag }}
+        shell: bash
+        run: |
+          if gh release view "${RELEASE_TAG}" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1; then
+            gh release upload "${RELEASE_TAG}" \
+              lexique-forensique-fr.oxt \
+              --repo "${GITHUB_REPOSITORY}" \
+              --clobber
+          else
+            gh release create "${RELEASE_TAG}" \
+              lexique-forensique-fr.oxt \
+              --repo "${GITHUB_REPOSITORY}" \
+              --target "${GITHUB_SHA}" \
+              --title "${RELEASE_TAG}" \
+              --generate-notes
+          fi
+,
+              f'CURRENT_VERSION = "{version}"',
+              text,
+              count=1,
+              flags=re.MULTILINE,
+          )
+          if count != 1:
+              raise SystemExit("CURRENT_VERSION introuvable ou ambigu")
+          script.write_text(text, encoding="utf-8")
+
+          description = Path("extension/description.xml")
+          text = description.read_text(encoding="utf-8")
+          text, count = re.subn(
+              r'<version value="[^"]+"\s*/>',
+              f'<version value="{version}"/>',
+              text,
+              count=1,
+          )
+          if count != 1:
+              raise SystemExit("Version description.xml introuvable ou ambigu")
+          description.write_text(text, encoding="utf-8")
+
+          print(f"Version interne synchronisée : {version}")
+          PY
+
+      - name: Verify internal extension version
+        env:
+          RELEASE_TAG: ${{ steps.version.outputs.tag }}
+        shell: bash
+        run: |
+          VERSION="${RELEASE_TAG#v}"
+          grep -F "CURRENT_VERSION = \"${VERSION}\""             extension/Scripts/python/lexique_forensique.py
+          grep -F "<version value=\"${VERSION}\"/>"             extension/description.xml
+
       - name: Build OXT
         run: |
           python - <<'PY'
