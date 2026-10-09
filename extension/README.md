@@ -1,26 +1,40 @@
-# Extension LibreOffice
+# Extension LibreOffice Writer
 
-Extension Writer du **Lexique forensique FR**.
+Extension du projet **Lexique forensique FR**.
 
-## Version 0.4.1 — branche de test
+## Fonctions actuelles
 
-Cette version corrige l'ergonomie du contrôle terminologique.
+La fenêtre principale reste ouverte pendant la rédaction et permet de :
 
-### Séparation du lexique et des alertes
+- rechercher un terme dans le lexique ;
+- consulter sa définition, son équivalent anglais, sa catégorie et ses synonymes ;
+- vérifier le document Writer actif ;
+- afficher séparément les alertes terminologiques ;
+- sélectionner une occurrence et la remplacer individuellement ;
+- afficher les formulations de rapport directement dans la fiche ;
+- sélectionner une formulation dans la zone de droite ;
+- insérer la formulation sélectionnée dans le document ;
+- rechercher et installer les mises à jour publiées sur GitHub.
 
-Le panneau de gauche est maintenant divisé en deux zones :
+Les sources et les termes déconseillés restent conservés dans le JSON mais ne sont plus affichés dans la fiche principale afin de garder l’interface lisible.
 
-- **Lexique** : conserve en permanence la liste des termes disponibles ;
-- **Alertes du document** : affiche uniquement les termes déconseillés détectés dans le document actif.
+## Interface
 
-Le bouton **Vérifier document** ne remplace donc plus la liste du lexique par les alertes.
+Le panneau de gauche conserve en permanence :
 
-### Comportement
+- **Lexique** : liste des termes disponibles ;
+- **Alertes du document** : termes déconseillés détectés dans le document actif.
 
-- rechercher un terme continue d'afficher sa définition ;
-- vérifier le document remplit uniquement la zone d'alertes ;
-- sélectionner une alerte affiche la fiche du terme recommandé et sélectionne l'occurrence dans Writer ;
-- **Remplacer occurrence** corrige uniquement l'occurrence sélectionnée ;
-- après correction, la liste d'alertes est actualisée sans effacer le lexique.
+La zone de droite affiche la fiche du terme et, lorsqu’elles existent, les différentes **formulations pour rapport**.
 
-La fenêtre reste non modale afin de permettre la modification du document pendant son utilisation.
+La fenêtre est **non modale**.
+
+## Installation
+
+Le paquet doit impérativement conserver le nom :
+
+`lexique-forensique-fr.oxt`
+
+Installer l’extension pour l’utilisateur actif puis redémarrer complètement LibreOffice si nécessaire.
+
+Version de la source actuelle : **0.7.15**.

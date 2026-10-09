@@ -1,16 +1,21 @@
-Lexique forensique FR — v0.1.1
+Lexique forensique FR — v0.7.15
 
-Extension expérimentale LibreOffice Writer.
+Extension LibreOffice Writer pour la criminalistique numérique.
 
-Fonctions actuelles :
-- recherche dans le lexique ;
-- affichage de la définition et des termes associés ;
-- insertion d'une formulation recommandée dans Writer.
+Fonctions :
+- recherche terminologique ;
+- consultation des fiches du lexique ;
+- contrôle des termes déconseillés dans le document actif ;
+- remplacement individuel d’une occurrence ;
+- choix et insertion de formulations pour rapport ;
+- vérification des mises à jour depuis GitHub.
 
-Installation de test :
-- conserver le nom du fichier lexique-forensique-fr.oxt ;
-- installer pour l'utilisateur actif ;
-- redémarrer complètement LibreOffice.
+La fenêtre peut rester ouverte pendant la rédaction.
+
+Installation :
+- conserver impérativement le nom lexique-forensique-fr.oxt ;
+- installer pour l’utilisateur actif ;
+- redémarrer complètement LibreOffice si nécessaire.
 
 Projet :
 https://github.com/jmarande/lexique-forensique-fr
