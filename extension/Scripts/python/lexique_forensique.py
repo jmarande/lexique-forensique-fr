@@ -130,6 +130,16 @@ def _load_data():
     return _load_builtin_data() + _load_user_data()
 
 
+def _load_translations():
+    path = os.path.join(_extension_root(), "data", "traductions.json")
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except Exception:
+        return []
+    return data if isinstance(data, list) else []
+
+
 def _load_scenarios():
     path = os.path.join(_extension_root(), "data", "scenarios.json")
     with open(path, "r", encoding="utf-8") as f:
@@ -300,7 +310,7 @@ def _find_entries(query, data, category=None):
     return sorted(results, key=lambda e: _normalize(e.get("terme", "")))
 
 
-def _scan_document_text(text, data):
+def _scan_document_text(text, data, translations=None):
     normalized_text = _normalize(text)
     alerts = []
 
@@ -310,20 +320,41 @@ def _scan_document_text(text, data):
             if not normalized_bad:
                 continue
 
-            pattern = r"(?<!\w)" + re.escape(normalized_bad) + r"(?!\w)"
+            pattern = r"(?<!\\w)" + re.escape(normalized_bad) + r"(?!\\w)"
             count = len(re.findall(pattern, normalized_text))
             if count:
                 alerts.append({
+                    "kind": "terminologie",
                     "entry": entry,
                     "found": bad,
+                    "replacement": entry.get("terme", ""),
                     "count": count,
                 })
+
+    for item in translations or []:
+        source = (item.get("anglais") or "").strip()
+        replacement = (item.get("francais") or "").strip()
+        if not source or not replacement or _normalize(source) == _normalize(replacement):
+            continue
+
+        normalized_source = _normalize(source)
+        pattern = r"(?<!\\w)" + re.escape(normalized_source) + r"(?!\\w)"
+        count = len(re.findall(pattern, normalized_text))
+        if count:
+            alerts.append({
+                "kind": "traduction",
+                "entry": None,
+                "found": source,
+                "replacement": replacement,
+                "count": count,
+                "note": (item.get("note") or "").strip(),
+            })
 
     return sorted(
         alerts,
         key=lambda item: (
-            _normalize(item["entry"].get("terme", "")),
-            _normalize(item["found"]),
+            0 if item.get("kind") == "traduction" else 1,
+            _normalize(item.get("found", "")),
         ),
     )
 
@@ -549,13 +580,23 @@ class VerificationListener(
     XItemListener,
     XTopWindowListener,
 ):
-    def __init__(self, dialog, alerts_box, detail_box, status_label, replace_button, data):
+    def __init__(
+        self,
+        dialog,
+        alerts_box,
+        detail_box,
+        status_label,
+        replace_button,
+        data,
+        translations,
+    ):
         self.dialog = dialog
         self.alerts_box = alerts_box
         self.detail_box = detail_box
         self.status_label = status_label
         self.replace_button = replace_button
         self.data = data
+        self.translations = translations
         self.alerts = []
         self.current_alert = None
         self.current_found_range = None
@@ -594,8 +635,20 @@ class VerificationListener(
 
     def _show_alert(self, alert):
         self.current_alert = alert
-        text, _ = _format_entry(alert["entry"], warning=alert)
-        self.detail_box.Text = text
+        if alert.get("kind") == "traduction":
+            note = alert.get("note") or (
+                "Terme anglais détecté dans le document. "
+                "La traduction proposée vise à franciser l’export."
+            )
+            self.detail_box.Text = (
+                "TRADUCTION\n"
+                f"{alert['found']} → {alert['replacement']}\n\n"
+                f"Occurrences détectées : {alert['count']}\n\n"
+                f"{note}"
+            )
+        else:
+            text, _ = _format_entry(alert["entry"], warning=alert)
+            self.detail_box.Text = text
         self._goto_occurrence(alert)
 
     def scan(self):
@@ -607,12 +660,22 @@ class VerificationListener(
         self.current_alert = None
         self.current_found_range = None
         self._set_replace_enabled(False)
-        self.alerts = _scan_document_text(doc.Text.String, self.data)
+        self.alerts = _scan_document_text(
+            doc.Text.String,
+            self.data,
+            self.translations,
+        )
         self._clear_alerts()
 
         for alert in self.alerts:
+            prefix = (
+                "Traduction"
+                if alert.get("kind") == "traduction"
+                else "Terminologie"
+            )
             self.alerts_box.addItem(
-                f"{alert['found']} → {alert['entry']['terme']} ({alert['count']})",
+                f"[{prefix}] {alert['found']} → "
+                f"{alert['replacement']} ({alert['count']})",
                 self.alerts_box.ItemCount,
             )
 
@@ -620,20 +683,20 @@ class VerificationListener(
         if self.alerts:
             self.status_label.getModel().Label = (
                 f"{total} occurrence" if total == 1
-                else f"{total} occurrences terminologiques"
+                else f"{total} occurrences à vérifier"
             )
             self.alerts_box.selectItemPos(0, True)
             self._show_alert(self.alerts[0])
         else:
             self.detail_box.Text = (
-                "Aucune alerte terminologique détectée dans le document actif."
+                "Aucun terme à traduire ou à normaliser détecté dans le document actif."
             )
-            self.status_label.getModel().Label = "Aucune alerte terminologique"
+            self.status_label.getModel().Label = "Aucune alerte"
 
     def replace_current(self):
         if not self.current_alert or not self.current_found_range:
             return
-        replacement = self.current_alert["entry"]["terme"]
+        replacement = self.current_alert["replacement"]
         self.current_found_range.String = replacement
         self.current_found_range = None
         self.scan()
@@ -1680,7 +1743,7 @@ def open_verification(*args):
         model.insertByName(name, item)
 
     add("lblAlerts", "com.sun.star.awt.UnoControlFixedTextModel",
-        8, 8, 104, 10, Label="Alertes détectées")
+        8, 8, 104, 10, Label="Éléments détectés")
     add("lstVerifyAlerts", "com.sun.star.awt.UnoControlListBoxModel",
         8, 20, 104, 164)
     add("txtVerifyDetail", "com.sun.star.awt.UnoControlEditModel",
@@ -1688,7 +1751,7 @@ def open_verification(*args):
     add("lblVerifyStatus", "com.sun.star.awt.UnoControlFixedTextModel",
         8, 190, 284, 10, Label="")
     add("btnVerifyReplace", "com.sun.star.awt.UnoControlButtonModel",
-        8, 208, 104, 16, Label="Remplacer occurrence", Enabled=False)
+        8, 208, 104, 16, Label="Remplacer cette occurrence", Enabled=False)
     add("btnVerifyRescan", "com.sun.star.awt.UnoControlButtonModel",
         118, 208, 78, 16, Label="Revérifier")
     add("btnVerifyClose", "com.sun.star.awt.UnoControlButtonModel",
@@ -1707,6 +1770,7 @@ def open_verification(*args):
         dialog.getControl("lblVerifyStatus"),
         dialog.getControl("btnVerifyReplace"),
         _load_data(),
+        _load_translations(),
     )
     for control_name, command in [
         ("btnVerifyReplace", "replace"),
