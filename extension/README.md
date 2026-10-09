@@ -2,32 +2,41 @@
 
 Extension du projet **Lexique forensique FR**.
 
-## Fonctions actuelles
+## Fonctions
 
-La fenêtre principale reste ouverte pendant la rédaction et permet de :
+La fenêtre principale permet de rechercher les termes, filtrer par catégorie, consulter les fiches et insérer une formulation dans Writer.
 
-- rechercher un terme dans le lexique ;
-- consulter sa définition, son équivalent anglais, sa catégorie et ses synonymes ;
-- vérifier le document Writer actif ;
-- afficher séparément les alertes terminologiques ;
-- sélectionner une occurrence et la remplacer individuellement ;
-- afficher les formulations de rapport directement dans la fiche ;
-- sélectionner une formulation dans la zone de droite ;
-- insérer la formulation sélectionnée dans le document ;
-- rechercher et installer les mises à jour publiées sur GitHub.
+Des fenêtres dédiées gèrent les fonctions plus riches :
 
-Les sources et les termes déconseillés restent conservés dans le JSON mais ne sont plus affichés dans la fiche principale afin de garder l’interface lisible.
+- **Vérifier le document** : termes déconseillés, occurrences et francisation de libellés anglais ;
+- **Scénarios** : assemblage et insertion de plusieurs formulations ;
+- **Gérer les termes** : création et modification de termes utilisateur ;
+- **Gérer les occurrences** : création de règles de détection personnelles.
 
-## Interface
+Les données officielles restent protégées. Les données utilisateur sont enregistrées dans `~/.lexique-forensique-fr/`.
 
-Le panneau de gauche conserve en permanence :
+## Vérification du document
 
-- **Lexique** : liste des termes disponibles ;
-- **Alertes du document** : termes déconseillés détectés dans le document actif.
+Le vérificateur distingue notamment :
 
-La zone de droite affiche la fiche du terme et, lorsqu’elles existent, les différentes **formulations pour rapport**.
+- **Terminologie** : terme déconseillé à normaliser ;
+- **Traduction / normalisation** : occurrence anglaise ou personnalisée à remplacer.
 
-La fenêtre est **non modale**.
+Les occurrences utilisateur peuvent définir plusieurs remplacements possibles et un remplacement préféré.
+
+## Export / import
+
+Le menu **Exporter / Importer…** sauvegarde ensemble :
+
+- les termes utilisateur ;
+- les scénarios utilisateur ;
+- les occurrences utilisateur.
+
+L’import propose **Fusionner** ou **Remplacer**. Une sauvegarde de la base existante est créée avant import.
+
+## Mise à jour
+
+Le menu **Mettre à jour…** consulte la dernière GitHub Release, vérifie la version et le SHA-256 lorsqu’il est fourni, télécharge `lexique-forensique-fr.oxt` puis lance son installation.
 
 ## Installation
 
@@ -37,4 +46,4 @@ Le paquet doit impérativement conserver le nom :
 
 Installer l’extension pour l’utilisateur actif puis redémarrer complètement LibreOffice si nécessaire.
 
-Version de la source actuelle : **0.7.15**.
+Version de référence du dépôt : **0.8.1**.
