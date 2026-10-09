@@ -3099,8 +3099,8 @@ def show_about(*args):
     )
     model.PositionX = 95
     model.PositionY = 65
-    model.Width = 220
-    model.Height = 102
+    model.Width = 250
+    model.Height = 118
     model.Title = "À propos de Lexique forensique FR"
 
     def add(name, service, x, y, w, h, **props):
@@ -3112,10 +3112,20 @@ def show_about(*args):
             setattr(item, key, value)
         model.insertByName(name, item)
 
+    logo_path = os.path.join(_extension_root(), "images", "logo.png")
+    logo_url = uno.systemPathToFileUrl(logo_path)
+    add(
+        "imgAboutLogo",
+        "com.sun.star.awt.UnoControlImageControlModel",
+        10, 10, 42, 42,
+        ImageURL=logo_url,
+        ScaleImage=True,
+        Border=0,
+    )
     add(
         "txtAbout",
         "com.sun.star.awt.UnoControlFixedTextModel",
-        10, 10, 200, 42,
+        60, 10, 180, 54,
         Label=(
             "Lexique forensique FR\n"
             f"Version {CURRENT_VERSION}\n"
@@ -3127,13 +3137,13 @@ def show_about(*args):
     add(
         "btnGitHub",
         "com.sun.star.awt.UnoControlButtonModel",
-        10, 62, 62, 16,
+        10, 84, 62, 16,
         Label="GitHub",
     )
     add(
         "btnClose",
         "com.sun.star.awt.UnoControlButtonModel",
-        158, 62, 52, 16,
+        188, 84, 52, 16,
         Label="Fermer",
     )
 
