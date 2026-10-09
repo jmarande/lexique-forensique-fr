@@ -1439,9 +1439,7 @@ class TermEditorListener(
     def _load_formulation(self, index):
         if not (0 <= index < len(self.formulations)):
             return
-        item = self.formulations[index]
-        self.formulation_text_box.Text = item.get("texte", "")
-        self.add_button.getModel().Label = "Mettre à jour"
+        self.add_button.getModel().Label = "Ajouter"
 
     def _commit_current_formulation(self):
         index = self._selected_formulation_index()
@@ -1455,17 +1453,6 @@ class TermEditorListener(
         current_text = (self.formulation_text_box.Text or "").strip()
         if not current_text:
             self.status_label.getModel().Label = "Saisissez une formulation"
-            return
-
-        index = self._selected_formulation_index()
-        if index >= 0 and self.add_button.getModel().Label == "Mettre à jour":
-            label = self.formulations[index].get("type") or "Formulation"
-            self.formulations[index] = {
-                "type": label,
-                "texte": current_text,
-            }
-            self._populate_formulations(index)
-            self.status_label.getModel().Label = "Formulation mise à jour"
             return
 
         self.formulations.append({
@@ -1503,11 +1490,8 @@ class TermEditorListener(
         if not term:
             self.status_label.getModel().Label = "Le terme est obligatoire"
             return
-        index = self._selected_formulation_index()
         current_text = (self.formulation_text_box.Text or "").strip()
-        if index >= 0:
-            self._commit_current_formulation()
-        elif current_text:
+        if current_text:
             self.formulations.append({
                 "type": "Formulation",
                 "texte": current_text,
