@@ -25,7 +25,7 @@ _OPEN_TERM_EDITOR_WINDOWS = []
 _OPEN_DATA_TRANSFER_WINDOWS = []
 _OPEN_ABOUT_WINDOWS = []
 
-CURRENT_VERSION = "0.7.20"
+CURRENT_VERSION = "0.8.1"
 GITHUB_URL = "https://github.com/jmarande/lexique-forensique-fr"
 GITHUB_LATEST_RELEASE_API = (
     "https://api.github.com/repos/jmarande/lexique-forensique-fr/releases/latest"
