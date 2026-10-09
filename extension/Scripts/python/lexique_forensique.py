@@ -372,6 +372,29 @@ class DialogListener(
         if self.results_box.ItemCount:
             self.results_box.removeItems(0, self.results_box.ItemCount)
 
+    def reload_data(self):
+        previous_category = self.current_category
+        self.data = _load_data()
+        self.categories = sorted(
+            {e.get("categorie", "") for e in self.data if e.get("categorie", "")},
+            key=_normalize,
+        )
+
+        if self.category_box.ItemCount:
+            self.category_box.removeItems(0, self.category_box.ItemCount)
+        self.category_box.addItem("Toutes", self.category_box.ItemCount)
+        for category in self.categories:
+            self.category_box.addItem(category, self.category_box.ItemCount)
+
+        if previous_category and previous_category in self.categories:
+            self.current_category = previous_category
+            self.category_box.setText(previous_category)
+        else:
+            self.current_category = None
+            self.category_box.setText("Toutes")
+
+        self.refresh()
+
     def _display_entry(self, entry):
         text, ranges = _format_entry(entry)
         self.detail_box.Text = text
@@ -429,7 +452,7 @@ class DialogListener(
         elif cmd == "scenarios":
             open_scenarios()
         elif cmd == "manage_terms":
-            open_term_manager()
+            open_term_manager(self)
         elif cmd == "insert" and self.current:
             if self.formulation_ranges:
                 item = self.formulation_ranges[self.selected_formulation_index]
@@ -1119,6 +1142,7 @@ class TermManagerListener(
         status_label,
         builtin_data,
         user_data,
+        lexicon_listener=None,
     ):
         self.dialog = dialog
         self.terms_box = terms_box
@@ -1126,6 +1150,7 @@ class TermManagerListener(
         self.status_label = status_label
         self.builtin_data = builtin_data
         self.user_data = user_data
+        self.lexicon_listener = lexicon_listener
         self.data = []
         self.current = None
         self._closing = False
@@ -1171,6 +1196,13 @@ class TermManagerListener(
     def _current_index(self):
         pos = self.terms_box.SelectedItemPos
         return pos if 0 <= pos < len(self.data) else -1
+
+    def _notify_lexicon(self):
+        if self.lexicon_listener is not None:
+            try:
+                self.lexicon_listener.reload_data()
+            except Exception:
+                pass
 
     def _new_id(self):
         existing = {e.get("id") for e in self.builtin_data + self.user_data}
@@ -1220,6 +1252,7 @@ class TermManagerListener(
         self.user_data.append(duplicate)
         _save_user_data(self.user_data)
         self._populate()
+        self._notify_lexicon()
         self.status_label.getModel().Label = "Terme dupliqué"
 
     def edit_current(self):
@@ -1265,10 +1298,12 @@ class TermManagerListener(
             return
         _save_user_data(self.user_data)
         self._populate(max(index - 1, 0))
+        self._notify_lexicon()
         self.status_label.getModel().Label = "Terme utilisateur supprimé"
 
     def refresh_after_edit(self, entry):
         self._populate()
+        self._notify_lexicon()
         for index, item in enumerate(self.data):
             if item is entry or item.get("id") == entry.get("id"):
                 self.terms_box.selectItemPos(index, True)
@@ -1423,6 +1458,7 @@ class TermEditorListener(
                 "texte": current_text,
             })
             self._populate_formulations(len(self.formulations) - 1)
+            self.formulation_text_box.Text = ""
             return
         self.formulations.append({
             "type": "Formulation",
@@ -1853,7 +1889,7 @@ def open_term_editor(parent_listener, entry):
     model.PositionX = 105
     model.PositionY = 55
     model.Width = 430
-    model.Height = 340
+    model.Height = 372
     model.Title = "Éditer un terme utilisateur"
 
     def add(name, service, x, y, w, h, **props):
@@ -1900,30 +1936,30 @@ def open_term_editor(parent_listener, entry):
         8, 80, 414, 60, MultiLine=True, VScroll=True,
         Text=entry.get("definition", ""))
 
-    add("lblFormulations", "com.sun.star.awt.UnoControlFixedTextModel",
-        8, 148, 110, 10, Label="Formulations de rapport")
-    add("lstTermFormulations", "com.sun.star.awt.UnoControlListBoxModel",
-        8, 160, 156, 122)
-    add("btnTermFormUp", "com.sun.star.awt.UnoControlButtonModel",
-        8, 286, 34, 16, Label="↑")
-    add("btnTermFormDown", "com.sun.star.awt.UnoControlButtonModel",
-        46, 286, 34, 16, Label="↓")
-    add("btnTermFormRemove", "com.sun.star.awt.UnoControlButtonModel",
-        84, 286, 50, 16, Label="Retirer")
-    add("btnTermFormAdd", "com.sun.star.awt.UnoControlButtonModel",
-        138, 286, 26, 16, Label="+")
-
     add("lblFormText", "com.sun.star.awt.UnoControlFixedTextModel",
-        174, 160, 120, 10, Label="Formulation pour rapport :")
+        8, 148, 150, 10, Label="Formulation pour rapport :")
     add("txtFormText", "com.sun.star.awt.UnoControlEditModel",
-        174, 174, 248, 108, MultiLine=True, VScroll=True)
+        8, 160, 414, 62, MultiLine=True, VScroll=True)
+    add("btnTermFormAdd", "com.sun.star.awt.UnoControlButtonModel",
+        300, 226, 122, 16, Label="Ajouter la formulation")
+
+    add("lblFormulations", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 248, 120, 10, Label="Formulations ajoutées")
+    add("lstTermFormulations", "com.sun.star.awt.UnoControlListBoxModel",
+        8, 260, 414, 64)
+    add("btnTermFormUp", "com.sun.star.awt.UnoControlButtonModel",
+        8, 328, 34, 16, Label="↑")
+    add("btnTermFormDown", "com.sun.star.awt.UnoControlButtonModel",
+        46, 328, 34, 16, Label="↓")
+    add("btnTermFormRemove", "com.sun.star.awt.UnoControlButtonModel",
+        84, 328, 50, 16, Label="Retirer")
 
     add("lblTermEditStatus", "com.sun.star.awt.UnoControlFixedTextModel",
-        174, 288, 120, 10, Label="")
+        144, 331, 140, 10, Label="")
     add("btnTermEditCancel", "com.sun.star.awt.UnoControlButtonModel",
-        300, 308, 54, 18, Label="Annuler")
+        300, 346, 54, 18, Label="Annuler")
     add("btnTermEditSave", "com.sun.star.awt.UnoControlButtonModel",
-        360, 308, 62, 18, Label="Enregistrer")
+        360, 346, 62, 18, Label="Enregistrer")
 
     dialog = smgr.createInstanceWithContext(
         "com.sun.star.awt.UnoControlDialog", ctx
@@ -1974,7 +2010,7 @@ def open_term_editor(parent_listener, entry):
     dialog.setVisible(True)
 
 
-def open_term_manager(*args):
+def open_term_manager(lexicon_listener=None, *args):
     ctx = _ctx()
     smgr = ctx.ServiceManager
     toolkit = smgr.createInstanceWithContext("com.sun.star.awt.Toolkit", ctx)
@@ -2028,6 +2064,7 @@ def open_term_manager(*args):
         dialog.getControl("lblManagedTermStatus"),
         _load_builtin_data(),
         _load_user_data(),
+        lexicon_listener,
     )
     for control_name, command in [
         ("btnManagedTermNew", "new"),
