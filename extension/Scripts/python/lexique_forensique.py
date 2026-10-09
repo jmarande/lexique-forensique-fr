@@ -931,6 +931,10 @@ class ScenarioEditorListener(
         )
 
     def _selected_term_index(self):
+        value = (self.term_box.getText() or "").strip()
+        for index, entry in enumerate(self.entries):
+            if entry.get("terme", "") == value:
+                return index
         pos = self.term_box.SelectedItemPos
         return pos if 0 <= pos < len(self.entries) else -1
 
@@ -993,7 +997,11 @@ class ScenarioEditorListener(
 
     def actionPerformed(self, event):
         cmd = event.ActionCommand
-        if cmd == "add":
+        if cmd == "term_changed":
+            entry_index = self._selected_term_index()
+            if entry_index >= 0:
+                self._populate_formulations(entry_index)
+        elif cmd == "add":
             self.add_step()
         elif cmd == "remove":
             self.remove_step()
@@ -1013,7 +1021,9 @@ class ScenarioEditorListener(
         except Exception:
             pass
         if source_name == "cmbEditTerm":
-            self._populate_formulations(event.Source.SelectedItemPos)
+            entry_index = self._selected_term_index()
+            if entry_index >= 0:
+                self._populate_formulations(entry_index)
 
     def _close_dialog(self):
         try:
@@ -1259,7 +1269,10 @@ def open_scenario_editor(parent_listener, scenario):
         control.setActionCommand(command)
         control.addActionListener(listener)
 
-    dialog.getControl("cmbEditTerm").addItemListener(listener)
+    term_control = dialog.getControl("cmbEditTerm")
+    term_control.addItemListener(listener)
+    term_control.setActionCommand("term_changed")
+    term_control.addActionListener(listener)
     dialog.addTopWindowListener(listener)
     _OPEN_SCENARIO_EDITOR_WINDOWS.append({
         "dialog": dialog,
