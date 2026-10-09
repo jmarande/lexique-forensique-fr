@@ -1,0 +1,92 @@
+[
+  {
+    "anglais": "Missed Call",
+    "francais": "Appel manqué",
+    "note": "Statut d’appel non répondu."
+  },
+  {
+    "anglais": "Incoming Call",
+    "francais": "Appel entrant",
+    "note": "Sens de l’appel : appel reçu."
+  },
+  {
+    "anglais": "Outgoing Call",
+    "francais": "Appel sortant",
+    "note": "Sens de l’appel : appel émis."
+  },
+  {
+    "anglais": "Rejected Call",
+    "francais": "Appel rejeté",
+    "note": "Appel refusé ou rejeté."
+  },
+  {
+    "anglais": "Call Duration",
+    "francais": "Durée de l’appel",
+    "note": "Durée associée à un appel."
+  },
+  {
+    "anglais": "Voicemail",
+    "francais": "Messagerie vocale",
+    "note": "Élément relatif à la messagerie vocale."
+  },
+  {
+    "anglais": "Attachment",
+    "francais": "Pièce jointe",
+    "note": "Fichier ou contenu joint à un message."
+  },
+  {
+    "anglais": "Last Seen",
+    "francais": "Dernière activité",
+    "note": "Dernière activité ou présence indiquée par l’application."
+  },
+  {
+    "anglais": "Deleted Message",
+    "francais": "Message supprimé",
+    "note": "Message indiqué comme supprimé."
+  },
+  {
+    "anglais": "Deleted File",
+    "francais": "Fichier supprimé",
+    "note": "Fichier indiqué comme supprimé."
+  },
+  {
+    "anglais": "Date Created",
+    "francais": "Date de création",
+    "note": "Horodatage de création."
+  },
+  {
+    "anglais": "Date Modified",
+    "francais": "Date de modification",
+    "note": "Horodatage de dernière modification."
+  },
+  {
+    "anglais": "File Name",
+    "francais": "Nom du fichier",
+    "note": "Nom attribué au fichier."
+  },
+  {
+    "anglais": "File Size",
+    "francais": "Taille du fichier",
+    "note": "Taille du fichier ou de la donnée."
+  },
+  {
+    "anglais": "User Name",
+    "francais": "Nom d’utilisateur",
+    "note": "Nom associé au compte ou à l’utilisateur."
+  },
+  {
+    "anglais": "Phone Number",
+    "francais": "Numéro de téléphone",
+    "note": "Numéro de téléphone associé à l’élément."
+  },
+  {
+    "anglais": "Email Address",
+    "francais": "Adresse électronique",
+    "note": "Adresse de courrier électronique."
+  },
+  {
+    "anglais": "Location",
+    "francais": "Localisation",
+    "note": "Information de localisation."
+  }
+]
