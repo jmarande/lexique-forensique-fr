@@ -1,7 +1,7 @@
 # Lexique forensique FR
 
 <p align="center">
-  <img src="docs/images/logo.png" alt="Logo Lexique forensique FR" width="140">
+  <img src="docs/images/logo.png" alt="Logo Lexique forensique FR" width="180">
 </p>
 
 Lexique français collaboratif de **criminalistique numérique** accompagné d’une extension **LibreOffice Writer** destinée à la recherche terminologique, à la normalisation des rapports et à la francisation de libellés issus d’exports de logiciels forensiques.
