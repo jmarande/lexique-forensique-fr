@@ -166,13 +166,14 @@ def _format_entry(e, warning=None):
         parts.append("—")
 
     return "".join(parts), ranges
-def _find_entries(query, data):
+def _find_entries(query, data, category=None):
     q = _normalize(query)
-    if not q:
-        results = list(data)
-    else:
-        results = []
-        for e in data:
+    results = []
+    for e in data:
+        if category and e.get("categorie", "") != category:
+            continue
+
+        if q:
             fields = [
                 e.get("terme", ""),
                 e.get("anglais", ""),
@@ -181,8 +182,10 @@ def _find_entries(query, data):
                 " ".join(e.get("synonymes", [])),
                 " ".join(_bad_terms(e)),
             ]
-            if q in _normalize(" ".join(fields)):
-                results.append(e)
+            if q not in _normalize(" ".join(fields)):
+                continue
+
+        results.append(e)
 
     return sorted(results, key=lambda e: _normalize(e.get("terme", "")))
 
@@ -232,6 +235,7 @@ class DialogListener(
         status_label,
         insert_button,
         replace_button,
+        category_button,
         data,
     ):
         self.dialog = dialog
@@ -242,7 +246,14 @@ class DialogListener(
         self.status_label = status_label
         self.insert_button = insert_button
         self.replace_button = replace_button
+        self.category_button = category_button
         self.data = data
+        self.categories = sorted(
+            {e.get("categorie", "") for e in data if e.get("categorie", "")},
+            key=_normalize,
+        )
+        self.category_index = -1
+        self.current_category = None
         self.current = None
         self.matches = []
         self.scan_alerts = []
@@ -346,8 +357,32 @@ class DialogListener(
         )
         self.scan_document()
 
+    def _update_category_button(self):
+        label = "Toutes" if self.current_category is None else self.current_category
+        if len(label) > 24:
+            label = label[:21].rstrip() + "…"
+        self.category_button.getModel().Label = f"Catégorie : {label}"
+
+    def _cycle_category(self):
+        if not self.categories:
+            return
+
+        self.category_index += 1
+        if self.category_index >= len(self.categories):
+            self.category_index = -1
+            self.current_category = None
+        else:
+            self.current_category = self.categories[self.category_index]
+
+        self._update_category_button()
+        self.refresh()
+
     def refresh(self):
-        self.matches = _find_entries(self.search_box.Text, self.data)
+        self.matches = _find_entries(
+            self.search_box.Text,
+            self.data,
+            category=self.current_category,
+        )
         self._clear_results()
 
         for entry in self.matches:
@@ -407,6 +442,9 @@ class DialogListener(
 
         if cmd == "search":
             self.refresh()
+
+        elif cmd == "category":
+            self._cycle_category()
 
         elif cmd == "scan":
             self.scan_document()
@@ -773,9 +811,15 @@ def open_lexicon(*args):
         Label="Vérifier document",
     )
     add(
+        "btnCategory",
+        "com.sun.star.awt.UnoControlButtonModel",
+        8, 26, 105, 14,
+        Label="Catégorie : Toutes",
+    )
+    add(
         "lblStatus",
         "com.sun.star.awt.UnoControlFixedTextModel",
-        104, 27, 198, 10,
+        118, 27, 184, 10,
         Label="",
     )
     add(
@@ -842,6 +886,7 @@ def open_lexicon(*args):
     status_label = dialog.getControl("lblStatus")
     insert_button = dialog.getControl("btnInsert")
     replace_button = dialog.getControl("btnReplace")
+    category_button = dialog.getControl("btnCategory")
     listener = DialogListener(
         dialog,
         search_box,
@@ -851,11 +896,13 @@ def open_lexicon(*args):
         status_label,
         insert_button,
         replace_button,
+        category_button,
         _load_data(),
     )
 
     for control, command in [
         (dialog.getControl("btnSearch"), "search"),
+        (category_button, "category"),
         (dialog.getControl("btnScan"), "scan"),
         (replace_button, "replace"),
         (insert_button, "insert"),
