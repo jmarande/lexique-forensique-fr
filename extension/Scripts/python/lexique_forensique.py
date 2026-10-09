@@ -235,7 +235,7 @@ class DialogListener(
         status_label,
         insert_button,
         replace_button,
-        category_button,
+        category_box,
         data,
     ):
         self.dialog = dialog
@@ -246,13 +246,12 @@ class DialogListener(
         self.status_label = status_label
         self.insert_button = insert_button
         self.replace_button = replace_button
-        self.category_button = category_button
+        self.category_box = category_box
         self.data = data
         self.categories = sorted(
             {e.get("categorie", "") for e in data if e.get("categorie", "")},
             key=_normalize,
         )
-        self.category_index = -1
         self.current_category = None
         self.current = None
         self.matches = []
@@ -357,26 +356,6 @@ class DialogListener(
         )
         self.scan_document()
 
-    def _update_category_button(self):
-        label = "Toutes" if self.current_category is None else self.current_category
-        if len(label) > 24:
-            label = label[:21].rstrip() + "…"
-        self.category_button.getModel().Label = f"Catégorie : {label}"
-
-    def _cycle_category(self):
-        if not self.categories:
-            return
-
-        self.category_index += 1
-        if self.category_index >= len(self.categories):
-            self.category_index = -1
-            self.current_category = None
-        else:
-            self.current_category = self.categories[self.category_index]
-
-        self._update_category_button()
-        self.refresh()
-
     def refresh(self):
         self.matches = _find_entries(
             self.search_box.Text,
@@ -442,9 +421,6 @@ class DialogListener(
 
         if cmd == "search":
             self.refresh()
-
-        elif cmd == "category":
-            self._cycle_category()
 
         elif cmd == "scan":
             self.scan_document()
@@ -523,7 +499,17 @@ class DialogListener(
         pass
 
     def itemStateChanged(self, event):
-        if event.Source is self.alerts_box:
+        source_name = ""
+        try:
+            source_name = event.Source.getModel().Name
+        except Exception:
+            pass
+
+        if source_name == "cmbCategory":
+            value = (event.Source.getText() or "").strip()
+            self.current_category = None if value == "Toutes" else value
+            self.refresh()
+        elif source_name == "lstAlerts":
             pos = self.alerts_box.SelectedItemPos
             if 0 <= pos < len(self.scan_alerts):
                 self._show_scan_alert(self.scan_alerts[pos])
@@ -776,6 +762,12 @@ def open_lexicon(*args):
     model.Height = 334
     model.Title = "Lexique forensique FR — v0.7.16"
 
+    data = _load_data()
+    categories = sorted(
+        {e.get("categorie", "") for e in data if e.get("categorie", "")},
+        key=_normalize,
+    )
+
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
         item.Name = name
@@ -811,15 +803,24 @@ def open_lexicon(*args):
         Label="Vérifier document",
     )
     add(
-        "btnCategory",
-        "com.sun.star.awt.UnoControlButtonModel",
-        8, 26, 105, 14,
-        Label="Catégorie : Toutes",
+        "lblCategory",
+        "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 27, 42, 10,
+        Label="Catégorie :",
+    )
+    add(
+        "cmbCategory",
+        "com.sun.star.awt.UnoControlComboBoxModel",
+        50, 25, 104, 14,
+        Dropdown=True,
+        ReadOnly=True,
+        StringItemList=tuple(["Toutes"] + categories),
+        Text="Toutes",
     )
     add(
         "lblStatus",
         "com.sun.star.awt.UnoControlFixedTextModel",
-        118, 27, 184, 10,
+        160, 27, 142, 10,
         Label="",
     )
     add(
@@ -886,7 +887,7 @@ def open_lexicon(*args):
     status_label = dialog.getControl("lblStatus")
     insert_button = dialog.getControl("btnInsert")
     replace_button = dialog.getControl("btnReplace")
-    category_button = dialog.getControl("btnCategory")
+    category_box = dialog.getControl("cmbCategory")
     listener = DialogListener(
         dialog,
         search_box,
@@ -896,13 +897,12 @@ def open_lexicon(*args):
         status_label,
         insert_button,
         replace_button,
-        category_button,
-        _load_data(),
+        category_box,
+        data,
     )
 
     for control, command in [
         (dialog.getControl("btnSearch"), "search"),
-        (category_button, "category"),
         (dialog.getControl("btnScan"), "scan"),
         (replace_button, "replace"),
         (insert_button, "insert"),
@@ -913,6 +913,7 @@ def open_lexicon(*args):
 
     results_box.addItemListener(listener)
     alerts_box.addItemListener(listener)
+    category_box.addItemListener(listener)
     detail_box.addMouseListener(listener)
     dialog.addTopWindowListener(listener)
 
