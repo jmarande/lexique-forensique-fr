@@ -15,7 +15,7 @@ from com.sun.star.awt import XActionListener, XItemListener, XMouseListener, XTo
 _OPEN_LEXICON_WINDOWS = []
 _OPEN_ABOUT_WINDOWS = []
 
-CURRENT_VERSION = "0.7.15"
+CURRENT_VERSION = "0.7.16"
 GITHUB_URL = "https://github.com/jmarande/lexique-forensique-fr"
 GITHUB_LATEST_RELEASE_API = (
     "https://api.github.com/repos/jmarande/lexique-forensique-fr/releases/latest"
@@ -736,7 +736,7 @@ def open_lexicon(*args):
     model.PositionY = 45
     model.Width = 310
     model.Height = 334
-    model.Title = "Lexique forensique FR — v0.7.15"
+    model.Title = "Lexique forensique FR — v0.7.16"
 
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
