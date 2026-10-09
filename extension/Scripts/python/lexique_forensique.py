@@ -932,10 +932,6 @@ class ScenarioEditorListener(
         )
 
     def _selected_term_index(self):
-        value = (self.term_box.getText() or "").strip()
-        for index, entry in enumerate(self.entries):
-            if entry.get("terme", "") == value:
-                return index
         pos = self.term_box.SelectedItemPos
         return pos if 0 <= pos < len(self.entries) else -1
 
@@ -998,11 +994,7 @@ class ScenarioEditorListener(
 
     def actionPerformed(self, event):
         cmd = event.ActionCommand
-        if cmd == "term_changed":
-            entry_index = self._selected_term_index()
-            if entry_index >= 0:
-                self._populate_formulations(entry_index)
-        elif cmd == "add":
+        if cmd == "add":
             self.add_step()
         elif cmd == "remove":
             self.remove_step()
@@ -1230,11 +1222,11 @@ def open_scenario_editor(parent_listener, scenario):
         220, 110, 70, 10, Label="Ajouter une phrase")
     add("lblEditTerm", "com.sun.star.awt.UnoControlFixedTextModel",
         220, 130, 42, 10, Label="Terme :")
-    add("cmbEditTerm", "com.sun.star.awt.UnoControlComboBoxModel",
+    add("cmbEditTerm", "com.sun.star.awt.UnoControlListBoxModel",
         220, 142, 192, 14, Dropdown=True)
     add("lblEditFormulation", "com.sun.star.awt.UnoControlFixedTextModel",
         220, 164, 60, 10, Label="Formulation :")
-    add("cmbEditFormulation", "com.sun.star.awt.UnoControlComboBoxModel",
+    add("cmbEditFormulation", "com.sun.star.awt.UnoControlListBoxModel",
         220, 176, 192, 14, Dropdown=True)
     add("btnStepAdd", "com.sun.star.awt.UnoControlButtonModel",
         318, 198, 94, 16, Label="Ajouter la phrase")
@@ -1279,8 +1271,6 @@ def open_scenario_editor(parent_listener, scenario):
 
     term_control = dialog.getControl("cmbEditTerm")
     term_control.addItemListener(listener)
-    term_control.setActionCommand("term_changed")
-    term_control.addActionListener(listener)
     dialog.addTopWindowListener(listener)
     _OPEN_SCENARIO_EDITOR_WINDOWS.append({
         "dialog": dialog,
