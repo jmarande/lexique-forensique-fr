@@ -164,6 +164,7 @@ Voir `sources/CLARUS.md`.
 lexique-forensique-fr/
 ├── .github/workflows/release-oxt.yml
 ├── README.md
+├── LICENSE
 ├── CONTRIBUTING.md
 ├── ROADMAP.md
 ├── docs/
@@ -198,3 +199,7 @@ lexique-forensique-fr/
 Dernière version publiée au 9 octobre 2026 : **v0.8.1**.
 
 La distribution est construite automatiquement par GitHub Actions et publiée dans GitHub Releases.
+
+## Licence
+
+Lexique forensique FR est distribué sous licence **GNU General Public License version 3 (GPL-3.0-only)**. Consultez le fichier [LICENSE](LICENSE) pour le texte intégral de la licence.
