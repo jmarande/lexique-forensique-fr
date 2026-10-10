@@ -2877,9 +2877,9 @@ def open_term_editor(parent_listener, entry):
         "com.sun.star.awt.UnoControlDialogModel", ctx
     )
     model.PositionX = 105
-    model.PositionY = 55
+    model.PositionY = 10
     model.Width = 430
-    model.Height = 372
+    model.Height = 292
     model.Title = "Éditer un terme utilisateur"
 
     def add(name, service, x, y, w, h, **props):
@@ -2923,35 +2923,35 @@ def open_term_editor(parent_listener, entry):
     add("lblDefinition", "com.sun.star.awt.UnoControlFixedTextModel",
         8, 68, 54, 10, Label="Définition :")
     add("txtTermDefinition", "com.sun.star.awt.UnoControlEditModel",
-        8, 80, 414, 60, MultiLine=True, VScroll=True,
+        8, 80, 414, 40, MultiLine=True, VScroll=True,
         Text=entry.get("definition", ""))
 
     add("lblFormulations", "com.sun.star.awt.UnoControlFixedTextModel",
-        8, 148, 150, 10, Label="Formulations pour rapport")
+        8, 124, 150, 10, Label="Formulations pour rapport")
     add("lstTermFormulations", "com.sun.star.awt.UnoControlListBoxModel",
-        8, 160, 414, 72)
+        8, 136, 414, 44)
     add("btnTermFormUp", "com.sun.star.awt.UnoControlButtonModel",
-        8, 236, 46, 16, Label="Monter")
+        8, 184, 46, 16, Label="Monter")
     add("btnTermFormDown", "com.sun.star.awt.UnoControlButtonModel",
-        58, 236, 56, 16, Label="Descendre")
+        58, 184, 56, 16, Label="Descendre")
     add("btnTermFormRemove", "com.sun.star.awt.UnoControlButtonModel",
-        118, 236, 56, 16, Label="Supprimer")
+        118, 184, 56, 16, Label="Supprimer")
 
     add("lblFormText", "com.sun.star.awt.UnoControlFixedTextModel",
-        8, 262, 150, 10, Label="Créer une formulation")
+        8, 206, 150, 10, Label="Créer une formulation")
     add("txtFormText", "com.sun.star.awt.UnoControlEditModel",
-        8, 274, 414, 50, MultiLine=True, VScroll=True)
+        8, 218, 414, 34, MultiLine=True, VScroll=True)
     add("btnTermFormUpdate", "com.sun.star.awt.UnoControlButtonModel",
-        238, 328, 84, 16, Label="Mettre à jour", Enabled=False)
+        238, 256, 84, 16, Label="Mettre à jour", Enabled=False)
     add("btnTermFormAdd", "com.sun.star.awt.UnoControlButtonModel",
-        328, 328, 94, 16, Label="Ajouter")
+        328, 256, 94, 16, Label="Ajouter")
 
     add("lblTermEditStatus", "com.sun.star.awt.UnoControlFixedTextModel",
-        8, 350, 180, 10, Label="")
+        8, 277, 180, 10, Label="")
     add("btnTermEditCancel", "com.sun.star.awt.UnoControlButtonModel",
-        300, 346, 54, 18, Label="Annuler")
+        300, 274, 54, 16, Label="Annuler")
     add("btnTermEditSave", "com.sun.star.awt.UnoControlButtonModel",
-        360, 346, 62, 18, Label="Enregistrer")
+        360, 274, 62, 16, Label="Enregistrer")
 
     dialog = smgr.createInstanceWithContext(
         "com.sun.star.awt.UnoControlDialog", ctx
