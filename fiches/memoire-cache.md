@@ -6,21 +6,21 @@
 
 ## Définition
 
-Type de mémoire utilisé par un système ou une application pour stocker temporairement des fichiers et d’autres données. Les éléments présents dans le cache peuvent présenter une valeur probatoire.
+Mémoire intermédiaire rapide utilisée par un processeur ou un système pour conserver temporairement des informations et accélérer leur accès. Elle doit être distinguée du cache applicatif, qui peut conserver des fichiers et d’autres données sur un support de stockage.
 
 ## Synonymes
 
-- Cache
+- Cache mémoire
 
 ## Formulations pour rapport
 
 ### Données de cache identifiées
 
-L’examen des données met en évidence des éléments présents dans la mémoire cache de l’application.
+L’examen met en évidence des données de cache associées à l’application.
 
 ### Attribution prudente
 
-La présence d’un élément dans la mémoire cache atteste de sa présence dans les données locales, sans permettre à elle seule d’en déterminer l’auteur, le destinataire ou le contexte d’utilisation.
+La présence d’un élément dans le cache applicatif ne permet pas, à elle seule, d’identifier l’auteur d’une action ni le contexte de consultation.
 
 > Ces fiches sont des documents de travail du projet : les définitions restent soumises à la revue terminologique et documentaire.
 
