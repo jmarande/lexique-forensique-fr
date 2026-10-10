@@ -6,6 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "lexique.json"
+VALIDATION = ROOT / "data" / "validation_fiches.json"
 DEST = ROOT / "fiches"
 
 
@@ -20,10 +21,21 @@ def generate():
     ids = [f["id"] for f in fiches]
     if len(ids) != len(set(ids)) or any(not x or "/" in x or "\\" in x or x in (".", "..") for x in ids):
         raise ValueError("Identifiants invalides ou dupliqués")
+    validations = json.loads(VALIDATION.read_text(encoding="utf-8"))
+    if not isinstance(validations, dict) or set(validations) - set(ids):
+        raise ValueError("Registre de validation invalide ou identifiants inconnus")
+    for key, record in validations.items():
+        if (not isinstance(record, dict) or record.get("statut") != "validee"
+                or not all(clean(record.get(k)) for k in ("date", "validateur", "reference"))):
+            raise ValueError(f"Validation incomplète ou inconnue : {key}")
     DEST.mkdir(exist_ok=True)
     expected = {"README.md"} | {x + ".md" for x in ids}
     for f in fiches:
-        lines = ["# " + clean(f["terme"]), "", "**Catégorie :** " + clean(f.get("categorie")), ""]
+        review = validations.get(f["id"])
+        status = "Validée" if review else "En attente de relecture"
+        lines = ["# " + clean(f["terme"]), "", "**Statut :** " + status, "", "**Catégorie :** " + clean(f.get("categorie")), ""]
+        if review:
+            lines += ["**Validation éditoriale :** " + clean(review["date"]) + " — " + clean(review["validateur"]) + " (" + clean(review["reference"]) + ")", ""]
         if f.get("anglais"):
             lines += ["**Équivalent anglais :** " + clean(f["anglais"]), ""]
         lines += ["## Définition", "", clean(f["definition"]), ""]
@@ -44,9 +56,11 @@ def generate():
     index = ["# Catalogue des fiches — Lexique forensique FR", "",
              "Catalogue généré automatiquement depuis [data/lexique.json](../data/lexique.json).",
              "Ce catalogue n'est pas une validation juridique ou normative des définitions.", "",
-             f"**{len(entries)} fiches disponibles**", ""]
+             f"**{len(entries)} fiches disponibles** — {len(validations)} validées, {len(entries) - len(validations)} en attente de relecture.", "",
+             "[Procédure de validation](../docs/VALIDATION-FICHES.md)", ""]
     for f in entries:
-        index.append("- [" + clean(f["terme"]) + "](" + f["id"] + ".md) — " + clean(f.get("categorie")))
+        state = "Validée" if f["id"] in validations else "En attente de relecture"
+        index.append("- [" + clean(f["terme"]) + "](" + f["id"] + ".md) — " + clean(f.get("categorie")) + " — **" + state + "**")
     index += ["", "[← Présentation du projet](../README.md)", ""]
     (DEST / "README.md").write_text("\n".join(index), encoding="utf-8")
     for stale in DEST.glob("*.md"):
