@@ -3213,42 +3213,42 @@ def open_user_data_transfer(*args):
 
 _HELP_TOPICS = [
     ("Présentation",
-     "Lexique forensique FR\\n\\n"
-     "Extension LibreOffice Writer consacrée à la terminologie de criminalistique numérique.\\n"
-     "Toutes les rubriques de cette aide sont accessibles sans connexion Internet.\\n\\n"
+     "Lexique forensique FR\n\n"
+     "Extension LibreOffice Writer consacrée à la terminologie de criminalistique numérique.\n"
+     "Toutes les rubriques de cette aide sont accessibles sans connexion Internet.\n\n"
      "Les définitions et formulations sont des aides à la rédaction : elles doivent être adaptées aux constatations."),
     ("Rechercher un terme",
-     "Menu Lexique forensique > Rechercher un terme…\\n\\n"
+     "Menu Lexique forensique > Rechercher un terme…\n\n"
      "Recherchez un terme ou filtrez par catégorie. Consultez sa définition, les synonymes et, "
      "le cas échéant, les formulations pour rapport. Vérifiez leur adéquation avec les faits observés."),
     ("Fiches personnelles",
-     "Dans la gestion des termes, créez ou modifiez vos propres fiches.\\n\\n"
+     "Dans la gestion des termes, créez ou modifiez vos propres fiches.\n\n"
      "Une fiche peut comporter un terme, sa traduction, une catégorie, une définition, "
-     "des synonymes et plusieurs formulations pour rapport.\\n\\n"
+     "des synonymes et plusieurs formulations pour rapport.\n\n"
      "Les fiches personnelles sont conservées dans votre profil utilisateur."),
     ("Formulations et scénarios",
      "Les formulations pour rapport correspondent à des situations distinctes. "
-     "Sélectionnez une formulation pertinente avant de l'insérer dans Writer.\\n\\n"
+     "Sélectionnez une formulation pertinente avant de l'insérer dans Writer.\n\n"
      "Les scénarios assemblent plusieurs formulations et peuvent être personnalisés."),
     ("Vérifier le document",
      "La vérification du document permet de repérer les libellés anglais "
-     "et les termes déconseillés, puis de proposer leur remplacement.\\n\\n"
+     "et les termes déconseillés, puis de proposer leur remplacement.\n\n"
      "Lisez toujours le contexte avant de remplacer une occurrence."),
     ("Exporter / Importer",
-     "Menu Lexique forensique > Exporter / Importer…\\n\\n"
-     "Exporter enregistre vos termes, scénarios et occurrences personnels dans un fichier JSON.\\n"
-     "Importer et fusionner préserve les données locales et ajoute les éléments absents.\\n"
+     "Menu Lexique forensique > Exporter / Importer…\n\n"
+     "Exporter enregistre vos termes, scénarios et occurrences personnels dans un fichier JSON.\n"
+     "Importer et fusionner préserve les données locales et ajoute les éléments absents.\n"
      "Importer et remplacer substitue les données personnelles après une sauvegarde."),
     ("Proposer des fiches",
-     "Menu Lexique forensique > Exporter / Importer…\\n\\n"
+     "Menu Lexique forensique > Exporter / Importer…\n\n"
      "Sélectionnez une ou plusieurs fiches personnelles dans la liste (Ctrl ou Maj selon le système), "
-     "puis cliquez sur « Proposer les fiches sélectionnées ».\\n\\n"
+     "puis cliquez sur « Proposer les fiches sélectionnées ».\n\n"
      "Cette fonction ouvre GitHub dans le navigateur et nécessite Internet et un compte GitHub. "
      "Vous choisissez vous-même de publier ou non. Les propositions publiées sont publiques : "
-     "retirez toute donnée confidentielle ou propre à une procédure.\\n\\n"
+     "retirez toute donnée confidentielle ou propre à une procédure.\n\n"
      "L'aide reste disponible hors ligne, mais l'envoi de propositions nécessite une connexion."),
     ("Mises à jour",
-     "Menu Lexique forensique > Mettre à jour…\\n\\n"
+     "Menu Lexique forensique > Mettre à jour…\n\n"
      "La recherche et l'installation d'une nouvelle version nécessitent Internet. "
      "Vos fiches et règles personnelles restent dans votre profil et ne sont pas effacées "
      "par la mise à jour normale de l'extension."),
@@ -3268,7 +3268,7 @@ class HelpDialogListener(unohelper.Base, XActionListener, XItemListener, XTopWin
     def itemStateChanged(self, event):
         index = self.topics.SelectedItemPos
         if 0 <= index < len(_HELP_TOPICS):
-            self.detail.Text = _HELP_TOPICS[index][0] + "\\n\\n" + _HELP_TOPICS[index][1]
+            self.detail.Text = _HELP_TOPICS[index][0] + "\n\n" + _HELP_TOPICS[index][1]
 
     def actionPerformed(self, event):
         if event.ActionCommand == "close":
