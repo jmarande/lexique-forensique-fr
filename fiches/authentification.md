@@ -6,7 +6,7 @@
 
 ## Définition
 
-Processus de vérification de l’identité d’un utilisateur, de la validité de données ou de l’intégrité d’une preuve numérique.
+Processus permettant de vérifier l’identité déclarée d’un utilisateur, d’un équipement ou d’un service, généralement à l’aide d’un ou plusieurs facteurs d’authentification. Elle se distingue de la vérification d’intégrité des données.
 
 ## Synonymes
 
