@@ -12,6 +12,12 @@ Une fiche personnelle reste dans le profil LibreOffice de son auteur ; elle n'es
 
 **Aucune fiche historique n'est présumée validée.** Toute fiche non mentionnée dans `data/validation_fiches.json` est *en attente de relecture*.
 
+## Contenu d'une fiche proposée
+
+Toute proposition comprend : **terme français**, **équivalent anglais** (si applicable), **catégorie**, **définition**, **synonymes**, **références documentaires** et **formulations pour rapport**. Les formulations constituent une liste de variantes, chacune avec un **intitulé de situation** (`type`) et un **texte prêt à utiliser** (`texte`). L'utilisateur peut proposer plusieurs variantes, les modifier et en laisser aucune si le terme ne s'y prête pas. Elles restent **à relire**, comme la définition, et ne sont jamais approuvées automatiquement.
+
+Exemples de situations : « Opération réalisée », « Résultat partiel », « Opération impossible », « Limite d'interprétation ». La rédaction doit rester factuelle et ne pas conclure au-delà des observations.
+
 ## Cycle de travail
 
 1. Pour une contribution utilisateur, conserver la fiche personnelle localement et soumettre volontairement une proposition via le canal de contribution. Après première sélection, intégrer la fiche dans le lexique avec le statut « En attente de relecture ».
