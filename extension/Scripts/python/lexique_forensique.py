@@ -4,7 +4,7 @@ import os
 import re
 import unicodedata
 import urllib.request
-from urllib.parse import quote
+from urllib.parse import quote, unquote
 import hashlib
 import tempfile
 import shutil
@@ -96,6 +96,34 @@ def _prepare_term_proposal(entry):
     return (GITHUB_PROPOSE_URL + "?template=proposition-fiche.md&title="
             + quote("[Fiche proposée] " + limited(term, 90), safe="")
             + "&body=" + quote(body, safe=""))
+
+
+
+def _prepare_term_proposals(entries):
+    """Créer une unique proposition pour une sélection explicite de fiches."""
+    if not entries:
+        raise ValueError("Sélectionnez au moins une fiche personnelle")
+    parts = []
+    for index, entry in enumerate(entries, 1):
+        prepared = _prepare_term_proposal(entry)
+        encoded_body = prepared.split("&body=", 1)[1]
+        parts.append("## Fiche " + str(index) + " : "
+                     + str(entry.get("terme") or "").strip()[:100]
+                     + "\n\n" + unquote(encoded_body))
+    body = (
+        "Proposition collective de " + str(len(entries))
+        + " fiche(s) personnelles, à examiner individuellement.\n\n"
+        + "\n\n---\n\n".join(parts)
+    )
+    title = ("[Fiches proposées] " + str(len(entries)) + " fiche(s)")
+    url = (GITHUB_PROPOSE_URL + "?template=proposition-fiche.md&title="
+           + quote(title, safe="") + "&body=" + quote(body, safe=""))
+    if len(url) > 7000:
+        raise ValueError(
+            "Sélection trop volumineuse pour un formulaire GitHub : "
+            "choisissez moins de fiches ou raccourcissez leurs textes"
+        )
+    return url
 
 
 def _message_box(title, message):
@@ -1153,30 +1181,6 @@ class OccurrenceManagerListener(
             return
         open_occurrence_editor(self, item, False)
 
-    def propose_current(self):
-        index = self._current_index()
-        if index < 0:
-            return
-        entry = self.data[index]
-        try:
-            url = _prepare_term_proposal(entry)
-        except ValueError as exc:
-            self.status_label.getModel().Label = str(exc)
-            return
-        _message_box(
-            "Proposer une fiche",
-            "Le navigateur va ouvrir une proposition GitHub préremplie. "
-            "Son contenu sera public UNIQUEMENT si vous cliquez sur "
-            "'Submit new issue' sur GitHub. Relisez et supprimez toute "
-            "information confidentielle avant publication. "
-            "Un compte GitHub est nécessaire."
-        )
-        try:
-            _open_url(url)
-            self.status_label.getModel().Label = "Proposition ouverte dans le navigateur"
-        except Exception:
-            self.status_label.getModel().Label = "Impossible d’ouvrir GitHub"
-
     def delete_current(self):
         index, item = self._current()
         if not item:
@@ -1984,8 +1988,6 @@ class TermManagerListener(
             self.edit_current()
         elif cmd == "delete":
             self.delete_current()
-        elif cmd == "propose":
-            self.propose_current()
         elif cmd == "close":
             self._close_dialog()
 
@@ -2283,10 +2285,45 @@ class DataTransferListener(
     XActionListener,
     XTopWindowListener,
 ):
-    def __init__(self, dialog, status_label):
+    def __init__(self, dialog, status_label, proposal_list):
         self.dialog = dialog
         self.status_label = status_label
+        self.proposal_list = proposal_list
+        self.proposal_entries = []
         self._closing = False
+        self.refresh_proposals()
+
+    def refresh_proposals(self):
+        self.proposal_entries = _load_user_data()
+        self.proposal_list.removeItems(0, self.proposal_list.ItemCount)
+        for entry in self.proposal_entries:
+            self.proposal_list.addItem(entry.get('terme') or 'Sans nom', self.proposal_list.ItemCount)
+
+    def propose_selected(self):
+        self.refresh_entries_if_needed()
+        selected = list(self.proposal_list.SelectedItemsPos)
+        entries = [self.proposal_entries[i] for i in selected if 0 <= i < len(self.proposal_entries)]
+        try:
+            url = _prepare_term_proposals(entries)
+        except ValueError as exc:
+            self.status_label.getModel().Label = str(exc)
+            _message_box('Proposer des fiches', str(exc))
+            return
+        _message_box('Proposer des fiches',
+                     'Le navigateur va afficher les fiches sélectionnées. '
+                     'Aucune proposition n’est envoyée automatiquement. '
+                     'Une publication GitHub est publique : vérifiez chaque '
+                     'formulation et retirez les informations confidentielles '
+                     'avant de confirmer. Un compte GitHub est requis.')
+        try:
+            _open_url(url)
+            self.status_label.getModel().Label = 'Proposition prête dans le navigateur'
+        except Exception:
+            self.status_label.getModel().Label = 'Impossible d’ouvrir GitHub'
+
+    def refresh_entries_if_needed(self):
+        # Ne pas réinitialiser la sélection pendant que l’utilisateur la prépare.
+        return
 
     def export_data(self):
         try:
@@ -2386,6 +2423,8 @@ class DataTransferListener(
             self.import_data("merge")
         elif event.ActionCommand == "replace":
             self.import_data("replace")
+        elif event.ActionCommand == "propose":
+            self.propose_selected()
         elif event.ActionCommand == "close":
             self._close_dialog()
 
@@ -3043,8 +3082,6 @@ def open_term_manager(lexicon_listener=None, *args):
         106, 256, 44, 16, Label="Modifier")
     add("btnManagedTermDelete", "com.sun.star.awt.UnoControlButtonModel",
         8, 276, 48, 14, Label="Supprimer")
-    add("btnManagedTermPropose", "com.sun.star.awt.UnoControlButtonModel",
-        158, 274, 128, 16, Label="Proposer au lexique")
     add("btnManagedTermClose", "com.sun.star.awt.UnoControlButtonModel",
         330, 274, 52, 14, Label="Fermer")
 
@@ -3068,7 +3105,6 @@ def open_term_manager(lexicon_listener=None, *args):
         ("btnManagedTermDuplicate", "duplicate"),
         ("btnManagedTermEdit", "edit"),
         ("btnManagedTermDelete", "delete"),
-        ("btnManagedTermPropose", "propose"),
         ("btnManagedTermClose", "close"),
     ]:
         control = dialog.getControl(control_name)
@@ -3089,9 +3125,9 @@ def open_user_data_transfer(*args):
         "com.sun.star.awt.UnoControlDialogModel", ctx
     )
     model.PositionX = 105
-    model.PositionY = 70
+    model.PositionY = 12
     model.Width = 340
-    model.Height = 190
+    model.Height = 300
     model.Title = "Exporter / Importer les données utilisateur"
 
     def add(name, service, x, y, w, h, **props):
@@ -3134,10 +3170,16 @@ def open_user_data_transfer(*args):
         10, 140, 150, 20, Label="Importer et fusionner")
     add("btnUserImportReplace", "com.sun.star.awt.UnoControlButtonModel",
         168, 140, 162, 20, Label="Importer et remplacer")
+    add("lblProposals", "com.sun.star.awt.UnoControlFixedTextModel",
+        10, 168, 310, 10, Label="PROPOSER DES FICHES PERSONNELLES")
+    add("lstProposalTerms", "com.sun.star.awt.UnoControlListBoxModel",
+        10, 180, 320, 64, MultiSelection=True)
+    add("btnProposeSelected", "com.sun.star.awt.UnoControlButtonModel",
+        168, 248, 162, 19, Label="Proposer les fiches sélectionnées")
     add("lblTransferStatus", "com.sun.star.awt.UnoControlFixedTextModel",
-        10, 166, 220, 10, Label="")
+        10, 276, 258, 12, Label="")
     add("btnTransferClose", "com.sun.star.awt.UnoControlButtonModel",
-        278, 166, 52, 16, Label="Fermer")
+        278, 274, 52, 16, Label="Fermer")
 
     dialog = smgr.createInstanceWithContext(
         "com.sun.star.awt.UnoControlDialog", ctx
@@ -3148,11 +3190,13 @@ def open_user_data_transfer(*args):
     listener = DataTransferListener(
         dialog,
         dialog.getControl("lblTransferStatus"),
+        dialog.getControl("lstProposalTerms"),
     )
     for control_name, command in [
         ("btnUserExport", "export"),
         ("btnUserImportMerge", "merge"),
         ("btnUserImportReplace", "replace"),
+        ("btnProposeSelected", "propose"),
         ("btnTransferClose", "close"),
     ]:
         control = dialog.getControl(control_name)
@@ -3165,6 +3209,10 @@ def open_user_data_transfer(*args):
         "listener": listener,
     })
     dialog.setVisible(True)
+
+
+def show_help(*args):
+    _open_url(GITHUB_URL + '/blob/main/docs/AIDE.md')
 
 
 def show_about(*args):
