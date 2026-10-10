@@ -1,20 +1,26 @@
 # Validation éditoriale des fiches
 
-Le lexique distingue **deux états** :
+Le projet distingue **trois états éditoriaux** et sépare les fiches personnelles des propositions destinées à la communauté :
+
+- **Proposée** : contribution d'un utilisateur soumise à examen, qui n'entre pas encore dans la base officielle.
+
 
 - **En attente de relecture** : fiche publiée pour travail, sans validation terminologique définitive.
 - **Validée** : fiche relue et explicitement approuvée après confrontation des sources pertinentes.
+
+Une fiche personnelle reste dans le profil LibreOffice de son auteur ; elle n'est pas publiée ni proposée automatiquement. La proposition à la communauté est une action volontaire. Elle doit passer par un canal de contribution (par exemple une issue GitHub avec les champs nécessaires) et faire l'objet d'une première sélection avant d'être ajoutée à la base officielle.
 
 **Aucune fiche historique n'est présumée validée.** Toute fiche non mentionnée dans `data/validation_fiches.json` est *en attente de relecture*.
 
 ## Cycle de travail
 
-1. Modifier la fiche dans `data/lexique.json` et synchroniser `extension/data/lexique.json`.
-2. Croiser les sources pertinentes (NIST, SWGDE, FranceTerme, ANSSI, CLARUS, ISO, etc.) et documenter les concordances, divergences, références précises et droits de réutilisation.
-3. Soumettre les modifications à la relecture via une PR.
-4. Après approbation explicite, ajouter une entrée dans `data/validation_fiches.json` avec `statut: validee`, `date`, `validateur` et `reference` (numéro de PR ou lien vers la décision).
-5. Régénérer les fiches : `python3 scripts/generate_fiches.py`. Le workflow automatique actualise le catalogue après une modification sur `main`.
-6. Si le contenu substantiel d'une fiche validée change, **retirer son entrée de validation dans la même PR** et la repasser en attente de relecture jusqu'à nouvelle approbation.
+1. Pour une contribution utilisateur, conserver la fiche personnelle localement et soumettre volontairement une proposition via le canal de contribution. Après première sélection, intégrer la fiche dans le lexique avec le statut « En attente de relecture ».
+2. Modifier la fiche dans `data/lexique.json` et synchroniser `extension/data/lexique.json`.
+3. Croiser les sources pertinentes (NIST, SWGDE, FranceTerme, ANSSI, CLARUS, ISO, etc.) et documenter les concordances, divergences, références précises et droits de réutilisation.
+4. Soumettre les modifications à la relecture via une PR.
+5. Après approbation explicite, ajouter une entrée dans `data/validation_fiches.json` avec `statut: validee`, `date`, `validateur` et `reference` (numéro de PR ou lien vers la décision).
+6. Régénérer les fiches : `python3 scripts/generate_fiches.py`. Le workflow automatique actualise le catalogue après une modification sur `main`.
+7. Si le contenu substantiel d'une fiche validée change, **retirer son entrée de validation dans la même PR** et la repasser en attente de relecture jusqu'à nouvelle approbation.
 
 Exemple de validation à renseigner seulement après décision humaine :
 
