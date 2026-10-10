@@ -156,7 +156,7 @@ Le projet s’appuie notamment sur **CLARUS D3.2 — A searchable web-based comm
 
 Les entrées françaises ne sont pas nécessairement des traductions littérales : elles sont adaptées à l’usage professionnel francophone, tout en conservant la terminologie internationale et la traçabilité de la source lorsqu’elles sont disponibles.
 
-Voir `sources/CLARUS.md`.
+Voir `sources/CLARUS.md`, le [référentiel documentaire](sources/REFERENTIEL.md) et l'[audit terminologique initial](sources/AUDIT-INITIAL-2026-10-10.md). Ces références servent à vérifier les entrées avant tout enrichissement ; elles ne constituent pas une autorisation de reproduire les textes tiers.
 
 ## Structure du dépôt
 
