@@ -1,6 +1,8 @@
 # Référentiel documentaire — Lexique forensique FR
 
-État initial : 10 octobre 2026. Références documentaires proposées pour vérifier et enrichir les entrées ; **aucune autorisation de reproduction intégrale n'est présumée**.
+Lexique forensique FR est un **projet indépendant** qui confronte plusieurs références terminologiques et méthodologiques. Aucune source ne valide ni ne cautionne le projet. Les définitions et formulations sont élaborées pour un usage professionnel francophone et doivent être contrôlées avant publication.
+
+Référentiel initial au 10 octobre 2026 : les ressources répertoriées servent à vérifier et enrichir les entrées ; **leur accès public ne constitue pas une autorisation de reproduction ou de traduction**.
 
 | ID | Organisme / ressource | Périmètre | Accès et référence | Politique d'intégration |
 | --- | --- | --- | --- | --- |
