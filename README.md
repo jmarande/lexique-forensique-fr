@@ -6,6 +6,10 @@
 
 Lexique français collaboratif de **criminalistique numérique** accompagné d’une extension **LibreOffice Writer** destinée à la recherche terminologique, à la normalisation des rapports et à la francisation de libellés issus d’exports de logiciels forensiques.
 
+## Consulter les fiches
+
+**[Consulter le catalogue des fiches du lexique](fiches/README.md)** — index alphabétique des termes, définitions, synonymes et formulations de rapport. Les fiches sont générées depuis la base JSON officielle.
+
 ## Objectifs
 
 Le projet vise à :
