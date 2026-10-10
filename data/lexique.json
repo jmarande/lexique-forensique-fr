@@ -108,16 +108,14 @@
     "terme": "Authentification",
     "anglais": "Authentication",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Processus permettant de vérifier l’identité déclarée d’un utilisateur, d’un équipement ou d’un service, généralement à l’aide d’un ou plusieurs facteurs d’authentification. Elle se distingue de la vérification d’intégrité des données.",
-    "synonymes": [
-      "Vérification d’identité"
-    ],
-    "termes_deconseilles": [
-      "Authentification d’identité"
-    ],
+    "definition": "Processus visant à établir un niveau de confiance dans l’identité d’une entité ou dans l’authenticité de données, d’un message ou de leur provenance, selon le contexte. Il convient de distinguer l’authentification d’identité, l’authentification de la source et la vérification d’intégrité, qui répondent à des objectifs différents.",
+    "synonymes": [],
+    "termes_deconseilles": [],
     "exemple_rapport": "L’accès au service est soumis à une procédure d’authentification.",
     "sources": [
-      "CLARUS D3.2 — Authentication"
+      "CLARUS D3.2 — Authentication (référence à confronter)",
+      "NIST CSRC Glossary — authenticate / authentication (SP 800-175B Rev. 1)",
+      "SWGDE — Digital & Multimedia Evidence Glossary, Authentication"
     ]
   },
   {
