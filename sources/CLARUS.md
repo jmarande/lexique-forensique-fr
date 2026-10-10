@@ -1,25 +1,30 @@
-# CLARUS D3.2
+# CLARUS D3.2 — Référence documentaire
 
-Source de référence utilisée pour amorcer une partie du lexique :
+CLARUS D3.2 (*A searchable web-based common lexicon*) est **l'une des références consultées** pour la terminologie de criminalistique numérique.
 
-**CLARUS — D3.2 A searchable web-based common lexicon**
+**Lexique forensique FR est un projet indépendant.** Il confronte plusieurs sources documentaires et propose ses propres définitions et formulations adaptées à la pratique professionnelle francophone. CLARUS n'édite, ne valide et ne cautionne pas Lexique forensique FR.
 
-Projet européen consacré notamment à la réduction des ambiguïtés terminologiques en criminalistique numérique.
+## Document identifié
 
-## Principe d’utilisation
+- Projet : CLARUS (Horizon Europe, n° 101121182).
+- Livrable : D3.2 — *A searchable web-based common lexicon*.
+- Auteurs indiqués dans le document : Duygu Candarli et James Balfour.
+- Révision 1, remise le 18 novembre 2025.
+- [Lexique publié par CLARUS](https://clarus-lexicon.arg.tech/).
+- [Document D3.2](https://clarus-lexicon.arg.tech/static/files/full-lexicon.pdf).
 
-Les entrées du présent dépôt ne constituent pas nécessairement une traduction littérale du document CLARUS.
+## Utilisation dans Lexique forensique FR
 
-Le projet français vise à :
+Les concepts issus de CLARUS peuvent servir de points de comparaison avec d'autres références (NIST, SWGDE, ANSSI, FranceTerme, etc.). Les formulations en français font l'objet d'une revue de précision et de provenance, sans présumer qu'une reformulation suffit à autoriser la réutilisation d'un contenu protégé.
 
-- conserver l’équivalence avec le terme anglais lorsqu’elle est pertinente ;
-- adapter la définition au contexte professionnel francophone ;
-- conserver synonymes, termes déconseillés, points d’attention et sources utiles ;
-- fournir des formulations adaptées à la rédaction de rapports ;
-- distinguer les concepts terminologiques du mécanisme de francisation des libellés d’exports.
+La mention « CLARUS D3.2 » dans une fiche indique une **source déclarée**, non une certification de conformité ni une autorisation de reprise textuelle.
 
-La provenance reste enregistrée dans les entrées dérivées du document, même si les sources ne sont pas affichées dans la fiche principale de l’extension.
+## Droits et précautions
 
-## Limite
+Le caractère public du livrable n'implique pas une licence ouverte. Le site du projet porte une mention de réservation des droits ; aucune autorisation générale de traduction et de redistribution des définitions sous GPL-3.0 n'a été établie lors du contrôle initial.
 
-CLARUS constitue une source terminologique de référence, mais ne couvre pas à lui seul toutes les formulations, applications, libellés logiciels ou usages professionnels ajoutés au projet. Les ajouts non directement dérivés de CLARUS doivent conserver leur propre justification ou source lorsqu’elle est disponible.
+Avant toute reprise substantielle ou traduction fidèle, vérifier les droits applicables et demander, si nécessaire, une permission au consortium (clarus@dundee.ac.uk).
+
+Les fiches existantes faisant référence à CLARUS font l'objet d'un audit distinct ; leur conformité juridique n'est **pas encore certifiée**.
+
+Voir le [référentiel documentaire](REFERENTIEL.md) et la [revue des 63 fiches](AUDIT-63-FICHES-2026-10-10.md).
