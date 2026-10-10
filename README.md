@@ -150,13 +150,15 @@ La base officielle `traductions.json` alimente le vérificateur avec des corresp
 
 Les règles utilisateur peuvent contenir une occurrence, plusieurs remplacements possibles et un remplacement préféré.
 
-## Sources
+## Sources et démarche terminologique
 
-Le projet s’appuie notamment sur **CLARUS D3.2 — A searchable web-based common lexicon**.
+**Lexique forensique FR est un projet indépendant**, conçu pour la pratique francophone de la criminalistique numérique. Il propose ses propres définitions, équivalents français et formulations de rapport, en privilégiant la précision technique et la prudence dans l’interprétation.
 
-Les entrées françaises ne sont pas nécessairement des traductions littérales : elles sont adaptées à l’usage professionnel francophone, tout en conservant la terminologie internationale et la traçabilité de la source lorsqu’elles sont disponibles.
+Son travail documentaire confronte plusieurs références, notamment **CLARUS D3.2**, **NIST**, **SWGDE**, **ANSSI** et **FranceTerme**, ainsi que des guides méthodologiques pertinents. Ces organismes ne sont ni éditeurs ni garants du projet.
 
-Voir `sources/CLARUS.md`, le [référentiel documentaire](sources/REFERENTIEL.md) l'[audit terminologique initial](sources/AUDIT-INITIAL-2026-10-10.md) et la [revue des 63 fiches](sources/AUDIT-63-FICHES-2026-10-10.md). Ces références servent à vérifier les entrées avant tout enrichissement ; elles ne constituent pas une autorisation de reproduire les textes tiers.
+Les sources sont utilisées pour vérifier les concepts et identifier les divergences terminologiques. Leur citation ne vaut pas autorisation de reproduction : toute reprise de contenu doit respecter les droits et conditions de réutilisation applicables.
+
+**Documentation :** [référentiel des sources](sources/REFERENTIEL.md) · [audit des 63 fiches](sources/AUDIT-63-FICHES-2026-10-10.md) · [audit initial](sources/AUDIT-INITIAL-2026-10-10.md) · [CLARUS D3.2](sources/CLARUS.md).
 
 ## Structure du dépôt
 
