@@ -8,7 +8,7 @@ Lexique français collaboratif de **criminalistique numérique** accompagné d�
 
 ## Consulter les fiches
 
-**[Consulter le catalogue des fiches du lexique](fiches/README.md)** — index alphabétique des termes, définitions, synonymes et formulations de rapport. Les fiches sont générées depuis la base JSON officielle.
+**[Consulter le catalogue des fiches du lexique](fiches/README.md)** — index alphabétique des termes, définitions, synonymes et formulations de rapport. Les fiches sont générées depuis la base JSON officielle. [Comment mettre à jour une fiche](docs/MISE-A-JOUR-FICHES.md).
 
 ## Objectifs
 
