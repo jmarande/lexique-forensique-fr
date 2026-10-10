@@ -25,6 +25,12 @@
             <prop oor:name="Target" oor:type="xs:string"><value>_self</value></prop>
             <prop oor:name="Context" oor:type="xs:string"><value>com.sun.star.text.TextDocument</value></prop>
           </node>
+          <node oor:name="m5" oor:op="replace">
+            <prop oor:name="URL" oor:type="xs:string"><value>vnd.sun.star.script:lexique-forensique-fr.oxt|Scripts|python|lexique_forensique.py$show_help?language=Python&amp;location=user:uno_packages</value></prop>
+            <prop oor:name="Title" oor:type="xs:string"><value xml:lang="fr">Aide…</value></prop>
+            <prop oor:name="Target" oor:type="xs:string"><value>_self</value></prop>
+            <prop oor:name="Context" oor:type="xs:string"><value>com.sun.star.text.TextDocument</value></prop>
+          </node>
           <node oor:name="m4" oor:op="replace">
             <prop oor:name="URL" oor:type="xs:string"><value>vnd.sun.star.script:lexique-forensique-fr.oxt|Scripts|python|lexique_forensique.py$show_about?language=Python&amp;location=user:uno_packages</value></prop>
             <prop oor:name="Title" oor:type="xs:string"><value xml:lang="fr">À propos de…</value></prop>

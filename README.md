@@ -39,7 +39,7 @@ L’extension propose actuellement :
 - **Scénarios de rédaction** composés de plusieurs formulations du lexique ;
 - création, duplication, modification et suppression de scénarios utilisateur ;
 - **Gestion des termes utilisateur** avec catégories et formulations personnalisées ;
-- **Proposition d'une fiche personnelle** : ouverture d'une issue GitHub préremplie, à relire et envoyer volontairement par l'utilisateur ;
+- **Proposition de plusieurs fiches personnelles** depuis « Exporter / Importer… » : sélection multiple et issue GitHub préremplie, à vérifier avant publication ;
 - **Export / import** de toutes les données utilisateur dans un fichier JSON unique ;
 - import avec choix entre **fusionner** et **remplacer** la base utilisateur ;
 - vérification et installation des mises à jour depuis GitHub.
@@ -91,6 +91,8 @@ Le menu **Lexique forensique > Exporter / Importer…** permet d’exporter dans
 Les données officielles embarquées dans l’extension ne sont jamais écrasées par cette opération.
 
 **Contribuer :** [proposer une fiche au lexique](docs/PROPOSER-UNE-FICHE.md).
+
+**Aide :** accessible depuis le menu [Aide…](docs/AIDE.md).
 
 ## Installation
 
