@@ -1,5 +1,7 @@
 # Aide — Lexique forensique FR
 
+**Cette aide est aussi disponible hors ligne dans une fenêtre LibreOffice** : menu **Lexique forensique > Aide…**. Elle est incluse directement dans le code de l'extension OXT et ne dépend pas de GitHub ou d'une connexion réseau. Les liens ci-dessous restent des ressources complémentaires en ligne.
+
 ## Rechercher un terme
 Dans LibreOffice Writer, choisir **Lexique forensique > Rechercher un terme…**. Parcourir le lexique, consulter la définition et utiliser une formulation pour rapport si elle convient aux constatations.
 
