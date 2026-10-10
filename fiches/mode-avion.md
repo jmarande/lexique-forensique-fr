@@ -6,21 +6,21 @@
 
 ## Définition
 
-Réglage d’un appareil qui désactive ses fonctions de communication sans fil afin d’empêcher l’accès aux réseaux. Il peut être utilisé, lorsque les conditions le permettent, pour contribuer à préserver l’intégrité des données d’un appareil mobile.
+Réglage d’un appareil mobile destiné à limiter ou interrompre certaines communications radio. Son activation ne garantit pas, à elle seule, la désactivation du Wi-Fi, du Bluetooth ou de toute autre liaison sans fil ; l’état effectif des interfaces doit être vérifié selon l’appareil.
 
 ## Synonymes
 
-- Mode hors-ligne
+- Mode avion de l’appareil
 
 ## Formulations pour rapport
 
 ### Déjà en mode avion
 
-Lors de notre prise en charge, nous constatons que le support est déjà configuré en mode avion.
+Lors de notre prise en charge, nous constatons que le support est configuré en mode avion, sans préjuger de l’état de chacune de ses interfaces radio.
 
 ### Activation par l’opérateur
 
-Lors de notre prise en charge, nous plaçons le support en mode avion afin de limiter ses communications avec les réseaux.
+Lors de notre prise en charge, nous activons le mode avion afin de limiter les communications du support. L’état des interfaces sans fil est contrôlé dans la mesure des possibilités techniques.
 
 ### Activation techniquement impossible
 
