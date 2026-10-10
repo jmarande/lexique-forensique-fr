@@ -6,19 +6,7 @@
 
 ## Définition
 
-Processus permettant de vérifier l’identité déclarée d’un utilisateur, d’un équipement ou d’un service, généralement à l’aide d’un ou plusieurs facteurs d’authentification. Elle se distingue de la vérification d’intégrité des données.
-
-## Synonymes
-
-- Vérification d’identité
-
-## Termes déconseillés
-
-- Authentification d’identité
-
-## Exemple de formulation
-
-L’accès au service est soumis à une procédure d’authentification.
+Processus visant à établir un niveau de confiance dans l’identité d’une entité ou dans l’authenticité de données, d’un message ou de leur provenance, selon le contexte. Il convient de distinguer l’authentification d’identité, l’authentification de la source et la vérification d’intégrité, qui répondent à des objectifs différents.
 
 > Ces fiches sont des documents de travail du projet : les définitions restent soumises à la revue terminologique et documentaire.
 
