@@ -4,10 +4,9 @@
     "terme": "Acquisition forensique",
     "anglais": "Forensic acquisition",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Processus systématique consistant à créer une copie ou une image forensique de données numériques tout en préservant les données d’origine et leur intégrité pour les besoins de l’analyse et de la procédure.",
+    "definition": "Opération documentée visant à obtenir une copie ou une représentation exploitable de données numériques à partir d’une source, selon une méthode adaptée au support et au périmètre de l’examen. La portée de l’acquisition et les mesures de contrôle de l’intégrité sont consignées.",
     "synonymes": [
-      "Acquisition numérique forensique",
-      "Extraction"
+      "Acquisition numérique forensique"
     ],
     "termes_deconseilles": [],
     "exemple_rapport": "Nous procédons à l’acquisition forensique du support afin de préserver les données d’origine en vue de leur analyse.",
@@ -17,11 +16,11 @@
     "formulations_rapport": [
       {
         "type": "Acquisition réalisée",
-        "texte": "Nous procédons à l’acquisition forensique du support afin d’en extraire les données accessibles tout en préservant les données d’origine."
+        "texte": "Nous procédons à l’acquisition des données accessibles du support selon la méthode décrite dans le présent rapport."
       },
       {
         "type": "Acquisition partielle",
-        "texte": "Nos moyens techniques ne nous permettent de procéder qu’à une acquisition partielle des données du support."
+        "texte": "Nos moyens techniques ne nous permettent de procéder qu’à une acquisition partielle des données accessibles du support."
       },
       {
         "type": "Acquisition impossible",
@@ -109,7 +108,7 @@
     "terme": "Authentification",
     "anglais": "Authentication",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Processus de vérification de l’identité d’un utilisateur, de la validité de données ou de l’intégrité d’une preuve numérique.",
+    "definition": "Processus permettant de vérifier l’identité déclarée d’un utilisateur, d’un équipement ou d’un service, généralement à l’aide d’un ou plusieurs facteurs d’authentification. Elle se distingue de la vérification d’intégrité des données.",
     "synonymes": [
       "Vérification d’identité"
     ],
@@ -437,9 +436,10 @@
     "terme": "Empreinte numérique",
     "anglais": "Digital fingerprint",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Valeur de hachage calculée à partir d’un fichier, d’un équipement ou d’un ensemble de données et utilisée comme identifiant vérifiable de son contenu et de son intégrité.",
+    "definition": "Dans le contexte du contrôle d’intégrité, valeur produite par une fonction de hachage appliquée à un ensemble déterminé de données. La comparaison d’empreintes calculées avec le même algorithme permet de contrôler la concordance des contenus considérés ; elle ne suffit pas à établir leur origine ou leur authenticité.",
     "synonymes": [
-      "Empreinte cryptographique"
+      "Empreinte cryptographique",
+      "Valeur de hachage"
     ],
     "termes_deconseilles": [
       "Empreinte digitale"
@@ -719,7 +719,7 @@
     "terme": "IMEI",
     "anglais": "International Mobile Equipment Identity (IMEI)",
     "categorie": "Preuve numérique",
-    "definition": "Identifiant de quinze chiffres associé à un équipement mobile et permettant notamment d’identifier le fabricant et le modèle de l’appareil.",
+    "definition": "Identifiant d’équipement mobile utilisé sur les réseaux cellulaires, généralement composé de 15 chiffres dans sa représentation courante. Un appareil peut disposer de plusieurs IMEI. Cet identifiant peut contribuer à caractériser un équipement mais ne permet pas, à lui seul, de confirmer de manière certaine son modèle ou son utilisateur.",
     "synonymes": [
       "Numéro IMEI"
     ],
@@ -806,7 +806,7 @@
     "terme": "Intégrité des données",
     "anglais": "Data integrity / Evidence integrity",
     "categorie": "Principe de criminalistique numérique",
-    "definition": "Propriété selon laquelle les données demeurent complètes et non altérées au cours des opérations de collecte, copie, stockage, analyse ou transfert. En criminalistique numérique, son contrôle repose notamment sur des procédures adaptées et sur la comparaison de valeurs de hachage.",
+    "definition": "Propriété décrivant l’absence d’altération non maîtrisée des données dans un périmètre déterminé. En criminalistique numérique, les contrôles d’intégrité, notamment la comparaison de valeurs de hachage avec le même algorithme, contribuent à documenter la concordance entre les données examinées et une référence ; ils ne démontrent pas à eux seuls l’authenticité de leur origine.",
     "synonymes": [
       "Intégrité de la preuve numérique"
     ],
@@ -820,11 +820,11 @@
     "formulations_rapport": [
       {
         "type": "Intégrité vérifiée",
-        "texte": "L’intégrité des données est vérifiée par comparaison des valeurs de hachage calculées."
+        "texte": "La concordance des valeurs de hachage calculées avec le même algorithme permet de constater l’absence de différence détectée entre les données comparées."
       },
       {
         "type": "Intégrité lors de la remise",
-        "texte": "Les résultats sont remis accompagnés de leurs valeurs de hachage afin de permettre le contrôle ultérieur de leur intégrité."
+        "texte": "Les résultats sont remis accompagnés de leurs valeurs de hachage et de l’indication de l’algorithme utilisé afin de permettre un contrôle ultérieur de concordance."
       }
     ]
   },
@@ -881,9 +881,9 @@
     "terme": "Mémoire cache",
     "anglais": "Cache memory",
     "categorie": "Preuve numérique",
-    "definition": "Type de mémoire utilisé par un système ou une application pour stocker temporairement des fichiers et d’autres données. Les éléments présents dans le cache peuvent présenter une valeur probatoire.",
+    "definition": "Mémoire intermédiaire rapide utilisée par un processeur ou un système pour conserver temporairement des informations et accélérer leur accès. Elle doit être distinguée du cache applicatif, qui peut conserver des fichiers et d’autres données sur un support de stockage.",
     "synonymes": [
-      "Cache"
+      "Cache mémoire"
     ],
     "termes_deconseilles": [],
     "exemple_rapport": "L’analyse de la mémoire cache permet d’identifier des fichiers temporaires et autres éléments résiduels.",
@@ -893,11 +893,11 @@
     "formulations_rapport": [
       {
         "type": "Données de cache identifiées",
-        "texte": "L’examen des données met en évidence des éléments présents dans la mémoire cache de l’application."
+        "texte": "L’examen met en évidence des données de cache associées à l’application."
       },
       {
         "type": "Attribution prudente",
-        "texte": "La présence d’un élément dans la mémoire cache atteste de sa présence dans les données locales, sans permettre à elle seule d’en déterminer l’auteur, le destinataire ou le contexte d’utilisation."
+        "texte": "La présence d’un élément dans le cache applicatif ne permet pas, à elle seule, d’identifier l’auteur d’une action ni le contexte de consultation."
       }
     ]
   },
@@ -1053,9 +1053,9 @@
     "terme": "Mode avion",
     "anglais": "Airplane mode",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Réglage d’un appareil qui désactive ses fonctions de communication sans fil afin d’empêcher l’accès aux réseaux. Il peut être utilisé, lorsque les conditions le permettent, pour contribuer à préserver l’intégrité des données d’un appareil mobile.",
+    "definition": "Réglage d’un appareil mobile destiné à limiter ou interrompre certaines communications radio. Son activation ne garantit pas, à elle seule, la désactivation du Wi-Fi, du Bluetooth ou de toute autre liaison sans fil ; l’état effectif des interfaces doit être vérifié selon l’appareil.",
     "synonymes": [
-      "Mode hors-ligne"
+      "Mode avion de l’appareil"
     ],
     "termes_deconseilles": [],
     "exemple_rapport": "Lorsque les conditions techniques le permettent, le terminal est placé en mode avion afin de limiter les communications avec les réseaux.",
@@ -1065,11 +1065,11 @@
     "formulations_rapport": [
       {
         "type": "Déjà en mode avion",
-        "texte": "Lors de notre prise en charge, nous constatons que le support est déjà configuré en mode avion."
+        "texte": "Lors de notre prise en charge, nous constatons que le support est configuré en mode avion, sans préjuger de l’état de chacune de ses interfaces radio."
       },
       {
         "type": "Activation par l’opérateur",
-        "texte": "Lors de notre prise en charge, nous plaçons le support en mode avion afin de limiter ses communications avec les réseaux."
+        "texte": "Lors de notre prise en charge, nous activons le mode avion afin de limiter les communications du support. L’état des interfaces sans fil est contrôlé dans la mesure des possibilités techniques."
       },
       {
         "type": "Activation techniquement impossible",
