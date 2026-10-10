@@ -3211,8 +3211,157 @@ def open_user_data_transfer(*args):
     dialog.setVisible(True)
 
 
+_HELP_TOPICS = [
+    ("Présentation",
+     "Lexique forensique FR\\n\\n"
+     "Extension LibreOffice Writer consacrée à la terminologie de criminalistique numérique.\\n"
+     "Toutes les rubriques de cette aide sont accessibles sans connexion Internet.\\n\\n"
+     "Les définitions et formulations sont des aides à la rédaction : elles doivent être adaptées aux constatations."),
+    ("Rechercher un terme",
+     "Menu Lexique forensique > Rechercher un terme…\\n\\n"
+     "Recherchez un terme ou filtrez par catégorie. Consultez sa définition, les synonymes et, "
+     "le cas échéant, les formulations pour rapport. Vérifiez leur adéquation avec les faits observés."),
+    ("Fiches personnelles",
+     "Dans la gestion des termes, créez ou modifiez vos propres fiches.\\n\\n"
+     "Une fiche peut comporter un terme, sa traduction, une catégorie, une définition, "
+     "des synonymes et plusieurs formulations pour rapport.\\n\\n"
+     "Les fiches personnelles sont conservées dans votre profil utilisateur."),
+    ("Formulations et scénarios",
+     "Les formulations pour rapport correspondent à des situations distinctes. "
+     "Sélectionnez une formulation pertinente avant de l'insérer dans Writer.\\n\\n"
+     "Les scénarios assemblent plusieurs formulations et peuvent être personnalisés."),
+    ("Vérifier le document",
+     "La vérification du document permet de repérer les libellés anglais "
+     "et les termes déconseillés, puis de proposer leur remplacement.\\n\\n"
+     "Lisez toujours le contexte avant de remplacer une occurrence."),
+    ("Exporter / Importer",
+     "Menu Lexique forensique > Exporter / Importer…\\n\\n"
+     "Exporter enregistre vos termes, scénarios et occurrences personnels dans un fichier JSON.\\n"
+     "Importer et fusionner préserve les données locales et ajoute les éléments absents.\\n"
+     "Importer et remplacer substitue les données personnelles après une sauvegarde."),
+    ("Proposer des fiches",
+     "Menu Lexique forensique > Exporter / Importer…\\n\\n"
+     "Sélectionnez une ou plusieurs fiches personnelles dans la liste (Ctrl ou Maj selon le système), "
+     "puis cliquez sur « Proposer les fiches sélectionnées ».\\n\\n"
+     "Cette fonction ouvre GitHub dans le navigateur et nécessite Internet et un compte GitHub. "
+     "Vous choisissez vous-même de publier ou non. Les propositions publiées sont publiques : "
+     "retirez toute donnée confidentielle ou propre à une procédure.\\n\\n"
+     "L'aide reste disponible hors ligne, mais l'envoi de propositions nécessite une connexion."),
+    ("Mises à jour",
+     "Menu Lexique forensique > Mettre à jour…\\n\\n"
+     "La recherche et l'installation d'une nouvelle version nécessitent Internet. "
+     "Vos fiches et règles personnelles restent dans votre profil et ne sont pas effacées "
+     "par la mise à jour normale de l'extension."),
+]
+
+_OPEN_HELP_WINDOWS = []
+
+
+class HelpDialogListener(unohelper.Base, XActionListener, XItemListener, XTopWindowListener):
+    def __init__(self, dialog, topics, detail):
+        self.dialog = dialog
+        self.topics = topics
+        self.detail = detail
+        self._closing = False
+        self.itemStateChanged(None)
+
+    def itemStateChanged(self, event):
+        index = self.topics.SelectedItemPos
+        if 0 <= index < len(_HELP_TOPICS):
+            self.detail.Text = _HELP_TOPICS[index][0] + "\\n\\n" + _HELP_TOPICS[index][1]
+
+    def actionPerformed(self, event):
+        if event.ActionCommand == "close":
+            self._close_dialog()
+
+    def _close_dialog(self):
+        if self._closing:
+            return
+        self._closing = True
+        try:
+            try:
+                self.dialog.removeTopWindowListener(self)
+            except Exception:
+                pass
+            self.dialog.setVisible(False)
+            self.dialog.dispose()
+        finally:
+            _OPEN_HELP_WINDOWS[:] = [
+                entry for entry in _OPEN_HELP_WINDOWS if entry["dialog"] is not self.dialog
+            ]
+
+    def windowClosing(self, event):
+        self._close_dialog()
+
+    def windowOpened(self, event):
+        pass
+
+    def windowClosed(self, event):
+        pass
+
+    def windowMinimized(self, event):
+        pass
+
+    def windowNormalized(self, event):
+        pass
+
+    def windowActivated(self, event):
+        pass
+
+    def windowDeactivated(self, event):
+        pass
+
+
 def show_help(*args):
-    _open_url(GITHUB_URL + '/blob/main/docs/AIDE.md')
+    """Afficher une aide embarquée, sans requête réseau."""
+    for entry in _OPEN_HELP_WINDOWS:
+        try:
+            entry["dialog"].toFront()
+            return
+        except Exception:
+            pass
+    ctx = _ctx()
+    smgr = ctx.ServiceManager
+    toolkit = smgr.createInstanceWithContext("com.sun.star.awt.Toolkit", ctx)
+    model = smgr.createInstanceWithContext("com.sun.star.awt.UnoControlDialogModel", ctx)
+    model.PositionX = 50
+    model.PositionY = 12
+    model.Width = 390
+    model.Height = 248
+    model.Title = "Aide — Lexique forensique FR"
+
+    def add(name, service, x, y, w, h, **props):
+        item = model.createInstance(service)
+        item.Name = name
+        item.PositionX, item.PositionY = x, y
+        item.Width, item.Height = w, h
+        for key, value in props.items():
+            setattr(item, key, value)
+        model.insertByName(name, item)
+
+    add("lblHelpTopics", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 8, 120, 12, Label="Rubriques")
+    add("lstHelpTopics", "com.sun.star.awt.UnoControlListBoxModel",
+        8, 24, 118, 188, StringItemList=tuple(name for name, _ in _HELP_TOPICS))
+    add("txtHelpDetail", "com.sun.star.awt.UnoControlEditModel",
+        134, 24, 248, 188, ReadOnly=True, MultiLine=True, VScroll=True)
+    add("btnHelpClose", "com.sun.star.awt.UnoControlButtonModel",
+        320, 222, 62, 18, Label="Fermer")
+
+    dialog = smgr.createInstanceWithContext("com.sun.star.awt.UnoControlDialog", ctx)
+    dialog.setModel(model)
+    dialog.createPeer(toolkit, None)
+    topics = dialog.getControl("lstHelpTopics")
+    detail = dialog.getControl("txtHelpDetail")
+    topics.selectItemPos(0, True)
+    listener = HelpDialogListener(dialog, topics, detail)
+    topics.addItemListener(listener)
+    close = dialog.getControl("btnHelpClose")
+    close.setActionCommand("close")
+    close.addActionListener(listener)
+    dialog.addTopWindowListener(listener)
+    _OPEN_HELP_WINDOWS.append({"dialog": dialog, "listener": listener})
+    dialog.setVisible(True)
 
 
 def show_about(*args):
