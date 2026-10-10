@@ -82,16 +82,16 @@ def _prepare_term_proposal(entry):
     if not isinstance(sources, list):
         sources = []
     body = (
-        "## Terme français\\n" + limited(term, 140)
-        + "\\n\\n## Équivalent anglais\\n" + limited(entry.get("anglais"), 140)
-        + "\\n\\n## Catégorie\\n" + limited(entry.get("categorie"), 140)
-        + "\\n\\n## Définition proposée\\n" + limited(definition)
-        + "\\n\\n## Synonymes\\n" + ", ".join(limited(v, 100) for v in synonyms[:20])
-        + "\\n\\n## Formulations pour rapport\\n"
-        + ("\\n".join(formulations) if formulations else "Aucune formulation proposée.")
-        + "\\n\\n## Références documentaires\\n"
-        + ("\\n".join("- " + limited(v, 250) for v in sources[:15]) if sources else "À compléter.")
-        + "\\n\\n## Observations pour la relecture\\nÀ compléter."
+        "## Terme français\n" + limited(term, 140)
+        + "\n\n## Équivalent anglais\n" + limited(entry.get("anglais"), 140)
+        + "\n\n## Catégorie\n" + limited(entry.get("categorie"), 140)
+        + "\n\n## Définition proposée\n" + limited(definition)
+        + "\n\n## Synonymes\n" + ", ".join(limited(v, 100) for v in synonyms[:20])
+        + "\n\n## Formulations pour rapport\n"
+        + ("\n".join(formulations) if formulations else "Aucune formulation proposée.")
+        + "\n\n## Références documentaires\n"
+        + ("\n".join("- " + limited(v, 250) for v in sources[:15]) if sources else "À compléter.")
+        + "\n\n## Observations pour la relecture\nÀ compléter."
     )
     return (GITHUB_PROPOSE_URL + "?template=proposition-fiche.md&title="
             + quote("[Fiche proposée] " + limited(term, 90), safe="")
