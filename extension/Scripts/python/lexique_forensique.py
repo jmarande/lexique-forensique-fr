@@ -4,6 +4,7 @@ import os
 import re
 import unicodedata
 import urllib.request
+from urllib.parse import quote
 import hashlib
 import tempfile
 import shutil
@@ -27,6 +28,7 @@ _OPEN_ABOUT_WINDOWS = []
 
 CURRENT_VERSION = "0.8.1"
 GITHUB_URL = "https://github.com/jmarande/lexique-forensique-fr"
+GITHUB_PROPOSE_URL = GITHUB_URL + "/issues/new"
 GITHUB_LATEST_RELEASE_API = (
     "https://api.github.com/repos/jmarande/lexique-forensique-fr/releases/latest"
 )
@@ -48,6 +50,52 @@ def _open_url(url):
         "com.sun.star.system.SystemShellExecute", ctx
     )
     shell.execute(url, "", 0)
+
+
+
+def _prepare_term_proposal(entry):
+    """Préparer une proposition GitHub publique, sans envoi automatique."""
+    if entry.get("_source") != "user":
+        raise ValueError("Seules les fiches personnelles peuvent être proposées")
+    term = (entry.get("terme") or "").strip()
+    definition = (entry.get("definition") or "").strip()
+    if not term or not definition:
+        raise ValueError("Complétez le terme et sa définition avant de proposer la fiche")
+
+    def limited(value, size=1500):
+        return str(value or "").strip()[:size]
+
+    formulations = []
+    for item in (entry.get("formulations_rapport") or [])[:12]:
+        if not isinstance(item, dict):
+            continue
+        wording = limited(item.get("texte"), 700)
+        if wording:
+            formulations.append(
+                "- **" + limited(item.get("type") or "Formulation", 80)
+                + "** : " + wording
+            )
+    synonyms = entry.get("synonymes") or []
+    if not isinstance(synonyms, list):
+        synonyms = []
+    sources = entry.get("sources") or []
+    if not isinstance(sources, list):
+        sources = []
+    body = (
+        "## Terme français\\n" + limited(term, 140)
+        + "\\n\\n## Équivalent anglais\\n" + limited(entry.get("anglais"), 140)
+        + "\\n\\n## Catégorie\\n" + limited(entry.get("categorie"), 140)
+        + "\\n\\n## Définition proposée\\n" + limited(definition)
+        + "\\n\\n## Synonymes\\n" + ", ".join(limited(v, 100) for v in synonyms[:20])
+        + "\\n\\n## Formulations pour rapport\\n"
+        + ("\\n".join(formulations) if formulations else "Aucune formulation proposée.")
+        + "\\n\\n## Références documentaires\\n"
+        + ("\\n".join("- " + limited(v, 250) for v in sources[:15]) if sources else "À compléter.")
+        + "\\n\\n## Observations pour la relecture\\nÀ compléter."
+    )
+    return (GITHUB_PROPOSE_URL + "?template=proposition-fiche.md&title="
+            + quote("[Fiche proposée] " + limited(term, 90), safe="")
+            + "&body=" + quote(body, safe=""))
 
 
 def _message_box(title, message):
@@ -1105,6 +1153,30 @@ class OccurrenceManagerListener(
             return
         open_occurrence_editor(self, item, False)
 
+    def propose_current(self):
+        index = self._current_index()
+        if index < 0:
+            return
+        entry = self.data[index]
+        try:
+            url = _prepare_term_proposal(entry)
+        except ValueError as exc:
+            self.status_label.getModel().Label = str(exc)
+            return
+        _message_box(
+            "Proposer une fiche",
+            "Le navigateur va ouvrir une proposition GitHub préremplie. "
+            "Son contenu sera public UNIQUEMENT si vous cliquez sur "
+            "'Submit new issue' sur GitHub. Relisez et supprimez toute "
+            "information confidentielle avant publication. "
+            "Un compte GitHub est nécessaire."
+        )
+        try:
+            _open_url(url)
+            self.status_label.getModel().Label = "Proposition ouverte dans le navigateur"
+        except Exception:
+            self.status_label.getModel().Label = "Impossible d’ouvrir GitHub"
+
     def delete_current(self):
         index, item = self._current()
         if not item:
@@ -1912,6 +1984,8 @@ class TermManagerListener(
             self.edit_current()
         elif cmd == "delete":
             self.delete_current()
+        elif cmd == "propose":
+            self.propose_current()
         elif cmd == "close":
             self._close_dialog()
 
@@ -2969,6 +3043,8 @@ def open_term_manager(lexicon_listener=None, *args):
         106, 256, 44, 16, Label="Modifier")
     add("btnManagedTermDelete", "com.sun.star.awt.UnoControlButtonModel",
         8, 276, 48, 14, Label="Supprimer")
+    add("btnManagedTermPropose", "com.sun.star.awt.UnoControlButtonModel",
+        158, 274, 128, 16, Label="Proposer au lexique")
     add("btnManagedTermClose", "com.sun.star.awt.UnoControlButtonModel",
         330, 274, 52, 14, Label="Fermer")
 
@@ -2992,6 +3068,7 @@ def open_term_manager(lexicon_listener=None, *args):
         ("btnManagedTermDuplicate", "duplicate"),
         ("btnManagedTermEdit", "edit"),
         ("btnManagedTermDelete", "delete"),
+        ("btnManagedTermPropose", "propose"),
         ("btnManagedTermClose", "close"),
     ]:
         control = dialog.getControl(control_name)
