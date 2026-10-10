@@ -6,22 +6,21 @@
 
 ## Définition
 
-Processus systématique consistant à créer une copie ou une image forensique de données numériques tout en préservant les données d’origine et leur intégrité pour les besoins de l’analyse et de la procédure.
+Opération documentée visant à obtenir une copie ou une représentation exploitable de données numériques à partir d’une source, selon une méthode adaptée au support et au périmètre de l’examen. La portée de l’acquisition et les mesures de contrôle de l’intégrité sont consignées.
 
 ## Synonymes
 
 - Acquisition numérique forensique
-- Extraction
 
 ## Formulations pour rapport
 
 ### Acquisition réalisée
 
-Nous procédons à l’acquisition forensique du support afin d’en extraire les données accessibles tout en préservant les données d’origine.
+Nous procédons à l’acquisition des données accessibles du support selon la méthode décrite dans le présent rapport.
 
 ### Acquisition partielle
 
-Nos moyens techniques ne nous permettent de procéder qu’à une acquisition partielle des données du support.
+Nos moyens techniques ne nous permettent de procéder qu’à une acquisition partielle des données accessibles du support.
 
 ### Acquisition impossible
 
