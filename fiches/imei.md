@@ -6,7 +6,7 @@
 
 ## Définition
 
-Identifiant de quinze chiffres associé à un équipement mobile et permettant notamment d’identifier le fabricant et le modèle de l’appareil.
+Identifiant d’équipement mobile utilisé sur les réseaux cellulaires, généralement composé de 15 chiffres dans sa représentation courante. Un appareil peut disposer de plusieurs IMEI. Cet identifiant peut contribuer à caractériser un équipement mais ne permet pas, à lui seul, de confirmer de manière certaine son modèle ou son utilisateur.
 
 ## Synonymes
 
