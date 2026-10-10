@@ -6,11 +6,12 @@
 
 ## Définition
 
-Valeur de hachage calculée à partir d’un fichier, d’un équipement ou d’un ensemble de données et utilisée comme identifiant vérifiable de son contenu et de son intégrité.
+Dans le contexte du contrôle d’intégrité, valeur produite par une fonction de hachage appliquée à un ensemble déterminé de données. La comparaison d’empreintes calculées avec le même algorithme permet de contrôler la concordance des contenus considérés ; elle ne suffit pas à établir leur origine ou leur authenticité.
 
 ## Synonymes
 
 - Empreinte cryptographique
+- Valeur de hachage
 
 ## Termes déconseillés
 
