@@ -4,6 +4,7 @@ on:
     branches: [main]
     paths:
       - 'data/lexique.json'
+      - 'data/validation_fiches.json'
       - 'scripts/generate_fiches.py'
   workflow_dispatch:
 permissions:

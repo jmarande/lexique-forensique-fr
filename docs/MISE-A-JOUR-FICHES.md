@@ -28,6 +28,19 @@ git push
 
 Ne lancez `git push` qu'après avoir vérifié le diff, les droits de réutilisation et le contenu des formulations.
 
+## Formulations pour rapport
+
+Chaque fiche peut comporter **plusieurs formulations adaptées à des situations distinctes** dans `formulations_rapport`. Chaque objet comprend `type` (intitulé de la situation) et `texte` (formulation professionnelle). Ces formulations s'affichent automatiquement sur la fiche Markdown GitHub lorsque le catalogue est régénéré.
+
+```json
+"formulations_rapport": [
+  {"type": "Opération réalisée", "texte": "Nous procédons à l'opération selon les modalités précisées au présent rapport."},
+  {"type": "Opération partielle", "texte": "Les conditions techniques ne permettent qu'une réalisation partielle de l'opération."}
+]
+```
+
+Pour une **fiche proposée par un utilisateur**, ces formulations font partie des éléments transmis volontairement pour relecture. Elles sont modifiables avant validation. Ne pas inclure de données personnelles ou de détails d'une procédure réelle dans un exemple public.
+
 ## Ajouter une nouvelle fiche
 
 Insérer un nouvel objet dans le tableau `data/lexique.json`, avec au minimum un `id` unique et stable, un `terme`, une `categorie`, une `definition` et une liste `sources`. Exemple fictif :

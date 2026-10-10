@@ -8,6 +8,8 @@ Lexique français collaboratif de **criminalistique numérique** accompagné d�
 
 ## Consulter les fiches
 
+Les fiches comportent un statut **En attente de relecture** ou **Validée**. La validation est explicite, documentée et réexaminée si le contenu évolue. [Procédure de relecture et validation](docs/VALIDATION-FICHES.md).
+
 **[Consulter le catalogue des fiches du lexique](fiches/README.md)** — index alphabétique des termes, définitions, synonymes et formulations de rapport. Les fiches sont générées depuis la base JSON officielle. [Comment mettre à jour une fiche](docs/MISE-A-JOUR-FICHES.md).
 
 ## Objectifs
