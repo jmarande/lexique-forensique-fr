@@ -1,12 +1,12 @@
 # Proposer une fiche au lexique
 
-Depuis LibreOffice Writer : **Lexique forensique > Gestion des termes**, sélectionner une **fiche personnelle** puis cliquer sur **Proposer au lexique**.
+Depuis LibreOffice Writer : **Lexique forensique > Exporter / Importer…**. Dans la section **Proposer des fiches personnelles**, sélectionner une ou plusieurs fiches avec Ctrl+clic (ou Maj+clic) puis cliquer sur **Proposer les fiches sélectionnées**.
 
-La fiche doit contenir au minimum un **terme** et une **définition**. La proposition reprend le terme français, l'équivalent anglais, la catégorie, la définition, les synonymes, les références documentaires ainsi que les **formulations pour rapport** déjà enregistrées.
+Chaque fiche sélectionnée doit contenir au minimum un **terme** et une **définition**. La proposition reprend le terme français, l'équivalent anglais, la catégorie, la définition, les synonymes, les références documentaires ainsi que les **formulations pour rapport** déjà enregistrées.
 
-L'extension ouvre le navigateur sur une **issue GitHub préremplie**. Aucun envoi n'est effectué par l'extension. **L'utilisateur doit se connecter à GitHub, relire la proposition puis confirmer lui-même sa publication**. Le contenu publié dans une issue est public : **ne pas transmettre de données nominatives, d'extraits de dossiers, d'identifiants ou d'informations confidentielles**.
+L'extension ouvre le navigateur sur une **issue GitHub préremplie regroupant les fiches sélectionnées**. Aucun envoi n'est effectué par l'extension. **L'utilisateur doit se connecter à GitHub, relire la proposition puis confirmer lui-même sa publication**. Le contenu publié dans une issue est public : **ne pas transmettre de données nominatives, d'extraits de dossiers, d'identifiants ou d'informations confidentielles**.
 
-Seules les fiches personnelles peuvent être proposées depuis ce bouton. Les fiches officielles ne peuvent pas être renvoyées directement ; elles peuvent d'abord être dupliquées et adaptées en fiche personnelle. L'envoi ne modifie pas les données locales.
+Seules les fiches personnelles apparaissent dans cette liste et peuvent être proposées depuis ce bouton. Les fiches officielles ne peuvent pas être renvoyées directement ; elles peuvent d'abord être dupliquées et adaptées en fiche personnelle. L'envoi ne modifie pas les données locales.
 
 ## Traitement des contributions
 
