@@ -12,9 +12,7 @@ Processus méthodique de recherche, d'examen et d'analyse de données ou de preu
 
 - Enquête numérique
 
-## Exemple de formulation
-
-Les opérations réalisées s'inscrivent dans le cadre d'une investigation numérique du support.
+**Fiche regroupée :** [Criminalistique numérique](criminalistique-numerique.md)
 
 > Ces fiches sont des documents de travail du projet : les définitions restent soumises à la revue terminologique et documentaire.
 

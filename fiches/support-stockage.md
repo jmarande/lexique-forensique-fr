@@ -12,9 +12,7 @@
 
 - Média de stockage
 
-## Exemple de formulation
-
-Le support de stockage est identifié, documenté et examiné selon les procédures applicables.
+**Fiche regroupée :** [Support numérique](support-numerique.md)
 
 > Ces fiches sont des documents de travail du projet : les définitions restent soumises à la revue terminologique et documentaire.
 

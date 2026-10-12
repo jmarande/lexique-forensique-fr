@@ -3,7 +3,7 @@
 Catalogue généré automatiquement depuis [data/lexique.json](../data/lexique.json).
 Ce catalogue n'est pas une validation juridique ou normative des définitions.
 
-**67 fiches disponibles**
+**68 fiches disponibles**
 
 ## 🔬 Méthodologie forensique
 
@@ -20,6 +20,7 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 ### Examen et analyse
 
 - [Analyse des données](analyse-donnees.md)
+- [Carving de fichiers](carving-fichiers.md)
 - [Criminalistique numérique](criminalistique-numerique.md)
 - [Décodage des données](decodage-donnees.md)
 - [Investigation numérique](investigation-numerique.md)
@@ -141,6 +142,7 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Cache applicatif](cache-applicatif.md)
 - [Cache système](cache-systeme.md)
 - [Carte SIM](carte-sim.md)
+- [Carving de fichiers](carving-fichiers.md)
 - [Chaîne de traçabilité](chaine-tracabilite.md)
 - [Chiffrement](chiffrement.md)
 - [Clé USB](cle-usb.md)
