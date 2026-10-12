@@ -1,4 +1,4 @@
-name: Sync Lexique to project
+name: Synchroniser tableau forensique
 
 on:
   issues:
@@ -6,6 +6,11 @@ on:
   pull_request:
     types: [opened, reopened, edited, labeled, unlabeled]
   workflow_dispatch:
+  schedule:
+    - cron: '17 6 * * *'
+  push:
+    branches: [main]
+    paths: ['.github/workflows/project-sync.yml']
 
 permissions:
   contents: read
@@ -15,7 +20,7 @@ jobs:
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
-      - name: Add to project and sync priority
+      - name: Synchroniser ajouts et priorites
         uses: actions/github-script@v7
         env:
           PROJECT_TOKEN: ${{ secrets.PROJECT_SYNC_TOKEN }}
@@ -55,46 +60,49 @@ jobs:
               core.setFailed('Champ Priority introuvable dans le Project.');
               return;
             }
-            const events = [];
-            if (context.eventName === 'workflow_dispatch') {
-              // No backfill here: prevents unexpected changes to historical items.
-              core.info('Workflow opérationnel ; déclencher un événement sur une issue/PR pour synchroniser.');
-              return;
+            // Daily and manual runs reconcile both repositories; event runs only the changed item.
+            const fullSync = ['workflow_dispatch', 'schedule', 'push'].includes(context.eventName);
+            const items = [];
+            if (fullSync) {
+              for (const repository of ['CONSTATBOX-V5', 'lexique-forensique-fr']) {
+                const found = await github.paginate(github.rest.issues.listForRepo, {
+                  owner, repo: repository, state: 'open', per_page: 100
+                });
+                items.push(...found);
+              }
+            } else {
+              const changed = context.payload.issue ?? context.payload.pull_request;
+              if (changed && changed.state === 'open') items.push(changed);
             }
-            const item = context.payload.issue ?? context.payload.pull_request;
-            if (!item || item.state !== 'open') {
-              core.info('Élément absent ou fermé : aucun ajout.');
-              return;
-            }
-            const priorityLabels = (item.labels || []).map(label => label.name || '').join(' ');
-            const match = (priorityLabels + ' ' + (item.title || '')).match(/(?:^|[^A-Z0-9])P([012])(?:$|[^A-Z0-9])/i);
-            const desired = match ? `P${match[1]}` : null;
-            const nodeId = item.node_id;
+            core.info(`Éléments ouverts à synchroniser : ${items.length}`);
+            let addedCount = 0, priorityCount = 0, withoutPriority = 0;
+            for (const item of items) {
+              const priorityLabels = (item.labels || []).map(label => label.name || '').join(' ');
+              const match = (priorityLabels + ' ' + (item.title || '')).match(/(?:^|[^A-Z0-9])P([012])(?:$|[^A-Z0-9])/i);
+              const desired = match ? `P${match[1]}` : null;
+              const nodeId = item.node_id;
             const addMutation = `mutation($project: ID!, $content: ID!) {
               addProjectV2ItemById(input: {projectId: $project, contentId: $content}) {
                 item { id }
               }
             }`;
-            const added = await github.graphql(addMutation, { project: project.id, content: nodeId });
-            const projectItemId = added.addProjectV2ItemById.item.id;
-            core.info(`Élément ajouté ou déjà présent : ${item.html_url}`);
-            if (!desired) {
-              core.info('Aucune priorité explicite P0/P1/P2 : priorité existante conservée.');
-              return;
-            }
-            const option = priorityField.options.find(o => o.name.startsWith(desired + ' ') || o.name.startsWith(desired + ' —') || o.name === desired);
-            if (!option) {
-              core.setFailed(`Option Priority ${desired} introuvable.`);
-              return;
-            }
+              const added = await github.graphql(addMutation, { project: project.id, content: nodeId });
+              const projectItemId = added.addProjectV2ItemById.item.id;
+              addedCount++;
+              if (!desired) { withoutPriority++; continue; }
+              const option = priorityField.options.find(o => o.name === desired || o.name.startsWith(desired + ' ') || o.name.startsWith(desired + ' —'));
+              if (!option) { core.setFailed(`Option Priority ${desired} introuvable.`); return; }
             const updateMutation = `mutation($project: ID!, $item: ID!, $field: ID!, $option: String!) {
               updateProjectV2ItemFieldValue(input: {
                 projectId: $project, itemId: $item, fieldId: $field,
                 value: {singleSelectOptionId: $option}
               }) { projectV2Item { id } }
             }`;
-            await github.graphql(updateMutation, {
-              project: project.id, item: projectItemId,
-              field: priorityField.id, option: option.id
-            });
-            core.info(`Priorité synchronisée : ${desired}`);
+              await github.graphql(updateMutation, {
+                project: project.id, item: projectItemId,
+                field: priorityField.id, option: option.id
+              });
+              priorityCount++;
+            }
+            core.info(`Terminé : ${addedCount} éléments examinés, ${priorityCount} priorités explicites synchronisées, ${withoutPriority} priorités préservées.`);
+            // Les statuts et les éléments fermés restent inchangés.
