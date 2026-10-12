@@ -22,7 +22,8 @@
           "id": "techniques-acces",
           "label": "Accès et authentification"
         }
-      ]
+      ],
+      "icone": "🔬"
     },
     {
       "id": "donnees",
@@ -40,7 +41,8 @@
           "id": "integrite-cryptographie",
           "label": "Hachage et cryptographie"
         }
-      ]
+      ],
+      "icone": "🧩"
     },
     {
       "id": "materiel",
@@ -50,7 +52,8 @@
           "id": "supports-stockage",
           "label": "Supports et stockage"
         }
-      ]
+      ],
+      "icone": "💾"
     },
     {
       "id": "telephonie",
@@ -64,7 +67,8 @@
           "id": "connectivite",
           "label": "Connectivité"
         }
-      ]
+      ],
+      "icone": "📱"
     },
     {
       "id": "informatique",
@@ -74,7 +78,8 @@
           "id": "systemes-fichiers",
           "label": "Systèmes d’exploitation et fichiers"
         }
-      ]
+      ],
+      "icone": "💻"
     },
     {
       "id": "reseaux",
@@ -84,7 +89,8 @@
           "id": "communications",
           "label": "Adressage et communications"
         }
-      ]
+      ],
+      "icone": "🌐"
     },
     {
       "id": "services",
@@ -94,7 +100,8 @@
           "id": "cloud",
           "label": "Cloud"
         }
-      ]
+      ],
+      "icone": "☁️"
     },
     {
       "id": "applications",
@@ -104,7 +111,8 @@
           "id": "messageries",
           "label": "Messageries et réseaux sociaux"
         }
-      ]
+      ],
+      "icone": "💬"
     }
   ],
   "domaines": [
@@ -114,7 +122,8 @@
       "plateformes": [
         "iOS",
         "Android"
-      ]
+      ],
+      "icone": "📱"
     },
     {
       "id": "informatique",
@@ -123,7 +132,8 @@
         "Windows",
         "Linux",
         "macOS"
-      ]
+      ],
+      "icone": "💻"
     },
     {
       "id": "reseaux",
@@ -132,12 +142,14 @@
         "Ethernet",
         "Wi-Fi",
         "Bluetooth"
-      ]
+      ],
+      "icone": "🌐"
     },
     {
       "id": "multiplateforme",
       "label": "Multiplateforme",
-      "plateformes": []
+      "plateformes": [],
+      "icone": "🔖"
     }
   ],
   "classement": [
