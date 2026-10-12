@@ -193,6 +193,18 @@
       "ancienne_categorie": "Preuve numérique"
     },
     {
+      "id": "cache-applicatif",
+      "classification": "informatique/systemes-fichiers",
+      "domaines": [],
+      "ancienne_categorie": "Preuve numérique"
+    },
+    {
+      "id": "cache-systeme",
+      "classification": "informatique/systemes-fichiers",
+      "domaines": [],
+      "ancienne_categorie": "Preuve numérique"
+    },
+    {
       "id": "carte-sim",
       "classification": "telephonie/identifiants-sim",
       "domaines": [],
@@ -233,6 +245,12 @@
       "classification": "methodologie/examen-analyse",
       "domaines": [],
       "ancienne_categorie": "Méthode de criminalistique numérique"
+    },
+    {
+      "id": "dechiffrement",
+      "classification": "donnees/integrite-cryptographie",
+      "domaines": [],
+      "ancienne_categorie": "Cryptographie"
     },
     {
       "id": "decodage-donnees",
@@ -298,16 +316,31 @@
       "ancienne_categorie": "Méthode de criminalistique numérique"
     },
     {
+      "id": "extraction-logique",
+      "classification": "methodologie/acquisition-extraction",
+      "domaines": [],
+      "ancienne_categorie": "Méthode de criminalistique numérique"
+    },
+    {
+      "id": "extraction-physique",
+      "classification": "methodologie/acquisition-extraction",
+      "domaines": [
+        "informatique",
+        "telephonie"
+      ],
+      "ancienne_categorie": "Méthode de criminalistique numérique"
+    },
+    {
       "id": "extraction-systeme-fichiers",
       "classification": "methodologie/acquisition-extraction",
       "domaines": [],
       "ancienne_categorie": "Méthode de criminalistique numérique"
     },
     {
-      "id": "extraction-logique",
-      "classification": "methodologie/acquisition-extraction",
+      "id": "fai",
+      "classification": "reseaux/communications",
       "domaines": [],
-      "ancienne_categorie": "Méthode de criminalistique numérique"
+      "ancienne_categorie": "Technologie numérique"
     },
     {
       "id": "fichier-multimedia",
@@ -320,12 +353,6 @@
       "classification": "methodologie/techniques-acces",
       "domaines": [],
       "ancienne_categorie": "Méthode de criminalistique numérique"
-    },
-    {
-      "id": "fai",
-      "classification": "reseaux/communications",
-      "domaines": [],
-      "ancienne_categorie": "Technologie numérique"
     },
     {
       "id": "hachage",
@@ -502,13 +529,13 @@
       "ancienne_categorie": "Technologie numérique"
     },
     {
-      "id": "support-stockage",
+      "id": "support-numerique",
       "classification": "materiel/supports-stockage",
       "domaines": [],
       "ancienne_categorie": "Équipement numérique"
     },
     {
-      "id": "support-numerique",
+      "id": "support-stockage",
       "classification": "materiel/supports-stockage",
       "domaines": [],
       "ancienne_categorie": "Équipement numérique"
@@ -551,15 +578,6 @@
         "informatique"
       ],
       "ancienne_categorie": "Application — Messagerie"
-    },
-    {
-      "id": "extraction-physique",
-      "classification": "methodologie/acquisition-extraction",
-      "domaines": [
-        "informatique",
-        "telephonie"
-      ],
-      "ancienne_categorie": "Méthode de criminalistique numérique"
     }
   ]
 }
