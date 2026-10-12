@@ -3,7 +3,7 @@
 Catalogue généré automatiquement depuis [data/lexique.json](../data/lexique.json).
 Ce catalogue n'est pas une validation juridique ou normative des définitions.
 
-**63 fiches disponibles**
+**64 fiches disponibles**
 
 ## 🔬 Méthodologie forensique
 
@@ -14,6 +14,7 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Extraction](extraction.md)
 - [Extraction du système de fichiers](extraction-systeme-fichiers.md)
 - [Extraction logique](extraction-logique.md)
+- [Extraction physique](extraction-physique.md)
 - [Récupération de données](recuperation-donnees.md)
 
 ### Examen et analyse
@@ -152,6 +153,7 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Extraction](extraction.md)
 - [Extraction du système de fichiers](extraction-systeme-fichiers.md)
 - [Extraction logique](extraction-logique.md)
+- [Extraction physique](extraction-physique.md)
 - [Fichier multimédia](fichier-multimedia.md)
 - [Force brute](force-brute.md)
 - [Fournisseur d’accès à Internet](fai.md)
