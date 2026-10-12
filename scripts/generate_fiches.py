@@ -7,6 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "lexique.json"
 DEST = ROOT / "fiches"
+TAXONOMY = ROOT / "data" / "taxonomie-proposition.json"
 
 
 def clean(value):
@@ -20,10 +21,36 @@ def generate():
     ids = [f["id"] for f in fiches]
     if len(ids) != len(set(ids)) or any(not x or "/" in x or "\\" in x or x in (".", "..") for x in ids):
         raise ValueError("Identifiants invalides ou dupliqués")
+    taxonomy = json.loads(TAXONOMY.read_text(encoding="utf-8"))
+    families = {f["id"]: f for f in taxonomy["familles"]}
+    mapping = {x["id"]: x for x in taxonomy["classement"]}
+    if set(mapping) != set(ids):
+        raise ValueError("Classification incomplète ou fiche inconnue")
+    domains = {x["id"]: x for x in taxonomy["domaines"]}
+    def category(item):
+        segments = item["classification"].split("/")
+        if len(segments) != 2 or segments[0] not in families:
+            raise ValueError("Famille inconnue")
+        family = families[segments[0]]
+        children = {sub["id"]: sub for sub in family["sous_categories"]}
+        if segments[1] not in children:
+            raise ValueError("Sous-catégorie inconnue")
+        return family, children[segments[1]]
+    for item in mapping.values():
+        category(item)
+        if any(d not in domains for d in item.get("domaines", [])):
+            raise ValueError("Domaine inconnu")
     DEST.mkdir(exist_ok=True)
     expected = {"README.md"} | {x + ".md" for x in ids}
     for f in fiches:
-        lines = ["# " + clean(f["terme"]), "", "**Catégorie :** " + clean(f.get("categorie")), ""]
+        cls = mapping[f["id"]]
+        family, subcategory = category(cls)
+        lines = ["# " + clean(f["terme"]), "",
+                 "**Classification :** " + clean(family.get("icone")) + " " + clean(family["label"]) + " → " + clean(subcategory["label"]), ""]
+        selected_domains = [domains[x]["label"] for x in cls.get("domaines", [])]
+        if selected_domains:
+            lines += ["**Domaines d’application :** " + ", ".join(selected_domains), ""]
+
         if f.get("anglais"):
             lines += ["**Équivalent anglais :** " + clean(f["anglais"]), ""]
         lines += ["## Définition", "", clean(f["definition"]), ""]
@@ -45,8 +72,20 @@ def generate():
              "Catalogue généré automatiquement depuis [data/lexique.json](../data/lexique.json).",
              "Ce catalogue n'est pas une validation juridique ou normative des définitions.", "",
              f"**{len(entries)} fiches disponibles**", ""]
+    for family in taxonomy["familles"]:
+        grouped = [f for f in entries if mapping[f["id"]]["classification"].split("/")[0] == family["id"]]
+        if not grouped:
+            continue
+        index += ["## " + clean(family.get("icone")) + " " + clean(family["label"]), ""]
+        for sub in family["sous_categories"]:
+            members = [f for f in grouped if mapping[f["id"]]["classification"].split("/")[1] == sub["id"]]
+            if members:
+                index += ["### " + clean(sub["label"]), ""]
+                index += ["- [" + clean(f["terme"]) + "](" + f["id"] + ".md)" for f in members]
+                index += [""]
+    index += ["## Index alphabétique", ""]
     for f in entries:
-        index.append("- [" + clean(f["terme"]) + "](" + f["id"] + ".md) — " + clean(f.get("categorie")))
+        index.append("- [" + clean(f["terme"]) + "](" + f["id"] + ".md)")
     index += ["", "[← Présentation du projet](../README.md)", ""]
     (DEST / "README.md").write_text("\n".join(index), encoding="utf-8")
     for stale in DEST.glob("*.md"):
