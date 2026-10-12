@@ -137,7 +137,7 @@ Les paires correspondantes doivent rester synchronisées.
   "definition": "…",
   "synonymes": ["Extraction"],
   "termes_deconseilles": [],
-  "sources": ["CLARUS D3.2 — Forensic acquisition"],
+  "sources": ["Référence documentaire précise — entrée, édition ou date (exemple fictif)"],
   "formulations_rapport": [
     {
       "type": "Acquisition réalisée",
@@ -169,11 +169,11 @@ Les règles utilisateur peuvent contenir une occurrence, plusieurs remplacements
 
 **Lexique forensique FR est un projet indépendant**, conçu pour la pratique francophone de la criminalistique numérique. Il propose ses propres définitions, équivalents français et formulations de rapport, en privilégiant la précision technique et la prudence dans l’interprétation.
 
-Son travail documentaire confronte plusieurs références, notamment **CLARUS D3.2**, **NIST**, **SWGDE**, **ANSSI** et **FranceTerme**, ainsi que des guides méthodologiques pertinents. Ces organismes ne sont ni éditeurs ni garants du projet.
+Son travail documentaire confronte, selon le sujet, des références telles que **NIST**, **SWGDE**, **CLARUS D3.2**, **ANSSI**, **FranceTerme** et des guides méthodologiques ou techniques pertinents, **sans hiérarchie automatique entre elles**. Ces organismes ne sont ni éditeurs ni garants du projet.
 
 Les sources sont utilisées pour vérifier les concepts et identifier les divergences terminologiques. Leur citation ne vaut pas autorisation de reproduction : toute reprise de contenu doit respecter les droits et conditions de réutilisation applicables.
 
-**Documentation :** [référentiel des sources](sources/REFERENTIEL.md) · [audit des 63 fiches](sources/AUDIT-63-FICHES-2026-10-10.md) · [audit initial](sources/AUDIT-INITIAL-2026-10-10.md).
+**Documentation :** [méthode de relecture et validation](docs/VALIDATION-FICHES.md) · [référentiel commun des sources](sources/REFERENTIEL.md) · [audit des 63 fiches](sources/AUDIT-63-FICHES-2026-10-10.md) · [audit initial](sources/AUDIT-INITIAL-2026-10-10.md).
 
 ## Structure du dépôt
 
@@ -208,7 +208,9 @@ lexique-forensique-fr/
 ├── release/
 │   └── README.md
 └── sources/
-    └── CLARUS.md
+    ├── REFERENTIEL.md
+    ├── AUDIT-63-FICHES-2026-10-10.md
+    └── AUDIT-INITIAL-2026-10-10.md
 ```
 
 ## Version
