@@ -3,7 +3,7 @@
 Catalogue généré automatiquement depuis [data/lexique.json](../data/lexique.json).
 Ce catalogue n'est pas une validation juridique ou normative des définitions.
 
-**68 fiches disponibles**
+**74 fiches disponibles**
 
 ## 🔬 Méthodologie forensique
 
@@ -48,8 +48,11 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Donnée reconstruite](donnee-reconstruite.md)
 - [Donnée supprimée](donnee-supprimee.md)
 - [Données numériques](donnees-numeriques.md)
+- [Journaux applicatifs](journaux-applicatifs.md)
+- [Journaux système](journaux-systeme.md)
 - [Preuve numérique](preuve-numerique.md)
 - [Source de données](source-donnees.md)
+- [Traces d'activité](traces-activite.md)
 
 ### Formats et métadonnées
 
@@ -99,7 +102,6 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 
 - [Cache applicatif](cache-applicatif.md)
 - [Cache système](cache-systeme.md)
-- [Journaux système](journaux-systeme.md)
 - [Mémoire cache](memoire-cache.md)
 - [Système d'exploitation](systeme-exploitation.md)
 - [Système de fichiers](systeme-fichiers.md)
@@ -130,6 +132,18 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Snapchat](snapchat.md)
 - [Telegram](telegram.md)
 - [WhatsApp](whatsapp.md)
+
+## 🌐 Navigation Internet
+
+### Navigateurs
+
+- [Google Chrome](google-chrome.md)
+- [Mozilla Firefox](mozilla-firefox.md)
+- [Navigateur Internet](navigateur-internet.md)
+
+### Historique et traces de navigation
+
+- [Historique de navigation](historique-navigation.md)
 
 ## Index alphabétique
 
@@ -165,21 +179,26 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Fichier multimédia](fichier-multimedia.md)
 - [Force brute](force-brute.md)
 - [Fournisseur d’accès à Internet](fai.md)
+- [Google Chrome](google-chrome.md)
 - [Hachage et empreinte numérique](hachage.md)
+- [Historique de navigation](historique-navigation.md)
 - [Horodatage](horodatage.md)
 - [ICCID](iccid.md)
 - [IMEI](imei.md)
 - [Instagram Direct](instagram-direct.md)
 - [Intégrité des données](integrite-donnees.md)
 - [Investigation numérique](investigation-numerique.md)
+- [Journaux applicatifs](journaux-applicatifs.md)
 - [Journaux système](journaux-systeme.md)
 - [Messages (Apple)](messages-apple.md)
 - [Messenger](messenger.md)
 - [Mode avion](mode-avion.md)
+- [Mozilla Firefox](mozilla-firefox.md)
 - [MSISDN](msisdn.md)
 - [Mémoire](memoire.md)
 - [Mémoire cache](memoire-cache.md)
 - [Métadonnées](metadonnees.md)
+- [Navigateur Internet](navigateur-internet.md)
 - [Numéro de série](numero-serie.md)
 - [Preuve numérique](preuve-numerique.md)
 - [Remise des résultats](remise-resultats.md)
@@ -198,6 +217,7 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Système d'exploitation](systeme-exploitation.md)
 - [Système de fichiers](systeme-fichiers.md)
 - [Telegram](telegram.md)
+- [Traces d'activité](traces-activite.md)
 - [Valeur de hachage](valeur-hachage.md)
 - [WhatsApp](whatsapp.md)
 - [État du support](etat-support.md)
