@@ -571,6 +571,14 @@ def _format_entry(e, warning=None):
         + "FORMULATIONS POUR RAPPORT\n"
     )
 
+    if e.get("guide_choix"):
+        base += "QUEL TERME UTILISER ?\\n"
+        for case in e["guide_choix"]:
+            base += ("• " + case.get("situation", "") + "\\n"
+                     + "  → " + case.get("terme", "") + " : "
+                     + case.get("justification", "") + "\\n")
+        base += "\\n"
+
     if e.get("renvois"):
         by_id = {item.get("id"): item for item in _load_data()}
         relations = []
