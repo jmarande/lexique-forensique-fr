@@ -65,3 +65,13 @@ Maintenir à jour à chaque évolution significative :
 - `CONTRIBUTING.md` ;
 - `release/README.md` ;
 - la présente roadmap.
+
+## Gouvernance documentaire multi-sources
+
+- [x] Regrouper CLARUS avec les autres références dans le référentiel commun, sans source privilégiée.
+- [x] Documenter un circuit unifié de relecture, comparaison et validation des fiches.
+- [ ] Reprendre les fiches existantes par lots, confronter effectivement les sources pertinentes et consigner les divergences.
+- [ ] Conserver les anciens termes de recherche, synonymes et renvois lors des regroupements de fiches.
+- [ ] Vérifier les statuts « à relire » / « validée » et la synchronisation de l'extension avec les fiches révisées.
+
+Voir [la procédure de validation](docs/VALIDATION-FICHES.md) et le [référentiel documentaire](sources/REFERENTIEL.md). Les audits du 10 octobre 2026 restent des états historiques, non une validation multi-sources achevée.
