@@ -6,7 +6,8 @@
     "categorie": "Méthode de criminalistique numérique",
     "definition": "Opération technique documentée visant à obtenir une copie ou une représentation de données numériques à partir d'un support ou d'un système, selon une méthode déterminée, en précisant le périmètre de l'opération, ses limites et les contrôles d'intégrité réalisés.",
     "synonymes": [
-      "Acquisition numérique forensique"
+      "Acquisition numérique forensique",
+      "Extraction"
     ],
     "termes_deconseilles": [],
     "exemple_rapport": "Nous procédons à l'acquisition des données du support selon les modalités techniques décrites dans le présent rapport.",
