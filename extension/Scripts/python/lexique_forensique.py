@@ -571,28 +571,6 @@ def _format_entry(e, warning=None):
         + "FORMULATIONS POUR RAPPORT\n"
     )
 
-    if e.get("guide_choix"):
-        base += "QUEL TERME UTILISER ?\\n"
-        for case in e["guide_choix"]:
-            base += ("• " + case.get("situation", "") + "\\n"
-                     + "  → " + case.get("terme", "") + " : "
-                     + case.get("justification", "") + "\\n")
-        base += "\\n"
-
-    if e.get("renvois"):
-        by_id = {item.get("id"): item for item in _load_data()}
-        relations = []
-        for ref in e["renvois"]:
-            target = by_id.get(ref.get("id"))
-            if target:
-                relations.append(
-                    target.get("terme", "") + " : " + ref.get("nuance", "")
-                    + "\nhttps://github.com/jmarande/lexique-forensique-fr/blob/main/fiches/"
-                    + ref["id"] + ".md"
-                )
-        if relations:
-            base += "NUANCES ET DISTINCTIONS\n" + "\n\n".join(relations) + "\n\n"
-
     formulations = _report_formulations(e)
     ranges = []
     parts = [base]
@@ -613,6 +591,26 @@ def _format_entry(e, warning=None):
 
     if not formulations:
         parts.append("—")
+
+    # Les explications restent secondaires ; toutes les formulations gardent leurs positions.
+    if e.get("renvois") or e.get("guide_choix"):
+        by_id = {item.get("id"): item for item in _load_data()}
+        notes = []
+        for ref in e.get("renvois", []):
+            target = by_id.get(ref.get("id"))
+            if target:
+                notes.append(
+                    target.get("terme", "") + " — " + ref.get("nuance", "")
+                    + "\\nhttps://github.com/jmarande/lexique-forensique-fr/blob/main/fiches/"
+                    + ref["id"] + ".md"
+                )
+        for case in e.get("guide_choix", []):
+            notes.append(
+                case.get("situation", "") + " → " + case.get("terme", "")
+                + " : " + case.get("justification", "")
+            )
+        if notes:
+            parts.append("\\n\\nTERMES PROCHES · AIDE AU CHOIX\\n" + "\\n\\n".join(notes))
 
     return "".join(parts), ranges
 def _find_entries(query, data, category=None):
