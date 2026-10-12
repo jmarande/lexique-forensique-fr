@@ -4,11 +4,11 @@
 
 **Domaines d’application :** Informatique, Téléphonie
 
-**Équivalent anglais :** Extract
+**Équivalent anglais :** Data extraction
 
 ## Définition
 
-Opération consistant à récupérer ou obtenir des données à partir d'un dispositif numérique, d'un support de stockage ou d'un système afin de les rendre accessibles à des fins d'analyse ou d'exploitation.
+Opération technique consistant à récupérer des données depuis un équipement, un support ou un système numérique, afin de les rendre accessibles pour leur examen ou leur exploitation. L'extraction peut être complète ou partielle, selon les possibilités techniques et les conditions d'accès aux données.
 
 <details>
 <summary><strong>Termes proches · aide au choix</strong></summary>
