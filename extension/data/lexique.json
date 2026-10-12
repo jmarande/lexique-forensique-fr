@@ -86,7 +86,7 @@
     "terme": "Analyse des données",
     "anglais": "Data analysis",
     "categorie": "Procédure d’examen forensique",
-    "definition": "Phase d’examen et d’interprétation des données extraites visant à identifier les éléments susceptibles de présenter un intérêt au regard de la mission confiée, sans dépasser ce que permettent d’établir les données disponibles.",
+    "definition": "Opération consistant à examiner, interpréter et mettre en relation des données numériques afin d'identifier les informations susceptibles de présenter un intérêt au regard de la mission confiée. L'analyse repose sur les données disponibles et doit tenir compte de leurs limites, de leur contexte et des éventuelles incertitudes d'interprétation.",
     "synonymes": [
       "Examen des données"
     ],
@@ -96,21 +96,26 @@
     ],
     "formulations_rapport": [
       {
-        "type": "Éléments susceptibles d’éclairer l’affaire",
-        "texte": "Nous identifions des éléments susceptibles d’éclairer l’affaire."
+        "type": "Éléments susceptibles d'éclairer l'affaire",
+        "texte": "L'analyse des données permet d'identifier des éléments susceptibles d'éclairer l'affaire ou de présenter un intérêt au regard des faits examinés."
       },
       {
-        "type": "Éléments pouvant être en rapport avec les faits",
-        "texte": "Nous identifions des éléments pouvant être en rapport avec les faits."
+        "type": "Éléments susceptibles de caractériser une autre infraction",
+        "texte": "Au cours de l'analyse, nous identifions des éléments sans lien apparent avec les faits faisant l'objet de la mission, mais susceptibles de révéler des faits constitutifs d'une autre infraction."
       },
       {
-        "type": "Échanges pouvant être liés aux faits",
-        "texte": "Nous identifions des échanges pouvant être en rapport avec les faits."
+        "type": "Absence d'éléments en rapport avec la mission",
+        "texte": "L'analyse des données examinées ne permet pas d'identifier d'éléments présentant un lien apparent avec les faits faisant l'objet de la mission."
       },
       {
-        "type": "Échanges pouvant être liés à un trafic de stupéfiants",
-        "texte": "Nous identifions des échanges pouvant être en rapport avec les faits et/ou en lien avec un trafic de stupéfiants."
+        "type": "Éléments présentant un intérêt potentiel",
+        "texte": "Nous relevons des éléments présentant un intérêt potentiel, sans que les informations disponibles permettent d'en déterminer la signification ou le lien éventuel avec les faits examinés."
       }
+    ],
+    "termes_proches": [
+      "Décodage des données",
+      "Donnée reconstruite",
+      "Preuve numérique"
     ]
   },
   {
@@ -205,7 +210,7 @@
     "terme": "Chaîne de traçabilité",
     "anglais": "Chain of custody",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Ensemble des enregistrements permettant de documenter chronologiquement la prise en charge, les transferts, les opérations, le stockage et, le cas échéant, la restitution ou la destruction d’un élément de preuve afin d’en assurer la traçabilité et l’intégrité.",
+    "definition": "Ensemble des informations et enregistrements permettant de retracer chronologiquement la prise en charge, la conservation, les transferts et les opérations effectuées sur un élément de preuve, depuis sa collecte jusqu'à sa restitution, son archivage ou sa destruction éventuelle. Cette documentation permet d'identifier les personnes intervenues, les opérations réalisées et leurs circonstances.",
     "synonymes": [
       "Chaîne de possession",
       "Traçabilité du scellé"
@@ -214,6 +219,25 @@
     "exemple_rapport": "Les différentes opérations réalisées sur le scellé sont consignées afin d’en assurer la traçabilité.",
     "sources": [
       "CLARUS D3.2 — Chain of custody"
+    ],
+    "termes_proches": [
+      "Scellé",
+      "Intégrité des données",
+      "Preuve numérique"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Traçabilité des opérations",
+        "texte": "Les opérations réalisées sur le scellé sont consignées afin d'en assurer la traçabilité."
+      },
+      {
+        "type": "Prise en charge du scellé",
+        "texte": "Le scellé est pris en charge dans les conditions décrites au présent rapport. Les opérations réalisées et les mouvements du scellé sont documentés."
+      },
+      {
+        "type": "Conservation des données",
+        "texte": "Les données acquises sont conservées selon des modalités permettant de documenter leur origine, les opérations effectuées et les éventuels transferts."
+      }
     ]
   },
   {
@@ -300,7 +324,7 @@
     "terme": "Copie forensique",
     "anglais": "Forensic copy / Forensic image",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Copie de données numériques réalisée au moyen de procédures contrôlées afin de préserver les données d’origine pour leur examen et leur analyse.",
+    "definition": "Copie de données numériques réalisée selon une méthode documentée et contrôlée, visant à reproduire fidèlement les données sources dans un périmètre déterminé, afin de permettre leur examen et leur analyse tout en préservant l'original.",
     "synonymes": [
       "Image forensique",
       "Copie de travail forensique"
@@ -311,6 +335,22 @@
     "exemple_rapport": "Nous réalisons une copie forensique du support afin de préserver les données d’origine lors des opérations d’analyse.",
     "sources": [
       "CLARUS D3.2 — Forensic copy"
+    ],
+    "termes_proches": [
+      "Acquisition forensique",
+      "Extraction physique",
+      "Hachage et empreinte numérique",
+      "Intégrité des données"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Copie forensique réalisée",
+        "texte": "Nous réalisons une copie forensique du support afin de préserver les données d’origine lors des opérations d’analyse."
+      },
+      {
+        "type": "Vérification de l'intégrité de la copie",
+        "texte": "Nous procédons au calcul des empreintes numériques du support source et de sa copie forensique. La concordance des valeurs obtenues permet de vérifier l'intégrité de la copie au regard des données ayant fait l'objet du contrôle."
+      }
     ]
   },
   {
@@ -336,7 +376,7 @@
     "terme": "Décodage des données",
     "anglais": "Data decoding",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Opération consistant à interpréter des données brutes ou structurées afin de les rendre lisibles et exploitables pour l’analyse.",
+    "definition": "Opération technique consistant à interpréter des données numériques encodées ou structurées selon un format déterminé, afin de restituer des informations lisibles et exploitables. Le décodage peut être effectué automatiquement par un logiciel spécialisé ou au moyen d'opérations complémentaires réalisées par l'analyste. Les résultats obtenus dépendent des formats pris en charge et des capacités de décodage employées.",
     "synonymes": [
       "Décodage"
     ],
@@ -357,10 +397,32 @@
       {
         "type": "Décodage impossible",
         "texte": "Nos moyens techniques ne permettent pas de décoder les données extraites."
+      },
+      {
+        "type": "Limites du décodage automatisé",
+        "texte": "Le décodage automatisé des données repose sur les capacités des logiciels employés. Les résultats obtenus peuvent ne pas restituer l'ensemble des informations présentes dans les données extraites."
+      },
+      {
+        "type": "Décodage manuel par l'analyste",
+        "texte": "Nous procédons au décodage manuel de certaines données extraites, afin d'en interpréter la structure et le contenu et de restituer les informations susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Décodage manuel complémentaire",
+        "texte": "Le décodage automatisé ne permettant pas de restituer certaines informations, nous procédons à un décodage manuel complémentaire des données concernées."
+      },
+      {
+        "type": "Vérification du décodage automatisé",
+        "texte": "Nous procédons à la vérification de certaines données décodées automatiquement par les logiciels employés, par confrontation avec les données sources, afin de contrôler la cohérence des informations restituées."
       }
     ],
     "sources": [
       "Lexique forensique FR — usage professionnel"
+    ],
+    "termes_proches": [
+      "Extraction",
+      "Analyse des données",
+      "Donnée reconstruite",
+      "Déchiffrement"
     ]
   },
   {
@@ -474,16 +536,21 @@
     "terme": "Empreinte numérique",
     "anglais": "Digital fingerprint",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Valeur de hachage calculée à partir d’un fichier, d’un équipement ou d’un ensemble de données et utilisée comme identifiant vérifiable de son contenu et de son intégrité.",
+    "definition": "Valeur obtenue par l'application d'une fonction de hachage à des données numériques. Voir la fiche « Hachage et empreinte numérique » pour les formulations et le tableau des empreintes.",
     "synonymes": [
       "Empreinte cryptographique"
     ],
     "termes_deconseilles": [
       "Empreinte digitale"
     ],
-    "exemple_rapport": "Une empreinte numérique est calculée afin de disposer d’un identifiant vérifiable du contenu acquis.",
+    "exemple_rapport": "",
     "sources": [
       "CLARUS D3.2 — Digital fingerprint"
+    ],
+    "renvoi_principal": "hachage",
+    "formulations_rapport": [],
+    "termes_proches": [
+      "Hachage et empreinte numérique"
     ]
   },
   {
@@ -696,7 +763,7 @@
     "terme": "Extraction du système de fichiers",
     "anglais": "File system extraction",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Méthode d’extraction visant à obtenir tout ou partie de la structure du système de fichiers et des fichiers accessibles d’un support ou d’un appareil.",
+    "definition": "Opération technique consistant à obtenir tout ou partie de l'arborescence d'un système de fichiers, des fichiers qu'il contient et de leurs métadonnées accessibles, selon les possibilités d'accès offertes par l'équipement et la méthode utilisée. Cette extraction peut notamment permettre de récupérer des données applicatives, des bases de données, des journaux système et des fichiers de configuration, sans nécessiter une copie bit à bit du support physique.",
     "synonymes": [
       "Extraction filesystem",
       "File system extraction"
@@ -718,6 +785,10 @@
       {
         "type": "Extraction impossible",
         "texte": "Nos moyens techniques ne permettent pas de procéder à l’extraction du système de fichiers du support."
+      },
+      {
+        "type": "Limites de l'extraction du système de fichiers",
+        "texte": "Une extraction du système de fichiers ne permet pas nécessairement d'obtenir l'intégralité des données contenues sur le support. Elle peut notamment exclure les espaces non alloués, certaines données supprimées ainsi que les zones de stockage non accessibles par la méthode employée."
       }
     ],
     "sources": [
@@ -730,7 +801,9 @@
       }
     ],
     "termes_proches": [
-      "Extraction"
+      "Extraction",
+      "Extraction logique",
+      "Extraction physique"
     ]
   },
   {
@@ -803,20 +876,51 @@
   },
   {
     "id": "hachage",
-    "terme": "Hachage",
-    "anglais": "Hash / Hashing",
+    "terme": "Hachage et empreinte numérique",
+    "anglais": "Hashing / Hash value",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Technique cryptographique permettant de calculer, à partir de données, une valeur de taille fixe utilisée notamment pour contrôler leur intégrité et comparer un original à une copie forensique.",
+    "definition": "Le hachage consiste à appliquer une fonction à des données numériques afin de produire une empreinte de longueur déterminée. L'empreinte est la valeur obtenue, utilisée notamment pour comparer des données et contribuer à la vérification de leur intégrité.",
     "synonymes": [
       "Calcul d’empreinte",
-      "Fonction de hachage"
+      "Fonction de hachage",
+      "Hachage",
+      "Empreinte numérique",
+      "Valeur de hachage",
+      "Empreinte cryptographique",
+      "Calcul d'empreinte numérique"
     ],
     "termes_deconseilles": [
-      "Hashage"
+      "Hashage",
+      "Empreinte digitale"
     ],
     "exemple_rapport": "Une valeur de hachage est calculée afin de contrôler l’intégrité des données extraites.",
     "sources": [
       "CLARUS D3.2 — Hash/Hashing"
+    ],
+    "termes_proches": [
+      "Intégrité des données",
+      "Copie forensique"
+    ],
+    "tableau_rapport": {
+      "colonnes": [
+        "Algorithme",
+        "Valeur"
+      ],
+      "lignes": []
+    },
+    "formulations_rapport": [
+      {
+        "type": "Calcul d'empreinte numérique",
+        "texte": "Nous procédons au calcul des empreintes numériques des données au moyen des algorithmes de hachage indiqués ci-dessous."
+      },
+      {
+        "type": "Vérification d'intégrité",
+        "texte": "Nous procédons à la comparaison des empreintes numériques calculées sur les données de référence et les données contrôlées. Les valeurs obtenues sont concordantes."
+      },
+      {
+        "type": "Empreintes différentes",
+        "texte": "La comparaison des empreintes numériques met en évidence des valeurs différentes entre les données de référence et les données contrôlées."
+      }
     ]
   },
   {
@@ -942,7 +1046,7 @@
     "terme": "Intégrité des données",
     "anglais": "Data integrity / Evidence integrity",
     "categorie": "Principe de criminalistique numérique",
-    "definition": "Propriété selon laquelle les données demeurent complètes et non altérées au cours des opérations de collecte, copie, stockage, analyse ou transfert. En criminalistique numérique, son contrôle repose notamment sur des procédures adaptées et sur la comparaison de valeurs de hachage.",
+    "definition": "Propriété caractérisant des données numériques dont le contenu n'a pas été altéré par rapport à un état de référence déterminé. En criminalistique numérique, l'intégrité peut être contrôlée notamment par comparaison d'empreintes numériques et par la mise en œuvre de procédures documentées.",
     "synonymes": [
       "Intégrité de la preuve numérique"
     ],
@@ -956,12 +1060,21 @@
     "formulations_rapport": [
       {
         "type": "Intégrité vérifiée",
-        "texte": "L’intégrité des données est vérifiée par comparaison des valeurs de hachage calculées."
+        "texte": "L'intégrité des données est vérifiée par comparaison des valeurs de hachage calculées sur les données de référence et les données contrôlées. Les valeurs obtenues sont concordantes."
       },
       {
         "type": "Intégrité lors de la remise",
         "texte": "Les résultats sont remis accompagnés de leurs valeurs de hachage afin de permettre le contrôle ultérieur de leur intégrité."
+      },
+      {
+        "type": "Intégrité non vérifiée",
+        "texte": "Aucun contrôle d'intégrité par comparaison d'empreintes numériques n'a pu être réalisé dans les conditions techniques rencontrées. Cette limite est prise en compte dans l'appréciation des résultats."
       }
+    ],
+    "termes_proches": [
+      "Hachage et empreinte numérique",
+      "Chaîne de traçabilité",
+      "Copie forensique"
     ]
   },
   {
@@ -1301,7 +1414,7 @@
     "terme": "Remise des résultats",
     "anglais": "Delivery of results",
     "categorie": "Procédure d’examen forensique",
-    "definition": "Étape consistant à remettre au requérant les données, exports, rapports ou autres résultats produits à l’issue des opérations techniques, dans un format permettant leur exploitation et, lorsque cela est pertinent, leur contrôle d’intégrité.",
+    "definition": "Opération consistant à transmettre au requérant les rapports, données, fichiers ou autres éléments produits à l'issue des examens techniques, selon des modalités permettant leur consultation, leur exploitation et, lorsque cela est prévu, le contrôle de leur intégrité.",
     "synonymes": [
       "Restitution des résultats",
       "Remise des données"
@@ -1316,17 +1429,39 @@
         "texte": "Les résultats sont remis au requérant dans un format exploitable."
       },
       {
-        "type": "Remise avec SHA-256",
-        "texte": "Les fichiers extraits sont remis au requérant accompagnés de leur valeur de hachage SHA-256."
+        "type": "Remise avec empreintes numériques",
+        "texte": "Les fichiers extraits sont remis au requérant accompagnés de leurs valeurs de hachage afin de permettre un contrôle ultérieur de leur intégrité."
       },
       {
         "type": "Extraction et décodage",
-        "texte": "Les résultats des opérations d’extraction et de décodage sont remis au requérant dans un format exploitable."
+        "texte": "Les résultats des opérations d'extraction et de décodage sont remis au requérant dans un format exploitable."
       },
       {
         "type": "Ensemble des supports",
-        "texte": "Nous avons extrait et décodé les données accessibles de l’ensemble des supports examinés et remettons les résultats au requérant dans un format exploitable."
+        "texte": "Nous avons extrait et décodé les données accessibles de l'ensemble des supports examinés et remettons les résultats au requérant dans un format exploitable."
+      },
+      {
+        "type": "Remise de résultats partiels",
+        "texte": "Les résultats obtenus dans les limites techniques précisées au présent rapport sont remis au requérant dans un format exploitable."
+      },
+      {
+        "type": "Remise des données décodées automatiquement",
+        "texte": "L'ensemble des données extraites et décodées par les logiciels employés est remis au requérant dans un format exploitable."
+      },
+      {
+        "type": "Remise des éléments identifiés par l'analyste",
+        "texte": "Les éléments identifiés par l'analyste comme susceptibles de présenter un intérêt au regard de la mission sont sélectionnés et remis au requérant dans un format exploitable."
+      },
+      {
+        "type": "Remise complète : données décodées et éléments sélectionnés",
+        "texte": "Nous remettons au requérant l'ensemble des données extraites et décodées par les logiciels employés, ainsi qu'une sélection distincte des éléments identifiés par l'analyste comme susceptibles de présenter un intérêt au regard de la mission."
       }
+    ],
+    "termes_proches": [
+      "Extraction",
+      "Décodage des données",
+      "Intégrité des données",
+      "Chaîne de traçabilité"
     ]
   },
   {
@@ -1396,7 +1531,7 @@
     "terme": "Scellé",
     "anglais": "Evidence seal / Sealed evidence",
     "categorie": "Procédure d’examen forensique",
-    "definition": "Conditionnement ou dispositif de scellement permettant d’identifier et de protéger un élément remis pour examen, dont l’état est constaté lors de sa prise en charge.",
+    "definition": "Élément ou ensemble d'éléments placé sous un conditionnement identifié et, le cas échéant, fermé par un dispositif de scellement, afin d'en assurer la conservation, la traçabilité et de permettre la constatation d'une éventuelle ouverture ou altération.",
     "synonymes": [
       "Scellé judiciaire"
     ],
@@ -1416,7 +1551,16 @@
       {
         "type": "Ouverture pour examen",
         "texte": "Nous procédons à l’ouverture du scellé numéroté [RÉFÉRENCE] afin de réaliser les opérations techniques demandées."
+      },
+      {
+        "type": "Reconditionnement après examen",
+        "texte": "À l'issue des opérations techniques, les éléments examinés sont reconditionnés sous le scellé numéro [RÉFÉRENCE], dans les conditions précisées au présent rapport."
       }
+    ],
+    "termes_proches": [
+      "Chaîne de traçabilité",
+      "Preuve numérique",
+      "Intégrité des données"
     ]
   },
   {
