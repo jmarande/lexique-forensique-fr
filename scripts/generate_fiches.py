@@ -20,6 +20,11 @@ def generate():
     ids = [f["id"] for f in fiches]
     if len(ids) != len(set(ids)) or any(not x or "/" in x or "\\" in x or x in (".", "..") for x in ids):
         raise ValueError("Identifiants invalides ou dupliqués")
+    by_id = {f["id"]: f for f in fiches}
+    for f in fiches:
+        for ref in f.get("renvois", []):
+            if ref.get("id") not in by_id or not clean(ref.get("nuance")):
+                raise ValueError("Renvoi invalide dans " + f["id"])
     DEST.mkdir(exist_ok=True)
     expected = {"README.md"} | {x + ".md" for x in ids}
     for f in fiches:
@@ -31,6 +36,12 @@ def generate():
             lines += ["## Synonymes", ""] + ["- " + clean(s) for s in f["synonymes"]] + [""]
         if f.get("termes_deconseilles"):
             lines += ["## Termes déconseillés", ""] + ["- " + clean(s) for s in f["termes_deconseilles"]] + [""]
+        if f.get("renvois"):
+            lines += ["## Nuances et distinctions", ""]
+            for ref in f["renvois"]:
+                target = by_id[ref["id"]]
+                lines += ["- [" + clean(target["terme"]) + "](" + ref["id"] + ".md) — " + clean(ref["nuance"])]
+            lines += [""]
         forms = f.get("formulations_rapport") or []
         if forms:
             lines += ["## Formulations pour rapport", ""]
