@@ -6,7 +6,7 @@
 
 ## Définition
 
-Réglage d’un appareil qui désactive ses fonctions de communication sans fil afin d’empêcher l’accès aux réseaux. Il peut être utilisé, lorsque les conditions le permettent, pour contribuer à préserver l’intégrité des données d’un appareil mobile.
+Fonction d'un équipement mobile permettant de désactiver ou de limiter certaines communications radio, notamment les connexions cellulaires. Selon l'appareil et sa configuration, les interfaces Wi-Fi et Bluetooth peuvent rester actives ou être réactivées indépendamment. L'activation du mode avion ne garantit donc pas, à elle seule, l'isolement complet de l'équipement vis-à-vis des réseaux.
 
 ## Synonymes
 

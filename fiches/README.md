@@ -3,7 +3,7 @@
 Catalogue généré automatiquement depuis [data/lexique.json](../data/lexique.json).
 Ce catalogue n'est pas une validation juridique ou normative des définitions.
 
-**64 fiches disponibles**
+**67 fiches disponibles**
 
 ## 🔬 Méthodologie forensique
 
@@ -62,6 +62,7 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 ### Hachage et cryptographie
 
 - [Chiffrement](chiffrement.md)
+- [Déchiffrement](dechiffrement.md)
 - [Empreinte numérique](empreinte-numerique.md)
 - [Hachage et empreinte numérique](hachage.md)
 - [Valeur de hachage](valeur-hachage.md)
@@ -95,6 +96,8 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 
 ### Systèmes d’exploitation et fichiers
 
+- [Cache applicatif](cache-applicatif.md)
+- [Cache système](cache-systeme.md)
 - [Journaux système](journaux-systeme.md)
 - [Mémoire cache](memoire-cache.md)
 - [Système d'exploitation](systeme-exploitation.md)
@@ -135,6 +138,8 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Artefact forensique](artefact-forensique.md)
 - [Authentification](authentification.md)
 - [Base de données](base-de-donnees.md)
+- [Cache applicatif](cache-applicatif.md)
+- [Cache système](cache-systeme.md)
 - [Carte SIM](carte-sim.md)
 - [Chaîne de traçabilité](chaine-tracabilite.md)
 - [Chiffrement](chiffrement.md)
@@ -147,6 +152,7 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Donnée supprimée](donnee-supprimee.md)
 - [Données numériques](donnees-numeriques.md)
 - [Dossier](dossier.md)
+- [Déchiffrement](dechiffrement.md)
 - [Décodage des données](decodage-donnees.md)
 - [Empreinte numérique](empreinte-numerique.md)
 - [EXIF](exif.md)
