@@ -87,3 +87,9 @@ Pour une modification terminologique, indiquer :
 4. la ou les sources utilisées.
 
 Pour une évolution de l’extension, privilégier une modification isolée et testable. La stabilité de LibreOffice/UNO prime sur l’ajout de fonctionnalités.
+
+## Critères documentaires de contribution
+
+Le contenu d'une fiche doit être confronté aux [références communes](sources/REFERENTIEL.md) : CLARUS est examiné avec les autres ressources, sans priorité automatique. Citer les références effectivement consultées, idéalement avec entrée ou document exact, édition/date et URL. Signaler les divergences et distinguer information vérifiée, rédaction du projet et formulation de rapport. Une citation ne confère aucun droit de reproduction.
+
+Suivre le [circuit de validation](docs/VALIDATION-FICHES.md) avant de marquer une fiche comme validée. Lors d'une fusion, préserver les anciennes recherches et formulations utiles, ainsi que les références des fiches d'origine.

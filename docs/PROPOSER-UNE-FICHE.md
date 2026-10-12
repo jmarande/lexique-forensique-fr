@@ -23,3 +23,7 @@ Seules les fiches personnelles apparaissent dans cette liste et peuvent être pr
 - Les formulations sont transmises dans la proposition, sans validation automatique.
 - Si le contenu est trop long, l'URL préremplie peut atteindre les limites du navigateur ; réduire alors la proposition.
 - Le statut de proposition n'est pas encore synchronisé automatiquement avec l'extension.
+
+## Vérification des références
+
+Les propositions doivent mentionner les sources consultées et les éventuelles divergences, sans supposer que CLARUS ou toute autre ressource suffit à valider une fiche. Voir le [référentiel commun](../sources/REFERENTIEL.md) et le [circuit de relecture](VALIDATION-FICHES.md). Les formulations de rapport sont propres au projet et soumises à relecture.

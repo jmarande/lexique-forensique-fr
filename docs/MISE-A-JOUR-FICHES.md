@@ -55,3 +55,7 @@ Insérer un nouvel objet dans le tableau `data/lexique.json`, avec au minimum un
 - Vérifier le résultat dans le catalogue et dans l'extension lors de la prochaine version distribuée.
 
 Le catalogue ne modifie pas automatiquement une extension **déjà installée** : la copie embarquée est prise en compte lors de la construction et de l'installation de la nouvelle version OXT.
+
+## Contrôle documentaire transversal
+
+Avant validation, appliquer la [méthode multi-sources](VALIDATION-FICHES.md) et consulter le [référentiel commun](../sources/REFERENTIEL.md). Aucune source, y compris CLARUS, n'est présumée supérieure. Documenter uniquement les références réellement examinées. Une fusion de fiches nécessite de préserver les anciens accès de recherche, les scénarios et les formulations pertinentes.
