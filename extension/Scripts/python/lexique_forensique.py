@@ -1341,6 +1341,13 @@ class OccurrenceEditorListener(
                 "Ajoutez au moins un remplacement"
             )
             return
+        if "**" in occurrence:
+            expected = occurrence.count("**")
+            if any(value.count("**") != expected for value in replacements + ([preferred] if preferred else [])):
+                self.status_label.getModel().Label = (
+                    "Chaque remplacement doit reprendre tous les jokers **"
+                )
+                return
         if not preferred:
             preferred = replacements[0]
         if preferred not in replacements:
