@@ -13,10 +13,6 @@
 - Média numérique
 - Support de données
 
-## Termes déconseillés
-
-- Media
-
 ## Exemple de formulation
 
 Le support numérique est pris en charge en vue de son acquisition et de son analyse.
