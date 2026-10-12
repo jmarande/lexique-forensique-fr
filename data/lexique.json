@@ -1811,16 +1811,12 @@
     ],
     "formulations_rapport": [
       {
-        "type": "Examen",
-        "texte": "Nous procédons à l'examen des journaux système accessibles afin d'identifier les événements susceptibles de présenter un intérêt au regard de la mission."
+        "type": "Examen des journaux système",
+        "texte": "Nous procédons à l'examen des journaux système accessibles afin d'identifier les événements techniques susceptibles de présenter un intérêt au regard de la mission."
       },
       {
         "type": "Événements identifiés",
-        "texte": "L'examen des journaux système permet d'identifier des événements techniques enregistrés."
-      },
-      {
-        "type": "Connexions et authentifications",
-        "texte": "Les journaux système examinés comportent des événements relatifs à des opérations de connexion ou d'authentification."
+        "texte": "L'examen des journaux système permet d'identifier plusieurs événements techniques enregistrés par l'équipement au cours de son fonctionnement."
       },
       {
         "type": "Reconstitution chronologique",
