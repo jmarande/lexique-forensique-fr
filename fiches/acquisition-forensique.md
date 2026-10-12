@@ -13,6 +13,7 @@ Opération technique documentée visant à obtenir une copie ou une représentat
 ## Synonymes
 
 - Acquisition numérique forensique
+- Extraction
 
 <details>
 <summary><strong>Termes proches · aide au choix</strong></summary>
