@@ -105,4 +105,42 @@ jobs:
               priorityCount++;
             }
             core.info(`Terminé : ${addedCount} éléments examinés, ${priorityCount} priorités explicites synchronisées, ${withoutPriority} priorités préservées.`);
-            // Les statuts et les éléments fermés restent inchangés.
+
+            // Corriger toutes les cartes du tableau, y compris fermées et brouillons.
+            // Ne jamais écraser une priorité déjà renseignée.
+            let after = null;
+            let inspected = 0;
+            let corrected = 0;
+            do {
+              const projectPage = await github.graphql(
+                'query($id: ID!, $after: String) { node(id: $id) { ... on ProjectV2 { items(first: 100, after: $after) { pageInfo { hasNextPage endCursor } nodes { id content { ... on Issue { title labels(first: 50) { nodes { name } } } ... on PullRequest { title labels(first: 50) { nodes { name } } } ... on DraftIssue { title } } fieldValues(first: 50) { nodes { ... on ProjectV2ItemFieldSingleSelectValue { field { ... on ProjectV2SingleSelectField { id } } optionId } } } } } } } }',
+                { id: project.id, after }
+              );
+              const page = projectPage.node.items;
+              for (const card of page.nodes) {
+                inspected++;
+                const existing = card.fieldValues.nodes.find(value =>
+                  value?.field?.id === priorityField.id && value.optionId
+                );
+                if (existing) continue;
+                const labels = (card.content?.labels?.nodes || []).map(label => label.name).join(' ');
+                const title = card.content?.title || '';
+                const matched = (labels + ' ' + title).match(/(?:^|[^A-Z0-9])P([012])(?:$|[^A-Z0-9])/i);
+                const level = matched ? 'P' + matched[1] : 'P2';
+                const option = priorityField.options.find(value =>
+                  value.name === level || value.name.startsWith(level + ' ')
+                );
+                if (!option) {
+                  core.setFailed('Option Priority introuvable : ' + level);
+                  return;
+                }
+                await github.graphql(
+                  'mutation($project: ID!, $item: ID!, $field: ID!, $option: String!) { updateProjectV2ItemFieldValue(input: {projectId: $project, itemId: $item, fieldId: $field, value: {singleSelectOptionId: $option}}) { projectV2Item { id } } }',
+                  { project: project.id, item: card.id, field: priorityField.id, option: option.id }
+                );
+                corrected++;
+              }
+              after = page.pageInfo.hasNextPage ? page.pageInfo.endCursor : null;
+            } while (after);
+            core.info('Cartes du tableau vérifiées : ' + inspected + ', priorités manquantes renseignées : ' + corrected);
+            // Les statuts et toutes les priorités existantes sont conservés.
