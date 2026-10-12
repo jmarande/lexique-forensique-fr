@@ -173,7 +173,7 @@ Son travail documentaire confronte plusieurs références, notamment **CLARUS D3
 
 Les sources sont utilisées pour vérifier les concepts et identifier les divergences terminologiques. Leur citation ne vaut pas autorisation de reproduction : toute reprise de contenu doit respecter les droits et conditions de réutilisation applicables.
 
-**Documentation :** [référentiel des sources](sources/REFERENTIEL.md) · [audit des 63 fiches](sources/AUDIT-63-FICHES-2026-10-10.md) · [audit initial](sources/AUDIT-INITIAL-2026-10-10.md) · [CLARUS D3.2](sources/CLARUS.md).
+**Documentation :** [référentiel des sources](sources/REFERENTIEL.md) · [audit des 63 fiches](sources/AUDIT-63-FICHES-2026-10-10.md) · [audit initial](sources/AUDIT-INITIAL-2026-10-10.md).
 
 ## Structure du dépôt
 
