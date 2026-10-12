@@ -1,0 +1,100 @@
+name: Sync Lexique to project
+
+on:
+  issues:
+    types: [opened, reopened, edited, labeled, unlabeled]
+  pull_request:
+    types: [opened, reopened, edited, labeled, unlabeled]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add to project and sync priority
+        uses: actions/github-script@v7
+        env:
+          PROJECT_TOKEN: ${{ secrets.PROJECT_SYNC_TOKEN }}
+        with:
+          github-token: ${{ secrets.PROJECT_SYNC_TOKEN }}
+          script: |
+            const token = process.env.PROJECT_TOKEN;
+            if (!token) {
+              core.setFailed('PROJECT_SYNC_TOKEN absent : configurer le secret avant activation.');
+              return;
+            }
+            const owner = 'jmarande';
+            const projectNumber = 1;
+            const query = `query($login: String!, $number: Int!) {
+              user(login: $login) {
+                projectV2(number: $number) {
+                  id
+                  fields(first: 50) {
+                    nodes {
+                      ... on ProjectV2SingleSelectField {
+                        id
+                        name
+                        options { id name }
+                      }
+                    }
+                  }
+                }
+              }
+            }`;
+            const project = (await github.graphql(query, { login: owner, number: projectNumber })).user?.projectV2;
+            if (!project) {
+              core.setFailed('Projet GitHub introuvable ou token sans accès Projects.');
+              return;
+            }
+            const priorityField = project.fields.nodes.find(field => field?.name === 'Priority');
+            if (!priorityField) {
+              core.setFailed('Champ Priority introuvable dans le Project.');
+              return;
+            }
+            const events = [];
+            if (context.eventName === 'workflow_dispatch') {
+              // No backfill here: prevents unexpected changes to historical items.
+              core.info('Workflow opérationnel ; déclencher un événement sur une issue/PR pour synchroniser.');
+              return;
+            }
+            const item = context.payload.issue ?? context.payload.pull_request;
+            if (!item || item.state !== 'open') {
+              core.info('Élément absent ou fermé : aucun ajout.');
+              return;
+            }
+            const priorityLabels = (item.labels || []).map(label => label.name || '').join(' ');
+            const match = (priorityLabels + ' ' + (item.title || '')).match(/(?:^|[^A-Z0-9])P([012])(?:$|[^A-Z0-9])/i);
+            const desired = match ? `P${match[1]}` : null;
+            const nodeId = item.node_id;
+            const addMutation = `mutation($project: ID!, $content: ID!) {
+              addProjectV2ItemById(input: {projectId: $project, contentId: $content}) {
+                item { id }
+              }
+            }`;
+            const added = await github.graphql(addMutation, { project: project.id, content: nodeId });
+            const projectItemId = added.addProjectV2ItemById.item.id;
+            core.info(`Élément ajouté ou déjà présent : ${item.html_url}`);
+            if (!desired) {
+              core.info('Aucune priorité explicite P0/P1/P2 : priorité existante conservée.');
+              return;
+            }
+            const option = priorityField.options.find(o => o.name.startsWith(desired + ' ') || o.name.startsWith(desired + ' —') || o.name === desired);
+            if (!option) {
+              core.setFailed(`Option Priority ${desired} introuvable.`);
+              return;
+            }
+            const updateMutation = `mutation($project: ID!, $item: ID!, $field: ID!, $option: String!) {
+              updateProjectV2ItemFieldValue(input: {
+                projectId: $project, itemId: $item, fieldId: $field,
+                value: {singleSelectOptionId: $option}
+              }) { projectV2Item { id } }
+            }`;
+            await github.graphql(updateMutation, {
+              project: project.id, item: projectItemId,
+              field: priorityField.id, option: option.id
+            });
+            core.info(`Priorité synchronisée : ${desired}`);
