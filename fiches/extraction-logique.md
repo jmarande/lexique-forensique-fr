@@ -12,6 +12,13 @@ Méthode d’extraction obtenant les données accessibles par les interfaces log
 
 - Acquisition logique
 
+<details>
+<summary><strong>Termes proches · aide au choix</strong></summary>
+
+- [Extraction](extraction.md) — L’extraction logique est une forme d’extraction, limitée aux données accessibles par les interfaces et mécanismes utilisés.
+
+</details>
+
 ## Formulations pour rapport
 
 ### Extraction logique réalisée

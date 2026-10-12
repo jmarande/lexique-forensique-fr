@@ -15,6 +15,23 @@ Processus systématique consistant à créer une copie ou une image forensique d
 - Acquisition numérique forensique
 - Extraction
 
+<details>
+<summary><strong>Termes proches · aide au choix</strong></summary>
+
+- [Extraction](extraction.md) — L’acquisition désigne une opération documentée d’obtention des données ; l’extraction décrit plus précisément leur récupération depuis un équipement ou un système.
+
+**Quel terme utiliser ?**
+
+| Situation | Terme conseillé | Pourquoi ? |
+|---|---|---|
+| Observer un équipement et relever ses caractéristiques | Constatation numérique | Observation et documentation, sans récupération nécessaire de données. |
+| Réaliser une image forensique d’un disque | Acquisition forensique | Obtention documentée d’une représentation du contenu du support. |
+| Récupérer des données accessibles d’un téléphone | Extraction | Désigne la récupération des données ; préciser la méthode utilisée. |
+| Copier un ensemble ciblé de fichiers pour examen | Acquisition ciblée ou copie de fichiers | Préciser la portée, la méthode et les contrôles effectivement réalisés. |
+| Enregistrer un trafic réseau dans un PCAP | Acquisition de données réseau | Conservation d’une capture documentée pour un examen ultérieur. |
+
+</details>
+
 ## Formulations pour rapport
 
 ### Acquisition réalisée
