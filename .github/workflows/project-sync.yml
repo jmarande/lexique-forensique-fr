@@ -89,20 +89,7 @@ jobs:
               const added = await github.graphql(addMutation, { project: project.id, content: nodeId });
               const projectItemId = added.addProjectV2ItemById.item.id;
               addedCount++;
-              if (!desired) { withoutPriority++; continue; }
-              const option = priorityField.options.find(o => o.name === desired || o.name.startsWith(desired + ' ') || o.name.startsWith(desired + ' —'));
-              if (!option) { core.setFailed(`Option Priority ${desired} introuvable.`); return; }
-            const updateMutation = `mutation($project: ID!, $item: ID!, $field: ID!, $option: String!) {
-              updateProjectV2ItemFieldValue(input: {
-                projectId: $project, itemId: $item, fieldId: $field,
-                value: {singleSelectOptionId: $option}
-              }) { projectV2Item { id } }
-            }`;
-              await github.graphql(updateMutation, {
-                project: project.id, item: projectItemId,
-                field: priorityField.id, option: option.id
-              });
-              priorityCount++;
+              if (!desired) withoutPriority++;
             }
             core.info(`Terminé : ${addedCount} éléments examinés, ${priorityCount} priorités explicites synchronisées, ${withoutPriority} priorités préservées.`);
 
