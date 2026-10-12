@@ -207,6 +207,51 @@ def _save_user_data(data):
         f.write("\n")
 
 
+def _classification_index():
+    path = os.path.join(_extension_root(), "data", "taxonomie.json")
+    try:
+        with open(path, "r", encoding="utf-8") as handle:
+            taxonomy = json.load(handle)
+        families = {family["id"]: family for family in taxonomy["familles"]}
+        result = {}
+        for record in taxonomy["classement"]:
+            family_id, subgroup_id = record["classification"].split("/")
+            family = families[family_id]
+            subgroup = next(item for item in family["sous_categories"] if item["id"] == subgroup_id)
+            result[record["id"]] = (
+                family.get("icone", "") + " " + family["label"] + " → " + subgroup["label"]
+            ).strip()
+        return result
+    except (OSError, ValueError, KeyError, StopIteration):
+        return {}
+
+
+_CLASSIFICATION = None
+
+
+def _entry_category(entry):
+    global _CLASSIFICATION
+    if _CLASSIFICATION is None:
+        _CLASSIFICATION = _classification_index()
+    return _CLASSIFICATION.get(entry.get("id")) or entry.get("categorie", "")
+
+
+def _available_categories(entries):
+    return sorted({_entry_category(e) for e in entries if _entry_category(e)}, key=_normalize)
+
+
+def _nearby_help(entry, entries):
+    by_id = {item.get("id"): item for item in entries}
+    notes = []
+    for ref in entry.get("renvois", []):
+        related = by_id.get(ref.get("id"))
+        if related:
+            notes.append(related.get("terme", "") + " : " + ref.get("nuance", ""))
+    for case in entry.get("guide_choix", []):
+        notes.append(case.get("situation", "") + " → " + case.get("terme", ""))
+    return "\n".join(notes) if notes else ""
+
+
 def _load_data():
     return _load_builtin_data() + _load_user_data()
 
@@ -565,7 +610,7 @@ def _format_entry(e, warning=None):
         prefix
         + f"{e['terme']}\n"
         + f"Anglais : {e.get('anglais', '—')}\n"
-        + f"Catégorie : {e.get('categorie', '—')}\n"
+        + f"Catégorie : {_entry_category(e)}\n"
         + f"Synonymes : {syn}\n\n"
         + f"DÉFINITION\n{e.get('definition', '')}\n\n"
         + "FORMULATIONS POUR RAPPORT\n"
@@ -592,39 +637,19 @@ def _format_entry(e, warning=None):
     if not formulations:
         parts.append("—")
 
-    # Les explications restent secondaires ; toutes les formulations gardent leurs positions.
-    if e.get("renvois") or e.get("guide_choix"):
-        by_id = {item.get("id"): item for item in _load_data()}
-        notes = []
-        for ref in e.get("renvois", []):
-            target = by_id.get(ref.get("id"))
-            if target:
-                notes.append(
-                    target.get("terme", "") + " — " + ref.get("nuance", "")
-                    + "\nhttps://github.com/jmarande/lexique-forensique-fr/blob/main/fiches/"
-                    + ref["id"] + ".md"
-                )
-        for case in e.get("guide_choix", []):
-            notes.append(
-                case.get("situation", "") + " → " + case.get("terme", "")
-                + " : " + case.get("justification", "")
-            )
-        if notes:
-            parts.append("\n\nTERMES PROCHES · AIDE AU CHOIX\n" + "\n\n".join(notes))
-
     return "".join(parts), ranges
 def _find_entries(query, data, category=None):
     q = _normalize(query)
     results = []
     for e in data:
-        if category and e.get("categorie", "") != category:
+        if category and _entry_category(e) != category:
             continue
 
         if q:
             fields = [
                 e.get("terme", ""),
                 e.get("anglais", ""),
-                e.get("categorie", ""),
+                _entry_category(e),
                 e.get("definition", ""),
                 " ".join(e.get("synonymes", [])),
                 " ".join(_bad_terms(e)),
@@ -756,11 +781,9 @@ class DialogListener(
         self.status_label = status_label
         self.insert_button = insert_button
         self.category_box = category_box
+        self.nearby_button = dialog.getControl("btnNearby")
         self.data = data
-        self.categories = sorted(
-            {e.get("categorie", "") for e in data if e.get("categorie", "")},
-            key=_normalize,
-        )
+        self.categories = _available_categories(data)
         self.current_category = None
         self.current = None
         self.matches = []
@@ -778,10 +801,7 @@ class DialogListener(
     def reload_data(self):
         previous_category = self.current_category
         self.data = _load_data()
-        self.categories = sorted(
-            {e.get("categorie", "") for e in self.data if e.get("categorie", "")},
-            key=_normalize,
-        )
+        self.categories = _available_categories(self.data)
 
         if self.category_box.ItemCount:
             self.category_box.removeItems(0, self.category_box.ItemCount)
@@ -801,6 +821,9 @@ class DialogListener(
     def _display_entry(self, entry):
         text, ranges = _format_entry(entry)
         self.detail_box.Text = text
+        help_text = _nearby_help(entry, self.data)
+        self.nearby_button.getModel().HelpText = help_text or "Aucun terme proche renseigné"
+        self.nearby_button.getModel().Enabled = bool(help_text)
         self.formulation_ranges = ranges
         self.selected_formulation_index = 0
         if ranges:
@@ -844,6 +867,7 @@ class DialogListener(
             self.current = None
             self.formulation_ranges = []
             self.detail_box.Text = "Aucun terme trouvé."
+            self.nearby_button.getModel().Enabled = False
             self._set_insert_enabled(False)
 
     def actionPerformed(self, event):
@@ -3650,10 +3674,7 @@ def open_lexicon(*args):
     model.Title = f"Lexique forensique FR — v{CURRENT_VERSION}"
 
     data = _load_data()
-    categories = sorted(
-        {e.get("categorie", "") for e in data if e.get("categorie", "")},
-        key=_normalize,
-    )
+    categories = _available_categories(data)
 
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
@@ -3740,6 +3761,13 @@ def open_lexicon(*args):
         ReadOnly=True,
         VScroll=True,
         HideInactiveSelection=False,
+    )
+    add(
+        "btnNearby",
+        "com.sun.star.awt.UnoControlButtonModel",
+        118, 288, 90, 16,
+        Label="Termes proches ⓘ",
+        HelpText="Survolez pour consulter les nuances",
     )
     add(
         "btnInsert",
