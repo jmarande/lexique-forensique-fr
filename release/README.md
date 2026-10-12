@@ -64,3 +64,10 @@ Le fichier distribué doit rester nommé exactement :
 `lexique-forensique-fr.oxt`
 
 Les URL de scripts LibreOffice définies dans `extension/Addons.xcu` dépendent de ce nom.
+
+## Classification et relecture avant prochaine release
+
+- Vérifier la proposition de taxonomie (PR #70) ; les pictogrammes ne modifient pas les catégories historiques.
+- Réconcilier les PR #57 (sept fiches), #58 (statuts) et #69 (renvois), sans forcer leurs conflits.
+- Contrôler dans Writer les occurrences avec `**` issues de la PR #68 et les occurrences ordinaires.
+- Vérifier les données utilisateur, l'aide hors ligne et les fichiers générés avant toute nouvelle release OXT.

@@ -10,6 +10,12 @@ Lexique français collaboratif de **criminalistique numérique** accompagné d�
 
 **[Consulter le catalogue des fiches du lexique](fiches/README.md)** — index alphabétique des termes, définitions, synonymes et formulations de rapport. Les fiches sont générées depuis la base JSON officielle. [Comment mettre à jour une fiche](docs/MISE-A-JOUR-FICHES.md).
 
+### Nouvelle classification en préparation
+
+🔬 **Méthodologie forensique** · 🧩 **Données et traces** · 💾 **Équipements et supports** · 📱 **Téléphonie mobile** · 💻 **Informatique** · 🌐 **Réseaux** · ☁️ **Services numériques** · 💬 **Applications**
+
+La [proposition de classification hiérarchique](docs/PROPOSITION-TAXONOMIE.md) couvre les 63 fiches existantes, sans modifier leurs anciennes catégories. Les domaines iOS, Android, Windows, Linux et macOS pourront compléter le classement principal. La navigation hiérarchique dans Writer sera livrée après validation et tests.
+
 ## Objectifs
 
 Le projet vise à :
