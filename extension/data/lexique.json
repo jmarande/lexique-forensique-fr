@@ -123,7 +123,7 @@
     "terme": "Artefact forensique",
     "anglais": "Forensic artifact",
     "categorie": "Preuve numérique",
-    "definition": "Élément d’information interprété à partir de données numériques et présentant un intérêt pour l’examen forensique, par exemple un message, un appel, un compte, une localisation ou une activité applicative.",
+    "definition": "Élément d'information identifié ou reconstitué à partir de données numériques, notamment par l'interprétation de structures, de fichiers, de bases de données ou de traces d'activité. Un artefact peut correspondre à un message, un appel, un contact, une localisation, un historique de navigation ou une activité applicative. Son interprétation dépend des données sources, du contexte et des méthodes de décodage ou d'analyse employées.",
     "synonymes": [
       "Artefact numérique"
     ],
@@ -135,15 +135,34 @@
     "formulations_rapport": [
       {
         "type": "Artefacts identifiés",
-        "texte": "L’examen des données extraites met en évidence plusieurs artefacts numériques susceptibles de présenter un intérêt au regard de la mission confiée."
+        "texte": "L'examen des données extraites permet d'identifier plusieurs artefacts numériques susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Artefacts décodés automatiquement",
+        "texte": "Les logiciels employés permettent d'identifier et de restituer des artefacts numériques à partir des données extraites du support."
+      },
+      {
+        "type": "Artefacts identifiés par l'analyste",
+        "texte": "L'examen complémentaire des données permet d'identifier des artefacts numériques qui n'avaient pas été restitués par les traitements automatisés."
       },
       {
         "type": "Interprétation prudente",
         "texte": "Les artefacts identifiés sont interprétés au regard de leur source, de leur contexte et des autres éléments disponibles."
+      },
+      {
+        "type": "Limites d'interprétation",
+        "texte": "Les informations disponibles ne permettent pas de déterminer avec suffisamment de certitude le contexte de création ou d'utilisation de certains artefacts identifiés."
       }
     ],
     "sources": [
       "Lexique forensique FR — usage professionnel"
+    ],
+    "termes_proches": [
+      "Donnée reconstruite",
+      "Décodage des données",
+      "Métadonnées",
+      "Analyse des données",
+      "Preuve numérique"
     ]
   },
   {
@@ -298,6 +317,59 @@
         "type": "Extraction partielle",
         "texte": "Les données accessibles sur la carte SIM ne permettent qu’une extraction partielle de son contenu."
       }
+    ]
+  },
+  {
+    "id": "carving-fichiers",
+    "terme": "Carving de fichiers",
+    "anglais": "File carving / Data carving",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Technique de récupération consistant à rechercher et, lorsque cela est possible, à reconstituer des fichiers à partir de leur contenu binaire, notamment de leurs signatures, de leurs structures internes ou d'autres caractéristiques propres à leur format, sans nécessiter les métadonnées d'allocation du système de fichiers. Cette méthode peut être employée sur des données brutes accessibles, notamment dans les espaces non alloués, et permet éventuellement de retrouver des fichiers dont les références d'origine sont absentes ou inexploitables. Les fichiers obtenus peuvent être complets ou partiels, et leur récupération ne démontre pas nécessairement qu'ils ont été supprimés.",
+    "synonymes": [
+      "File carving",
+      "Data carving",
+      "Extraction par signature"
+    ],
+    "termes_deconseilles": [],
+    "termes_proches": [
+      "Donnée supprimée",
+      "Donnée reconstruite",
+      "Récupération de données",
+      "Extraction physique",
+      "Artefact forensique"
+    ],
+    "points_attention": [
+      "La fragmentation et l'écrasement peuvent empêcher la reconstruction.",
+      "Le nom, le chemin et les horodatages d'origine ne sont pas nécessairement retrouvés.",
+      "Une récupération par carving n'établit pas à elle seule une suppression préalable."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Recherche par carving réalisée",
+        "texte": "Nous procédons à une recherche de fichiers par carving à partir des données accessibles du support examiné."
+      },
+      {
+        "type": "Fichiers identifiés par carving",
+        "texte": "Les opérations de carving permettent d'identifier et de reconstituer des fichiers à partir des données examinées, sans nécessairement permettre de retrouver leur nom ou leur emplacement d'origine."
+      },
+      {
+        "type": "Récupération partielle",
+        "texte": "Les opérations de carving permettent de récupérer partiellement certains fichiers, dont le contenu demeure incomplet."
+      },
+      {
+        "type": "Absence de résultat exploitable",
+        "texte": "Les opérations de carving réalisées ne permettent pas d'identifier de fichiers exploitables dans les données examinées."
+      },
+      {
+        "type": "Limites d'interprétation",
+        "texte": "Les fichiers récupérés par carving peuvent être incomplets ou dépourvus de certaines métadonnées. Leur présence ne permet pas, à elle seule, de déterminer les circonstances de leur création, de leur utilisation ou de leur éventuelle suppression."
+      }
+    ],
+    "sources": [
+      "NIST — A Strategy for Testing Graphic File Carving Tools (2014)",
+      "NIST — Scientific Foundation Review of Digital Forensics (2022)",
+      "SWGDE — Establishing Confidence in Digital Forensic Results",
+      "CGSecurity — PhotoRec documentation"
     ]
   },
   {
@@ -476,10 +548,12 @@
     "terme": "Criminalistique numérique",
     "anglais": "Digital forensics",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Discipline couvrant la récupération, l’examen et l’interprétation de données provenant d’ordinateurs, de téléphones mobiles, de réseaux et d’autres supports de stockage numérique dans le cadre d’enquêtes et de procédures judiciaires.",
+    "definition": "Discipline scientifique et technique consacrée à l'identification, la préservation, l'acquisition, l'examen, l'analyse et l'interprétation de données numériques susceptibles de contribuer à l'établissement de faits. Elle repose sur des méthodes documentées permettant d'apprécier l'origine, l'intégrité, le contexte et les limites des informations examinées. L'investigation numérique désigne une démarche de recherche et d'examen conduite dans le cadre d'une mission déterminée, pouvant mobiliser ces méthodes.",
     "synonymes": [
       "Forensique numérique",
-      "Informatique forensique"
+      "Informatique forensique",
+      "Investigation numérique",
+      "Enquête numérique"
     ],
     "termes_deconseilles": [
       "Forensic informatique"
@@ -487,6 +561,26 @@
     "exemple_rapport": "Les opérations réalisées relèvent de la criminalistique numérique et portent sur la récupération, l’examen et l’interprétation des données accessibles.",
     "sources": [
       "CLARUS D3.2 — Digital forensics"
+    ],
+    "termes_proches": [
+      "Investigation numérique",
+      "Acquisition forensique",
+      "Analyse des données",
+      "Preuve numérique"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Opérations de criminalistique numérique",
+        "texte": "Les opérations de criminalistique numérique réalisées portent sur l'acquisition, l'examen et l'analyse des données numériques accessibles, dans les limites techniques précisées au présent rapport."
+      },
+      {
+        "type": "Investigation numérique",
+        "texte": "Nous procédons à l'examen des données numériques accessibles dans le cadre de la mission confiée."
+      },
+      {
+        "type": "Périmètre des opérations",
+        "texte": "Les opérations techniques sont réalisées dans le périmètre défini par la mission, compte tenu des moyens disponibles et des caractéristiques des supports examinés."
+      }
     ]
   },
   {
@@ -605,7 +699,7 @@
     "terme": "Donnée reconstruite",
     "anglais": "Reconstructed data",
     "categorie": "Preuve numérique",
-    "definition": "Donnée reconstituée ou interprétée par un logiciel d’analyse à partir d’éléments présents dans les données examinées, et qui doit être distinguée d’une donnée directement accessible dans la source extraite.",
+    "definition": "Information reconstituée à partir de données numériques partielles, fragmentées ou nécessitant une interprétation technique, au moyen d'un logiciel spécialisé ou d'une intervention de l'analyste. La reconstruction peut notamment permettre de restituer des messages, des fichiers ou des enregistrements à partir de différentes structures de données. Le résultat obtenu doit être distingué des données directement accessibles dans la source et apprécié au regard de la fiabilité de la méthode employée.",
     "synonymes": [
       "Donnée reconstituée",
       "Élément reconstruit"
@@ -616,13 +710,31 @@
     ],
     "formulations_rapport": [
       {
-        "type": "Donnée reconstruite par le logiciel",
-        "texte": "Il est à noter que les éléments signalés comme reconstruits correspondent à des données reconstituées automatiquement par le logiciel d’analyse."
+        "type": "Reconstruction automatisée",
+        "texte": "Certains éléments restitués correspondent à des données reconstruites automatiquement par le logiciel d'analyse à partir des informations disponibles dans la source examinée."
+      },
+      {
+        "type": "Reconstruction manuelle par l'analyste",
+        "texte": "Nous procédons à la reconstruction manuelle de certaines données à partir des éléments identifiés dans la source examinée."
+      },
+      {
+        "type": "Reconstruction partielle",
+        "texte": "Les éléments disponibles ne permettent qu'une reconstruction partielle des données concernées."
       },
       {
         "type": "Interprétation prudente",
-        "texte": "Cette donnée résulte d’une reconstruction effectuée par le logiciel d’analyse et doit être interprétée avec prudence."
+        "texte": "Les données reconstruites doivent être interprétées avec prudence, leur contenu et leur contexte pouvant dépendre des méthodes de reconstruction employées."
+      },
+      {
+        "type": "Reconstruction non concluante",
+        "texte": "Les opérations de reconstruction réalisées ne permettent pas de restituer des informations suffisamment exploitables pour en proposer une interprétation fiable."
       }
+    ],
+    "termes_proches": [
+      "Artefact forensique",
+      "Donnée supprimée",
+      "Décodage des données",
+      "Analyse des données"
     ]
   },
   {
@@ -630,32 +742,49 @@
     "terme": "Donnée supprimée",
     "anglais": "Deleted data",
     "categorie": "Preuve numérique",
-    "definition": "Donnée ayant fait l’objet d’une suppression logique ou applicative et dont tout ou partie du contenu, des métadonnées ou des traces peuvent éventuellement subsister dans les données examinées.",
+    "definition": "Donnée ayant fait l'objet d'une opération de suppression au sein d'un système de fichiers, d'une application ou d'une structure de stockage. Selon le mécanisme de suppression, l'état du support et les possibilités d'acquisition, tout ou partie de son contenu peut demeurer accessible ou ne subsister qu'au travers de métadonnées, de références ou de traces résiduelles. L'identification d'une donnée supprimée ne permet pas, à elle seule, d'établir les circonstances, la date ou l'auteur de sa suppression.",
     "synonymes": [
       "Élément supprimé",
       "Fichier supprimé"
     ],
     "termes_deconseilles": [],
     "sources": [
-      "Lexique forensique FR — usage professionnel"
+      "NIST — Scientific Foundation Review of Digital Forensics (2022)",
+      "NIST — Deleted File Recovery",
+      "SWGDE — Digital & Multimedia Evidence Glossary"
     ],
     "formulations_rapport": [
       {
         "type": "Donnée supprimée récupérée",
-        "texte": "Nous identifions une donnée supprimée dont le contenu demeure accessible dans les données extraites."
+        "texte": "Les opérations techniques permettent de récupérer le contenu d'une donnée identifiée comme supprimée."
       },
       {
-        "type": "Trace sans contenu",
-        "texte": "Nous identifions la trace d’un élément supprimé, sans que son contenu soit disponible dans les données extraites."
+        "type": "Trace d'une donnée supprimée",
+        "texte": "Nous identifions la trace d'un élément supprimé, sans que son contenu soit disponible dans les données extraites."
       },
       {
         "type": "Média supprimé",
-        "texte": "Un média supprimé est identifié ; son contenu n’est pas disponible dans les données extraites."
+        "texte": "Un média supprimé est identifié ; son contenu n'est pas disponible dans les données extraites."
+      },
+      {
+        "type": "Récupération partielle",
+        "texte": "Les opérations techniques permettent de récupérer partiellement le contenu d'une donnée identifiée comme supprimée."
+      },
+      {
+        "type": "Circonstances de suppression indéterminées",
+        "texte": "Les informations disponibles ne permettent pas de déterminer les circonstances dans lesquelles cet élément a été supprimé."
       }
     ],
     "points_attention": [
       "La présence d’une trace supprimée ne permet pas nécessairement de déterminer la date ou les circonstances de sa suppression.",
       "Le contenu peut être partiellement ou totalement indisponible alors que des métadonnées ou références persistent."
+    ],
+    "termes_proches": [
+      "Récupération de données",
+      "Carving de fichiers",
+      "Donnée reconstruite",
+      "Artefact forensique",
+      "Métadonnées"
     ]
   },
   {
@@ -702,7 +831,6 @@
     "termes_deconseilles": [
       "Empreinte digitale"
     ],
-    "exemple_rapport": "",
     "sources": [
       "CLARUS D3.2 — Digital fingerprint"
     ],
@@ -717,7 +845,7 @@
     "terme": "État du support",
     "anglais": "Device condition / State of the device",
     "categorie": "Procédure d’examen forensique",
-    "definition": "État matériel et fonctionnel constaté lors de la prise en charge d’un support numérique, notamment son alimentation, son verrouillage, son intégrité physique et sa capacité à être examiné.",
+    "definition": "Ensemble des caractéristiques matérielles, fonctionnelles et des conditions d'accès constatées sur un équipement ou un support numérique lors de sa prise en charge et de son examen. Ces constatations peuvent concerner son alimentation, son fonctionnement, son état physique, son verrouillage, son chiffrement ou les limitations techniques rencontrées.",
     "synonymes": [
       "État du terminal",
       "État de l’équipement"
@@ -746,7 +874,33 @@
       {
         "type": "Support non fonctionnel",
         "texte": "Lors de notre prise en charge, nous constatons que le support n’est pas fonctionnel."
+      },
+      {
+        "type": "Support détérioré, accès limité",
+        "texte": "Le support présente des dégradations matérielles qui limitent les possibilités d'accès aux données dans les conditions techniques rencontrées."
+      },
+      {
+        "type": "Support partiellement fonctionnel",
+        "texte": "Le support présente un fonctionnement partiel permettant certaines opérations techniques, sans garantir l'accès à l'ensemble des données."
+      },
+      {
+        "type": "Support non reconnu",
+        "texte": "Le support n'est pas reconnu par les moyens techniques employés, empêchant son examen dans les conditions rencontrées."
+      },
+      {
+        "type": "Erreurs de lecture",
+        "texte": "Les opérations d'acquisition mettent en évidence des erreurs de lecture limitant la quantité de données pouvant être obtenues."
+      },
+      {
+        "type": "Support chiffré — accès limité",
+        "texte": "Les données du support sont protégées par un mécanisme de chiffrement ne permettant pas leur exploitation dans les conditions techniques rencontrées."
       }
+    ],
+    "termes_proches": [
+      "Support numérique",
+      "Réparation du support",
+      "Chiffrement",
+      "Code de déverrouillage"
     ]
   },
   {
@@ -1066,7 +1220,7 @@
     "terme": "Hachage et empreinte numérique",
     "anglais": "Hashing / Hash value",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Le hachage consiste à appliquer une fonction à des données numériques afin de produire une empreinte de longueur déterminée. L'empreinte est la valeur obtenue, utilisée notamment pour comparer des données et contribuer à la vérification de leur intégrité.",
+    "definition": "Le hachage est une opération consistant à appliquer une fonction mathématique à des données numériques pour produire une empreinte de longueur déterminée, appelée valeur de hachage. Cette empreinte permet notamment de comparer des données et de contribuer à la vérification de leur intégrité. La concordance de valeurs calculées avec le même algorithme ne suffit pas, à elle seule, à établir l'origine ou l'authenticité des données.",
     "synonymes": [
       "Calcul d’empreinte",
       "Fonction de hachage",
@@ -1074,11 +1228,14 @@
       "Empreinte numérique",
       "Valeur de hachage",
       "Empreinte cryptographique",
-      "Calcul d'empreinte numérique"
+      "Calcul d'empreinte numérique",
+      "Hash",
+      "Hashing"
     ],
     "termes_deconseilles": [
       "Hashage",
-      "Empreinte digitale"
+      "Empreinte digitale",
+      "Checksum cryptographique"
     ],
     "exemple_rapport": "Une valeur de hachage est calculée afin de contrôler l’intégrité des données extraites.",
     "sources": [
@@ -1101,12 +1258,20 @@
         "texte": "Nous procédons au calcul des empreintes numériques des données au moyen des algorithmes de hachage indiqués ci-dessous."
       },
       {
+        "type": "Calcul d'une empreinte de référence",
+        "texte": "Nous calculons l'empreinte numérique du fichier au moyen de l'algorithme indiqué dans le présent rapport, afin de disposer d'une valeur de référence."
+      },
+      {
         "type": "Vérification d'intégrité",
         "texte": "Nous procédons à la comparaison des empreintes numériques calculées sur les données de référence et les données contrôlées. Les valeurs obtenues sont concordantes."
       },
       {
         "type": "Empreintes différentes",
         "texte": "La comparaison des empreintes numériques met en évidence des valeurs différentes entre les données de référence et les données contrôlées."
+      },
+      {
+        "type": "Remise avec empreintes numériques",
+        "texte": "Les fichiers remis sont accompagnés de leurs valeurs de hachage afin de permettre un contrôle ultérieur de leur intégrité."
       }
     ]
   },
@@ -1299,10 +1464,14 @@
       "Enquête numérique"
     ],
     "termes_deconseilles": [],
-    "exemple_rapport": "Les opérations réalisées s'inscrivent dans le cadre d'une investigation numérique du support.",
     "sources": [
       "CLARUS D3.2"
-    ]
+    ],
+    "renvoi_principal": "criminalistique-numerique",
+    "termes_proches": [
+      "Criminalistique numérique"
+    ],
+    "formulations_rapport": []
   },
   {
     "id": "journaux-systeme",
@@ -1610,7 +1779,7 @@
     "terme": "Récupération de données",
     "anglais": "Retrieval / Data recovery",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Processus consistant à accéder à des informations numériques et à les obtenir ou les restaurer depuis un support, un système de stockage ou une archive. Il peut inclure la récupération de contenus supprimés, cachés ou archivés.",
+    "definition": "Ensemble d'opérations techniques visant à retrouver et à rendre accessibles des données numériques devenues inaccessibles par les moyens habituels, notamment à la suite d'une suppression, d'une altération logique ou d'un dysfonctionnement du support. La récupération peut reposer sur l'exploitation des structures du système de fichiers, des données résiduelles, du carving ou d'autres méthodes adaptées à la source examinée. Les données récupérées peuvent être complètes, partielles ou nécessiter une reconstruction.",
     "synonymes": [
       "Restauration de données",
       "Récupération de fichiers"
@@ -1619,6 +1788,34 @@
     "exemple_rapport": "Nous procédons à la récupération des données accessibles, y compris lorsque cela est techniquement possible des éléments supprimés ou archivés.",
     "sources": [
       "CLARUS D3.2 — Retrieval"
+    ],
+    "termes_proches": [
+      "Donnée supprimée",
+      "Carving de fichiers",
+      "Donnée reconstruite",
+      "Réparation du support"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Récupération réalisée",
+        "texte": "Nous procédons à des opérations de récupération de données à partir du support examiné."
+      },
+      {
+        "type": "Données récupérées",
+        "texte": "Les opérations techniques permettent de récupérer des données qui n'étaient pas directement accessibles par les moyens habituels."
+      },
+      {
+        "type": "Récupération partielle",
+        "texte": "Les opérations techniques ne permettent de récupérer qu'une partie des données recherchées, dans les limites précisées au présent rapport."
+      },
+      {
+        "type": "Récupération infructueuse",
+        "texte": "Les opérations de récupération mises en œuvre ne permettent pas de restituer les données recherchées."
+      },
+      {
+        "type": "Récupération techniquement impossible",
+        "texte": "L'état du support et les moyens techniques disponibles ne permettent pas de mettre en œuvre une récupération des données dans les conditions de l'examen."
+      }
     ]
   },
   {
@@ -1681,7 +1878,7 @@
     "terme": "Réparation du support",
     "anglais": "Device repair",
     "categorie": "Procédure d’examen forensique",
-    "definition": "Intervention matérielle limitée réalisée sur un support numérique afin de restaurer temporairement ou suffisamment son fonctionnement pour permettre les opérations techniques d’examen ou d’extraction.",
+    "definition": "Intervention technique réalisée sur un équipement ou un support numérique présentant un dysfonctionnement ou une dégradation, afin de rétablir tout ou partie de son fonctionnement et de permettre les opérations d'examen ou d'acquisition des données. L'intervention peut être temporaire ou limitée aux fonctions nécessaires à l'examen. Elle doit être documentée, notamment lorsqu'elle est susceptible de modifier l'état matériel ou les données du support.",
     "synonymes": [
       "Réparation sommaire",
       "Remise en état du support"
@@ -1702,7 +1899,28 @@
       {
         "type": "Réparation insuffisante",
         "texte": "L’état du support ne permet pas une remise en fonctionnement suffisante pour procéder aux opérations d’extraction."
+      },
+      {
+        "type": "Remise en fonctionnement partielle",
+        "texte": "L'intervention technique permet de rétablir partiellement le fonctionnement du support, autorisant certaines opérations d'examen sans garantir l'accès à l'ensemble des données."
+      },
+      {
+        "type": "Intervention non réalisée",
+        "texte": "Compte tenu de l'état du support et des risques susceptibles d'affecter les données, aucune intervention de réparation n'est réalisée dans les conditions de l'examen."
+      },
+      {
+        "type": "Traçabilité de l'intervention",
+        "texte": "Les opérations réalisées sur le support, ainsi que les éventuelles modifications de son état, sont documentées au présent rapport."
+      },
+      {
+        "type": "Intervention nécessitant un service spécialisé",
+        "texte": "Nos moyens techniques ne permettent pas de procéder à la remise en fonctionnement du support. Une intervention par un service spécialisé serait nécessaire pour envisager la récupération des données."
       }
+    ],
+    "termes_proches": [
+      "État du support",
+      "Acquisition forensique",
+      "Récupération de données"
     ]
   },
   {
@@ -1959,16 +2177,38 @@
     "terme": "Support numérique",
     "anglais": "Digital media / Media",
     "categorie": "Équipement numérique",
-    "definition": "Équipement, matériau ou système utilisé pour stocker, enregistrer ou transmettre des informations numériques et susceptible d’être rencontré lors d’une investigation.",
+    "definition": "Équipement ou support physique susceptible de contenir, d'enregistrer ou de permettre l'accès à des données numériques dans le cadre d'un examen technique. Les supports de stockage constituent une catégorie particulière de supports numériques, destinée à conserver des données de manière temporaire ou permanente. La nature du support, ses interfaces et son état peuvent conditionner les possibilités d'acquisition et d'analyse.",
     "synonymes": [
       "Média numérique",
-      "Support de données"
+      "Support de données",
+      "Support de stockage",
+      "Média de stockage"
     ],
     "termes_deconseilles": [],
     "exemple_rapport": "Le support numérique est pris en charge en vue de son acquisition et de son analyse.",
     "sources": [
       "CLARUS D3.2 — Media",
       "CLARUS D3.2 — Digital media"
+    ],
+    "termes_proches": [
+      "Disque dur",
+      "Clé USB",
+      "Stockage de données",
+      "Source de données"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Prise en charge du support",
+        "texte": "Nous prenons en charge le support numérique désigné au présent rapport afin de procéder aux opérations techniques demandées."
+      },
+      {
+        "type": "Identification du support de stockage",
+        "texte": "Nous procédons à l'identification et à la documentation des caractéristiques du support de stockage examiné."
+      },
+      {
+        "type": "Limites techniques",
+        "texte": "Les caractéristiques ou l'état du support limitent les possibilités d'accès aux données dans les conditions de l'examen."
+      }
     ]
   },
   {
@@ -1981,10 +2221,14 @@
       "Média de stockage"
     ],
     "termes_deconseilles": [],
-    "exemple_rapport": "Le support de stockage est identifié, documenté et examiné selon les procédures applicables.",
     "sources": [
       "CLARUS D3.2 — Storage media"
-    ]
+    ],
+    "renvoi_principal": "support-numerique",
+    "termes_proches": [
+      "Support numérique"
+    ],
+    "formulations_rapport": []
   },
   {
     "id": "systeme-exploitation",
@@ -2088,7 +2332,7 @@
     "terme": "Valeur de hachage",
     "anglais": "Hash value",
     "categorie": "Preuve numérique",
-    "definition": "Valeur obtenue par l’application d’une fonction de hachage à un ensemble de données. La comparaison de valeurs de hachage permet notamment de vérifier qu’une copie n’a pas été modifiée par rapport à la donnée de référence.",
+    "definition": "Valeur produite par une fonction de hachage appliquée à des données numériques. Voir « Hachage et empreinte numérique » pour les formulations de rapport.",
     "synonymes": [
       "Empreinte numérique",
       "Hash"
@@ -2096,27 +2340,17 @@
     "termes_deconseilles": [
       "Checksum cryptographique"
     ],
-    "exemple_rapport": "Les valeurs de hachage calculées avant et après l’opération sont identiques, ce qui permet de vérifier l’intégrité de la copie.",
     "sources": [
       "CLARUS D3.2 — Hash/Hashing"
     ],
-    "formulations_rapport": [
-      {
-        "type": "Calcul de l’empreinte",
-        "texte": "Nous calculons la valeur de hachage SHA-256 du fichier afin d’en disposer comme empreinte de référence."
-      },
-      {
-        "type": "Remise avec empreinte",
-        "texte": "Les fichiers remis sont accompagnés de leur valeur de hachage SHA-256."
-      },
-      {
-        "type": "Valeurs concordantes",
-        "texte": "Les valeurs de hachage calculées sont identiques, permettant de vérifier l’intégrité des données comparées."
-      }
-    ],
+    "formulations_rapport": [],
     "points_attention": [
       "Une valeur de hachage permet de comparer l’intégrité de données, mais ne décrit pas leur contenu.",
       "L’algorithme utilisé doit être identifié dans le rapport ou la documentation technique lorsqu’il présente un intérêt pour la traçabilité."
+    ],
+    "renvoi_principal": "hachage",
+    "termes_proches": [
+      "Hachage et empreinte numérique"
     ]
   },
   {
