@@ -595,9 +595,9 @@ def _normalize(value):
     return value.casefold().strip()
 
 
-def _format_entry(e, warning=None):
+def _format_entry(e, warning=None, entries=None):
     syn = ", ".join(e.get("synonymes", [])) or "—"
-    bad = ", ".join(_bad_terms(e)) or "—"
+    nearby = _nearby_help(e, entries if entries is not None else _load_data()) or "—"
     prefix = ""
     if warning:
         prefix = (
@@ -611,7 +611,8 @@ def _format_entry(e, warning=None):
         + f"{e['terme']}\n"
         + f"Anglais : {e.get('anglais', '—')}\n"
         + f"Catégorie : {_entry_category(e)}\n"
-        + f"Synonymes : {syn}\n\n"
+        + f"Synonymes : {syn}\n"
+        + f"Termes proches : {nearby}\n\n"
         + f"DÉFINITION\n{e.get('definition', '')}\n\n"
         + "FORMULATIONS POUR RAPPORT\n"
     )
@@ -781,7 +782,6 @@ class DialogListener(
         self.status_label = status_label
         self.insert_button = insert_button
         self.category_box = category_box
-        self.nearby_button = dialog.getControl("btnNearby")
         self.data = data
         self.categories = _available_categories(data)
         self.current_category = None
@@ -819,11 +819,8 @@ class DialogListener(
         self.refresh()
 
     def _display_entry(self, entry):
-        text, ranges = _format_entry(entry)
+        text, ranges = _format_entry(entry, entries=self.data)
         self.detail_box.Text = text
-        help_text = _nearby_help(entry, self.data)
-        self.nearby_button.getModel().HelpText = help_text or "Aucun terme proche renseigné"
-        self.nearby_button.getModel().Enabled = bool(help_text)
         self.formulation_ranges = ranges
         self.selected_formulation_index = 0
         if ranges:
@@ -3761,13 +3758,6 @@ def open_lexicon(*args):
         ReadOnly=True,
         VScroll=True,
         HideInactiveSelection=False,
-    )
-    add(
-        "btnNearby",
-        "com.sun.star.awt.UnoControlButtonModel",
-        118, 288, 90, 16,
-        Label="Termes proches ⓘ",
-        HelpText="Survolez pour consulter les nuances",
     )
     add(
         "btnInsert",
