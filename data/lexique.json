@@ -603,6 +603,89 @@
     ]
   },
   {
+    "id": "extraction-logique",
+    "terme": "Extraction logique",
+    "anglais": "Logical extraction",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Méthode d’extraction obtenant les données accessibles par les interfaces logiques du système, de l’application ou du protocole utilisé.",
+    "synonymes": [
+      "Acquisition logique"
+    ],
+    "termes_deconseilles": [],
+    "points_attention": [
+      "Une extraction logique ne restitue pas nécessairement l’ensemble des données présentes sur le support.",
+      "Le contenu obtenu dépend notamment de l’état du support, du niveau d’accès et des interfaces disponibles."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Extraction logique réalisée",
+        "texte": "Nous procédons à une extraction logique des données accessibles du support."
+      },
+      {
+        "type": "Extraction logique partielle",
+        "texte": "Nos moyens techniques ne permettent d’obtenir qu’une extraction logique partielle des données du support."
+      },
+      {
+        "type": "Échec de l’extraction logique",
+        "texte": "La tentative d’extraction logique des données du support échoue."
+      }
+    ],
+    "sources": [
+      "Lexique forensique FR — usage professionnel"
+    ],
+    "renvois": [
+      {
+        "id": "extraction",
+        "nuance": "L’extraction logique est une forme d’extraction, limitée aux données accessibles par les interfaces et mécanismes utilisés."
+      }
+    ],
+    "termes_proches": [
+      "Extraction"
+    ]
+  },
+  {
+    "id": "extraction-physique",
+    "terme": "Extraction physique",
+    "anglais": "Physical extraction / Physical acquisition",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Opération technique consistant à réaliser une copie bit à bit des données d'un support de stockage physique, afin d'en obtenir une représentation fidèle, indépendante de l'organisation logique des fichiers. Elle peut notamment comprendre les espaces non alloués et les données résiduelles accessibles. La fidélité et l'exhaustivité de la copie s'apprécient au regard du périmètre effectivement acquis et des contrôles d'intégrité réalisés.",
+    "synonymes": [
+      "Acquisition physique",
+      "Copie physique bit à bit"
+    ],
+    "termes_deconseilles": [],
+    "termes_proches": [
+      "Extraction",
+      "Acquisition forensique",
+      "Extraction logique",
+      "Extraction du système de fichiers",
+      "Copie forensique"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Extraction physique réalisée",
+        "texte": "Nous procédons à une extraction physique du support, permettant d'obtenir une copie bit à bit des données contenues dans le périmètre acquis."
+      },
+      {
+        "type": "Extraction physique partielle",
+        "texte": "Nous procédons à une extraction physique partielle du support, limitée aux zones de stockage techniquement accessibles."
+      },
+      {
+        "type": "Extraction physique impossible",
+        "texte": "Les conditions techniques rencontrées ne nous permettent pas de réaliser une extraction physique des données du support."
+      },
+      {
+        "type": "Extraction physique de données chiffrées",
+        "texte": "Nous procédons à une extraction physique du support. Les données obtenues sont conservées sous leur forme chiffrée, leur déchiffrement et leur exploitation faisant l'objet d'opérations distinctes."
+      }
+    ],
+    "sources": [
+      "SWGDE — Best Practices for Computer Forensic Acquisition (17-F-002)",
+      "SWGDE — Mobile Device Evidence Collection, Preservation, Handling and Acquisition (18-F-003)",
+      "NIST SP 800-86 — Guide to Integrating Forensic Techniques into Incident Response"
+    ]
+  },
+  {
     "id": "extraction-systeme-fichiers",
     "terme": "Extraction du système de fichiers",
     "anglais": "File system extraction",
@@ -645,44 +728,19 @@
     ]
   },
   {
-    "id": "extraction-logique",
-    "terme": "Extraction logique",
-    "anglais": "Logical extraction",
-    "categorie": "Méthode de criminalistique numérique",
-    "definition": "Méthode d’extraction obtenant les données accessibles par les interfaces logiques du système, de l’application ou du protocole utilisé.",
+    "id": "fai",
+    "terme": "Fournisseur d’accès à Internet",
+    "anglais": "Internet Service Provider (ISP)",
+    "categorie": "Technologie numérique",
+    "definition": "Entreprise fournissant une connectivité Internet à ses utilisateurs et susceptible de conserver des journaux relatifs notamment aux dates, heures et abonnés auxquels des adresses IP ont été attribuées.",
     "synonymes": [
-      "Acquisition logique"
+      "FAI",
+      "ISP"
     ],
     "termes_deconseilles": [],
-    "points_attention": [
-      "Une extraction logique ne restitue pas nécessairement l’ensemble des données présentes sur le support.",
-      "Le contenu obtenu dépend notamment de l’état du support, du niveau d’accès et des interfaces disponibles."
-    ],
-    "formulations_rapport": [
-      {
-        "type": "Extraction logique réalisée",
-        "texte": "Nous procédons à une extraction logique des données accessibles du support."
-      },
-      {
-        "type": "Extraction logique partielle",
-        "texte": "Nos moyens techniques ne permettent d’obtenir qu’une extraction logique partielle des données du support."
-      },
-      {
-        "type": "Échec de l’extraction logique",
-        "texte": "La tentative d’extraction logique des données du support échoue."
-      }
-    ],
+    "exemple_rapport": "L’attribution de l’adresse IP peut nécessiter l’exploitation des informations conservées par le fournisseur d’accès à Internet.",
     "sources": [
-      "Lexique forensique FR — usage professionnel"
-    ],
-    "renvois": [
-      {
-        "id": "extraction",
-        "nuance": "L’extraction logique est une forme d’extraction, limitée aux données accessibles par les interfaces et mécanismes utilisés."
-      }
-    ],
-    "termes_proches": [
-      "Extraction"
+      "CLARUS D3.2 — ISP"
     ]
   },
   {
@@ -735,22 +793,6 @@
     "exemple_rapport": "Une tentative d'accès par force brute peut être mise en œuvre lorsque le cadre technique et juridique le permet.",
     "sources": [
       "CLARUS D3.2"
-    ]
-  },
-  {
-    "id": "fai",
-    "terme": "Fournisseur d’accès à Internet",
-    "anglais": "Internet Service Provider (ISP)",
-    "categorie": "Technologie numérique",
-    "definition": "Entreprise fournissant une connectivité Internet à ses utilisateurs et susceptible de conserver des journaux relatifs notamment aux dates, heures et abonnés auxquels des adresses IP ont été attribuées.",
-    "synonymes": [
-      "FAI",
-      "ISP"
-    ],
-    "termes_deconseilles": [],
-    "exemple_rapport": "L’attribution de l’adresse IP peut nécessiter l’exploitation des informations conservées par le fournisseur d’accès à Internet.",
-    "sources": [
-      "CLARUS D3.2 — ISP"
     ]
   },
   {
@@ -1551,21 +1593,6 @@
     ]
   },
   {
-    "id": "support-stockage",
-    "terme": "Support de stockage",
-    "anglais": "Storage media",
-    "categorie": "Équipement numérique",
-    "definition": "Équipement ou matériau utilisé pour stocker des données numériques. La notion peut également inclure, dans le contexte décrit par CLARUS, des données stockées à distance et accessibles au moyen d’un équipement soumis à examen.",
-    "synonymes": [
-      "Média de stockage"
-    ],
-    "termes_deconseilles": [],
-    "exemple_rapport": "Le support de stockage est identifié, documenté et examiné selon les procédures applicables.",
-    "sources": [
-      "CLARUS D3.2 — Storage media"
-    ]
-  },
-  {
     "id": "support-numerique",
     "terme": "Support numérique",
     "anglais": "Digital media / Media",
@@ -1580,6 +1607,21 @@
     "sources": [
       "CLARUS D3.2 — Media",
       "CLARUS D3.2 — Digital media"
+    ]
+  },
+  {
+    "id": "support-stockage",
+    "terme": "Support de stockage",
+    "anglais": "Storage media",
+    "categorie": "Équipement numérique",
+    "definition": "Équipement ou matériau utilisé pour stocker des données numériques. La notion peut également inclure, dans le contexte décrit par CLARUS, des données stockées à distance et accessibles au moyen d’un équipement soumis à examen.",
+    "synonymes": [
+      "Média de stockage"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "Le support de stockage est identifié, documenté et examiné selon les procédures applicables.",
+    "sources": [
+      "CLARUS D3.2 — Storage media"
     ]
   },
   {
