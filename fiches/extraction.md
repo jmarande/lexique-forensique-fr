@@ -1,6 +1,8 @@
 # Extraction
 
-**Catégorie :** Méthode de criminalistique numérique
+**Classification :** 🔬 Méthodologie forensique → Acquisition et extraction
+
+**Domaines d’application :** Informatique, Téléphonie
 
 **Équivalent anglais :** Extract
 

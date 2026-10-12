@@ -1,6 +1,6 @@
 # Force brute
 
-**Catégorie :** Méthode de criminalistique numérique
+**Classification :** 🔬 Méthodologie forensique → Accès et authentification
 
 **Équivalent anglais :** Brute force
 

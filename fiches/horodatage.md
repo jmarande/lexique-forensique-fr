@@ -1,6 +1,6 @@
 # Horodatage
 
-**Catégorie :** Preuve numérique
+**Classification :** 🧩 Données et traces → Formats et métadonnées
 
 **Équivalent anglais :** Timestamp
 

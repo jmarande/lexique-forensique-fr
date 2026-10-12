@@ -1,6 +1,6 @@
 # Journaux système
 
-**Catégorie :** Preuve numérique
+**Classification :** 💻 Informatique → Systèmes d’exploitation et fichiers
 
 **Équivalent anglais :** Logs / Log files
 

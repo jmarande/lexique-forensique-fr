@@ -1,6 +1,6 @@
 # Fournisseur d’accès à Internet
 
-**Catégorie :** Technologie numérique
+**Classification :** 🌐 Réseaux → Adressage et communications
 
 **Équivalent anglais :** Internet Service Provider (ISP)
 

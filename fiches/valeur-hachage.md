@@ -1,6 +1,6 @@
 # Valeur de hachage
 
-**Catégorie :** Preuve numérique
+**Classification :** 🧩 Données et traces → Hachage et cryptographie
 
 **Équivalent anglais :** Hash value
 

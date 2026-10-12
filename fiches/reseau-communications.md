@@ -1,6 +1,6 @@
 # Réseau de communications
 
-**Catégorie :** Technologie numérique
+**Classification :** 🌐 Réseaux → Adressage et communications
 
 **Équivalent anglais :** Communications network
 

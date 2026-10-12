@@ -1,6 +1,6 @@
 # Réseau sans fil
 
-**Catégorie :** Technologie numérique
+**Classification :** 🌐 Réseaux → Adressage et communications
 
 **Équivalent anglais :** Wireless network
 

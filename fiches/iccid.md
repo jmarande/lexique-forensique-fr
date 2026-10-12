@@ -1,6 +1,6 @@
 # ICCID
 
-**Catégorie :** Preuve numérique
+**Classification :** 📱 Téléphonie mobile → SIM et identifiants
 
 **Équivalent anglais :** Integrated Circuit Card Identifier (ICCID)
 

@@ -1,6 +1,6 @@
 # EXIF
 
-**Catégorie :** Preuve numérique
+**Classification :** 🧩 Données et traces → Formats et métadonnées
 
 **Équivalent anglais :** Exchangeable Image File Format (EXIF)
 

@@ -1,6 +1,6 @@
 # Chiffrement
 
-**Catégorie :** Cryptographie
+**Classification :** 🧩 Données et traces → Hachage et cryptographie
 
 **Équivalent anglais :** Encryption / Encrypted
 

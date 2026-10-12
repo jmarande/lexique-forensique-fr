@@ -1,6 +1,6 @@
 # IMEI
 
-**Catégorie :** Preuve numérique
+**Classification :** 📱 Téléphonie mobile → SIM et identifiants
 
 **Équivalent anglais :** International Mobile Equipment Identity (IMEI)
 

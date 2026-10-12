@@ -1,6 +1,6 @@
 # Artefact forensique
 
-**Catégorie :** Preuve numérique
+**Classification :** 🧩 Données et traces → Preuves et traces numériques
 
 **Équivalent anglais :** Forensic artifact
 

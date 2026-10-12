@@ -1,6 +1,6 @@
 # Stockage de données
 
-**Catégorie :** Technologie numérique
+**Classification :** 💾 Équipements et supports → Supports et stockage
 
 **Équivalent anglais :** Data storage
 

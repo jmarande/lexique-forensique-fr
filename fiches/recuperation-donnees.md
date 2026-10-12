@@ -1,6 +1,6 @@
 # Récupération de données
 
-**Catégorie :** Méthode de criminalistique numérique
+**Classification :** 🔬 Méthodologie forensique → Acquisition et extraction
 
 **Équivalent anglais :** Retrieval / Data recovery
 

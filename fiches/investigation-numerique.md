@@ -1,6 +1,6 @@
 # Investigation numérique
 
-**Catégorie :** Méthode de criminalistique numérique
+**Classification :** 🔬 Méthodologie forensique → Examen et analyse
 
 **Équivalent anglais :** Digital investigation
 

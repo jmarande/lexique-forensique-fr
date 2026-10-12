@@ -1,6 +1,6 @@
 # État du support
 
-**Catégorie :** Procédure d’examen forensique
+**Classification :** 🔬 Méthodologie forensique → Préservation et traçabilité
 
 **Équivalent anglais :** Device condition / State of the device
 

@@ -1,6 +1,6 @@
 # Analyse des données
 
-**Catégorie :** Procédure d’examen forensique
+**Classification :** 🔬 Méthodologie forensique → Examen et analyse
 
 **Équivalent anglais :** Data analysis
 

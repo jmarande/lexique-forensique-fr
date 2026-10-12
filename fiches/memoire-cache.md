@@ -1,6 +1,6 @@
 # Mémoire cache
 
-**Catégorie :** Preuve numérique
+**Classification :** 💻 Informatique → Systèmes d’exploitation et fichiers
 
 **Équivalent anglais :** Cache memory
 

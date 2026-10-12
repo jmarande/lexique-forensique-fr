@@ -1,6 +1,6 @@
 # Décodage des données
 
-**Catégorie :** Méthode de criminalistique numérique
+**Classification :** 🔬 Méthodologie forensique → Examen et analyse
 
 **Équivalent anglais :** Data decoding
 

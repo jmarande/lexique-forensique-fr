@@ -1,6 +1,6 @@
 # Système de fichiers
 
-**Catégorie :** Technologie numérique
+**Classification :** 💻 Informatique → Systèmes d’exploitation et fichiers
 
 **Équivalent anglais :** File system
 

@@ -1,6 +1,6 @@
 # Copie forensique
 
-**Catégorie :** Méthode de criminalistique numérique
+**Classification :** 🔬 Méthodologie forensique → Acquisition et extraction
 
 **Équivalent anglais :** Forensic copy / Forensic image
 

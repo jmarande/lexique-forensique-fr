@@ -1,6 +1,6 @@
 # Scellé
 
-**Catégorie :** Procédure d’examen forensique
+**Classification :** 🔬 Méthodologie forensique → Préservation et traçabilité
 
 **Équivalent anglais :** Evidence seal / Sealed evidence
 

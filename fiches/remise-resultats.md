@@ -1,6 +1,6 @@
 # Remise des résultats
 
-**Catégorie :** Procédure d’examen forensique
+**Classification :** 🔬 Méthodologie forensique → Préservation et traçabilité
 
 **Équivalent anglais :** Delivery of results
 

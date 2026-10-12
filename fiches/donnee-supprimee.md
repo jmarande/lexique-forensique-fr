@@ -1,6 +1,6 @@
 # Donnée supprimée
 
-**Catégorie :** Preuve numérique
+**Classification :** 🧩 Données et traces → Preuves et traces numériques
 
 **Équivalent anglais :** Deleted data
 

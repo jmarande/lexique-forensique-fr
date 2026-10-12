@@ -1,6 +1,6 @@
 # Clé USB
 
-**Catégorie :** Équipement numérique
+**Classification :** 💾 Équipements et supports → Supports et stockage
 
 **Équivalent anglais :** USB stick
 

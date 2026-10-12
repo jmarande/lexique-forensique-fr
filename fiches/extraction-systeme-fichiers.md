@@ -1,6 +1,6 @@
 # Extraction du système de fichiers
 
-**Catégorie :** Méthode de criminalistique numérique
+**Classification :** 🔬 Méthodologie forensique → Acquisition et extraction
 
 **Équivalent anglais :** File system extraction
 

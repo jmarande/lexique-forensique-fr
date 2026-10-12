@@ -1,6 +1,6 @@
 # Extraction logique
 
-**Catégorie :** Méthode de criminalistique numérique
+**Classification :** 🔬 Méthodologie forensique → Acquisition et extraction
 
 **Équivalent anglais :** Logical extraction
 

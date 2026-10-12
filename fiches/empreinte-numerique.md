@@ -1,6 +1,6 @@
 # Empreinte numérique
 
-**Catégorie :** Méthode de criminalistique numérique
+**Classification :** 🧩 Données et traces → Hachage et cryptographie
 
 **Équivalent anglais :** Digital fingerprint
 

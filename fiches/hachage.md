@@ -1,6 +1,6 @@
 # Hachage
 
-**Catégorie :** Méthode de criminalistique numérique
+**Classification :** 🧩 Données et traces → Hachage et cryptographie
 
 **Équivalent anglais :** Hash / Hashing
 

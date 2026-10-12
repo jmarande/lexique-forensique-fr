@@ -1,6 +1,8 @@
 # Snapchat
 
-**Catégorie :** Application — Messagerie et réseau social
+**Classification :** 💬 Applications → Messageries et réseaux sociaux
+
+**Domaines d’application :** Téléphonie, Informatique
 
 **Équivalent anglais :** Snapchat
 

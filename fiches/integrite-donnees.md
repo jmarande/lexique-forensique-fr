@@ -1,6 +1,6 @@
 # Intégrité des données
 
-**Catégorie :** Principe de criminalistique numérique
+**Classification :** 🔬 Méthodologie forensique → Préservation et traçabilité
 
 **Équivalent anglais :** Data integrity / Evidence integrity
 

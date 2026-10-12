@@ -1,6 +1,6 @@
 # Adresse IP
 
-**Catégorie :** Technologie numérique
+**Classification :** 🌐 Réseaux → Adressage et communications
 
 **Équivalent anglais :** IP address
 

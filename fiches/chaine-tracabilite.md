@@ -1,6 +1,6 @@
 # Chaîne de traçabilité
 
-**Catégorie :** Méthode de criminalistique numérique
+**Classification :** 🔬 Méthodologie forensique → Préservation et traçabilité
 
 **Équivalent anglais :** Chain of custody
 

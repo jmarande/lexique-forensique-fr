@@ -1,6 +1,6 @@
 # Mode avion
 
-**Catégorie :** Méthode de criminalistique numérique
+**Classification :** 📱 Téléphonie mobile → Connectivité
 
 **Équivalent anglais :** Airplane mode
 

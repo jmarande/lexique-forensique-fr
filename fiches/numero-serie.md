@@ -1,6 +1,6 @@
 # Numéro de série
 
-**Catégorie :** Preuve numérique
+**Classification :** 📱 Téléphonie mobile → SIM et identifiants
 
 **Équivalent anglais :** Serial number
 

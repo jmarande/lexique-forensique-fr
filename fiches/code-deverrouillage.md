@@ -1,6 +1,6 @@
 # Code de déverrouillage
 
-**Catégorie :** Procédure d’examen forensique
+**Classification :** 🔬 Méthodologie forensique → Accès et authentification
 
 **Équivalent anglais :** Device passcode / Unlock code
 

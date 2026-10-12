@@ -1,6 +1,6 @@
 # Source de données
 
-**Catégorie :** Preuve numérique
+**Classification :** 🧩 Données et traces → Preuves et traces numériques
 
 **Équivalent anglais :** Data source
 

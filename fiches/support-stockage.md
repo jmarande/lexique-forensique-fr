@@ -1,6 +1,6 @@
 # Support de stockage
 
-**Catégorie :** Équipement numérique
+**Classification :** 💾 Équipements et supports → Supports et stockage
 
 **Équivalent anglais :** Storage media
 
