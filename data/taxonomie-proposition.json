@@ -1,0 +1,544 @@
+{
+  "version": 1,
+  "regle": "Une classification principale obligatoire ; domaines transversaux optionnels. Les niveaux iOS, Android, Windows, Linux, macOS ne sont pas imposés aux notions générales.",
+  "familles": [
+    {
+      "id": "methodologie",
+      "label": "Méthodologie forensique",
+      "sous_categories": [
+        {
+          "id": "acquisition-extraction",
+          "label": "Acquisition et extraction"
+        },
+        {
+          "id": "examen-analyse",
+          "label": "Examen et analyse"
+        },
+        {
+          "id": "preservation-tracabilite",
+          "label": "Préservation et traçabilité"
+        },
+        {
+          "id": "techniques-acces",
+          "label": "Accès et authentification"
+        }
+      ]
+    },
+    {
+      "id": "donnees",
+      "label": "Données et traces",
+      "sous_categories": [
+        {
+          "id": "preuves-traces",
+          "label": "Preuves et traces numériques"
+        },
+        {
+          "id": "formats-metadonnees",
+          "label": "Formats et métadonnées"
+        },
+        {
+          "id": "integrite-cryptographie",
+          "label": "Hachage et cryptographie"
+        }
+      ]
+    },
+    {
+      "id": "materiel",
+      "label": "Équipements et supports",
+      "sous_categories": [
+        {
+          "id": "supports-stockage",
+          "label": "Supports et stockage"
+        }
+      ]
+    },
+    {
+      "id": "telephonie",
+      "label": "Téléphonie mobile",
+      "sous_categories": [
+        {
+          "id": "identifiants-sim",
+          "label": "SIM et identifiants"
+        },
+        {
+          "id": "connectivite",
+          "label": "Connectivité"
+        }
+      ]
+    },
+    {
+      "id": "informatique",
+      "label": "Informatique",
+      "sous_categories": [
+        {
+          "id": "systemes-fichiers",
+          "label": "Systèmes d’exploitation et fichiers"
+        }
+      ]
+    },
+    {
+      "id": "reseaux",
+      "label": "Réseaux",
+      "sous_categories": [
+        {
+          "id": "communications",
+          "label": "Adressage et communications"
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "label": "Services numériques",
+      "sous_categories": [
+        {
+          "id": "cloud",
+          "label": "Cloud"
+        }
+      ]
+    },
+    {
+      "id": "applications",
+      "label": "Applications",
+      "sous_categories": [
+        {
+          "id": "messageries",
+          "label": "Messageries et réseaux sociaux"
+        }
+      ]
+    }
+  ],
+  "domaines": [
+    {
+      "id": "telephonie",
+      "label": "Téléphonie",
+      "plateformes": [
+        "iOS",
+        "Android"
+      ]
+    },
+    {
+      "id": "informatique",
+      "label": "Informatique",
+      "plateformes": [
+        "Windows",
+        "Linux",
+        "macOS"
+      ]
+    },
+    {
+      "id": "reseaux",
+      "label": "Réseaux",
+      "plateformes": [
+        "Ethernet",
+        "Wi-Fi",
+        "Bluetooth"
+      ]
+    },
+    {
+      "id": "multiplateforme",
+      "label": "Multiplateforme",
+      "plateformes": []
+    }
+  ],
+  "classement": [
+    {
+      "id": "acquisition-forensique",
+      "classification": "methodologie/acquisition-extraction",
+      "domaines": [
+        "informatique",
+        "telephonie"
+      ],
+      "ancienne_categorie": "Méthode de criminalistique numérique"
+    },
+    {
+      "id": "adresse-ip",
+      "classification": "reseaux/communications",
+      "domaines": [],
+      "ancienne_categorie": "Technologie numérique"
+    },
+    {
+      "id": "analyse-donnees",
+      "classification": "methodologie/examen-analyse",
+      "domaines": [],
+      "ancienne_categorie": "Procédure d’examen forensique"
+    },
+    {
+      "id": "artefact-forensique",
+      "classification": "donnees/preuves-traces",
+      "domaines": [],
+      "ancienne_categorie": "Preuve numérique"
+    },
+    {
+      "id": "authentification",
+      "classification": "methodologie/techniques-acces",
+      "domaines": [],
+      "ancienne_categorie": "Méthode de criminalistique numérique"
+    },
+    {
+      "id": "base-de-donnees",
+      "classification": "donnees/formats-metadonnees",
+      "domaines": [],
+      "ancienne_categorie": "Preuve numérique"
+    },
+    {
+      "id": "carte-sim",
+      "classification": "telephonie/identifiants-sim",
+      "domaines": [],
+      "ancienne_categorie": "Preuve numérique"
+    },
+    {
+      "id": "chaine-tracabilite",
+      "classification": "methodologie/preservation-tracabilite",
+      "domaines": [],
+      "ancienne_categorie": "Méthode de criminalistique numérique"
+    },
+    {
+      "id": "chiffrement",
+      "classification": "donnees/integrite-cryptographie",
+      "domaines": [],
+      "ancienne_categorie": "Cryptographie"
+    },
+    {
+      "id": "cle-usb",
+      "classification": "materiel/supports-stockage",
+      "domaines": [],
+      "ancienne_categorie": "Équipement numérique"
+    },
+    {
+      "id": "code-deverrouillage",
+      "classification": "methodologie/techniques-acces",
+      "domaines": [],
+      "ancienne_categorie": "Procédure d’examen forensique"
+    },
+    {
+      "id": "copie-forensique",
+      "classification": "methodologie/acquisition-extraction",
+      "domaines": [],
+      "ancienne_categorie": "Méthode de criminalistique numérique"
+    },
+    {
+      "id": "criminalistique-numerique",
+      "classification": "methodologie/examen-analyse",
+      "domaines": [],
+      "ancienne_categorie": "Méthode de criminalistique numérique"
+    },
+    {
+      "id": "decodage-donnees",
+      "classification": "methodologie/examen-analyse",
+      "domaines": [],
+      "ancienne_categorie": "Méthode de criminalistique numérique"
+    },
+    {
+      "id": "disque-dur",
+      "classification": "materiel/supports-stockage",
+      "domaines": [],
+      "ancienne_categorie": "Équipement numérique"
+    },
+    {
+      "id": "donnee-reconstruite",
+      "classification": "donnees/preuves-traces",
+      "domaines": [],
+      "ancienne_categorie": "Preuve numérique"
+    },
+    {
+      "id": "donnee-supprimee",
+      "classification": "donnees/preuves-traces",
+      "domaines": [],
+      "ancienne_categorie": "Preuve numérique"
+    },
+    {
+      "id": "donnees-numeriques",
+      "classification": "donnees/preuves-traces",
+      "domaines": [],
+      "ancienne_categorie": "Preuve numérique"
+    },
+    {
+      "id": "dossier",
+      "classification": "donnees/formats-metadonnees",
+      "domaines": [],
+      "ancienne_categorie": "Preuve numérique"
+    },
+    {
+      "id": "empreinte-numerique",
+      "classification": "donnees/integrite-cryptographie",
+      "domaines": [],
+      "ancienne_categorie": "Méthode de criminalistique numérique"
+    },
+    {
+      "id": "etat-support",
+      "classification": "methodologie/preservation-tracabilite",
+      "domaines": [],
+      "ancienne_categorie": "Procédure d’examen forensique"
+    },
+    {
+      "id": "exif",
+      "classification": "donnees/formats-metadonnees",
+      "domaines": [],
+      "ancienne_categorie": "Preuve numérique"
+    },
+    {
+      "id": "extraction",
+      "classification": "methodologie/acquisition-extraction",
+      "domaines": [
+        "informatique",
+        "telephonie"
+      ],
+      "ancienne_categorie": "Méthode de criminalistique numérique"
+    },
+    {
+      "id": "extraction-systeme-fichiers",
+      "classification": "methodologie/acquisition-extraction",
+      "domaines": [],
+      "ancienne_categorie": "Méthode de criminalistique numérique"
+    },
+    {
+      "id": "extraction-logique",
+      "classification": "methodologie/acquisition-extraction",
+      "domaines": [],
+      "ancienne_categorie": "Méthode de criminalistique numérique"
+    },
+    {
+      "id": "fichier-multimedia",
+      "classification": "donnees/formats-metadonnees",
+      "domaines": [],
+      "ancienne_categorie": "Preuve numérique"
+    },
+    {
+      "id": "force-brute",
+      "classification": "methodologie/techniques-acces",
+      "domaines": [],
+      "ancienne_categorie": "Méthode de criminalistique numérique"
+    },
+    {
+      "id": "fai",
+      "classification": "reseaux/communications",
+      "domaines": [],
+      "ancienne_categorie": "Technologie numérique"
+    },
+    {
+      "id": "hachage",
+      "classification": "donnees/integrite-cryptographie",
+      "domaines": [],
+      "ancienne_categorie": "Méthode de criminalistique numérique"
+    },
+    {
+      "id": "horodatage",
+      "classification": "donnees/formats-metadonnees",
+      "domaines": [],
+      "ancienne_categorie": "Preuve numérique"
+    },
+    {
+      "id": "iccid",
+      "classification": "telephonie/identifiants-sim",
+      "domaines": [],
+      "ancienne_categorie": "Preuve numérique"
+    },
+    {
+      "id": "imei",
+      "classification": "telephonie/identifiants-sim",
+      "domaines": [],
+      "ancienne_categorie": "Preuve numérique"
+    },
+    {
+      "id": "instagram-direct",
+      "classification": "applications/messageries",
+      "domaines": [],
+      "ancienne_categorie": "Application — Messagerie et réseau social"
+    },
+    {
+      "id": "integrite-donnees",
+      "classification": "methodologie/preservation-tracabilite",
+      "domaines": [],
+      "ancienne_categorie": "Principe de criminalistique numérique"
+    },
+    {
+      "id": "investigation-numerique",
+      "classification": "methodologie/examen-analyse",
+      "domaines": [],
+      "ancienne_categorie": "Méthode de criminalistique numérique"
+    },
+    {
+      "id": "journaux-systeme",
+      "classification": "informatique/systemes-fichiers",
+      "domaines": [],
+      "ancienne_categorie": "Preuve numérique"
+    },
+    {
+      "id": "memoire",
+      "classification": "materiel/supports-stockage",
+      "domaines": [],
+      "ancienne_categorie": "Équipement numérique"
+    },
+    {
+      "id": "memoire-cache",
+      "classification": "informatique/systemes-fichiers",
+      "domaines": [],
+      "ancienne_categorie": "Preuve numérique"
+    },
+    {
+      "id": "messages-apple",
+      "classification": "applications/messageries",
+      "domaines": [],
+      "ancienne_categorie": "Application — Messagerie"
+    },
+    {
+      "id": "messenger",
+      "classification": "applications/messageries",
+      "domaines": [],
+      "ancienne_categorie": "Application — Messagerie"
+    },
+    {
+      "id": "metadonnees",
+      "classification": "donnees/formats-metadonnees",
+      "domaines": [],
+      "ancienne_categorie": "Preuve numérique"
+    },
+    {
+      "id": "mode-avion",
+      "classification": "telephonie/connectivite",
+      "domaines": [],
+      "ancienne_categorie": "Méthode de criminalistique numérique"
+    },
+    {
+      "id": "msisdn",
+      "classification": "telephonie/identifiants-sim",
+      "domaines": [],
+      "ancienne_categorie": "Preuve numérique"
+    },
+    {
+      "id": "numero-serie",
+      "classification": "telephonie/identifiants-sim",
+      "domaines": [],
+      "ancienne_categorie": "Preuve numérique"
+    },
+    {
+      "id": "preuve-numerique",
+      "classification": "donnees/preuves-traces",
+      "domaines": [],
+      "ancienne_categorie": "Preuve numérique"
+    },
+    {
+      "id": "recuperation-donnees",
+      "classification": "methodologie/acquisition-extraction",
+      "domaines": [],
+      "ancienne_categorie": "Méthode de criminalistique numérique"
+    },
+    {
+      "id": "remise-resultats",
+      "classification": "methodologie/preservation-tracabilite",
+      "domaines": [],
+      "ancienne_categorie": "Procédure d’examen forensique"
+    },
+    {
+      "id": "reparation-support",
+      "classification": "methodologie/preservation-tracabilite",
+      "domaines": [],
+      "ancienne_categorie": "Procédure d’examen forensique"
+    },
+    {
+      "id": "reseau-communications",
+      "classification": "reseaux/communications",
+      "domaines": [],
+      "ancienne_categorie": "Technologie numérique"
+    },
+    {
+      "id": "reseau-sans-fil",
+      "classification": "reseaux/communications",
+      "domaines": [],
+      "ancienne_categorie": "Technologie numérique"
+    },
+    {
+      "id": "scelle",
+      "classification": "methodologie/preservation-tracabilite",
+      "domaines": [],
+      "ancienne_categorie": "Procédure d’examen forensique"
+    },
+    {
+      "id": "signal",
+      "classification": "applications/messageries",
+      "domaines": [
+        "telephonie",
+        "informatique"
+      ],
+      "ancienne_categorie": "Application — Messagerie"
+    },
+    {
+      "id": "snapchat",
+      "classification": "applications/messageries",
+      "domaines": [
+        "telephonie",
+        "informatique"
+      ],
+      "ancienne_categorie": "Application — Messagerie et réseau social"
+    },
+    {
+      "id": "source-donnees",
+      "classification": "donnees/preuves-traces",
+      "domaines": [],
+      "ancienne_categorie": "Preuve numérique"
+    },
+    {
+      "id": "stockage-cloud",
+      "classification": "services/cloud",
+      "domaines": [],
+      "ancienne_categorie": "Technologie numérique"
+    },
+    {
+      "id": "stockage-donnees",
+      "classification": "materiel/supports-stockage",
+      "domaines": [],
+      "ancienne_categorie": "Technologie numérique"
+    },
+    {
+      "id": "support-stockage",
+      "classification": "materiel/supports-stockage",
+      "domaines": [],
+      "ancienne_categorie": "Équipement numérique"
+    },
+    {
+      "id": "support-numerique",
+      "classification": "materiel/supports-stockage",
+      "domaines": [],
+      "ancienne_categorie": "Équipement numérique"
+    },
+    {
+      "id": "systeme-exploitation",
+      "classification": "informatique/systemes-fichiers",
+      "domaines": [
+        "informatique",
+        "telephonie"
+      ],
+      "ancienne_categorie": "Technologie numérique"
+    },
+    {
+      "id": "systeme-fichiers",
+      "classification": "informatique/systemes-fichiers",
+      "domaines": [],
+      "ancienne_categorie": "Technologie numérique"
+    },
+    {
+      "id": "telegram",
+      "classification": "applications/messageries",
+      "domaines": [
+        "telephonie",
+        "informatique"
+      ],
+      "ancienne_categorie": "Application — Messagerie"
+    },
+    {
+      "id": "valeur-hachage",
+      "classification": "donnees/integrite-cryptographie",
+      "domaines": [],
+      "ancienne_categorie": "Preuve numérique"
+    },
+    {
+      "id": "whatsapp",
+      "classification": "applications/messageries",
+      "domaines": [
+        "telephonie",
+        "informatique"
+      ],
+      "ancienne_categorie": "Application — Messagerie"
+    }
+  ]
+}
