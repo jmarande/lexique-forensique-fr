@@ -6,7 +6,7 @@
 
 ## Définition
 
-Méthode d’extraction obtenant les données accessibles par les interfaces logiques du système, de l’application ou du protocole utilisé.
+Opération technique consistant à récupérer des données numériques au moyen des interfaces logiques mises à disposition par un système, un équipement ou une application, sans nécessiter une copie bit à bit de l'ensemble du support physique. L'étendue des données obtenues dépend des interfaces utilisées, des autorisations d'accès et des fonctionnalités de la méthode d'extraction.
 
 ## Synonymes
 
@@ -32,6 +32,10 @@ Nos moyens techniques ne permettent d’obtenir qu’une extraction logique part
 ### Échec de l’extraction logique
 
 La tentative d’extraction logique des données du support échoue.
+
+### Limites de l'extraction logique
+
+Une extraction logique ne permet pas nécessairement d'accéder à l'ensemble des données contenues sur le support. Les résultats obtenus dépendent notamment des interfaces utilisées, des autorisations d'accès et des possibilités techniques de la méthode employée.
 
 > Ces fiches sont des documents de travail du projet : les définitions restent soumises à la revue terminologique et documentaire.
 
