@@ -16,9 +16,9 @@ Référentiel initial au 10 octobre 2026 : les ressources répertoriées servent
 | INTERPOL-DF | INTERPOL — ressources de criminalistique numérique | Intervention et méthodes forensiques | https://www.interpol.int/ | Identifier d'abord le guide exact, son édition et ses conditions |
 | ENFSI-DF | ENFSI — Best Practice Manuals | Qualité et pratiques forensiques | https://enfsi.eu/documents/best-practice-manuals/ | Identifier l'édition exacte avant de s'en servir pour valider une fiche |
 
-## Précisions bibliographiques et de provenance
+## Notices bibliographiques et de provenance
 
-CLARUS D3.2 est traité comme toute autre référence du tableau, sans statut privilégié. Pour la notice bibliographique : projet Horizon Europe n° 101121182 ; livrable *A searchable web-based common lexicon*, auteurs indiqués Duygu Candarli et James Balfour, révision 1 remise le 18 novembre 2025 ; [lexique en ligne](https://clarus-lexicon.arg.tech/) et [PDF](https://clarus-lexicon.arg.tech/static/files/full-lexicon.pdf). La mention « CLARUS D3.2 » dans une fiche désigne une source déclarée, non une validation du projet ni une licence de reproduction. Pour les conditions de réutilisation, voir le tableau commun ci-dessous. Les fiches doivent être confrontées aux autres références disponibles, sans présumer leur conformité documentaire ou juridique.
+Pour CLARUS D3.2 : projet Horizon Europe n° 101121182 ; livrable *A searchable web-based common lexicon*, auteurs indiqués Duygu Candarli et James Balfour, révision 1 remise le 18 novembre 2025 ; [lexique en ligne](https://clarus-lexicon.arg.tech/) et [PDF](https://clarus-lexicon.arg.tech/static/files/full-lexicon.pdf). La mention « CLARUS D3.2 » dans une fiche désigne une source déclarée, non une validation du projet ni une licence de reproduction. Pour les conditions de réutilisation, voir le tableau commun ci-dessous. Cette notice ne donne pas de priorité à CLARUS. Toutes les fiches doivent être confrontées aux références pertinentes, sans présumer leur conformité documentaire ou juridique.
 
 ## Règles éditoriales
 
@@ -32,7 +32,7 @@ CLARUS D3.2 est traité comme toute autre référence du tableau, sans statut pr
 
 ## Première vague de contrôle
 
-- **SWGDE / CLARUS / NIST** : acquisition forensique, extraction, copie, image forensique, intégrité, empreinte numérique, traçabilité.
+- **Références pertinentes parmi SWGDE, CLARUS et NIST** : acquisition forensique, extraction, copie, image forensique, intégrité, empreinte numérique, traçabilité, en documentant les différences.
 - **ANSSI / FranceTerme** : équivalents français courants et libellés techniques anglais.
 - **ISO/IEC / ENFSI / INTERPOL** : vérifier les nuances entre constatation, collecte, acquisition, analyse et interprétation.
 
@@ -54,3 +54,7 @@ Une source supplémentaire n'est ajoutée dans `sources` d'une fiche qu'après e
 | CLARUS D3.2 | **Conditions non déterminées** | Document identifié : **Candarli & Balfour, D3.2, révision 1, remis le 18 novembre 2025**, 423 pages, diffusion « Public », projet Horizon Europe 101121182. PDF officiel : https://clarus-lexicon.arg.tech/static/files/full-lexicon.pdf . Le site du lexique affiche © 2025 Clarus Project, « All rights reserved ». **Diffusion publique ≠ licence ouverte** : aucune autorisation explicite d'intégration ou de traduction redistribuable sous GPL identifiée. Demander une autorisation écrite au consortium (clarus@dundee.ac.uk) avant toute reprise textuelle systématique. |
 
 **Décision provisoire :** commencer les enrichissements à partir de FranceTerme et de publications NIST dont les mentions confirment la réutilisation ; les autres sources sont utilisables pour orienter l'analyse et pour des références bibliographiques, sans reproduction de leur expression protégée. Conserver des attributions spécifiques aux données tierces : la présence d'un fichier LICENSE GPL à la racine ne transforme pas les œuvres de tiers en œuvres GPL.
+
+## Méthode commune
+
+Aucune référence ne possède de priorité générale. Le choix dépend de la notion étudiée. Les sources indiquées dans les fiches sont des provenances déclarées, et seules les références réellement examinées peuvent être présentées comme vérifiées. La [méthode de relecture et validation](../docs/VALIDATION-FICHES.md) encadre les décisions de révision, les fusions et la conservation des anciens accès.
