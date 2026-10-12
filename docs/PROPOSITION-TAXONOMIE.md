@@ -15,3 +15,16 @@ La proposition classe **63 fiches sur 63**, une seule fois chacune. Elle ne modi
 ## Prochaine étape
 
 Après validation du classement : générer les chemins de navigation GitHub et la sélection hiérarchique dans Writer à partir du JSON, sans recopier les familles dans plusieurs fichiers. Ensuite reprendre la relecture des définitions PR #57.
+
+## Repères visuels
+
+- 🔬 **Méthodologie forensique**
+- 🧩 **Données et traces**
+- 💾 **Équipements et supports**
+- 📱 **Téléphonie mobile**
+- 💻 **Informatique**
+- 🌐 **Réseaux**
+- ☁️ **Services numériques**
+- 💬 **Applications**
+
+Les pictogrammes sont des repères légers ; ils ne remplacent jamais les noms de catégories. Ils ne modifient pas les termes personnels.
