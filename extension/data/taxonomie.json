@@ -551,6 +551,15 @@
         "informatique"
       ],
       "ancienne_categorie": "Application — Messagerie"
+    },
+    {
+      "id": "extraction-physique",
+      "classification": "methodologie/acquisition-extraction",
+      "domaines": [
+        "informatique",
+        "telephonie"
+      ],
+      "ancienne_categorie": "Méthode de criminalistique numérique"
     }
   ]
 }
