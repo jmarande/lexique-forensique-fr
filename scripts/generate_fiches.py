@@ -40,6 +40,11 @@ def generate():
         category(item)
         if any(d not in domains for d in item.get("domaines", [])):
             raise ValueError("Domaine inconnu")
+    by_id = {f["id"]: f for f in fiches}
+    for f in fiches:
+        for ref in f.get("renvois", []):
+            if ref.get("id") not in by_id or not clean(ref.get("nuance")):
+                raise ValueError("Renvoi invalide dans " + f["id"])
     DEST.mkdir(exist_ok=True)
     expected = {"README.md"} | {x + ".md" for x in ids}
     for f in fiches:
@@ -58,6 +63,17 @@ def generate():
             lines += ["## Synonymes", ""] + ["- " + clean(s) for s in f["synonymes"]] + [""]
         if f.get("termes_deconseilles"):
             lines += ["## Termes déconseillés", ""] + ["- " + clean(s) for s in f["termes_deconseilles"]] + [""]
+        if f.get("renvois") or f.get("guide_choix"):
+            lines += ["<details>", "<summary><strong>Termes proches · aide au choix</strong></summary>", ""]
+            for ref in f.get("renvois", []):
+                target = by_id[ref["id"]]
+                lines += ["- [" + clean(target["terme"]) + "](" + ref["id"] + ".md) — " + clean(ref["nuance"])]
+            if f.get("guide_choix"):
+                lines += ["", "**Quel terme utiliser ?**", "", "| Situation | Terme conseillé | Pourquoi ? |", "|---|---|---|"]
+                for case in f["guide_choix"]:
+                    fields = [clean(case.get(key)).replace("|", r"\\|").replace("\\n", " ") for key in ("situation", "terme", "justification")]
+                    lines += ["| " + " | ".join(fields) + " |"]
+            lines += ["", "</details>", ""]
         forms = f.get("formulations_rapport") or []
         if forms:
             lines += ["## Formulations pour rapport", ""]
