@@ -211,6 +211,12 @@
       "ancienne_categorie": "Preuve numérique"
     },
     {
+      "id": "carving-fichiers",
+      "classification": "methodologie/examen-analyse",
+      "domaines": [],
+      "ancienne_categorie": "Méthode de criminalistique numérique"
+    },
+    {
       "id": "chaine-tracabilite",
       "classification": "methodologie/preservation-tracabilite",
       "domaines": [],
