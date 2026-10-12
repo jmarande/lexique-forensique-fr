@@ -27,6 +27,12 @@
         "type": "Acquisition impossible",
         "texte": "Nos moyens techniques ne nous permettent pas de procéder à l’acquisition des données du support."
       }
+    ],
+    "renvois": [
+      {
+        "id": "extraction",
+        "nuance": "L’acquisition désigne une opération documentée d’obtention des données ; l’extraction décrit plus précisément leur récupération depuis un équipement ou un système."
+      }
     ]
   },
   {
@@ -530,6 +536,16 @@
         "type": "Échec d’extraction",
         "texte": "Nos moyens techniques ne nous permettent pas de procéder à l’extraction des données du support."
       }
+    ],
+    "renvois": [
+      {
+        "id": "acquisition-forensique",
+        "nuance": "L’extraction vise la récupération des données ; une acquisition forensique englobe également la méthode, le périmètre et les contrôles documentés."
+      },
+      {
+        "id": "extraction-logique",
+        "nuance": "L’extraction logique constitue une méthode particulière d’extraction."
+      }
     ]
   },
   {
@@ -563,6 +579,12 @@
     ],
     "sources": [
       "Lexique forensique FR — usage professionnel"
+    ],
+    "renvois": [
+      {
+        "id": "extraction",
+        "nuance": "L’extraction du système de fichiers constitue une modalité d’extraction, distincte de l’extraction logique selon les possibilités de l’outil."
+      }
     ]
   },
   {
@@ -595,6 +617,12 @@
     ],
     "sources": [
       "Lexique forensique FR — usage professionnel"
+    ],
+    "renvois": [
+      {
+        "id": "extraction",
+        "nuance": "L’extraction logique est une forme d’extraction, limitée aux données accessibles par les interfaces et mécanismes utilisés."
+      }
     ]
   },
   {
