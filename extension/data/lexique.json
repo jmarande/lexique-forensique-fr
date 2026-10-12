@@ -60,6 +60,9 @@
         "terme": "Acquisition de données réseau",
         "justification": "Conservation d’une capture documentée pour un examen ultérieur."
       }
+    ],
+    "termes_proches": [
+      "Extraction"
     ]
   },
   {
@@ -590,6 +593,10 @@
         "terme": "Constatation numérique",
         "justification": "L’observation n’implique pas nécessairement la récupération de données."
       }
+    ],
+    "termes_proches": [
+      "Acquisition forensique",
+      "Extraction logique"
     ]
   },
   {
@@ -629,6 +636,9 @@
         "id": "extraction",
         "nuance": "L’extraction du système de fichiers constitue une modalité d’extraction, distincte de l’extraction logique selon les possibilités de l’outil."
       }
+    ],
+    "termes_proches": [
+      "Extraction"
     ]
   },
   {
@@ -667,6 +677,9 @@
         "id": "extraction",
         "nuance": "L’extraction logique est une forme d’extraction, limitée aux données accessibles par les interfaces et mécanismes utilisés."
       }
+    ],
+    "termes_proches": [
+      "Extraction"
     ]
   },
   {
