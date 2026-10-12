@@ -30,6 +30,17 @@
 
 Le [catalogue des fiches](fiches/README.md) se consulte directement sur GitHub. L’extension intègre ces ressources à **LibreOffice Writer** pour les utiliser pendant la rédaction.
 
+## Le lexique en chiffres
+
+| Ressource disponible | Nombre |
+| --- | ---: |
+| [Fiches terminologiques](fiches/README.md) | **68** |
+| Formulations de rapport | **200** |
+| Scénarios de rédaction | **5** |
+| Règles de francisation des libellés | **18** |
+
+*Chiffres calculés à partir de la base officielle du dépôt au 12 octobre 2026, hors données personnelles. Le catalogue évolue au fil des relectures ; le contenu installé dépend de la version de l’extension.*
+
 ## Ce que permet l’extension
 
 | Usage | Fonctionnalités |
@@ -111,10 +122,10 @@ La proposition depuis l’extension ouvre un formulaire prérempli : elle n’es
 | [Extension Writer](extension/README.md) | Fonctionnement de l’extension et mises à jour. |
 | [Données et organisation du dépôt](docs/DONNEES.md) | Stockage local, formats JSON et structure du projet. |
 | [Sources et validation](docs/VALIDATION-FICHES.md) | Méthode documentaire et critères de relecture. |
-| [Feuille de route](ROADMAP.md) | Priorités et évolutions prévues, dont la classification hiérarchique. |
+| [Feuille de route](ROADMAP.md) | Priorités et évolutions prévues. |
 | [Distribution des versions](release/README.md) | Construction du paquet OXT et publication. |
 
-La [proposition de classification](docs/PROPOSITION-TAXONOMIE.md) et les [issues du projet](https://github.com/jmarande/lexique-forensique-fr/issues) détaillent les travaux en cours. Les audits [initial](sources/AUDIT-INITIAL-2026-10-10.md) et [des 63 fiches au 10 octobre 2026](sources/AUDIT-63-FICHES-2026-10-10.md) restent consultables comme états historiques.
+Les [issues du projet](https://github.com/jmarande/lexique-forensique-fr/issues) détaillent les travaux en cours. Les audits [initial](sources/AUDIT-INITIAL-2026-10-10.md) et [des 63 fiches au 10 octobre 2026](sources/AUDIT-63-FICHES-2026-10-10.md) restent consultables comme états historiques.
 
 ## Licence
 
