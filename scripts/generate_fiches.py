@@ -36,18 +36,17 @@ def generate():
             lines += ["## Synonymes", ""] + ["- " + clean(s) for s in f["synonymes"]] + [""]
         if f.get("termes_deconseilles"):
             lines += ["## Termes déconseillés", ""] + ["- " + clean(s) for s in f["termes_deconseilles"]] + [""]
-        if f.get("guide_choix"):
-            lines += ["## Quel terme utiliser ?", "", "| Situation | Terme conseillé | Pourquoi ? |", "|---|---|---|"]
-            for case in f["guide_choix"]:
-                fields = [clean(case.get(key)).replace("|", r"\\|").replace("\\n", " ") for key in ("situation", "terme", "justification")]
-                lines += ["| " + " | ".join(fields) + " |"]
-            lines += [""]
-        if f.get("renvois"):
-            lines += ["## Nuances et distinctions", ""]
-            for ref in f["renvois"]:
+        if f.get("renvois") or f.get("guide_choix"):
+            lines += ["<details>", "<summary><strong>Termes proches · aide au choix</strong></summary>", ""]
+            for ref in f.get("renvois", []):
                 target = by_id[ref["id"]]
                 lines += ["- [" + clean(target["terme"]) + "](" + ref["id"] + ".md) — " + clean(ref["nuance"])]
-            lines += [""]
+            if f.get("guide_choix"):
+                lines += ["", "**Quel terme utiliser ?**", "", "| Situation | Terme conseillé | Pourquoi ? |", "|---|---|---|"]
+                for case in f["guide_choix"]:
+                    fields = [clean(case.get(key)).replace("|", r"\\|").replace("\\n", " ") for key in ("situation", "terme", "justification")]
+                    lines += ["| " + " | ".join(fields) + " |"]
+            lines += ["", "</details>", ""]
         forms = f.get("formulations_rapport") or []
         if forms:
             lines += ["## Formulations pour rapport", ""]
