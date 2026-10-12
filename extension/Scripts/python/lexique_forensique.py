@@ -626,13 +626,13 @@ def _expand_variable_occurrence(source, replacement, text):
     if replacement.count("**") != len(parts) - 1:
         return []
     # Un joker ne traverse jamais une ligne et sa taille est bornee.
-    pattern = r"(?<!\\w)" + r"([^\\r\\n]{1,200}?)".join(
+    pattern = r"(?<!\w)" + r"([^\r\n]{1,200}?)".join(
         re.escape(part) for part in parts
-    ) + r"(?!\\w)"
+    ) + r"(?!\w)"
     results = []
     for match in re.finditer(pattern, text, re.IGNORECASE):
         captures = iter(match.groups())
-        translated = re.sub(r"\\*\\*", lambda _m: next(captures), replacement)
+        translated = re.sub(r"\*\*", lambda _m: next(captures), replacement)
         results.append((match.group(0), translated))
     return results
 
