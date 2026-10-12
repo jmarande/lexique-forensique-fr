@@ -31,3 +31,19 @@ du Project conservent la responsabilité de la transition de statut.
 L'API GraphQL de Projects peut nécessiter d'ajuster les permissions du jeton ;
 le workflow n'est pas opérationnel avant configuration et essai réel. Pour éviter
 les permissions excessives, privilégier un jeton dédié et révocable.
+
+
+## Synchronisation globale (12 octobre 2026)
+
+La même action parcourt désormais **les deux dépôts** : `CONSTATBOX-V5` et
+`lexique-forensique-fr`. Un passage complet est déclenché au premier déploiement,
+chaque jour et manuellement via `workflow_dispatch`. Tous les tickets et PR
+**ouverts** sont ajoutés au projet s'ils n'y figurent pas ; une priorité
+explicite P0/P1/P2 dans le titre ou les labels est synchronisée.
+
+Les cartes déjà présentes sont conservées ; leurs statuts ne sont pas déplacés.
+Les éléments fermés/historiques et les priorités non explicites ne sont pas
+modifiés. Les transitions de statut continuent à relever des workflows natifs
+et de la validation opérateur. Le jeton `PROJECT_SYNC_TOKEN` doit avoir accès
+aux deux dépôts et au Project personnel. Une erreur de droits doit arrêter
+le job, jamais afficher un faux succès.
