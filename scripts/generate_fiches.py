@@ -36,6 +36,12 @@ def generate():
             lines += ["## Synonymes", ""] + ["- " + clean(s) for s in f["synonymes"]] + [""]
         if f.get("termes_deconseilles"):
             lines += ["## Termes déconseillés", ""] + ["- " + clean(s) for s in f["termes_deconseilles"]] + [""]
+        if f.get("guide_choix"):
+            lines += ["## Quel terme utiliser ?", "", "| Situation | Terme conseillé | Pourquoi ? |", "|---|---|---|"]
+            for case in f["guide_choix"]:
+                fields = [clean(case.get(key)).replace("|", r"\\|").replace("\\n", " ") for key in ("situation", "terme", "justification")]
+                lines += ["| " + " | ".join(fields) + " |"]
+            lines += [""]
         if f.get("renvois"):
             lines += ["## Nuances et distinctions", ""]
             for ref in f["renvois"]:
