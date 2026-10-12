@@ -45,6 +45,10 @@ def generate():
         for ref in f.get("renvois", []):
             if ref.get("id") not in by_id or not clean(ref.get("nuance")):
                 raise ValueError("Renvoi invalide dans " + f["id"])
+    by_id = {item["id"]: item for item in fiches}
+    for item in fiches:
+        if item.get("renvoi_principal") and item["renvoi_principal"] not in by_id:
+            raise ValueError("Renvoi principal invalide")
     DEST.mkdir(exist_ok=True)
     expected = {"README.md"} | {x + ".md" for x in ids}
     for f in fiches:
@@ -74,12 +78,21 @@ def generate():
                     fields = [clean(case.get(key)).replace("|", r"\\|").replace("\\n", " ") for key in ("situation", "terme", "justification")]
                     lines += ["| " + " | ".join(fields) + " |"]
             lines += ["", "</details>", ""]
+        if f.get("renvoi_principal"):
+            target = by_id[f["renvoi_principal"]]
+            lines += ["**Fiche regroupée :** [" + clean(target["terme"]) + "](" + target["id"] + ".md)", ""]
         forms = f.get("formulations_rapport") or []
         if forms:
             lines += ["## Formulations pour rapport", ""]
             for form in forms:
                 lines += ["### " + clean(form.get("type", "Formulation")), "", clean(form.get("texte")), ""]
-        elif f.get("exemple_rapport"):
+        if f.get("tableau_rapport"):
+            columns = f["tableau_rapport"].get("colonnes", [])
+            if columns:
+                lines += ["## Tableau à compléter", "", "| " + " | ".join(columns) + " |",
+                          "|" + "|".join(["---"] * len(columns)) + "|",
+                          "| " + " | ".join(["À renseigner"] * len(columns)) + " |", ""]
+        elif f.get("exemple_rapport") and not forms:
             lines += ["## Exemple de formulation", "", clean(f["exemple_rapport"]), ""]
         lines += ["> Ces fiches sont des documents de travail du projet : les définitions restent soumises à la revue terminologique et documentaire.", "", "[← Retour à l’index](README.md)", ""]
         (DEST / (f["id"] + ".md")).write_text("\n".join(lines), encoding="utf-8")
