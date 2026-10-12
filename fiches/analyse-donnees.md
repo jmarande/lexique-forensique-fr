@@ -6,7 +6,7 @@
 
 ## Définition
 
-Phase d’examen et d’interprétation des données extraites visant à identifier les éléments susceptibles de présenter un intérêt au regard de la mission confiée, sans dépasser ce que permettent d’établir les données disponibles.
+Opération consistant à examiner, interpréter et mettre en relation des données numériques afin d'identifier les informations susceptibles de présenter un intérêt au regard de la mission confiée. L'analyse repose sur les données disponibles et doit tenir compte de leurs limites, de leur contexte et des éventuelles incertitudes d'interprétation.
 
 ## Synonymes
 
@@ -14,21 +14,21 @@ Phase d’examen et d’interprétation des données extraites visant à identif
 
 ## Formulations pour rapport
 
-### Éléments susceptibles d’éclairer l’affaire
+### Éléments susceptibles d'éclairer l'affaire
 
-Nous identifions des éléments susceptibles d’éclairer l’affaire.
+L'analyse des données permet d'identifier des éléments susceptibles d'éclairer l'affaire ou de présenter un intérêt au regard des faits examinés.
 
-### Éléments pouvant être en rapport avec les faits
+### Éléments susceptibles de caractériser une autre infraction
 
-Nous identifions des éléments pouvant être en rapport avec les faits.
+Au cours de l'analyse, nous identifions des éléments sans lien apparent avec les faits faisant l'objet de la mission, mais susceptibles de révéler des faits constitutifs d'une autre infraction.
 
-### Échanges pouvant être liés aux faits
+### Absence d'éléments en rapport avec la mission
 
-Nous identifions des échanges pouvant être en rapport avec les faits.
+L'analyse des données examinées ne permet pas d'identifier d'éléments présentant un lien apparent avec les faits faisant l'objet de la mission.
 
-### Échanges pouvant être liés à un trafic de stupéfiants
+### Éléments présentant un intérêt potentiel
 
-Nous identifions des échanges pouvant être en rapport avec les faits et/ou en lien avec un trafic de stupéfiants.
+Nous relevons des éléments présentant un intérêt potentiel, sans que les informations disponibles permettent d'en déterminer la signification ou le lien éventuel avec les faits examinés.
 
 > Ces fiches sont des documents de travail du projet : les définitions restent soumises à la revue terminologique et documentaire.
 

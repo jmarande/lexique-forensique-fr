@@ -6,7 +6,7 @@
 
 ## Définition
 
-Valeur de hachage calculée à partir d’un fichier, d’un équipement ou d’un ensemble de données et utilisée comme identifiant vérifiable de son contenu et de son intégrité.
+Valeur obtenue par l'application d'une fonction de hachage à des données numériques. Voir la fiche « Hachage et empreinte numérique » pour les formulations et le tableau des empreintes.
 
 ## Synonymes
 
@@ -16,9 +16,7 @@ Valeur de hachage calculée à partir d’un fichier, d’un équipement ou d’
 
 - Empreinte digitale
 
-## Exemple de formulation
-
-Une empreinte numérique est calculée afin de disposer d’un identifiant vérifiable du contenu acquis.
+**Fiche regroupée :** [Hachage et empreinte numérique](hachage.md)
 
 > Ces fiches sont des documents de travail du projet : les définitions restent soumises à la revue terminologique et documentaire.
 

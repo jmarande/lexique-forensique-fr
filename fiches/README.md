@@ -63,7 +63,7 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 
 - [Chiffrement](chiffrement.md)
 - [Empreinte numérique](empreinte-numerique.md)
-- [Hachage](hachage.md)
+- [Hachage et empreinte numérique](hachage.md)
 - [Valeur de hachage](valeur-hachage.md)
 
 ## 💾 Équipements et supports
@@ -157,7 +157,7 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Fichier multimédia](fichier-multimedia.md)
 - [Force brute](force-brute.md)
 - [Fournisseur d’accès à Internet](fai.md)
-- [Hachage](hachage.md)
+- [Hachage et empreinte numérique](hachage.md)
 - [Horodatage](horodatage.md)
 - [ICCID](iccid.md)
 - [IMEI](imei.md)
