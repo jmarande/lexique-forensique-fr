@@ -33,6 +33,33 @@
         "id": "extraction",
         "nuance": "L’acquisition désigne une opération documentée d’obtention des données ; l’extraction décrit plus précisément leur récupération depuis un équipement ou un système."
       }
+    ],
+    "guide_choix": [
+      {
+        "situation": "Observer un équipement et relever ses caractéristiques",
+        "terme": "Constatation numérique",
+        "justification": "Observation et documentation, sans récupération nécessaire de données."
+      },
+      {
+        "situation": "Réaliser une image forensique d’un disque",
+        "terme": "Acquisition forensique",
+        "justification": "Obtention documentée d’une représentation du contenu du support."
+      },
+      {
+        "situation": "Récupérer des données accessibles d’un téléphone",
+        "terme": "Extraction",
+        "justification": "Désigne la récupération des données ; préciser la méthode utilisée."
+      },
+      {
+        "situation": "Copier un ensemble ciblé de fichiers pour examen",
+        "terme": "Acquisition ciblée ou copie de fichiers",
+        "justification": "Préciser la portée, la méthode et les contrôles effectivement réalisés."
+      },
+      {
+        "situation": "Enregistrer un trafic réseau dans un PCAP",
+        "terme": "Acquisition de données réseau",
+        "justification": "Conservation d’une capture documentée pour un examen ultérieur."
+      }
     ]
   },
   {
@@ -545,6 +572,23 @@
       {
         "id": "extraction-logique",
         "nuance": "L’extraction logique constitue une méthode particulière d’extraction."
+      }
+    ],
+    "guide_choix": [
+      {
+        "situation": "Récupérer les données accessibles d’un téléphone ou d’une carte SIM",
+        "terme": "Extraction",
+        "justification": "Préciser la méthode et les éventuelles limites d’accès."
+      },
+      {
+        "situation": "Réaliser une image bit à bit d’un disque",
+        "terme": "Acquisition forensique",
+        "justification": "Désigne précisément la réalisation d’une copie image."
+      },
+      {
+        "situation": "Consulter seulement des informations affichées à l’écran",
+        "terme": "Constatation numérique",
+        "justification": "L’observation n’implique pas nécessairement la récupération de données."
       }
     ]
   },
