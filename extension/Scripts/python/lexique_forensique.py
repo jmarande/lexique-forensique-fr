@@ -240,18 +240,6 @@ def _available_categories(entries):
     return sorted({_entry_category(e) for e in entries if _entry_category(e)}, key=_normalize)
 
 
-def _nearby_help(entry, entries):
-    by_id = {item.get("id"): item for item in entries}
-    notes = []
-    for ref in entry.get("renvois", []):
-        related = by_id.get(ref.get("id"))
-        if related:
-            notes.append(related.get("terme", "") + " : " + ref.get("nuance", ""))
-    for case in entry.get("guide_choix", []):
-        notes.append(case.get("situation", "") + " → " + case.get("terme", ""))
-    return "\n".join(notes) if notes else ""
-
-
 def _load_data():
     return _load_builtin_data() + _load_user_data()
 
@@ -597,6 +585,7 @@ def _normalize(value):
 
 def _format_entry(e, warning=None):
     syn = ", ".join(e.get("synonymes", [])) or "—"
+    proches = ", ".join(e.get("termes_proches", [])) or "—"
     bad = ", ".join(_bad_terms(e)) or "—"
     prefix = ""
     if warning:
@@ -611,7 +600,8 @@ def _format_entry(e, warning=None):
         + f"{e['terme']}\n"
         + f"Anglais : {e.get('anglais', '—')}\n"
         + f"Catégorie : {_entry_category(e)}\n"
-        + f"Synonymes : {syn}\n\n"
+        + f"Synonymes : {syn}\n"
+        + f"Termes proches : {proches}\n\n"
         + f"DÉFINITION\n{e.get('definition', '')}\n\n"
         + "FORMULATIONS POUR RAPPORT\n"
     )
@@ -781,7 +771,6 @@ class DialogListener(
         self.status_label = status_label
         self.insert_button = insert_button
         self.category_box = category_box
-        self.nearby_button = dialog.getControl("btnNearby")
         self.data = data
         self.categories = _available_categories(data)
         self.current_category = None
@@ -821,9 +810,6 @@ class DialogListener(
     def _display_entry(self, entry):
         text, ranges = _format_entry(entry)
         self.detail_box.Text = text
-        help_text = _nearby_help(entry, self.data)
-        self.nearby_button.getModel().HelpText = help_text or "Aucun terme proche renseigné"
-        self.nearby_button.getModel().Enabled = bool(help_text)
         self.formulation_ranges = ranges
         self.selected_formulation_index = 0
         if ranges:
@@ -867,7 +853,6 @@ class DialogListener(
             self.current = None
             self.formulation_ranges = []
             self.detail_box.Text = "Aucun terme trouvé."
-            self.nearby_button.getModel().Enabled = False
             self._set_insert_enabled(False)
 
     def actionPerformed(self, event):
@@ -3761,13 +3746,6 @@ def open_lexicon(*args):
         ReadOnly=True,
         VScroll=True,
         HideInactiveSelection=False,
-    )
-    add(
-        "btnNearby",
-        "com.sun.star.awt.UnoControlButtonModel",
-        118, 288, 90, 16,
-        Label="Termes proches ⓘ",
-        HelpText="Survolez pour consulter les nuances",
     )
     add(
         "btnInsert",
