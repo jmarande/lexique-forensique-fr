@@ -3004,16 +3004,16 @@ def open_term_editor(parent_listener, entry):
         8, 8, 44, 10, Label="Terme :")
     add("txtTerm", "com.sun.star.awt.UnoControlEditModel",
         54, 6, 368, 14, Text=entry.get("terme", ""))
-    categories = sorted(
-        {
-            e.get("categorie", "")
-            for e in parent_listener.builtin_data + parent_listener.user_data
-            if e.get("categorie", "")
-        },
-        key=_normalize,
+    # Reuse the same hierarchical categories as the main lexicon.
+    categories = _available_categories(
+        parent_listener.builtin_data + parent_listener.user_data
     )
+    current_category = entry.get("categorie", "Personnalisé")
+    if current_category and current_category not in categories:
+        categories.append(current_category)
     if "Personnalisé" not in categories:
         categories.append("Personnalisé")
+    categories = sorted(set(categories), key=_normalize)
 
     add("lblEnglish", "com.sun.star.awt.UnoControlFixedTextModel",
         8, 28, 44, 10, Label="Anglais :")
@@ -3069,7 +3069,6 @@ def open_term_editor(parent_listener, entry):
     dialog.createPeer(toolkit, None)
 
     category_control = dialog.getControl("lstTermCategory")
-    current_category = entry.get("categorie", "Personnalisé")
     try:
         category_control.selectItem(current_category, True)
     except Exception:
