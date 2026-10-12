@@ -541,9 +541,9 @@
   {
     "id": "extraction",
     "terme": "Extraction",
-    "anglais": "Extract",
+    "anglais": "Data extraction",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Opération consistant à récupérer ou obtenir des données à partir d'un dispositif numérique, d'un support de stockage ou d'un système afin de les rendre accessibles à des fins d'analyse ou d'exploitation.",
+    "definition": "Opération technique consistant à récupérer des données depuis un équipement, un support ou un système numérique, afin de les rendre accessibles pour leur examen ou leur exploitation. L'extraction peut être complète ou partielle, selon les possibilités techniques et les conditions d'accès aux données.",
     "synonymes": [],
     "termes_deconseilles": [],
     "exemple_rapport": "Nous procédons à l'extraction des données accessibles présentes sur le support.",
@@ -597,7 +597,9 @@
     ],
     "termes_proches": [
       "Acquisition forensique",
-      "Extraction logique"
+      "Extraction logique",
+      "Extraction du système de fichiers",
+      "Extraction physique"
     ]
   },
   {
