@@ -630,27 +630,36 @@ def _format_entry(e, warning=None):
     return "".join(parts), ranges
 def _find_entries(query, data, category=None):
     q = _normalize(query)
-    results = []
-    for e in data:
-        if category and _entry_category(e) != category:
-            continue
+    by_id = {entry.get("id"): entry for entry in data if entry.get("id")}
+    aliases = {}
+    for entry in data:
+        target_id = entry.get("renvoi_principal")
+        if target_id and target_id in by_id:
+            aliases.setdefault(target_id, []).append(entry)
 
+    results = []
+    for entry in data:
+        # Keep legacy identifiers for links but show only the canonical fiche.
+        if entry.get("renvoi_principal") in by_id:
+            continue
+        if category and _entry_category(entry) != category:
+            continue
+        searchable = [entry] + aliases.get(entry.get("id"), [])
         if q:
-            fields = [
-                e.get("terme", ""),
-                e.get("anglais", ""),
-                _entry_category(e),
-                e.get("definition", ""),
-                " ".join(e.get("synonymes", [])),
-                " ".join(_bad_terms(e)),
-            ]
+            fields = []
+            for item in searchable:
+                fields.extend([
+                    item.get("terme", ""),
+                    item.get("anglais", ""),
+                    _entry_category(item),
+                    item.get("definition", ""),
+                    " ".join(item.get("synonymes", [])),
+                    " ".join(_bad_terms(item)),
+                ])
             if q not in _normalize(" ".join(fields)):
                 continue
-
-        results.append(e)
-
+        results.append(entry)
     return sorted(results, key=lambda e: _normalize(e.get("terme", "")))
-
 
 
 def _expand_variable_occurrence(source, replacement, text):
