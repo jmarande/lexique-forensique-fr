@@ -151,7 +151,7 @@
     "terme": "Authentification",
     "anglais": "Authentication",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Processus de vérification de l’identité d’un utilisateur, de la validité de données ou de l’intégrité d’une preuve numérique.",
+    "definition": "Mécanisme permettant de vérifier l'identité déclarée d'un utilisateur, d'un équipement ou d'un service, au moyen d'un ou plusieurs facteurs d'authentification. En criminalistique numérique, l'authentification doit être distinguée de la vérification de l'intégrité des données et de l'authenticité de leur provenance.",
     "synonymes": [
       "Vérification d’identité"
     ],
@@ -161,6 +161,30 @@
     "exemple_rapport": "L’accès au service est soumis à une procédure d’authentification.",
     "sources": [
       "CLARUS D3.2 — Authentication"
+    ],
+    "termes_proches": [
+      "Identification",
+      "Code de déverrouillage",
+      "Contrôle d'accès",
+      "Intégrité des données"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Authentification requise",
+        "texte": "L'accès aux données du support nécessite une authentification préalable."
+      },
+      {
+        "type": "Authentification réussie",
+        "texte": "Nous procédons à l'authentification sur le support au moyen des éléments d'accès mis à notre disposition, permettant ainsi la poursuite des opérations techniques."
+      },
+      {
+        "type": "Authentification impossible",
+        "texte": "Nos moyens techniques et les éléments d'accès disponibles ne permettent pas de satisfaire aux mécanismes d'authentification nécessaires pour accéder aux données concernées."
+      },
+      {
+        "type": "Authentification non tentée",
+        "texte": "Aucune tentative d'authentification n'est réalisée sur le support, compte tenu des conditions techniques rencontrées et des risques susceptibles d'affecter son état ou l'accès aux données."
+      }
     ]
   },
   {
@@ -174,6 +198,77 @@
     "exemple_rapport": "Les enregistrements pertinents ont été recherchés dans la base de données de l'application.",
     "sources": [
       "CLARUS D3.2"
+    ]
+  },
+  {
+    "id": "cache-applicatif",
+    "terme": "Cache applicatif",
+    "anglais": "Application cache",
+    "categorie": "Preuve numérique",
+    "definition": "Ensemble de données conservées par une application afin d'accélérer son fonctionnement, de faciliter l'accès à certains contenus ou d'éviter leur téléchargement répété. Ces données peuvent notamment comprendre des images, des vidéos, des fichiers temporaires ou des informations résiduelles.",
+    "synonymes": [
+      "Cache d'application"
+    ],
+    "termes_deconseilles": [],
+    "termes_proches": [
+      "Cache système",
+      "Mémoire cache",
+      "Données temporaires",
+      "Fichiers résiduels",
+      "Historique de navigation"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Données de cache identifiées",
+        "texte": "L'examen des données met en évidence des éléments conservés dans le cache de l'application."
+      },
+      {
+        "type": "Fichiers multimédias en cache",
+        "texte": "Nous identifions des fichiers multimédias présents dans les données de cache de l'application examinée."
+      },
+      {
+        "type": "Attribution prudente",
+        "texte": "La présence d'un élément dans le cache applicatif ne permet pas, à elle seule, de déterminer les circonstances de son enregistrement ou d'établir qu'il a été volontairement consulté par l'utilisateur."
+      },
+      {
+        "type": "Données résiduelles",
+        "texte": "L'examen des données de cache permet d'identifier des éléments résiduels dont la présence peut résulter du fonctionnement de l'application."
+      }
+    ],
+    "sources": [
+      "Lexique forensique FR — usage professionnel"
+    ]
+  },
+  {
+    "id": "cache-systeme",
+    "terme": "Cache système",
+    "anglais": "System cache",
+    "categorie": "Preuve numérique",
+    "definition": "Ensemble de données conservées temporairement par un système d'exploitation afin d'optimiser son fonctionnement et l'accès aux ressources. Selon le système et ses mécanismes, ces caches peuvent contenir des fichiers temporaires, des métadonnées, des informations relatives aux opérations effectuées ou des traces d'utilisation.",
+    "synonymes": [],
+    "termes_deconseilles": [],
+    "termes_proches": [
+      "Cache applicatif",
+      "Mémoire cache",
+      "Fichiers temporaires",
+      "Artefacts système"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Données de cache système identifiées",
+        "texte": "L'examen du support permet d'identifier des données conservées dans les mécanismes de cache du système d'exploitation."
+      },
+      {
+        "type": "Traces d'activité identifiées",
+        "texte": "L'analyse des données de cache système met en évidence des éléments susceptibles de renseigner sur certaines activités réalisées sur le support."
+      },
+      {
+        "type": "Attribution prudente",
+        "texte": "La présence d'éléments dans le cache système ne permet pas, à elle seule, de déterminer les circonstances de leur création ou de leur utilisation."
+      }
+    ],
+    "sources": [
+      "Lexique forensique FR — usage professionnel"
     ]
   },
   {
@@ -245,7 +340,7 @@
     "terme": "Chiffrement",
     "anglais": "Encryption / Encrypted",
     "categorie": "Cryptographie",
-    "definition": "Procédé cryptographique transformant des données afin de les rendre inintelligibles sans la clé, le mot de passe ou le mécanisme cryptographique approprié.",
+    "definition": "Procédé cryptographique consistant à transformer des données intelligibles en données chiffrées au moyen d'un algorithme et d'une clé cryptographique, afin d'en préserver la confidentialité. L'accès aux données en clair nécessite la mise en œuvre d'un mécanisme de déchiffrement approprié. Selon les équipements, ce mécanisme peut être lié à un code de déverrouillage, à une clé cryptographique ou à un dispositif matériel de sécurité.",
     "synonymes": [
       "Données chiffrées"
     ],
@@ -262,13 +357,19 @@
         "texte": "Les données présentes sur le support sont protégées par chiffrement."
       },
       {
-        "type": "Code de déchiffrement inconnu",
-        "texte": "Le code de déchiffrement du support n’est pas connu lors de notre examen."
+        "type": "Moyen de déchiffrement inconnu",
+        "texte": "Les éléments nécessaires au déchiffrement des données ne sont pas connus lors de notre examen."
       },
       {
         "type": "Accès aux données impossible",
-        "texte": "En l’absence du mécanisme de déchiffrement approprié, nos moyens techniques ne nous permettent pas d’accéder aux données protégées."
+        "texte": "En l'absence du mécanisme de déchiffrement approprié, nos moyens techniques ne nous permettent pas d'accéder aux données protégées."
       }
+    ],
+    "termes_proches": [
+      "Déchiffrement",
+      "Code de déverrouillage",
+      "Authentification",
+      "Force brute"
     ]
   },
   {
@@ -294,7 +395,7 @@
     "terme": "Code de déverrouillage",
     "anglais": "Device passcode / Unlock code",
     "categorie": "Procédure d’examen forensique",
-    "definition": "Code, mot de passe ou autre secret utilisé pour déverrouiller un équipement numérique et permettre l’accès à ses fonctions ou à ses données.",
+    "definition": "Code numérique, alphanumérique, mot de passe ou autre secret utilisé pour déverrouiller un équipement numérique et permettre l'accès à ses fonctions ou à certaines de ses données. Son absence ou sa méconnaissance peut limiter les possibilités d'examen, sans nécessairement exclure toute acquisition de données.",
     "synonymes": [
       "Code utilisateur",
       "Code de verrouillage",
@@ -307,16 +408,33 @@
     "formulations_rapport": [
       {
         "type": "Code inconnu",
-        "texte": "Le code de déverrouillage du support n’est pas connu lors de notre prise en charge."
+        "texte": "Le code de déverrouillage du support n'est pas connu lors de notre prise en charge."
       },
       {
         "type": "Aucun code identifié",
-        "texte": "Aucun code de déverrouillage n’a pu être identifié."
+        "texte": "Aucun code de déverrouillage n'a pu être identifié."
       },
       {
         "type": "Code communiqué",
-        "texte": "Le code de déverrouillage communiqué permet l’accès au support."
+        "texte": "Le code de déverrouillage communiqué permet l'accès au support."
+      },
+      {
+        "type": "Code non communiqué",
+        "texte": "Aucun code de déverrouillage ne nous est communiqué dans le cadre de la mission."
+      },
+      {
+        "type": "Tentative de déverrouillage infructueuse",
+        "texte": "Nous procédons à une tentative de déverrouillage au moyen du code disponible. Cette tentative ne permet pas d'accéder au support."
+      },
+      {
+        "type": "Accès limité par le verrouillage",
+        "texte": "En l'absence de code de déverrouillage connu, les possibilités d'accès aux données du support sont limitées dans les conditions techniques rencontrées."
       }
+    ],
+    "termes_proches": [
+      "Authentification",
+      "Force brute",
+      "Chiffrement"
     ]
   },
   {
@@ -369,6 +487,47 @@
     "exemple_rapport": "Les opérations réalisées relèvent de la criminalistique numérique et portent sur la récupération, l’examen et l’interprétation des données accessibles.",
     "sources": [
       "CLARUS D3.2 — Digital forensics"
+    ]
+  },
+  {
+    "id": "dechiffrement",
+    "terme": "Déchiffrement",
+    "anglais": "Decryption",
+    "categorie": "Cryptographie",
+    "definition": "Opération cryptographique consistant à restituer des données en clair à partir de données chiffrées, au moyen de la clé ou du mécanisme cryptographique approprié. En criminalistique numérique, le déchiffrement peut être réalisé par un logiciel, un équipement ou un mécanisme intégré au système examiné. Il doit être distingué du déverrouillage d'un appareil et du décodage des données.",
+    "synonymes": [],
+    "termes_deconseilles": [],
+    "termes_proches": [
+      "Chiffrement",
+      "Code de déverrouillage",
+      "Authentification",
+      "Force brute",
+      "Décodage des données"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Déchiffrement réalisé",
+        "texte": "Nous procédons au déchiffrement des données protégées, permettant leur exploitation dans le cadre de l'examen."
+      },
+      {
+        "type": "Déchiffrement partiel",
+        "texte": "Les moyens techniques employés permettent de déchiffrer une partie des données protégées. Les autres données demeurent inaccessibles dans les conditions de l'examen."
+      },
+      {
+        "type": "Déchiffrement impossible",
+        "texte": "Nos moyens techniques ne permettent pas de procéder au déchiffrement des données protégées dans les conditions de l'examen."
+      },
+      {
+        "type": "Déchiffrement non nécessaire",
+        "texte": "L'accès aux données concernées ne nécessite pas d'opération de déchiffrement supplémentaire dans les conditions techniques rencontrées."
+      },
+      {
+        "type": "Déchiffrement par mécanisme intégré",
+        "texte": "L'accès aux données en clair est obtenu au moyen du mécanisme de déchiffrement intégré à l'équipement ou au système examiné."
+      }
+    ],
+    "sources": [
+      "Lexique forensique FR — usage professionnel"
     ]
   },
   {
@@ -864,7 +1023,7 @@
     "terme": "Force brute",
     "anglais": "Brute force",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Méthode consistant à tester systématiquement un ensemble de clés, mots de passe ou combinaisons possibles afin de tenter d'accéder à des données ou à un système protégé.",
+    "definition": "Méthode consistant à tester successivement des combinaisons de codes, de mots de passe ou de clés cryptographiques afin d'identifier une valeur permettant de satisfaire un mécanisme d'authentification, de déverrouillage ou de déchiffrement. Selon les conditions techniques, les essais peuvent être exhaustifs ou limités à un ensemble de valeurs, notamment lorsqu'ils reposent sur un dictionnaire ou sur des informations connues.",
     "synonymes": [
       "Attaque par force brute"
     ],
@@ -872,6 +1031,34 @@
     "exemple_rapport": "Une tentative d'accès par force brute peut être mise en œuvre lorsque le cadre technique et juridique le permet.",
     "sources": [
       "CLARUS D3.2"
+    ],
+    "termes_proches": [
+      "Code de déverrouillage",
+      "Authentification",
+      "Chiffrement",
+      "Attaque par dictionnaire"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Recherche par force brute",
+        "texte": "Nous procédons à une recherche par force brute afin de tenter d'identifier le code ou le mot de passe permettant l'accès aux données protégées."
+      },
+      {
+        "type": "Recherche par force brute infructueuse",
+        "texte": "Les opérations de recherche par force brute mises en œuvre ne permettent pas d'identifier un code ou un mot de passe valide."
+      },
+      {
+        "type": "Recherche par force brute fructueuse",
+        "texte": "Les opérations de recherche par force brute permettent d'identifier un code ou un mot de passe valide, autorisant l'accès aux données concernées."
+      },
+      {
+        "type": "Recherche techniquement impossible",
+        "texte": "Les caractéristiques du mécanisme de protection et les moyens techniques disponibles ne permettent pas de mettre en œuvre une recherche par force brute dans les conditions de l'examen."
+      },
+      {
+        "type": "Recherche interrompue à la demande du requérant",
+        "texte": "Sur demande du requérant, nous interrompons les opérations de recherche par force brute sans identification d'un code ou d'un mot de passe valide."
+      }
     ]
   },
   {
@@ -959,7 +1146,7 @@
     "terme": "IMEI",
     "anglais": "International Mobile Equipment Identity (IMEI)",
     "categorie": "Preuve numérique",
-    "definition": "Identifiant de quinze chiffres associé à un équipement mobile et permettant notamment d’identifier le fabricant et le modèle de l’appareil.",
+    "definition": "Identifiant numérique généralement composé de 15 chiffres, attribué à un équipement de téléphonie mobile pour son identification sur les réseaux cellulaires. Un équipement peut disposer de plusieurs IMEI, notamment lorsqu'il prend en charge plusieurs lignes mobiles. L'IMEI peut contribuer à identifier ou caractériser un équipement, mais ne permet pas, à lui seul, d'établir avec certitude son modèle exact, son propriétaire ou son utilisateur.",
     "synonymes": [
       "Numéro IMEI"
     ],
@@ -971,6 +1158,31 @@
     "points_attention": [
       "L’IMEI identifie un équipement ou une interface cellulaire et ne permet pas, à lui seul, d’identifier son utilisateur.",
       "Certains appareils disposent de plusieurs IMEI, notamment lorsqu’ils prennent en charge plusieurs lignes ou eSIM."
+    ],
+    "termes_proches": [
+      "IMEISV",
+      "IMSI",
+      "ICCID",
+      "Carte SIM",
+      "eSIM"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "IMEI relevé",
+        "texte": "Nous relevons le numéro IMEI [NUMÉRO] associé au terminal examiné."
+      },
+      {
+        "type": "Plusieurs IMEI identifiés",
+        "texte": "L'examen du terminal permet d'identifier plusieurs numéros IMEI, dont les valeurs sont consignées dans les résultats des opérations techniques."
+      },
+      {
+        "type": "IMEI non accessible",
+        "texte": "Les conditions techniques de l'examen ne permettent pas de relever le numéro IMEI du terminal."
+      },
+      {
+        "type": "Identification du modèle à partir de l'IMEI",
+        "texte": "Les informations associées au numéro IMEI permettent de proposer une identification du fabricant et du modèle de l'équipement, sous réserve des limites des référentiels consultés."
+      }
     ]
   },
   {
@@ -1130,24 +1342,19 @@
     "terme": "Mémoire cache",
     "anglais": "Cache memory",
     "categorie": "Preuve numérique",
-    "definition": "Type de mémoire utilisé par un système ou une application pour stocker temporairement des fichiers et d’autres données. Les éléments présents dans le cache peuvent présenter une valeur probatoire.",
+    "definition": "Mémoire intermédiaire à accès rapide, utilisée notamment par les processeurs et certains composants informatiques pour conserver temporairement des données ou des instructions et réduire les délais d'accès aux informations. Son contenu est généralement volatil et dépend du fonctionnement du matériel et du système. La mémoire cache matérielle doit être distinguée des caches applicatifs et des caches système susceptibles de conserver des données sur un support de stockage.",
     "synonymes": [
-      "Cache"
+      "Cache mémoire"
     ],
     "termes_deconseilles": [],
-    "exemple_rapport": "L’analyse de la mémoire cache permet d’identifier des fichiers temporaires et autres éléments résiduels.",
     "sources": [
       "CLARUS D3.2 — Cache memory"
     ],
-    "formulations_rapport": [
-      {
-        "type": "Données de cache identifiées",
-        "texte": "L’examen des données met en évidence des éléments présents dans la mémoire cache de l’application."
-      },
-      {
-        "type": "Attribution prudente",
-        "texte": "La présence d’un élément dans la mémoire cache atteste de sa présence dans les données locales, sans permettre à elle seule d’en déterminer l’auteur, le destinataire ou le contexte d’utilisation."
-      }
+    "formulations_rapport": [],
+    "termes_proches": [
+      "Cache applicatif",
+      "Cache système",
+      "Mémoire vive (RAM)"
     ]
   },
   {
@@ -1302,7 +1509,7 @@
     "terme": "Mode avion",
     "anglais": "Airplane mode",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Réglage d’un appareil qui désactive ses fonctions de communication sans fil afin d’empêcher l’accès aux réseaux. Il peut être utilisé, lorsque les conditions le permettent, pour contribuer à préserver l’intégrité des données d’un appareil mobile.",
+    "definition": "Fonction d'un équipement mobile permettant de désactiver ou de limiter certaines communications radio, notamment les connexions cellulaires. Selon l'appareil et sa configuration, les interfaces Wi-Fi et Bluetooth peuvent rester actives ou être réactivées indépendamment. L'activation du mode avion ne garantit donc pas, à elle seule, l'isolement complet de l'équipement vis-à-vis des réseaux.",
     "synonymes": [
       "Mode hors-ligne"
     ],
@@ -1328,6 +1535,11 @@
         "type": "Activation non réalisée pour préserver l’état du support",
         "texte": "Afin de préserver l’état du support et de ne pas compromettre l’accès aux données, nous ne procédons pas à l’activation du mode avion."
       }
+    ],
+    "termes_proches": [
+      "Isolement réseau",
+      "Acquisition forensique",
+      "Préservation des données"
     ]
   },
   {
