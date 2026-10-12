@@ -592,6 +592,26 @@ def _format_entry(e, warning=None):
     if not formulations:
         parts.append("—")
 
+    # Les explications restent secondaires ; toutes les formulations gardent leurs positions.
+    if e.get("renvois") or e.get("guide_choix"):
+        by_id = {item.get("id"): item for item in _load_data()}
+        notes = []
+        for ref in e.get("renvois", []):
+            target = by_id.get(ref.get("id"))
+            if target:
+                notes.append(
+                    target.get("terme", "") + " — " + ref.get("nuance", "")
+                    + "\nhttps://github.com/jmarande/lexique-forensique-fr/blob/main/fiches/"
+                    + ref["id"] + ".md"
+                )
+        for case in e.get("guide_choix", []):
+            notes.append(
+                case.get("situation", "") + " → " + case.get("terme", "")
+                + " : " + case.get("justification", "")
+            )
+        if notes:
+            parts.append("\n\nTERMES PROCHES · AIDE AU CHOIX\n" + "\n\n".join(notes))
+
     return "".join(parts), ranges
 def _find_entries(query, data, category=None):
     q = _normalize(query)
