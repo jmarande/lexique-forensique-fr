@@ -1559,9 +1559,7 @@
       "Média numérique",
       "Support de données"
     ],
-    "termes_deconseilles": [
-      "Media"
-    ],
+    "termes_deconseilles": [],
     "exemple_rapport": "Le support numérique est pris en charge en vue de son acquisition et de son analyse.",
     "sources": [
       "CLARUS D3.2 — Media",
