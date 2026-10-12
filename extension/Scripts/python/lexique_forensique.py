@@ -601,7 +601,7 @@ def _format_entry(e, warning=None):
             if target:
                 notes.append(
                     target.get("terme", "") + " — " + ref.get("nuance", "")
-                    + "\\nhttps://github.com/jmarande/lexique-forensique-fr/blob/main/fiches/"
+                    + "\nhttps://github.com/jmarande/lexique-forensique-fr/blob/main/fiches/"
                     + ref["id"] + ".md"
                 )
         for case in e.get("guide_choix", []):
@@ -610,7 +610,7 @@ def _format_entry(e, warning=None):
                 + " : " + case.get("justification", "")
             )
         if notes:
-            parts.append("\\n\\nTERMES PROCHES · AIDE AU CHOIX\\n" + "\\n\\n".join(notes))
+            parts.append("\n\nTERMES PROCHES · AIDE AU CHOIX\n" + "\n\n".join(notes))
 
     return "".join(parts), ranges
 def _find_entries(query, data, category=None):
