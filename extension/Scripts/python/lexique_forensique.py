@@ -617,6 +617,26 @@ def _find_entries(query, data, category=None):
     return sorted(results, key=lambda e: _normalize(e.get("terme", "")))
 
 
+
+def _expand_variable_occurrence(source, replacement, text):
+    """Detecter une regle ** et conserver ses captures sans les traduire."""
+    if "**" not in source:
+        return []
+    parts = source.split("**")
+    if replacement.count("**") != len(parts) - 1:
+        return []
+    # Un joker ne traverse jamais une ligne et sa taille est bornee.
+    pattern = r"(?<!\\w)" + r"([^\\r\\n]{1,200}?)".join(
+        re.escape(part) for part in parts
+    ) + r"(?!\\w)"
+    results = []
+    for match in re.finditer(pattern, text, re.IGNORECASE):
+        captures = iter(match.groups())
+        translated = re.sub(r"\\*\\*", lambda _m: next(captures), replacement)
+        results.append((match.group(0), translated))
+    return results
+
+
 def _scan_document_text(text, data, translations=None):
     normalized_text = _normalize(text)
     alerts = []
@@ -651,6 +671,20 @@ def _scan_document_text(text, data, translations=None):
         if not preferred and replacements:
             preferred = replacements[0]
         if not source or not preferred or _normalize(source) == _normalize(preferred):
+            continue
+
+        if "**" in source:
+            for found, translated in _expand_variable_occurrence(source, preferred, text):
+                alerts.append({
+                    "kind": "traduction",
+                    "entry": None,
+                    "found": found,
+                    "replacement": translated,
+                    "replacements": [translated],
+                    "count": 1,
+                    "note": (item.get("note") or "").strip(),
+                    "source": item.get("_source", "builtin"),
+                })
             continue
 
         normalized_source = _normalize(source)
