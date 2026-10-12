@@ -6,7 +6,7 @@ Référentiel initial au 10 octobre 2026 : les ressources répertoriées servent
 
 | ID | Organisme / ressource | Périmètre | Accès et référence | Politique d'intégration |
 | --- | --- | --- | --- | --- |
-| CLARUS-D32 | CLARUS — D3.2, *A searchable web-based common lexicon* | Terminologie de criminalistique numérique | [Document initial](CLARUS.md) | Conserver les références existantes ; recontrôler les notions et les droits de réutilisation |
+| CLARUS-D32 | CLARUS — D3.2, *A searchable web-based common lexicon* | Terminologie de criminalistique numérique | [Livrable D3.2](https://clarus-lexicon.arg.tech/static/files/full-lexicon.pdf) | Conserver les références existantes ; recontrôler les notions et les droits de réutilisation |
 | SWGDE-GLOSSARY | Scientific Working Group on Digital Evidence — *Digital & Multimedia Evidence Glossary* | Preuves numériques, informatique, multimédia | https://www.swgde.org/documents/published-complete-listing/05-f-001-swgde-digital-multimedia-evidence-glossary/ | Source de comparaison, **pas d'import massif** ; droits des documents à vérifier |
 | NIST-CSRC-GLOSSARY | NIST Computer Security Resource Center — Glossary | Terminologie cybersécurité, digital forensics, provenance des définitions | https://csrc.nist.gov/glossary | Vérifier le document primaire cité par chaque définition ; ne pas attribuer systématiquement au NIST une définition agrégée |
 | ANSSI-CYBERDICO | ANSSI — CyberDico | Traductions techniques français / anglais et cybersécurité | https://cyber.gouv.fr/cyberdico/ | Comparer les équivalents français ; contrôler les droits de reproduction avant tout import |
@@ -15,6 +15,10 @@ Référentiel initial au 10 octobre 2026 : les ressources répertoriées servent
 | ISO-IEC-27042 | ISO/IEC 27042 — Guidelines for the analysis and interpretation of digital evidence | Analyse, interprétation | https://www.iso.org/search.html?q=ISO%2FIEC%2027042 | Référence normative : consultation selon accès autorisé, sans reproduction des clauses |
 | INTERPOL-DF | INTERPOL — ressources de criminalistique numérique | Intervention et méthodes forensiques | https://www.interpol.int/ | Identifier d'abord le guide exact, son édition et ses conditions |
 | ENFSI-DF | ENFSI — Best Practice Manuals | Qualité et pratiques forensiques | https://enfsi.eu/documents/best-practice-manuals/ | Identifier l'édition exacte avant de s'en servir pour valider une fiche |
+
+## Précisions bibliographiques et de provenance
+
+CLARUS D3.2 est traité comme toute autre référence du tableau, sans statut privilégié. Pour la notice bibliographique : projet Horizon Europe n° 101121182 ; livrable *A searchable web-based common lexicon*, auteurs indiqués Duygu Candarli et James Balfour, révision 1 remise le 18 novembre 2025 ; [lexique en ligne](https://clarus-lexicon.arg.tech/) et [PDF](https://clarus-lexicon.arg.tech/static/files/full-lexicon.pdf). La mention « CLARUS D3.2 » dans une fiche désigne une source déclarée, non une validation du projet ni une licence de reproduction. Pour les conditions de réutilisation, voir le tableau commun ci-dessous. Les fiches doivent être confrontées aux autres références disponibles, sans présumer leur conformité documentaire ou juridique.
 
 ## Règles éditoriales
 
