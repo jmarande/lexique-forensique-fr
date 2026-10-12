@@ -47,3 +47,7 @@ Le paquet doit impérativement conserver le nom :
 Installer l’extension pour l’utilisateur actif puis redémarrer complètement LibreOffice si nécessaire.
 
 Version de référence du dépôt : **0.8.1**.
+
+## Classification en préparation
+
+La future navigation emploiera les petits pictogrammes 🔬 📱 💻 🌐 🧩 💾 💬 ☁️ pour distinguer les familles. Les 63 fiches sont couvertes par la [proposition de taxonomie](../docs/PROPOSITION-TAXONOMIE.md). Tant que l'intégration Writer n'est pas validée, le filtre actuel continue de fonctionner avec les catégories historiques.
