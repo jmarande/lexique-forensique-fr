@@ -1,224 +1,132 @@
-# Lexique forensique FR
-
 <p align="center">
-  <img src="docs/images/logo.png" alt="Logo Lexique forensique FR" width="142">
+  <img src="docs/images/logo.png" alt="Logo Lexique forensique FR" width="150">
 </p>
 
-Lexique français collaboratif de **criminalistique numérique** accompagné d’une extension **LibreOffice Writer** destinée à la recherche terminologique, à la normalisation des rapports et à la francisation de libellés issus d’exports de logiciels forensiques.
-
-## Consulter les fiches
-
-**[Consulter le catalogue des fiches du lexique](fiches/README.md)** — index alphabétique des termes, définitions, synonymes et formulations de rapport. Les fiches sont générées depuis la base JSON officielle. [Comment mettre à jour une fiche](docs/MISE-A-JOUR-FICHES.md).
-
-### Nouvelle classification en préparation
-
-🔬 **Méthodologie forensique** · 🧩 **Données et traces** · 💾 **Équipements et supports** · 📱 **Téléphonie mobile** · 💻 **Informatique** · 🌐 **Réseaux** · ☁️ **Services numériques** · 💬 **Applications**
-
-La [proposition de classification hiérarchique](docs/PROPOSITION-TAXONOMIE.md) couvre les 63 fiches existantes, sans modifier leurs anciennes catégories. Les domaines iOS, Android, Windows, Linux et macOS pourront compléter le classement principal. La navigation hiérarchique dans Writer sera livrée après validation et tests.
-
-## Objectifs
-
-Le projet vise à :
-
-- proposer un vocabulaire français cohérent pour la criminalistique numérique ;
-- rapprocher les termes français de leurs équivalents anglais ;
-- fournir des définitions courtes, techniques et opérationnelles ;
-- conserver synonymes, termes déconseillés, sources et points d’attention ;
-- proposer plusieurs formulations de rapport lorsque le contexte le justifie ;
-- détecter dans Writer des termes déconseillés ou des libellés anglais à franciser ;
-- permettre à l’utilisateur d’enrichir ses propres termes, scénarios et occurrences ;
-- conserver les données dans des formats JSON simples et réutilisables.
-
-## Extension LibreOffice Writer
-
-L’extension propose actuellement :
-
-- **Recherche terminologique** avec recherche insensible à la casse et aux accents ;
-- **Filtre par catégorie** ;
-- **Fiches de termes** avec définition, anglais, catégorie, synonymes et formulations pour rapport ;
-- **Insertion d’une formulation** dans le document Writer ;
-- **Vérification du document** dans une fenêtre dédiée ;
-- détection des **termes déconseillés** ;
-- détection et francisation de **libellés anglais** d’exports forensiques ;
-- remplacement d’une occurrence détectée ;
-- **Occurrences utilisateur** : création, modification et suppression de règles personnelles ;
-- **Scénarios de rédaction** composés de plusieurs formulations du lexique ;
-- création, duplication, modification et suppression de scénarios utilisateur ;
-- **Gestion des termes utilisateur** avec catégories et formulations personnalisées ;
-- **Proposition de plusieurs fiches personnelles** depuis « Exporter / Importer… » : sélection multiple et issue GitHub préremplie, à vérifier avant publication ;
-- **Export / import** de toutes les données utilisateur dans un fichier JSON unique ;
-- import avec choix entre **fusionner** et **remplacer** la base utilisateur ;
-- vérification et installation des mises à jour depuis GitHub.
-
-Les fenêtres principales de travail sont non modales lorsque cela est utile afin de pouvoir continuer à rédiger dans Writer.
-
-## Captures d’écran
-
-### Fenêtre principale du lexique
+<h1 align="center">Lexique forensique FR</h1>
 
 <p align="center">
-  <img src="docs/images/capture-lexique.jpg" alt="Fenêtre principale du Lexique forensique FR" width="620">
+  <strong>Le vocabulaire de la criminalistique numérique, au service de vos rapports.</strong><br>
+  Un lexique français collaboratif et une extension pour LibreOffice Writer.
 </p>
-
-### Scénarios de rédaction
 
 <p align="center">
-  <img src="docs/images/capture-scenarios.jpg" alt="Fenêtre des scénarios de rédaction" width="700">
+  <a href="https://github.com/jmarande/lexique-forensique-fr/releases/latest"><img src="https://img.shields.io/github/v/release/jmarande/lexique-forensique-fr?label=version&amp;color=17365d" alt="Dernière version publiée"></a>
+  <a href="extension/README.md"><img src="https://img.shields.io/badge/LibreOffice-7.4%2B-187443" alt="LibreOffice 7.4 ou supérieur"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/licence-GPL--3.0--only-52647a" alt="Licence GPL-3.0-only"></a>
 </p>
 
-## Données officielles et données utilisateur
+<p align="center">
+  <a href="https://github.com/jmarande/lexique-forensique-fr/releases/latest/download/lexique-forensique-fr.oxt"><strong>Télécharger l’extension</strong></a> ·
+  <a href="fiches/README.md"><strong>Consulter les fiches</strong></a> ·
+  <a href="docs/AIDE.md">Guide d’utilisation</a> ·
+  <a href="CONTRIBUTING.md">Contribuer</a>
+</p>
 
-Les données fournies avec l’extension sont protégées. Les créations personnelles sont stockées dans le profil utilisateur, hors du paquet OXT :
+---
 
-```text
-~/.lexique-forensique-fr/
-├── lexique-utilisateur.json
-├── scenarios-utilisateur.json
-├── occurrences-utilisateur.json
-└── sauvegardes/
-```
+## Un vocabulaire commun pour des rapports précis
 
-Cela permet de mettre à jour l’extension sans perdre les données personnelles.
+**Lexique forensique FR** accompagne les professionnels de la criminalistique numérique dans la recherche d’un terme, la compréhension d’une notion et la rédaction en français. Il rassemble des définitions, des équivalents anglais, des synonymes, des termes proches et des formulations adaptées à différentes situations d’examen.
 
-### Export / import
+Le [catalogue des fiches](fiches/README.md) se consulte directement sur GitHub. L’extension intègre ces ressources à **LibreOffice Writer** pour les utiliser pendant la rédaction.
 
-Le menu **Lexique forensique > Exporter / Importer…** permet d’exporter dans un seul fichier :
+## Le lexique en chiffres
 
-- les termes utilisateur ;
-- les scénarios utilisateur ;
-- les occurrences utilisateur.
+| Ressource disponible | Nombre |
+| --- | ---: |
+| [Fiches terminologiques](fiches/README.md) | **68** |
+| Formulations de rapport | **200** |
+| Scénarios de rédaction | **5** |
+| Règles de francisation des libellés | **18** |
 
-À l’import :
+*Chiffres calculés à partir de la base officielle du dépôt au 12 octobre 2026, hors données personnelles. Le catalogue évolue au fil des relectures ; le contenu installé dépend de la version de l’extension.*
 
-- **Fusionner** conserve les données locales déjà présentes et ajoute les éléments absents ;
-- **Remplacer** remplace uniquement les données utilisateur ;
-- une sauvegarde automatique de la base locale est créée avant import.
+## Ce que permet l’extension
 
-Les données officielles embarquées dans l’extension ne sont jamais écrasées par cette opération.
+| Usage | Fonctionnalités |
+| --- | --- |
+| **Rechercher un terme** | Recherche insensible à la casse et aux accents, recherche par synonymes et filtre par catégorie. |
+| **Rédiger un rapport** | Consultation des fiches et insertion d’une formulation correspondant à la situation rencontrée. |
+| **Préparer un scénario** | Assemblage de plusieurs formulations ; création, duplication et modification de scénarios personnels. |
+| **Vérifier un document** | Repérage de termes déconseillés et de libellés anglais d’exports forensiques, avec remplacement d’une occurrence. |
+| **Enrichir ses ressources** | Création de termes, de formulations et de règles de détection personnelles. |
+| **Sauvegarder et partager** | Export et import de la base personnelle ; proposition d’une ou plusieurs fiches au projet depuis l’extension. |
 
-**Contribuer :** [proposer une fiche au lexique](docs/PROPOSER-UNE-FICHE.md).
+La consultation du lexique, la rédaction et l’aide intégrée fonctionnent **hors ligne**. Le téléchargement des mises à jour et la proposition de fiches sur GitHub nécessitent une connexion.
 
-**Aide :** accessible depuis le menu [Aide…](docs/AIDE.md).
+## Aperçu dans LibreOffice Writer
 
-## Installation
+### Rechercher, comprendre et insérer une formulation
 
-Télécharger **`lexique-forensique-fr.oxt`** depuis la dernière GitHub Release puis l’ouvrir avec LibreOffice.
+<p align="center">
+  <a href="docs/images/capture-lexique.jpg"><img src="docs/images/capture-lexique.jpg" alt="Recherche d’un terme et sélection d’une formulation de rapport dans Writer" width="620"></a>
+</p>
 
-> Le nom du fichier OXT doit rester exactement `lexique-forensique-fr.oxt`, car les URL de scripts de `extension/Addons.xcu` dépendent de ce nom.
+### Assembler plusieurs formulations dans un scénario
 
-Après installation, redémarrer complètement LibreOffice si le menu **Lexique forensique** n’apparaît pas immédiatement.
+<p align="center">
+  <a href="docs/images/capture-scenarios.jpg"><img src="docs/images/capture-scenarios.jpg" alt="Scénario de rédaction composé de plusieurs formulations du lexique" width="700"></a>
+</p>
 
-## Données du projet
+*Captures d’une version antérieure : certains libellés et la disposition des commandes peuvent différer de la version actuelle.*
 
-Les données officielles existent en double : une copie source à la racine et une copie embarquée dans l’extension.
+## Installer et commencer
 
-```text
-data/
-├── lexique.json
-├── scenarios.json
-└── traductions.json
+**Prérequis : LibreOffice 7.4 ou supérieur, avec Writer.**
 
-extension/data/
-├── lexique.json
-├── scenarios.json
-└── traductions.json
-```
+1. Télécharger [**lexique-forensique-fr.oxt**](https://github.com/jmarande/lexique-forensique-fr/releases/latest/download/lexique-forensique-fr.oxt), le paquet de la dernière version publiée.
+2. Ouvrir le fichier avec LibreOffice et confirmer l’installation. Redémarrer complètement LibreOffice si nécessaire.
+3. Dans Writer, ouvrir **Lexique forensique > Rechercher un terme…**, puis choisir une fiche et une formulation à insérer.
 
-Les paires correspondantes doivent rester synchronisées.
+Conserver le nom **`lexique-forensique-fr.oxt`** : il est nécessaire au fonctionnement de l’extension.
 
-### Entrée de lexique
+**Au quotidien :** le menu **Aide…** ouvre une aide consultable hors ligne. Le menu **Mettre à jour…** recherche la dernière version et présente ses notes de publication.
 
-```json
-{
-  "id": "acquisition-forensique",
-  "terme": "Acquisition forensique",
-  "anglais": "Forensic acquisition",
-  "categorie": "Méthode de criminalistique numérique",
-  "definition": "…",
-  "synonymes": ["Extraction"],
-  "termes_deconseilles": [],
-  "sources": ["Référence documentaire précise — entrée, édition ou date (exemple fictif)"],
-  "formulations_rapport": [
-    {
-      "type": "Acquisition réalisée",
-      "texte": "…"
-    }
-  ]
-}
-```
+[Consulter les versions et leurs nouveautés](https://github.com/jmarande/lexique-forensique-fr/releases) · [Ouvrir le guide d’utilisation](docs/AIDE.md)
 
-### Scénarios
+## Vos ressources personnelles
 
-Les scénarios référencent les identifiants des termes et les types de formulations. Ils ne recopient pas les phrases du lexique : une évolution d’une formulation reste ainsi répercutée dans les scénarios.
+Vos **termes, scénarios et occurrences** sont enregistrés localement, séparément des données fournies avec l’extension. Ils sont conservés lors des mises à jour.
 
-### Occurrences et francisation
+Le menu **Exporter / Importer…** permet de sauvegarder l’ensemble dans un fichier JSON. L’import propose de **fusionner** les données ou de **remplacer** la base personnelle, avec sauvegarde automatique préalable. Les données officielles ne sont pas écrasées par l’import.
 
-La base officielle `traductions.json` alimente le vérificateur avec des correspondances du type :
+[Comprendre le stockage et les formats de données](docs/DONNEES.md)
 
-```json
-{
-  "anglais": "Missed Call",
-  "francais": "Appel manqué",
-  "note": "Statut d’appel non répondu."
-}
-```
+## Une démarche documentaire fondée sur plusieurs sources
 
-Les règles utilisateur peuvent contenir une occurrence, plusieurs remplacements possibles et un remplacement préféré.
+**Le projet est indépendant.** Il rédige ses propres définitions françaises et formulations de rapport en confrontant, selon le sujet, les références pertinentes : **NIST, SWGDE, CLARUS D3.2, ANSSI, FranceTerme**, ainsi que d’autres guides méthodologiques et documentations techniques. Aucune source ne bénéficie d’une priorité automatique ; les organismes cités ne sont ni éditeurs ni garants du projet.
 
-## Sources et démarche terminologique
+La relecture des fiches se poursuit progressivement : une fiche disponible n’est pas nécessairement une fiche validée. Le circuit prévoit une analyse documentaire, la comparaison des concepts et une **validation humaine explicite**. Les formulations proposées restent à adapter aux constatations et aux limites de chaque examen.
 
-**Lexique forensique FR est un projet indépendant**, conçu pour la pratique francophone de la criminalistique numérique. Il propose ses propres définitions, équivalents français et formulations de rapport, en privilégiant la précision technique et la prudence dans l’interprétation.
+Les références documentent les notions et leurs usages. Leur citation ne vaut pas autorisation de reproduction ; les conditions de réutilisation de chaque source doivent être respectées.
 
-Son travail documentaire confronte, selon le sujet, des références telles que **NIST**, **SWGDE**, **CLARUS D3.2**, **ANSSI**, **FranceTerme** et des guides méthodologiques ou techniques pertinents, **sans hiérarchie automatique entre elles**. Ces organismes ne sont ni éditeurs ni garants du projet.
+[Référentiel commun des sources](sources/REFERENTIEL.md) · [Méthode de relecture et de validation](docs/VALIDATION-FICHES.md)
 
-Les sources sont utilisées pour vérifier les concepts et identifier les divergences terminologiques. Leur citation ne vaut pas autorisation de reproduction : toute reprise de contenu doit respecter les droits et conditions de réutilisation applicables.
+## Participer au projet
 
-**Documentation :** [méthode de relecture et validation](docs/VALIDATION-FICHES.md) · [référentiel commun des sources](sources/REFERENTIEL.md) · [audit des 63 fiches](sources/AUDIT-63-FICHES-2026-10-10.md) · [audit initial](sources/AUDIT-INITIAL-2026-10-10.md).
+Vous pouvez proposer un terme, préciser une définition, enrichir une formulation ou signaler un dysfonctionnement.
 
-## Structure du dépôt
+- **Depuis Writer :** dans **Exporter / Importer…**, sélectionner une ou plusieurs fiches personnelles et préparer leur proposition au lexique.
+- **Depuis GitHub :** suivre le [guide de contribution](CONTRIBUTING.md) ou [ouvrir une issue](https://github.com/jmarande/lexique-forensique-fr/issues/new/choose).
 
-```text
-lexique-forensique-fr/
-├── .github/workflows/release-oxt.yml
-├── README.md
-├── LICENSE
-├── CONTRIBUTING.md
-├── ROADMAP.md
-├── docs/
-│   └── images/
-│       ├── logo.png
-│       ├── capture-lexique.jpg
-│       └── capture-scenarios.jpg
-├── data/
-│   ├── lexique.json
-│   ├── scenarios.json
-│   └── traductions.json
-├── extension/
-│   ├── Addons.xcu
-│   ├── META-INF/manifest.xml
-│   ├── Scripts/python/lexique_forensique.py
-│   ├── images/logo.png
-│   ├── data/
-│   │   ├── lexique.json
-│   │   ├── scenarios.json
-│   │   └── traductions.json
-│   ├── description.xml
-│   ├── README.md
-│   └── README.txt
-├── release/
-│   └── README.md
-└── sources/
-    ├── REFERENTIEL.md
-    ├── AUDIT-63-FICHES-2026-10-10.md
-    └── AUDIT-INITIAL-2026-10-10.md
-```
+La proposition depuis l’extension ouvre un formulaire prérempli : elle n’est publiée qu’après votre confirmation sur GitHub. Vérifiez son contenu avant publication et retirez toute donnée personnelle, confidentielle ou issue d’une procédure. Les propositions sont relues avant leur éventuelle intégration.
 
-## Version
+[Comment proposer une fiche](docs/PROPOSER-UNE-FICHE.md) · [Comment mettre à jour une fiche](docs/MISE-A-JOUR-FICHES.md)
 
-Dernière version publiée au 9 octobre 2026 : **v0.8.1**.
+## Documentation et suivi
 
-La distribution est construite automatiquement par GitHub Actions et publiée dans GitHub Releases.
+| Ressource | Contenu |
+| --- | --- |
+| [Catalogue des fiches](fiches/README.md) | Index alphabétique, définitions et formulations de rapport. |
+| [Aide utilisateur](docs/AIDE.md) | Prise en main et principaux parcours dans Writer. |
+| [Extension Writer](extension/README.md) | Fonctionnement de l’extension et mises à jour. |
+| [Données et organisation du dépôt](docs/DONNEES.md) | Stockage local, formats JSON et structure du projet. |
+| [Sources et validation](docs/VALIDATION-FICHES.md) | Méthode documentaire et critères de relecture. |
+| [Feuille de route](ROADMAP.md) | Priorités et évolutions prévues. |
+| [Distribution des versions](release/README.md) | Construction du paquet OXT et publication. |
+
+Les [issues du projet](https://github.com/jmarande/lexique-forensique-fr/issues) détaillent les travaux en cours. Les audits [initial](sources/AUDIT-INITIAL-2026-10-10.md) et [des 63 fiches au 10 octobre 2026](sources/AUDIT-63-FICHES-2026-10-10.md) restent consultables comme états historiques.
 
 ## Licence
 
-Lexique forensique FR est distribué sous licence **GNU General Public License version 3 (GPL-3.0-only)**. Consultez le fichier [LICENSE](LICENSE) pour le texte intégral de la licence.
+Lexique forensique FR est distribué sous licence **GNU GPL-3.0-only**. Consulter le fichier [LICENSE](LICENSE) pour le texte intégral.
