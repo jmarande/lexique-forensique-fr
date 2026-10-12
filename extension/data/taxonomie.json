@@ -113,6 +113,21 @@
         }
       ],
       "icone": "💬"
+    },
+    {
+      "id": "navigation",
+      "label": "Navigation Internet",
+      "sous_categories": [
+        {
+          "id": "navigateurs",
+          "label": "Navigateurs"
+        },
+        {
+          "id": "historique",
+          "label": "Historique et traces de navigation"
+        }
+      ],
+      "icone": "🌐"
     }
   ],
   "domaines": [
@@ -361,10 +376,22 @@
       "ancienne_categorie": "Méthode de criminalistique numérique"
     },
     {
+      "id": "google-chrome",
+      "classification": "navigation/navigateurs",
+      "domaines": [],
+      "ancienne_categorie": "Logiciel et application"
+    },
+    {
       "id": "hachage",
       "classification": "donnees/integrite-cryptographie",
       "domaines": [],
       "ancienne_categorie": "Méthode de criminalistique numérique"
+    },
+    {
+      "id": "historique-navigation",
+      "classification": "navigation/historique",
+      "domaines": [],
+      "ancienne_categorie": "Logiciel et application"
     },
     {
       "id": "horodatage",
@@ -403,8 +430,14 @@
       "ancienne_categorie": "Méthode de criminalistique numérique"
     },
     {
+      "id": "journaux-applicatifs",
+      "classification": "donnees/preuves-traces",
+      "domaines": [],
+      "ancienne_categorie": "Preuve numérique"
+    },
+    {
       "id": "journaux-systeme",
-      "classification": "informatique/systemes-fichiers",
+      "classification": "donnees/preuves-traces",
       "domaines": [],
       "ancienne_categorie": "Preuve numérique"
     },
@@ -445,10 +478,22 @@
       "ancienne_categorie": "Méthode de criminalistique numérique"
     },
     {
+      "id": "mozilla-firefox",
+      "classification": "navigation/navigateurs",
+      "domaines": [],
+      "ancienne_categorie": "Logiciel et application"
+    },
+    {
       "id": "msisdn",
       "classification": "telephonie/identifiants-sim",
       "domaines": [],
       "ancienne_categorie": "Preuve numérique"
+    },
+    {
+      "id": "navigateur-internet",
+      "classification": "navigation/navigateurs",
+      "domaines": [],
+      "ancienne_categorie": "Logiciel et application"
     },
     {
       "id": "numero-serie",
@@ -569,6 +614,12 @@
         "informatique"
       ],
       "ancienne_categorie": "Application — Messagerie"
+    },
+    {
+      "id": "traces-activite",
+      "classification": "donnees/preuves-traces",
+      "domaines": [],
+      "ancienne_categorie": "Preuve numérique"
     },
     {
       "id": "valeur-hachage",

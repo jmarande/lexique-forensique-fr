@@ -908,14 +908,54 @@
     "terme": "EXIF",
     "anglais": "Exchangeable Image File Format (EXIF)",
     "categorie": "Preuve numérique",
-    "definition": "Format normalisé de métadonnées intégré notamment à des fichiers d’image et pouvant contenir des informations techniques relatives aux conditions, à la date, à l’heure ou au lieu de création du fichier.",
+    "definition": "Ensemble normalisé de métadonnées pouvant être intégré à certains fichiers d'images numériques afin de décrire leurs caractéristiques techniques et les conditions déclarées de leur acquisition. Ces informations peuvent comprendre les caractéristiques de l'appareil, les paramètres de prise de vue, des dates, des heures et des coordonnées géographiques. Leur présence, leur exactitude et leur conservation dépendent de l'appareil, du format et des traitements effectués ; elles doivent être interprétées au regard des autres informations disponibles.",
     "synonymes": [
       "Métadonnées EXIF"
     ],
     "termes_deconseilles": [],
     "exemple_rapport": "L’examen des métadonnées EXIF fournit des informations techniques complémentaires relatives au fichier.",
     "sources": [
-      "CLARUS D3.2 — EXIF"
+      "CIPA — Exif Version 3.1",
+      "ExifTool — FAQ",
+      "ExifTool — GPS Tag Names",
+      "SWGDE — Guidelines for Forensic Image Analysis"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Examen des métadonnées EXIF",
+        "texte": "Nous procédons à l'examen des métadonnées EXIF associées aux fichiers photographiques afin de relever les informations techniques disponibles."
+      },
+      {
+        "type": "Informations de prise de vue",
+        "texte": "Les métadonnées EXIF du fichier comportent des informations relatives à l'appareil et aux paramètres de prise de vue."
+      },
+      {
+        "type": "Coordonnées géographiques",
+        "texte": "Les métadonnées EXIF du fichier comportent des coordonnées géographiques susceptibles de renseigner sur le lieu de prise de vue déclaré."
+      },
+      {
+        "type": "Horodatage EXIF",
+        "texte": "Les métadonnées EXIF du fichier comportent des informations de date et d'heure associées à la prise de vue, dont l'interprétation nécessite de tenir compte des paramètres temporels de l'appareil."
+      },
+      {
+        "type": "Métadonnées EXIF absentes",
+        "texte": "L'examen du fichier ne permet pas d'identifier de métadonnées EXIF exploitables."
+      },
+      {
+        "type": "Divergence des horodatages",
+        "texte": "Nous constatons une différence entre les informations temporelles enregistrées dans les métadonnées EXIF et celles associées au fichier par le système de fichiers, sans que cette différence permette, à elle seule, d'en déterminer l'origine."
+      }
+    ],
+    "termes_proches": [
+      "Métadonnées",
+      "Horodatage",
+      "Fichier multimédia",
+      "Géolocalisation"
+    ],
+    "points_attention": [
+      "Les coordonnées GPS ne garantissent pas la localisation effective de la prise de vue.",
+      "Certains horodatages EXIF n'incluent pas de fuseau.",
+      "Un transfert peut supprimer les métadonnées sans intention de dissimulation."
     ]
   },
   {
@@ -1216,6 +1256,113 @@
     ]
   },
   {
+    "id": "google-chrome",
+    "terme": "Google Chrome",
+    "definition": "Navigateur Internet développé par Google et reposant sur Chromium. Il peut conserver des historiques, téléchargements, favoris, cookies, données de formulaires, sessions et paramètres de profils. Les traces doivent être interprétées en tenant compte des opérations automatiques, de la synchronisation, des profils et des conditions d'acquisition.",
+    "formulations_rapport": [
+      {
+        "type": "Identification",
+        "texte": "Nous identifions la présence du navigateur Internet Google Chrome sur le support examiné."
+      },
+      {
+        "type": "Examen",
+        "texte": "Nous procédons à l'examen des données accessibles associées à Google Chrome afin d'identifier les éléments susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Historique identifié",
+        "texte": "L'examen des données de Google Chrome permet d'identifier des enregistrements d'historique de navigation associés à différentes adresses Internet."
+      },
+      {
+        "type": "Téléchargements",
+        "texte": "Les données de Google Chrome comportent des enregistrements relatifs à des opérations de téléchargement."
+      },
+      {
+        "type": "Plusieurs profils",
+        "texte": "Nous identifions plusieurs profils associés à Google Chrome et procédons à l'examen des données accessibles de chacun d'eux."
+      },
+      {
+        "type": "Accès partiel",
+        "texte": "Les conditions techniques de l'examen ne permettent d'accéder qu'à une partie des données associées au navigateur Google Chrome."
+      },
+      {
+        "type": "Absence de données",
+        "texte": "L'examen des données accessibles de Google Chrome ne permet pas d'identifier d'éléments exploitables au regard de la mission."
+      },
+      {
+        "type": "Limites d'attribution",
+        "texte": "Les traces identifiées dans les données de Google Chrome ne permettent pas, à elles seules, d'établir l'identité de la personne ayant réalisé les opérations de navigation correspondantes."
+      },
+      {
+        "type": "Données de formulaires",
+        "texte": "L'examen des données de Google Chrome permet d'identifier des informations enregistrées au titre du remplissage automatique de formulaires."
+      },
+      {
+        "type": "Adresses distinctes",
+        "texte": "L'examen des données de Google Chrome permet d'identifier [nombre] adresses Internet distinctes dans l'historique de navigation, pour une période comprise entre le [date de début] et le [date de fin]."
+      },
+      {
+        "type": "Événements de navigation",
+        "texte": "L'analyse de l'historique de Google Chrome permet de relever [nombre] événements de navigation enregistrés entre le [date de début] et le [date de fin]."
+      }
+    ],
+    "sources": [
+      "Chromium — User Data Directory",
+      "Chromium — History",
+      "Chromium — Downloads",
+      "Google Chrome — Navigation privée"
+    ],
+    "anglais": "Google Chrome",
+    "categorie": "Logiciel et application",
+    "synonymes": [
+      "Chrome"
+    ],
+    "termes_deconseilles": [],
+    "termes_proches": [
+      "Navigateur Internet",
+      "Historique de navigation",
+      "Chromium",
+      "Cookies"
+    ],
+    "points_attention": [
+      "Distinguer URL distinctes et événements de visite.",
+      "Les saisies de formulaires n'attestent pas une soumission.",
+      "Les données Android/iOS dépendent des protections et des versions.",
+      "Vérifier la présentation des horodatages en UTC+00:00."
+    ],
+    "artefacts_techniques": [
+      "History — Visites et téléchargements",
+      "Bookmarks — Favoris",
+      "Cookies — Cookies",
+      "Login Data — Identifiants protégés",
+      "Web Data — Saisies de formulaires",
+      "Preferences — Paramètres",
+      "Sessions — Sessions",
+      "Cache — Ressources"
+    ],
+    "emplacements_par_systeme": [
+      {
+        "systeme": "Windows",
+        "chemin": "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\"
+      },
+      {
+        "systeme": "Linux",
+        "chemin": "~/.config/google-chrome/"
+      },
+      {
+        "systeme": "macOS",
+        "chemin": "~/Library/Application Support/Google/Chrome/"
+      },
+      {
+        "systeme": "Android",
+        "chemin": "/data/user/0/com.android.chrome/app_chrome/ (selon version)"
+      },
+      {
+        "systeme": "iOS",
+        "chemin": "Conteneur privé : Library/Application Support/Google/Chrome/ (selon version)"
+      }
+    ]
+  },
+  {
     "id": "hachage",
     "terme": "Hachage et empreinte numérique",
     "anglais": "Hashing / Hash value",
@@ -1276,11 +1423,77 @@
     ]
   },
   {
+    "id": "historique-navigation",
+    "terme": "Historique de navigation",
+    "definition": "Ensemble des enregistrements conservés par un navigateur concernant les accès à des pages ou ressources Web. Ils peuvent comprendre URL, titres, dates, nombre de visites et types de transition. Conservé localement ou synchronisé, cet historique n'est pas nécessairement exhaustif et doit être interprété selon les redirections, chargements automatiques, suppressions éventuelles et limites d'acquisition.",
+    "formulations_rapport": [
+      {
+        "type": "Examen",
+        "texte": "Nous procédons à l'examen des historiques de navigation accessibles afin d'identifier les adresses et événements de navigation susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Historique identifié",
+        "texte": "L'examen des données du navigateur permet d'identifier des enregistrements d'historique associés à différentes adresses Internet."
+      },
+      {
+        "type": "Site déterminé",
+        "texte": "Nous identifions dans l'historique du navigateur des enregistrements associés au site Internet [adresse ou nom du site]."
+      },
+      {
+        "type": "Chronologie",
+        "texte": "L'exploitation des informations temporelles disponibles permet d'établir une chronologie des événements de navigation enregistrés, dans les limites précisées au présent rapport."
+      },
+      {
+        "type": "Historique partiel",
+        "texte": "Les données disponibles ne permettent de restituer qu'une partie des événements de navigation susceptibles d'avoir été enregistrés par le navigateur."
+      },
+      {
+        "type": "Absence d'historique",
+        "texte": "L'examen des données accessibles du navigateur ne permet pas d'identifier d'historique de navigation exploitable au regard de la mission."
+      },
+      {
+        "type": "Historique résiduel",
+        "texte": "Les opérations d'examen permettent d'identifier des traces résiduelles d'historique de navigation, sans permettre nécessairement de reconstituer l'ensemble des événements correspondants."
+      },
+      {
+        "type": "Synchronisation",
+        "texte": "Les données examinées comportent des informations de navigation susceptibles de provenir d'une synchronisation entre plusieurs équipements, sans qu'il soit possible d'attribuer avec certitude chaque événement au support examiné."
+      },
+      {
+        "type": "Limites d'interprétation",
+        "texte": "Les enregistrements d'historique ne permettent pas, à eux seuls, d'établir qu'une personne déterminée a volontairement consulté le contenu des pages correspondantes."
+      }
+    ],
+    "sources": [
+      "Mozilla — Places",
+      "Chromium — History API",
+      "SWGDE — Computer Forensic Examinations"
+    ],
+    "anglais": "Browsing history / Web browsing history",
+    "categorie": "Logiciel et application",
+    "synonymes": [
+      "Historique Web",
+      "Historique du navigateur"
+    ],
+    "termes_deconseilles": [],
+    "termes_proches": [
+      "Navigateur Internet",
+      "Traces d'activité",
+      "Cookies",
+      "Horodatage"
+    ],
+    "points_attention": [
+      "Une URL enregistrée ne prouve pas la lecture du contenu.",
+      "Une absence d'historique n'implique pas une suppression.",
+      "Les redirections et synchronisations influencent l'attribution."
+    ]
+  },
+  {
     "id": "horodatage",
     "terme": "Horodatage",
     "anglais": "Timestamp",
     "categorie": "Preuve numérique",
-    "definition": "Marque enregistrée indiquant une date et une heure associées à un événement numérique ou à une opération portant sur des données, par exemple leur création, modification, accès ou transmission.",
+    "definition": "Information temporelle associant une date et une heure à une donnée numérique, un événement ou une opération enregistrée par un système, une application ou un équipement. Un horodatage peut notamment concerner la création, la modification ou l'accès à un fichier, un message ou une activité système. Son interprétation nécessite de tenir compte de son origine, du référentiel temporel, du fuseau horaire, de la précision et de la fiabilité de l'horloge.",
     "synonymes": [
       "Marque temporelle",
       "Timestamp"
@@ -1288,7 +1501,51 @@
     "termes_deconseilles": [],
     "exemple_rapport": "L’horodatage associé au fichier indique la date et l’heure enregistrées pour sa création ou sa modification.",
     "sources": [
-      "CLARUS D3.2 — Timestamp"
+      "NIST SP 800-86",
+      "SWGDE — Mobile Device Forensic Analysis",
+      "Microsoft — File Times",
+      "SWGDE — Computer Forensic Acquisition"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Examen des horodatages",
+        "texte": "Nous procédons à l'examen des informations temporelles associées aux données afin d'en relever les dates et heures disponibles."
+      },
+      {
+        "type": "Conversion du fuseau horaire",
+        "texte": "Les horodatages relevés sont convertis dans le fuseau horaire indiqué au présent rapport, à partir des informations temporelles disponibles."
+      },
+      {
+        "type": "Divergence des horodatages",
+        "texte": "L'examen met en évidence des différences entre les informations temporelles associées à certains éléments, dont l'origine ne peut être déterminée avec certitude à partir des seules données disponibles."
+      },
+      {
+        "type": "Décalage de l'horloge",
+        "texte": "Les informations disponibles mettent en évidence un décalage de l'horloge de l'équipement, susceptible d'affecter l'interprétation chronologique des événements enregistrés."
+      },
+      {
+        "type": "Référentiel temporel indéterminé",
+        "texte": "Les informations disponibles ne permettent pas de déterminer avec certitude le référentiel temporel utilisé pour les horodatages concernés."
+      },
+      {
+        "type": "Limites d'interprétation",
+        "texte": "Les horodatages identifiés doivent être interprétés en tenant compte des caractéristiques du système et des éventuels décalages ou modifications des informations temporelles."
+      },
+      {
+        "type": "Uniformisation UTC+00:00",
+        "texte": "Afin de garantir la cohérence de la présentation chronologique, l'ensemble des dates et heures mentionnées dans le présent rapport est exprimé en temps universel coordonné (UTC+00:00)."
+      }
+    ],
+    "termes_proches": [
+      "Métadonnées",
+      "EXIF",
+      "Journaux système",
+      "Analyse des données"
+    ],
+    "points_attention": [
+      "La formulation UTC+00:00 exige une conversion ou vérification effective de toutes les dates concernées.",
+      "L'horloge d'un appareil peut être décalée.",
+      "Une date de fichier ne correspond pas nécessairement à la création de son contenu."
     ]
   },
   {
@@ -1474,21 +1731,123 @@
     "formulations_rapport": []
   },
   {
+    "id": "journaux-applicatifs",
+    "terme": "Journaux applicatifs",
+    "definition": "Enregistrements générés par une application ou ses composants pour conserver des informations relatives à son fonctionnement, à certaines opérations et aux événements détectés. Ils peuvent concerner connexions, authentifications, erreurs, échanges avec des services distants et certaines actions applicatives. Conservés localement ou à distance, leur contenu, leur disponibilité et leur durée de conservation dépendent de la configuration et des conditions d'acquisition.",
+    "formulations_rapport": [
+      {
+        "type": "Examen",
+        "texte": "Nous procédons à l'examen des journaux applicatifs accessibles afin d'identifier les événements susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Événements identifiés",
+        "texte": "L'examen des journaux applicatifs permet d'identifier des événements techniques enregistrés."
+      },
+      {
+        "type": "Connexions et authentifications",
+        "texte": "Les journaux applicatifs examinés comportent des événements relatifs à des opérations de connexion ou d'authentification."
+      },
+      {
+        "type": "Reconstitution chronologique",
+        "texte": "L'analyse des journaux applicatifs permet d'établir une chronologie partielle des événements enregistrés, sous réserve de la fiabilité des informations temporelles disponibles."
+      },
+      {
+        "type": "Journaux incomplets",
+        "texte": "Les journaux applicatifs accessibles ne permettent pas de reconstituer l'ensemble des événements survenus pendant la période examinée."
+      },
+      {
+        "type": "Absence de journaux exploitables",
+        "texte": "L'examen des données disponibles ne permet pas d'identifier de journaux applicatifs exploitables au regard de la mission."
+      },
+      {
+        "type": "Corrélation",
+        "texte": "Nous procédons au rapprochement des événements identifiés dans les journaux applicatifs avec les autres traces numériques disponibles afin d'en apprécier la cohérence."
+      },
+      {
+        "type": "Limites d'attribution",
+        "texte": "Les événements identifiés dans les journaux applicatifs ne permettent pas, à eux seuls, de déterminer l'identité de la personne à l'origine des actions correspondantes."
+      }
+    ],
+    "sources": [
+      "NIST SP 800-92",
+      "OWASP — Logging Cheat Sheet",
+      "SWGDE — Computer Forensic Examinations"
+    ],
+    "anglais": "Application logs",
+    "synonymes": [
+      "Logs applicatifs",
+      "Journaux d'application"
+    ],
+    "categorie": "Preuve numérique",
+    "termes_deconseilles": [],
+    "termes_proches": [
+      "Horodatage",
+      "Métadonnées",
+      "Traces d'activité"
+    ],
+    "points_attention": [
+      "Un événement absent des journaux ne prouve pas son absence réelle.",
+      "La rotation et les réglages de conservation limitent l'exhaustivité.",
+      "Les horodatages et les attributions demandent une analyse contextualisée."
+    ]
+  },
+  {
     "id": "journaux-systeme",
     "terme": "Journaux système",
-    "anglais": "Logs / Log files",
+    "anglais": "System logs / System event logs",
     "categorie": "Preuve numérique",
-    "definition": "Enregistrements produits par un système afin de conserver la trace d’événements significatifs, tels que des connexions utilisateur, l’utilisation de périphériques, des connexions réseau ou d’autres activités du système.",
+    "definition": "Ensemble d'enregistrements générés par un système d'exploitation ou ses composants, relatifs à son fonctionnement et aux événements détectés ou signalés. Ils peuvent concerner démarrages, connexions, authentifications, erreurs et activités de services. Leur contenu dépend de la configuration, des conditions de fonctionnement et de conservation. Ils peuvent être incomplets, absents, altérés ou écrasés.",
     "synonymes": [
-      "Fichiers journaux",
-      "Logs",
-      "Journaux d’événements"
+      "Journaux d'événements système",
+      "Logs système"
     ],
     "termes_deconseilles": [],
     "exemple_rapport": "L’examen des journaux système met en évidence plusieurs événements susceptibles de contribuer à la chronologie des faits.",
     "sources": [
-      "CLARUS D3.2 — Logs",
-      "CLARUS D3.2 — Log files"
+      "NIST SP 800-92",
+      "SWGDE — Computer Forensic Examinations",
+      "Microsoft — Event Log Records",
+      "systemd-journald"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Examen des journaux système",
+        "texte": "Nous procédons à l'examen des journaux système accessibles afin d'identifier les événements techniques susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Événements identifiés",
+        "texte": "L'examen des journaux système permet d'identifier plusieurs événements techniques enregistrés par l'équipement au cours de son fonctionnement."
+      },
+      {
+        "type": "Reconstitution chronologique",
+        "texte": "L'analyse des journaux système permet d'établir une chronologie partielle des événements enregistrés, sous réserve de la fiabilité des informations temporelles disponibles."
+      },
+      {
+        "type": "Journaux incomplets",
+        "texte": "Les journaux système accessibles ne permettent pas de reconstituer l'ensemble des événements survenus pendant la période examinée."
+      },
+      {
+        "type": "Absence de journaux exploitables",
+        "texte": "L'examen des données disponibles ne permet pas d'identifier de journaux système exploitables au regard de la mission."
+      },
+      {
+        "type": "Corrélation",
+        "texte": "Nous procédons au rapprochement des événements identifiés dans les journaux système avec les autres traces numériques disponibles afin d'en apprécier la cohérence."
+      },
+      {
+        "type": "Limites d'attribution",
+        "texte": "Les événements identifiés dans les journaux système ne permettent pas, à eux seuls, de déterminer l'identité de la personne à l'origine des actions correspondantes."
+      }
+    ],
+    "termes_proches": [
+      "Horodatage",
+      "Métadonnées",
+      "Traces d'activité"
+    ],
+    "points_attention": [
+      "Un événement absent des journaux ne prouve pas son absence réelle.",
+      "La rotation et les réglages de conservation limitent l'exhaustivité.",
+      "Les horodatages et les attributions demandent une analyse contextualisée."
     ]
   },
   {
@@ -1665,12 +2024,55 @@
     "terme": "Métadonnées",
     "anglais": "Metadata",
     "categorie": "Preuve numérique",
-    "definition": "Données décrivant d’autres données, notamment leurs caractéristiques, propriétés, contexte ou structure. En criminalistique numérique, elles peuvent contribuer à établir l’origine, l’historique ou les attributs d’un fichier ou d’un système.",
-    "synonymes": [],
+    "definition": "Informations associées à des données numériques et permettant d'en décrire les caractéristiques, la structure, l'origine technique ou certaines propriétés. Les métadonnées peuvent être enregistrées dans les fichiers eux-mêmes, dans les structures d'un système de fichiers ou dans celles d'une application. Leur interprétation nécessite de tenir compte de leur provenance, des mécanismes qui les produisent et des opérations susceptibles de les modifier.",
+    "synonymes": [
+      "Métainformations"
+    ],
     "termes_deconseilles": [],
     "exemple_rapport": "L’examen des métadonnées permet d’apporter des éléments complémentaires sur l’origine et l’historique du fichier.",
     "sources": [
-      "CLARUS D3.2 — Metadata"
+      "NIST SP 800-86",
+      "SWGDE — Computer Forensic Acquisition",
+      "ExifTool — FAQ",
+      "NIST — Provenience-based Cross-verification of Digital Forensic Artifacts Applied to NTFS (2024)"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Examen des métadonnées",
+        "texte": "Nous procédons à l'examen des métadonnées associées aux fichiers afin de relever les informations techniques disponibles."
+      },
+      {
+        "type": "Métadonnées présentant un intérêt",
+        "texte": "L'analyse des métadonnées permet d'identifier des informations susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Absence ou données incomplètes",
+        "texte": "Les fichiers examinés ne comportent pas, ou seulement partiellement, les métadonnées recherchées."
+      },
+      {
+        "type": "Limites d'interprétation",
+        "texte": "Les métadonnées relevées ne permettent pas, à elles seules, d'établir les circonstances exactes de création, de modification ou d'utilisation des fichiers concernés."
+      },
+      {
+        "type": "Incohérence des métadonnées",
+        "texte": "L'examen met en évidence des incohérences entre certaines métadonnées, dont l'origine ne peut être déterminée avec certitude à partir des seules informations disponibles."
+      },
+      {
+        "type": "Divergence entre sources",
+        "texte": "Nous constatons des différences entre les métadonnées enregistrées dans les fichiers et celles issues du système de fichiers ou des applications, sans que les informations disponibles permettent d'en déterminer avec certitude l'origine."
+      }
+    ],
+    "termes_proches": [
+      "EXIF",
+      "Horodatage",
+      "Artefact forensique",
+      "Système de fichiers",
+      "Journaux système"
+    ],
+    "points_attention": [
+      "La date de création du fichier peut différer de celle du contenu.",
+      "Les copies et exportations peuvent modifier les métadonnées.",
+      "Une incohérence ne démontre pas une manipulation volontaire."
     ]
   },
   {
@@ -1712,6 +2114,114 @@
     ]
   },
   {
+    "id": "mozilla-firefox",
+    "terme": "Mozilla Firefox",
+    "definition": "Navigateur Internet développé par Mozilla. Il peut conserver des historiques, recherches, téléchargements, favoris, formulaires, cookies, sessions et données de comptes. Leur présence et leur interprétation dépendent du profil, de la plateforme, de la version, de la synchronisation et des conditions d'acquisition.",
+    "formulations_rapport": [
+      {
+        "type": "Identification",
+        "texte": "Nous identifions la présence du navigateur Internet Mozilla Firefox sur le support examiné."
+      },
+      {
+        "type": "Examen",
+        "texte": "Nous procédons à l'examen des données accessibles associées à Mozilla Firefox afin d'identifier les éléments susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Historique identifié",
+        "texte": "L'examen des données de Mozilla Firefox permet d'identifier des enregistrements d'historique de navigation associés à différentes adresses Internet."
+      },
+      {
+        "type": "Téléchargements",
+        "texte": "Les données de Mozilla Firefox comportent des enregistrements relatifs à des opérations de téléchargement."
+      },
+      {
+        "type": "Plusieurs profils",
+        "texte": "Nous identifions plusieurs profils associés à Mozilla Firefox et procédons à l'examen des données accessibles de chacun d'eux."
+      },
+      {
+        "type": "Accès partiel",
+        "texte": "Les conditions techniques de l'examen ne permettent d'accéder qu'à une partie des données associées au navigateur Mozilla Firefox."
+      },
+      {
+        "type": "Absence de données",
+        "texte": "L'examen des données accessibles de Mozilla Firefox ne permet pas d'identifier d'éléments exploitables au regard de la mission."
+      },
+      {
+        "type": "Limites d'attribution",
+        "texte": "Les traces identifiées dans les données de Mozilla Firefox ne permettent pas, à elles seules, d'établir l'identité de la personne ayant réalisé les opérations de navigation correspondantes."
+      },
+      {
+        "type": "Données de formulaires",
+        "texte": "L'examen des données de Mozilla Firefox permet d'identifier des informations conservées au titre du remplissage automatique de formulaires."
+      },
+      {
+        "type": "Adresses distinctes",
+        "texte": "L'examen des données de Mozilla Firefox permet d'identifier [nombre] adresses Internet distinctes dans l'historique de navigation, pour une période comprise entre le [date de début] et le [date de fin]."
+      },
+      {
+        "type": "Événements de navigation",
+        "texte": "L'analyse de l'historique de Mozilla Firefox permet de relever [nombre] événements de navigation enregistrés entre le [date de début] et le [date de fin]."
+      }
+    ],
+    "sources": [
+      "Mozilla — Données et fichiers importants",
+      "Mozilla — Profils Firefox",
+      "Mozilla — Firefox Data Stores",
+      "Mozilla — Firefox iOS"
+    ],
+    "anglais": "Mozilla Firefox / Firefox Web Browser",
+    "categorie": "Logiciel et application",
+    "synonymes": [
+      "Firefox"
+    ],
+    "termes_deconseilles": [],
+    "termes_proches": [
+      "Navigateur Internet",
+      "Historique de navigation",
+      "Google Chrome",
+      "Cookies"
+    ],
+    "points_attention": [
+      "Les bases mobiles peuvent différer des versions de bureau.",
+      "formhistory.sqlite n'établit pas un envoi de formulaire.",
+      "Considérer les journaux SQLite WAL et SHM le cas échéant.",
+      "Présenter les horodatages après conversion vérifiée."
+    ],
+    "artefacts_techniques": [
+      "places.sqlite — Historique et favoris",
+      "formhistory.sqlite — Formulaires",
+      "cookies.sqlite — Cookies",
+      "logins.json / key4.db — Identifiants",
+      "favicons.sqlite — Icônes",
+      "permissions.sqlite — Autorisations",
+      "prefs.js — Préférences",
+      "sessionstore.jsonlz4 — Sessions",
+      "storage/ — Stockage Web"
+    ],
+    "emplacements_par_systeme": [
+      {
+        "systeme": "Windows",
+        "chemin": "%APPDATA%\\Mozilla\\Firefox\\Profiles\\"
+      },
+      {
+        "systeme": "Linux",
+        "chemin": "~/.mozilla/firefox/"
+      },
+      {
+        "systeme": "macOS",
+        "chemin": "~/Library/Application Support/Firefox/Profiles/"
+      },
+      {
+        "systeme": "Android",
+        "chemin": "/data/user/0/org.mozilla.firefox/ (selon version)"
+      },
+      {
+        "systeme": "iOS",
+        "chemin": "Conteneur Firefox/AppGroup, profile.profile/browser.db selon version"
+      }
+    ]
+  },
+  {
     "id": "msisdn",
     "terme": "MSISDN",
     "anglais": "Mobile Station Integrated Services Digital Network (MSISDN)",
@@ -1728,6 +2238,69 @@
     "points_attention": [
       "La valeur MSISDN présente sur une carte SIM peut être absente, obsolète ou modifiée.",
       "Elle doit être corroborée par d’autres éléments avant d’être utilisée pour attribuer un numéro à un abonnement ou à un utilisateur."
+    ]
+  },
+  {
+    "id": "navigateur-internet",
+    "terme": "Navigateur Internet",
+    "definition": "Logiciel permettant d'accéder aux ressources et services disponibles sur le Web, d'en interpréter les contenus et de permettre l'interaction avec eux. Dans un examen numérique, il peut conserver des historiques, recherches, téléchargements, sessions et données de comptes. Les informations peuvent être stockées localement, synchronisées ou conservées à distance ; leur accessibilité dépend de la version, du profil, de la configuration et du type d'acquisition.",
+    "formulations_rapport": [
+      {
+        "type": "Identification",
+        "texte": "Nous identifions la présence du navigateur Internet [nom du navigateur] sur le support examiné."
+      },
+      {
+        "type": "Examen",
+        "texte": "Nous procédons à l'examen des données du navigateur accessibles afin d'identifier les éléments susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Plusieurs navigateurs",
+        "texte": "Nous identifions plusieurs navigateurs Internet sur le support examiné et procédons à l'examen des données accessibles associées à chacun d'eux."
+      },
+      {
+        "type": "Plusieurs profils",
+        "texte": "L'examen met en évidence plusieurs profils associés au navigateur Internet, dont les données sont étudiées séparément."
+      },
+      {
+        "type": "Données identifiées",
+        "texte": "L'examen du navigateur permet d'identifier des données relatives à la navigation Internet, notamment des historiques, des informations de session ou des fichiers conservés localement."
+      },
+      {
+        "type": "Données limitées",
+        "texte": "Les données accessibles du navigateur ne permettent qu'une restitution partielle des informations relatives à son utilisation."
+      },
+      {
+        "type": "Absence de données",
+        "texte": "L'examen des données accessibles associées au navigateur ne permet pas d'identifier d'éléments exploitables au regard de la mission."
+      },
+      {
+        "type": "Limites d'attribution",
+        "texte": "Les informations enregistrées par le navigateur ne permettent pas, à elles seules, d'établir l'identité de la personne ayant réalisé les opérations de navigation correspondantes."
+      }
+    ],
+    "sources": [
+      "Mozilla — Firefox Profiles",
+      "Chromium — User Data Directory",
+      "Mozilla — Places",
+      "Chromium — Incognito"
+    ],
+    "anglais": "Web browser",
+    "categorie": "Logiciel et application",
+    "synonymes": [
+      "Navigateur Web",
+      "Navigateur"
+    ],
+    "termes_deconseilles": [],
+    "termes_proches": [
+      "Historique de navigation",
+      "Cookies",
+      "Cache applicatif",
+      "Traces d'activité"
+    ],
+    "points_attention": [
+      "La présence d'un navigateur ne démontre pas son usage.",
+      "Un historique synchronisé peut provenir d'un autre appareil.",
+      "Une connexion automatisée ne démontre pas une navigation volontaire."
     ]
   },
   {
@@ -2325,6 +2898,68 @@
     "sources": [
       "Telegram FAQ — Secret Chats",
       "Telegram Privacy Policy — Self-Destructing Messages"
+    ]
+  },
+  {
+    "id": "traces-activite",
+    "terme": "Traces d'activité",
+    "definition": "Ensemble des informations numériques produites, enregistrées ou conservées à l'occasion du fonctionnement d'un système, de l'utilisation d'un équipement, d'une application ou d'un service numérique. Elles peuvent comprendre historiques de navigation, journaux, fichiers récents, bases applicatives, caches ou traces d'exécution. Elles peuvent résulter d'une intervention humaine ou de mécanismes automatisés. Leur interprétation exige de tenir compte de leur origine, de leur contexte et de leurs limites de conservation.",
+    "formulations_rapport": [
+      {
+        "type": "Recherche de traces d'activité",
+        "texte": "Nous procédons à l'examen des traces d'activité accessibles afin d'identifier les éléments susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Traces identifiées",
+        "texte": "L'examen des données permet d'identifier plusieurs traces d'activité enregistrées par le système ou les applications examinées."
+      },
+      {
+        "type": "Activité applicative",
+        "texte": "Les traces identifiées permettent de constater l'enregistrement d'événements associés au fonctionnement ou à l'utilisation de l'application concernée."
+      },
+      {
+        "type": "Chronologie",
+        "texte": "Le rapprochement des différentes traces d'activité permet de proposer une chronologie partielle des événements enregistrés, sous réserve des limites liées à leur origine et à leurs horodatages."
+      },
+      {
+        "type": "Corrélation",
+        "texte": "Nous procédons au rapprochement des traces issues de différentes sources numériques afin d'en apprécier la cohérence et de rechercher d'éventuelles correspondances."
+      },
+      {
+        "type": "Absence de traces",
+        "texte": "Les opérations d'examen ne permettent pas d'identifier de traces d'activité exploitables au regard de la mission dans les données accessibles."
+      },
+      {
+        "type": "Limites d'attribution",
+        "texte": "Les traces d'activité identifiées ne permettent pas, à elles seules, d'établir l'identité de la personne à l'origine des opérations correspondantes."
+      },
+      {
+        "type": "Activité automatisée possible",
+        "texte": "Les traces identifiées peuvent résulter du fonctionnement automatique du système ou d'une application, sans qu'une intervention directe de l'utilisateur puisse être établie."
+      }
+    ],
+    "sources": [
+      "SWGDE — Computer Forensic Examinations",
+      "SWGDE — Computer Forensic Acquisition",
+      "SWGDE — Digital Evidence Collection"
+    ],
+    "anglais": "Activity traces / Digital activity artifacts",
+    "categorie": "Preuve numérique",
+    "synonymes": [
+      "Traces d'utilisation"
+    ],
+    "termes_deconseilles": [],
+    "termes_proches": [
+      "Artefact forensique",
+      "Journaux système",
+      "Journaux applicatifs",
+      "Métadonnées",
+      "Horodatage"
+    ],
+    "points_attention": [
+      "Une trace ne démontre pas nécessairement une action volontaire.",
+      "Une trace conservée peut résulter d'un mécanisme automatique.",
+      "Le résultat d'un décodage doit être distingué de la source."
     ]
   },
   {
