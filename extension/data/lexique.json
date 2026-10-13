@@ -211,12 +211,68 @@
     "terme": "Base de données",
     "anglais": "Database",
     "categorie": "Preuve numérique",
-    "definition": "Collection structurée d'informations organisée afin de permettre la recherche, la comparaison, l'identification et la récupération d'enregistrements.",
-    "synonymes": [],
+    "definition": "Ensemble organisé de données numériques, structuré selon un modèle déterminé afin d'en permettre l'enregistrement, la consultation, la modification et l'exploitation. Une base de données peut notamment contenir des informations relatives à des comptes, des contacts, des messages, des événements, des historiques ou des paramètres applicatifs. En criminalistique numérique, son examen peut permettre d'identifier des enregistrements accessibles, des relations entre différentes informations ainsi que, selon le format et l'état des données, certains éléments résiduels. L'interprétation nécessite de tenir compte de la structure de la base, du fonctionnement de l'application, des mécanismes de transaction et des conditions d'acquisition.",
+    "synonymes": [
+      "Banque de données"
+    ],
     "termes_deconseilles": [],
     "exemple_rapport": "Les enregistrements pertinents ont été recherchés dans la base de données de l'application.",
     "sources": [
-      "CLARUS D3.2"
+      "NIST SP 800-86 — Guide to Integrating Forensic Techniques into Incident Response",
+      "SQLite — Database File Format",
+      "SQLite — Write-Ahead Logging",
+      "SQLite — The Schema Table"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Identification d'une base de données",
+        "texte": "L'examen des données du support permet d'identifier une base de données associée à l'application [nom de l'application]."
+      },
+      {
+        "type": "Examen d'une base de données",
+        "texte": "Nous procédons à l'examen de la base de données identifiée afin de rechercher les enregistrements susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Enregistrements identifiés",
+        "texte": "L'exploitation de la base de données permet d'identifier des enregistrements relatifs à [nature des informations]."
+      },
+      {
+        "type": "Corrélation des enregistrements",
+        "texte": "Nous procédons au rapprochement des informations contenues dans différentes tables de la base de données afin d'en apprécier les relations et la cohérence."
+      },
+      {
+        "type": "Données résiduelles",
+        "texte": "L'examen des structures de la base de données permet d'identifier des informations résiduelles qui ne figurent pas parmi les enregistrements couramment accessibles."
+      },
+      {
+        "type": "Données partiellement accessibles",
+        "texte": "L'état de la base de données ou les conditions techniques de l'examen ne permettent qu'une exploitation partielle des informations qu'elle contient."
+      },
+      {
+        "type": "Base de données non exploitable",
+        "texte": "Les opérations techniques réalisées ne permettent pas d'exploiter la base de données identifiée dans les conditions de l'examen."
+      },
+      {
+        "type": "Exploitation des journaux de transactions",
+        "texte": "L'examen des fichiers associés à la base de données permet d'identifier des informations complémentaires relatives aux transactions enregistrées."
+      },
+      {
+        "type": "Limites d'interprétation",
+        "texte": "Les enregistrements identifiés dans la base de données sont interprétés en tenant compte de leur structure, de leur provenance et des mécanismes de fonctionnement de l'application concernée."
+      }
+    ],
+    "termes_proches": [
+      "SQLite",
+      "Données numériques",
+      "Artefact forensique",
+      "Métadonnées",
+      "Donnée supprimée",
+      "Cache applicatif"
+    ],
+    "points_attention": [
+      "La présence d'une donnée stockée ne démontre pas sa visibilité dans l'application.",
+      "Pour SQLite, les fichiers -wal et -shm ont des fonctions distinctes.",
+      "Les bases peuvent être chiffrées et les horodatages nécessitent un décodage."
     ]
   },
   {
@@ -507,6 +563,181 @@
       "Authentification",
       "Force brute",
       "Chiffrement"
+    ]
+  },
+  {
+    "id": "compte-utilisateur",
+    "categorie": "Technologie numérique",
+    "synonymes": [
+      "Compte d'utilisateur",
+      "User account"
+    ],
+    "termes_deconseilles": [],
+    "terme": "Compte utilisateur",
+    "anglais": "User account",
+    "definition": "Identité logique enregistrée ou reconnue par un système informatique, permettant d'identifier un utilisateur ou un contexte d'exécution et de lui associer des paramètres, des droits d'accès et des ressources. Un compte peut notamment être caractérisé par un nom, un identifiant technique, un profil, des appartenances à des groupes et des autorisations. En criminalistique numérique, son examen peut permettre d'identifier les comptes présents sur un équipement, leurs caractéristiques ainsi que certaines informations relatives aux sessions, connexions et activités associées. L'association d'un compte à des données ou à des événements ne permet pas, à elle seule, d'établir l'identité de la personne physique qui les a produits.",
+    "formulations_rapport": [
+      {
+        "type": "Identification d'un compte utilisateur",
+        "texte": "L'examen des données du système permet d'identifier un compte utilisateur désigné sous le nom [nom du compte]."
+      },
+      {
+        "type": "Plusieurs comptes identifiés",
+        "texte": "L'examen du support permet d'identifier [nombre] comptes utilisateurs enregistrés dans le système d'exploitation."
+      },
+      {
+        "type": "Caractéristiques du compte",
+        "texte": "Nous procédons à l'examen des caractéristiques techniques du compte utilisateur [nom du compte], notamment de son identifiant, de son profil et des autorisations associées."
+      },
+      {
+        "type": "Compte disposant de privilèges administratifs",
+        "texte": "Les informations examinées indiquent que le compte utilisateur [nom du compte] dispose de privilèges d'administration sur le système."
+      },
+      {
+        "type": "Données associées à un profil utilisateur",
+        "texte": "L'examen permet d'identifier des données enregistrées dans le profil associé au compte utilisateur [nom du compte]."
+      },
+      {
+        "type": "Événements de connexion",
+        "texte": "L'analyse des journaux système permet d'identifier des événements de connexion associés au compte utilisateur [nom du compte]."
+      },
+      {
+        "type": "Compte utilisateur désactivé",
+        "texte": "Les informations disponibles indiquent que le compte utilisateur [nom du compte] est désactivé au moment de l'état du système examiné."
+      },
+      {
+        "type": "Compte sans activité identifiée",
+        "texte": "L'examen des données accessibles ne permet pas d'identifier d'événements d'activité exploitables associés au compte utilisateur [nom du compte] pour la période examinée."
+      },
+      {
+        "type": "Corrélation des activités",
+        "texte": "Nous procédons au rapprochement des traces associées au compte utilisateur [nom du compte] avec les autres informations numériques disponibles afin d'en apprécier la cohérence."
+      },
+      {
+        "type": "Limites d'attribution",
+        "texte": "Les données techniques associées au compte utilisateur [nom du compte] ne permettent pas, à elles seules, d'établir l'identité de la personne ayant effectivement utilisé ce compte."
+      }
+    ],
+    "termes_proches": [
+      "Profil utilisateur",
+      "Session utilisateur",
+      "Authentification",
+      "Journaux système",
+      "Traces d'activité"
+    ],
+    "sources": [
+      "Microsoft — Local Accounts",
+      "Microsoft — Security Identifiers",
+      "Linux — passwd(5)",
+      "Microsoft — Manage User Accounts"
+    ],
+    "points_attention": [
+      "Un compte n'identifie pas nécessairement une personne physique.",
+      "La présence d'un compte n'atteste pas une ouverture de session.",
+      "Distinguer comptes humains et comptes système.",
+      "Un SID ou UID peut être plus significatif qu'un nom affiché."
+    ],
+    "artefacts_techniques": [
+      {
+        "systeme": "Windows",
+        "sources": "SAM, SID, journaux de sécurité, NTUSER.DAT"
+      },
+      {
+        "systeme": "Linux",
+        "sources": "/etc/passwd, /etc/shadow, UID/GID, journaux"
+      },
+      {
+        "systeme": "macOS",
+        "sources": "Annuaire local, UID, journaux"
+      }
+    ]
+  },
+  {
+    "id": "connexion-supports-usb",
+    "categorie": "Technologie numérique",
+    "synonymes": [
+      "Branchement d'un support USB",
+      "Connexion USB d'un support de stockage"
+    ],
+    "termes_deconseilles": [],
+    "terme": "Connexion de supports USB",
+    "anglais": "USB storage device connection",
+    "definition": "Opération par laquelle un support de stockage utilisant une interface USB est relié à un équipement informatique et peut être détecté, reconnu ou rendu accessible par son système d'exploitation. Les supports concernés comprennent notamment les clés USB, les disques externes et certains équipements proposant un accès à leur stockage par USB. En criminalistique numérique, l'examen des traces conservées par le système peut permettre d'identifier des supports précédemment connectés, leurs caractéristiques techniques, certains événements de connexion et, selon les sources disponibles, des informations relatives aux volumes associés. L'interprétation nécessite de distinguer le branchement physique, la reconnaissance du périphérique, le montage éventuel d'un volume et les opérations effectivement réalisées sur les données.",
+    "formulations_rapport": [
+      {
+        "type": "Recherche de supports USB",
+        "texte": "Nous procédons à l'examen des traces système susceptibles de renseigner sur la connexion de supports de stockage USB à l'équipement examiné."
+      },
+      {
+        "type": "Supports USB identifiés",
+        "texte": "L'examen des données du système permet d'identifier des informations relatives à [nombre] supports de stockage USB distincts."
+      },
+      {
+        "type": "Identification d'un support",
+        "texte": "Les informations techniques examinées permettent d'identifier un support de stockage USB présentant les caractéristiques suivantes : [marque, modèle, identifiants]."
+      },
+      {
+        "type": "Connexion datée",
+        "texte": "L'examen des événements système permet d'identifier une trace de connexion associée au support USB [désignation], enregistrée le [date et heure]."
+      },
+      {
+        "type": "Première installation enregistrée",
+        "texte": "Les journaux système comportent un événement d'installation associé au support USB [désignation], enregistré le [date et heure]."
+      },
+      {
+        "type": "Association à un volume",
+        "texte": "Les données du système permettent d'identifier une association entre le support USB [désignation] et le volume [identifiant ou désignation]."
+      },
+      {
+        "type": "Plusieurs connexions identifiées",
+        "texte": "L'examen des traces disponibles permet d'identifier plusieurs événements de connexion associés au support USB [désignation] au cours de la période étudiée."
+      },
+      {
+        "type": "Recherche d'échanges de fichiers",
+        "texte": "Nous procédons au rapprochement des traces associées au support USB [désignation] avec les informations relatives aux fichiers récemment utilisés afin de rechercher d'éventuels indices d'accès ou de transfert de données."
+      },
+      {
+        "type": "Absence de traces exploitables",
+        "texte": "L'examen des données accessibles ne permet pas d'identifier de traces exploitables relatives à la connexion du support USB recherché."
+      },
+      {
+        "type": "Limites d'interprétation",
+        "texte": "Les traces techniques identifiées permettent de documenter l'association ou la connexion du support USB à l'équipement, sans établir à elles seules l'existence d'un transfert de fichiers ni l'identité de la personne à l'origine de cette opération."
+      }
+    ],
+    "termes_proches": [
+      "Périphériques connectés",
+      "Clé USB",
+      "Support de stockage",
+      "Fichiers récents",
+      "Journaux système"
+    ],
+    "sources": [
+      "Microsoft — SetupAPI Device Installation Log Entries",
+      "Microsoft — Audit Removable Storage",
+      "Linux — systemd-udevd",
+      "Apple — USB Descriptor and IORegistry Constants",
+      "Apple — Unified Logging"
+    ],
+    "points_attention": [
+      "Le premier événement d'installation conservé n'est pas nécessairement le premier branchement historique.",
+      "VID/PID et numéros de série ne garantissent pas une identification unique.",
+      "Montage, connexion et transfert de fichiers sont distincts.",
+      "Une ancienne entrée du registre ne date pas à elle seule le branchement."
+    ],
+    "artefacts_techniques": [
+      {
+        "systeme": "Windows",
+        "sources": "USBSTOR, USB, MountedDevices, MountPoints2, SetupAPI, EVTX"
+      },
+      {
+        "systeme": "Linux",
+        "sources": "udev, journaux noyau et journalctl"
+      },
+      {
+        "systeme": "macOS",
+        "sources": "IORegistry, journaux unifiés"
+      }
     ]
   },
   {
@@ -904,6 +1135,94 @@
     ]
   },
   {
+    "id": "execution-applications",
+    "categorie": "Technologie numérique",
+    "synonymes": [
+      "Lancement d'application",
+      "Exécution de programme"
+    ],
+    "termes_deconseilles": [],
+    "terme": "Exécution d'applications",
+    "anglais": "Application execution / Program execution",
+    "definition": "Opération par laquelle un système informatique lance ou fait fonctionner un programme, une application ou un processus logiciel. Cette exécution peut résulter d'une action de l'utilisateur, d'un mécanisme automatique du système, d'une tâche planifiée ou de l'intervention d'un autre programme. En criminalistique numérique, l'examen de certains artefacts techniques, journaux, fichiers de configuration ou données applicatives peut permettre d'identifier des indices relatifs à l'exécution d'un programme, à ses caractéristiques et, selon les sources, à certaines informations temporelles. L'interprétation de ces indices nécessite de tenir compte de leur mécanisme de production, de leur fiabilité et des limites techniques propres au système examiné.",
+    "formulations_rapport": [
+      {
+        "type": "Recherche d'indices d'exécution",
+        "texte": "Nous procédons à la recherche et à l'examen des traces techniques susceptibles de renseigner sur l'exécution de programmes ou d'applications sur le support examiné."
+      },
+      {
+        "type": "Indices d'exécution identifiés",
+        "texte": "L'examen des données du système permet d'identifier des indices techniques compatibles avec l'exécution du programme [nom du programme]."
+      },
+      {
+        "type": "Exécution documentée par les journaux",
+        "texte": "Les journaux système examinés comportent des événements relatifs à la création d'un processus associé au programme [nom du programme]."
+      },
+      {
+        "type": "Informations temporelles d'exécution",
+        "texte": "Les traces identifiées comportent des informations temporelles associées à l'exécution du programme [nom du programme], dont l'interprétation dépend du mécanisme ayant produit ces enregistrements."
+      },
+      {
+        "type": "Plusieurs exécutions enregistrées",
+        "texte": "Les données examinées permettent d'identifier plusieurs événements ou indices d'exécution associés au programme [nom du programme] au cours de la période étudiée."
+      },
+      {
+        "type": "Corrélation des artefacts",
+        "texte": "Nous procédons au rapprochement des différents artefacts techniques associés au programme [nom du programme] afin d'apprécier la cohérence des indices relatifs à son exécution."
+      },
+      {
+        "type": "Présence d'un programme sans exécution établie",
+        "texte": "Nous identifions des informations relatives à la présence du programme [nom du programme], sans que les traces disponibles permettent d'en établir l'exécution."
+      },
+      {
+        "type": "Absence d'indices exploitables",
+        "texte": "L'examen des données accessibles ne permet pas d'identifier d'indices exploitables relatifs à l'exécution du programme [nom du programme] au cours de la période étudiée."
+      },
+      {
+        "type": "Exécution automatisée possible",
+        "texte": "Les traces identifiées peuvent correspondre à une exécution automatisée du programme, sans qu'une intervention directe de l'utilisateur puisse être établie."
+      },
+      {
+        "type": "Limites d'attribution",
+        "texte": "Les éléments techniques identifiés ne permettent pas, à eux seuls, d'établir l'identité de la personne à l'origine de l'exécution du programme concerné."
+      }
+    ],
+    "termes_proches": [
+      "Application installée",
+      "Prefetch",
+      "Amcache",
+      "ShimCache",
+      "Journaux système",
+      "Session utilisateur",
+      "Traces d'activité"
+    ],
+    "sources": [
+      "Microsoft Security — Leveraging Windows Internals for Forensic Investigation",
+      "Microsoft — Event 4688",
+      "SWGDE — Best Practices for Computer Forensic Examinations"
+    ],
+    "points_attention": [
+      "L'installation d'un programme n'établit pas son exécution.",
+      "Amcache et ShimCache ne prouvent pas systématiquement l'exécution.",
+      "Une création de processus peut résulter de mécanismes automatisés.",
+      "Le contexte informatique doit être distingué de l'utilisation des applications mobiles."
+    ],
+    "artefacts_techniques": [
+      {
+        "systeme": "Windows",
+        "sources": "Prefetch, Event ID 4688, Amcache, ShimCache"
+      },
+      {
+        "systeme": "Linux",
+        "sources": "auditd et journaux système selon configuration"
+      },
+      {
+        "systeme": "macOS",
+        "sources": "Journaux unifiés, traces de lancement selon version"
+      }
+    ]
+  },
+  {
     "id": "exif",
     "terme": "EXIF",
     "anglais": "Exchangeable Image File Format (EXIF)",
@@ -1210,6 +1529,94 @@
     ],
     "sources": [
       "Lexique forensique FR — usage professionnel"
+    ]
+  },
+  {
+    "id": "fichiers-recents",
+    "categorie": "Technologie numérique",
+    "synonymes": [
+      "Documents récents",
+      "Éléments récemment utilisés"
+    ],
+    "termes_deconseilles": [],
+    "terme": "Fichiers récents",
+    "anglais": "Recent files / Recently used files",
+    "definition": "Ensemble des références ou enregistrements conservés par un système d'exploitation ou une application concernant des fichiers ou ressources récemment utilisés, ouverts, sélectionnés ou enregistrés. Ces informations peuvent notamment comprendre le nom d'un fichier, son chemin d'accès, l'application associée, certains horodatages ou des indications relatives à sa dernière utilisation. En criminalistique numérique, leur examen peut contribuer à identifier des fichiers ayant fait l'objet d'interactions enregistrées et à reconstituer certaines activités associées à un compte ou à un environnement utilisateur. L'interprétation de ces informations dépend des mécanismes ayant généré les traces. Leur présence ne permet pas, à elle seule, d'établir qu'un fichier a effectivement été lu, modifié ou manipulé volontairement par une personne déterminée.",
+    "formulations_rapport": [
+      {
+        "type": "Recherche de fichiers récents",
+        "texte": "Nous procédons à l'examen des traces relatives aux fichiers récemment utilisés afin d'identifier les références susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Références à des fichiers identifiées",
+        "texte": "L'examen des données du système permet d'identifier des références à des fichiers dans les enregistrements d'éléments récemment utilisés."
+      },
+      {
+        "type": "Fichiers associés à un compte utilisateur",
+        "texte": "Les traces identifiées comportent des références à des fichiers associées au profil du compte utilisateur [nom du compte]."
+      },
+      {
+        "type": "Identification d'un fichier déterminé",
+        "texte": "Nous identifions une référence au fichier [nom du fichier] parmi les éléments récemment utilisés enregistrés par le système ou l'application."
+      },
+      {
+        "type": "Reconstitution chronologique",
+        "texte": "L'exploitation des informations temporelles disponibles permet de proposer une chronologie partielle des événements associés aux fichiers récemment utilisés."
+      },
+      {
+        "type": "Fichier référencé mais absent",
+        "texte": "Nous identifions une référence au fichier [nom du fichier], dont le contenu n'est pas retrouvé dans les données accessibles du support examiné."
+      },
+      {
+        "type": "Synthèse quantitative",
+        "texte": "L'examen des traces de fichiers récents permet d'identifier [nombre] références à des fichiers distincts sur la période comprise entre le [date de début] et le [date de fin]."
+      },
+      {
+        "type": "Absence de traces exploitables",
+        "texte": "L'examen des données accessibles ne permet pas d'identifier de références à des fichiers récemment utilisés présentant un intérêt au regard de la mission."
+      },
+      {
+        "type": "Corrélation des traces",
+        "texte": "Nous procédons au rapprochement des références à des fichiers récemment utilisés avec les autres traces numériques disponibles afin d'en apprécier la cohérence."
+      },
+      {
+        "type": "Limites d'interprétation",
+        "texte": "Les références identifiées dans les listes de fichiers récents ne permettent pas, à elles seules, d'établir les circonstances exactes d'accès aux fichiers ni l'identité de la personne à l'origine des opérations correspondantes."
+      }
+    ],
+    "termes_proches": [
+      "Compte utilisateur",
+      "Traces d'activité",
+      "Fichiers LNK",
+      "Jump Lists",
+      "Horodatage",
+      "Métadonnées"
+    ],
+    "sources": [
+      "Microsoft — SHAddToRecentDocs",
+      "Microsoft — Recent Items",
+      "Freedesktop — Desktop Bookmark Specification",
+      "Apple — Shared File Lists"
+    ],
+    "points_attention": [
+      "Une référence ne prouve pas que le fichier existe ou a été lu.",
+      "Certaines listes sont mises à jour automatiquement.",
+      "Distinguer les références des fichiers distincts et des événements.",
+      "Présenter les dates selon le référentiel UTC+00:00 après vérification."
+    ],
+    "artefacts_techniques": [
+      {
+        "systeme": "Windows",
+        "sources": "Recent, LNK, Jump Lists, RecentDocs, OpenSavePidlMRU"
+      },
+      {
+        "systeme": "Linux",
+        "sources": "recently-used.xbel et historiques applicatifs"
+      },
+      {
+        "systeme": "macOS",
+        "sources": "Listes de documents récents, préférences applicatives"
+      }
     ]
   },
   {
@@ -2333,6 +2740,92 @@
     ]
   },
   {
+    "id": "peripheriques-connectes",
+    "categorie": "Technologie numérique",
+    "synonymes": [
+      "Périphériques externes",
+      "Équipements connectés"
+    ],
+    "termes_deconseilles": [],
+    "terme": "Périphériques connectés",
+    "anglais": "Connected devices / Peripheral devices",
+    "definition": "Équipements matériels reliés ou ayant été reliés à un système informatique au moyen d'une interface physique ou d'une liaison sans fil, afin de permettre des échanges de données, l'accès à des ressources ou la réalisation de fonctions particulières. Ces équipements peuvent notamment comprendre des supports de stockage amovibles, des téléphones, des imprimantes, des périphériques de saisie, des appareils Bluetooth ou des équipements réseau. En criminalistique numérique, l'examen des traces système peut permettre d'identifier certains périphériques détectés, installés ou connectés, leurs caractéristiques techniques et, selon les sources disponibles, des informations temporelles associées. Leur interprétation nécessite de distinguer la détection d'un équipement, l'établissement d'une connexion et son utilisation effective.",
+    "formulations_rapport": [
+      {
+        "type": "Recherche de périphériques connectés",
+        "texte": "Nous procédons à l'examen des traces système susceptibles de renseigner sur les périphériques connectés ou précédemment associés à l'équipement."
+      },
+      {
+        "type": "Périphériques identifiés",
+        "texte": "L'examen des données du système permet d'identifier des informations relatives à [nombre] périphériques distincts."
+      },
+      {
+        "type": "Identification d'un périphérique",
+        "texte": "Les informations techniques examinées permettent d'identifier un périphérique de type [type], présentant les caractéristiques suivantes : [caractéristiques]."
+      },
+      {
+        "type": "Détection d'un périphérique",
+        "texte": "L'examen des événements système permet d'identifier un événement de détection associé au périphérique [désignation], enregistré le [date et heure]."
+      },
+      {
+        "type": "Installation d'un périphérique",
+        "texte": "Les journaux du système comportent des informations relatives à l'installation du périphérique [désignation] ou de ses composants logiciels."
+      },
+      {
+        "type": "Connexion d'un périphérique",
+        "texte": "Les traces techniques identifiées permettent de relever un événement de connexion associé au périphérique [désignation], dans les conditions décrites au présent rapport."
+      },
+      {
+        "type": "Corrélation des traces",
+        "texte": "Nous procédons au rapprochement des informations relatives au périphérique [désignation] avec les autres traces numériques disponibles afin d'en apprécier la cohérence."
+      },
+      {
+        "type": "Périphérique précédemment associé",
+        "texte": "L'examen du système permet d'identifier des informations résiduelles relatives à un périphérique précédemment associé à l'équipement, sans permettre de déterminer sa présence physique au moment de l'examen."
+      },
+      {
+        "type": "Absence de traces exploitables",
+        "texte": "L'examen des données accessibles ne permet pas d'identifier de traces exploitables relatives à la connexion du périphérique recherché."
+      },
+      {
+        "type": "Limites d'interprétation",
+        "texte": "Les éléments techniques identifiés ne permettent pas, à eux seuls, d'établir les circonstances d'utilisation du périphérique ni l'existence d'éventuels transferts de données."
+      }
+    ],
+    "termes_proches": [
+      "Clé USB",
+      "Support numérique",
+      "Journaux système",
+      "Traces d'activité",
+      "Connexion de supports USB"
+    ],
+    "sources": [
+      "Microsoft — Audit PnP Activity",
+      "Microsoft — SetupAPI Device Installation Log Entries",
+      "Linux — systemd.device"
+    ],
+    "points_attention": [
+      "Détection ne garantit pas fonctionnement opérationnel.",
+      "Installation de pilote ne permet pas de compter les connexions.",
+      "VID/PID n'identifient pas systématiquement un exemplaire unique.",
+      "Un appairage Bluetooth n'établit pas une connexion active."
+    ],
+    "artefacts_techniques": [
+      {
+        "systeme": "Windows",
+        "sources": "USB, USBSTOR, MountedDevices, SetupAPI et PnP"
+      },
+      {
+        "systeme": "Linux",
+        "sources": "udev, journaux du noyau, systemd-journald"
+      },
+      {
+        "systeme": "macOS",
+        "sources": "IORegistry, journaux unifiés"
+      }
+    ]
+  },
+  {
     "id": "preuve-numerique",
     "terme": "Preuve numérique",
     "anglais": "Digital evidence",
@@ -2345,6 +2838,92 @@
     "exemple_rapport": "L'analyse du support a permis d'identifier plusieurs éléments de preuve numérique susceptibles d'éclairer les faits.",
     "sources": [
       "CLARUS D3.2"
+    ]
+  },
+  {
+    "id": "profil-utilisateur",
+    "categorie": "Technologie numérique",
+    "synonymes": [
+      "Profil de l'utilisateur",
+      "User profile"
+    ],
+    "termes_deconseilles": [],
+    "terme": "Profil utilisateur",
+    "anglais": "User profile",
+    "definition": "Ensemble de données, de paramètres et de ressources associés à un compte utilisateur au sein d'un système d'exploitation. Un profil peut notamment comprendre des documents, des préférences personnelles, des configurations applicatives, des historiques, des caches et différentes informations relatives à l'environnement de travail. En criminalistique numérique, son examen peut permettre d'identifier des données associées à un compte, de rechercher certaines traces d'activité et d'étudier les caractéristiques de l'environnement utilisateur. La présence d'un profil ou de données dans celui-ci ne permet pas, à elle seule, d'établir l'identité de la personne ayant utilisé le compte ni les circonstances dans lesquelles ces données ont été produites.",
+    "formulations_rapport": [
+      {
+        "type": "Identification d'un profil utilisateur",
+        "texte": "L'examen des données du système permet d'identifier un profil utilisateur associé au compte [nom du compte]."
+      },
+      {
+        "type": "Plusieurs profils identifiés",
+        "texte": "Nous identifions [nombre] profils utilisateurs sur le support examiné."
+      },
+      {
+        "type": "Examen du profil utilisateur",
+        "texte": "Nous procédons à l'examen des données accessibles du profil utilisateur [nom du profil] afin d'identifier les éléments susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Données personnelles et applicatives",
+        "texte": "Le profil utilisateur examiné comporte des fichiers personnels et des données applicatives dont le contenu fait l'objet d'un examen complémentaire."
+      },
+      {
+        "type": "Paramètres et environnement utilisateur",
+        "texte": "L'examen du profil permet d'identifier des informations relatives à la configuration de l'environnement utilisateur et aux paramètres de certaines applications."
+      },
+      {
+        "type": "Traces d'activité associées au profil",
+        "texte": "Les données du profil utilisateur comportent des traces d'activité enregistrées par le système ou les applications examinées."
+      },
+      {
+        "type": "Profil partiellement accessible",
+        "texte": "Les conditions techniques de l'examen ne permettent d'accéder qu'à une partie des données associées au profil utilisateur [nom du profil]."
+      },
+      {
+        "type": "Profil utilisateur résiduel",
+        "texte": "Nous identifions des données résiduelles associées à un profil utilisateur dont les informations disponibles ne permettent pas d'établir l'état actuel ou les circonstances de suppression."
+      },
+      {
+        "type": "Corrélation avec un compte utilisateur",
+        "texte": "Nous procédons au rapprochement des informations contenues dans le profil utilisateur avec les caractéristiques du compte associé afin d'en apprécier la cohérence."
+      },
+      {
+        "type": "Limites d'attribution",
+        "texte": "Les données identifiées dans le profil utilisateur ne permettent pas, à elles seules, d'établir l'identité de la personne ayant effectivement utilisé le compte correspondant."
+      }
+    ],
+    "termes_proches": [
+      "Compte utilisateur",
+      "Session utilisateur",
+      "Fichiers récents",
+      "Traces d'activité",
+      "Répertoire personnel"
+    ],
+    "sources": [
+      "Microsoft — User Profiles",
+      "Freedesktop — XDG Base Directory Specification",
+      "Filesystem Hierarchy Standard",
+      "Apple — Dossiers de macOS"
+    ],
+    "points_attention": [
+      "Un compte peut exister sans profil local exploitable.",
+      "Le nom du répertoire ne suffit pas à identifier le compte.",
+      "Les profils itinérants et les données synchronisées peuvent provenir d'ailleurs."
+    ],
+    "emplacements_par_systeme": [
+      {
+        "systeme": "Windows",
+        "chemin": "C:\\Users\\[utilisateur]\\ ; NTUSER.DAT ; AppData"
+      },
+      {
+        "systeme": "Linux",
+        "chemin": "/home/[utilisateur]/ ; .config ; .local/share ; .cache"
+      },
+      {
+        "systeme": "macOS",
+        "chemin": "/Users/[utilisateur]/ ; Library/Preferences ; Library/Application Support"
+      }
     ]
   },
   {
@@ -2564,6 +3143,95 @@
       "Chaîne de traçabilité",
       "Preuve numérique",
       "Intégrité des données"
+    ]
+  },
+  {
+    "id": "session-utilisateur",
+    "categorie": "Technologie numérique",
+    "synonymes": [
+      "Session de connexion",
+      "Session d'utilisateur"
+    ],
+    "termes_deconseilles": [],
+    "terme": "Session utilisateur",
+    "anglais": "User session / Logon session",
+    "definition": "Contexte d'accès à un système informatique associé à un compte utilisateur, établi selon un mécanisme d'ouverture de session ou d'authentification. Une session peut notamment être locale, distante, interactive ou liée à l'exécution de processus et de services. Selon le système, elle peut être caractérisée par un identifiant, un type de connexion, des informations temporelles et des événements relatifs à son activité ou à sa fermeture. En criminalistique numérique, l'examen des informations de session peut contribuer à identifier des périodes d'accès au système, des connexions et certaines activités associées à un compte. L'existence d'une session ne permet pas, à elle seule, d'établir la présence physique d'une personne ni l'identité de l'utilisateur effectif.",
+    "formulations_rapport": [
+      {
+        "type": "Recherche des sessions utilisateurs",
+        "texte": "Nous procédons à l'examen des événements de connexion et de session enregistrés par le système afin d'identifier les informations susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Ouverture de session identifiée",
+        "texte": "L'examen des journaux système permet d'identifier un événement d'ouverture de session associé au compte utilisateur [nom du compte], enregistré le [date et heure]."
+      },
+      {
+        "type": "Plusieurs sessions identifiées",
+        "texte": "Les données examinées permettent d'identifier [nombre] sessions associées au compte utilisateur [nom du compte] au cours de la période étudiée."
+      },
+      {
+        "type": "Connexion interactive locale",
+        "texte": "Les événements examinés indiquent une ouverture de session interactive locale associée au compte utilisateur [nom du compte]."
+      },
+      {
+        "type": "Connexion distante",
+        "texte": "Les événements examinés permettent d'identifier une ouverture de session distante associée au compte utilisateur [nom du compte]."
+      },
+      {
+        "type": "Fermeture de session",
+        "texte": "L'examen des journaux système permet d'identifier un événement de fermeture de session associé au compte utilisateur [nom du compte]."
+      },
+      {
+        "type": "Verrouillage ou déverrouillage",
+        "texte": "L'examen des événements système permet d'identifier une opération de [verrouillage/déverrouillage] de la session associée au compte utilisateur [nom du compte]."
+      },
+      {
+        "type": "Reconstitution chronologique des sessions",
+        "texte": "Le rapprochement des événements de connexion et de fermeture de session permet de proposer une chronologie des périodes d'accès au système, dans les limites des informations disponibles."
+      },
+      {
+        "type": "Session incomplètement documentée",
+        "texte": "Les événements disponibles ne permettent pas de déterminer avec certitude l'ensemble des caractéristiques ou la durée effective de la session concernée."
+      },
+      {
+        "type": "Limites d'attribution",
+        "texte": "Les événements de session identifiés ne permettent pas, à eux seuls, d'établir l'identité de la personne ayant effectivement utilisé le compte correspondant."
+      }
+    ],
+    "termes_proches": [
+      "Compte utilisateur",
+      "Profil utilisateur",
+      "Authentification",
+      "Journaux système",
+      "Traces d'activité",
+      "Horodatage"
+    ],
+    "sources": [
+      "Microsoft — Audit Logon Events",
+      "Linux — systemd-logind",
+      "Linux — pam_systemd",
+      "Apple — Security Sessions",
+      "Apple — Unified Logging"
+    ],
+    "points_attention": [
+      "Une session réseau ou de service n'atteste pas une interaction humaine.",
+      "Verrouillage et fermeture de session sont distincts.",
+      "Une durée de session n'établit pas une durée d'activité réelle.",
+      "Windows : 4624, 4634, 4647, 4800 et 4801 ont des significations distinctes."
+    ],
+    "artefacts_techniques": [
+      {
+        "systeme": "Windows",
+        "sources": "EVTX 4624, 4625, 4634, 4647, 4800, 4801 ; types 2, 3 et 10"
+      },
+      {
+        "systeme": "Linux",
+        "sources": "systemd-logind, journaux, wtmp/btmp selon configuration"
+      },
+      {
+        "systeme": "macOS",
+        "sources": "Journaux unifiés, événements d'authentification"
+      }
     ]
   },
   {
@@ -2808,14 +3476,74 @@
     "terme": "Système d'exploitation",
     "anglais": "Operating system (OS)",
     "categorie": "Technologie numérique",
-    "definition": "Logiciel fondamental assurant la gestion des ressources matérielles et logicielles d'un appareil numérique et générant notamment des données système, journaux et métadonnées.",
+    "definition": "Ensemble de logiciels assurant la gestion des ressources matérielles et logicielles d'un équipement numérique et fournissant les services nécessaires à l'exécution des applications. Un système d'exploitation assure notamment la gestion des processus, de la mémoire, des utilisateurs, des périphériques, des systèmes de fichiers et des mécanismes de sécurité. Dans le cadre d'un examen de criminalistique numérique, il peut constituer une source d'informations relatives à la configuration de l'équipement, aux comptes utilisateurs, aux applications installées, aux connexions, aux événements système et à certaines activités enregistrées. Les données disponibles et leur interprétation dépendent notamment du système d'exploitation, de sa version, de ses paramètres de configuration et des conditions d'acquisition.",
     "synonymes": [
-      "OS"
+      "OS",
+      "Operating system"
     ],
     "termes_deconseilles": [],
     "exemple_rapport": "Le support fonctionne sous un système d'exploitation dont les artefacts ont été examinés.",
     "sources": [
-      "CLARUS D3.2"
+      "NIST SP 800-86 — Guide to Integrating Forensic Techniques into Incident Response",
+      "Microsoft — Windows Registry",
+      "Filesystem Hierarchy Standard"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Identification du système d'exploitation",
+        "texte": "L'examen du support permet d'identifier un système d'exploitation de type [nom du système], dans sa version [version]."
+      },
+      {
+        "type": "Examen des données système",
+        "texte": "Nous procédons à l'examen des données accessibles du système d'exploitation afin d'identifier les informations susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Configuration du système",
+        "texte": "L'examen des données système permet de relever des informations relatives à la configuration de l'équipement et aux paramètres du système d'exploitation."
+      },
+      {
+        "type": "Comptes utilisateurs",
+        "texte": "Les données du système d'exploitation permettent d'identifier des comptes utilisateurs enregistrés sur l'équipement."
+      },
+      {
+        "type": "Applications installées",
+        "texte": "L'examen des données système permet d'identifier des informations relatives aux applications installées sur l'équipement."
+      },
+      {
+        "type": "Traces d'activité du système",
+        "texte": "L'exploitation des données du système d'exploitation permet d'identifier des traces relatives à certaines activités enregistrées sur l'équipement."
+      },
+      {
+        "type": "Identification partielle",
+        "texte": "Les informations accessibles permettent d'identifier le système d'exploitation, sans toutefois déterminer avec certitude l'ensemble de ses caractéristiques ou sa version exacte."
+      },
+      {
+        "type": "Système d'exploitation non identifié",
+        "texte": "Les données accessibles ne permettent pas d'identifier avec suffisamment de certitude le système d'exploitation présent sur le support examiné."
+      },
+      {
+        "type": "Limites d'interprétation",
+        "texte": "Les informations issues du système d'exploitation sont interprétées en tenant compte de sa configuration, des mécanismes de journalisation et des limites des données acquises."
+      }
+    ],
+    "termes_proches": [
+      "Système de fichiers",
+      "Journaux système",
+      "Traces d'activité",
+      "Métadonnées",
+      "Compte utilisateur"
+    ],
+    "points_attention": [
+      "La présence d'un système ne démontre pas son utilisation à la période considérée.",
+      "Plusieurs systèmes peuvent coexister.",
+      "Les comptes, applications et opérations automatiques doivent être interprétés séparément."
+    ],
+    "exemples": [
+      "Windows",
+      "Linux",
+      "macOS",
+      "Android",
+      "iOS"
     ]
   },
   {
@@ -2823,14 +3551,64 @@
     "terme": "Système de fichiers",
     "anglais": "File system",
     "categorie": "Technologie numérique",
-    "definition": "Structure utilisée sur un volume physique ou virtuel pour organiser, stocker et retrouver des fichiers utilisateur et système. En criminalistique numérique, son interprétation est essentielle pour reconstituer l’organisation des données qu’il contient.",
+    "definition": "Ensemble de structures et de mécanismes permettant d'organiser, d'enregistrer, de localiser et de gérer les fichiers et répertoires sur un support ou un volume numérique. Un système de fichiers définit notamment les modalités d'allocation des espaces de stockage, l'organisation des répertoires et la conservation de certaines métadonnées associées aux fichiers. En criminalistique numérique, son examen peut permettre d'identifier les fichiers présents, leurs caractéristiques, leur organisation, ainsi que certaines informations relatives à des fichiers supprimés ou à des espaces non alloués. Les possibilités d'exploitation dépendent du système de fichiers, de son état, des données accessibles et des méthodes d'acquisition employées.",
     "synonymes": [
       "File system"
     ],
     "termes_deconseilles": [],
     "exemple_rapport": "L’analyse du système de fichiers permet d’identifier l’organisation des données présentes sur le support.",
     "sources": [
-      "CLARUS D3.2 — File system"
+      "The Sleuth Kit — File Systems",
+      "The Sleuth Kit — NTFS File Recovery",
+      "Microsoft — File Timestamps"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Identification du système de fichiers",
+        "texte": "L'examen du support permet d'identifier un système de fichiers de type [type du système de fichiers]."
+      },
+      {
+        "type": "Examen du système de fichiers",
+        "texte": "Nous procédons à l'examen des structures du système de fichiers afin d'identifier les fichiers, répertoires et métadonnées accessibles."
+      },
+      {
+        "type": "Organisation des données",
+        "texte": "L'analyse du système de fichiers permet de restituer l'organisation des répertoires et des fichiers accessibles sur le volume examiné."
+      },
+      {
+        "type": "Recherche de fichiers supprimés",
+        "texte": "Nous procédons à la recherche d'entrées et de métadonnées associées à des fichiers identifiés comme supprimés dans les structures du système de fichiers."
+      },
+      {
+        "type": "Système de fichiers endommagé",
+        "texte": "L'examen met en évidence des altérations des structures du système de fichiers, limitant l'accès à certaines données."
+      },
+      {
+        "type": "Exploitation partielle",
+        "texte": "L'état du système de fichiers et les données accessibles ne permettent qu'une exploitation partielle de son contenu dans les conditions techniques rencontrées."
+      },
+      {
+        "type": "Système de fichiers non identifié",
+        "texte": "Les opérations d'examen ne permettent pas d'identifier avec suffisamment de certitude le système de fichiers présent sur le volume concerné."
+      },
+      {
+        "type": "Limites d'interprétation",
+        "texte": "Les informations issues du système de fichiers sont interprétées en tenant compte de ses caractéristiques techniques, de l'état du support et des éventuelles modifications intervenues sur les données."
+      }
+    ],
+    "termes_proches": [
+      "Métadonnées",
+      "Dossier",
+      "Fichier",
+      "Donnée supprimée",
+      "Carving de fichiers",
+      "Acquisition forensique"
+    ],
+    "points_attention": [
+      "Un système de fichiers NTFS n'établit pas à lui seul l'usage de Windows.",
+      "Les horodatages diffèrent selon le système de fichiers.",
+      "Une entrée supprimée ne garantit pas la récupération du contenu.",
+      "Un volume chiffré ou endommagé peut empêcher l'analyse des structures."
     ]
   },
   {
