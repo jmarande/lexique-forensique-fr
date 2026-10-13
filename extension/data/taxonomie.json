@@ -77,6 +77,14 @@
         {
           "id": "systemes-fichiers",
           "label": "Systèmes d’exploitation et fichiers"
+        },
+        {
+          "id": "comptes-activites",
+          "label": "Comptes et activités utilisateurs"
+        },
+        {
+          "id": "peripheriques-connexions",
+          "label": "Périphériques et connexions"
         }
       ],
       "icone": "💻"
@@ -256,6 +264,18 @@
       "ancienne_categorie": "Procédure d’examen forensique"
     },
     {
+      "id": "compte-utilisateur",
+      "classification": "informatique/comptes-activites",
+      "domaines": [],
+      "ancienne_categorie": "Technologie numérique"
+    },
+    {
+      "id": "connexion-supports-usb",
+      "classification": "informatique/peripheriques-connexions",
+      "domaines": [],
+      "ancienne_categorie": "Technologie numérique"
+    },
+    {
       "id": "copie-forensique",
       "classification": "methodologie/acquisition-extraction",
       "domaines": [],
@@ -322,6 +342,12 @@
       "ancienne_categorie": "Procédure d’examen forensique"
     },
     {
+      "id": "execution-applications",
+      "classification": "informatique/comptes-activites",
+      "domaines": [],
+      "ancienne_categorie": "Technologie numérique"
+    },
+    {
       "id": "exif",
       "classification": "donnees/formats-metadonnees",
       "domaines": [],
@@ -368,6 +394,12 @@
       "classification": "donnees/formats-metadonnees",
       "domaines": [],
       "ancienne_categorie": "Preuve numérique"
+    },
+    {
+      "id": "fichiers-recents",
+      "classification": "informatique/comptes-activites",
+      "domaines": [],
+      "ancienne_categorie": "Technologie numérique"
     },
     {
       "id": "force-brute",
@@ -502,10 +534,22 @@
       "ancienne_categorie": "Preuve numérique"
     },
     {
+      "id": "peripheriques-connectes",
+      "classification": "informatique/peripheriques-connexions",
+      "domaines": [],
+      "ancienne_categorie": "Technologie numérique"
+    },
+    {
       "id": "preuve-numerique",
       "classification": "donnees/preuves-traces",
       "domaines": [],
       "ancienne_categorie": "Preuve numérique"
+    },
+    {
+      "id": "profil-utilisateur",
+      "classification": "informatique/comptes-activites",
+      "domaines": [],
+      "ancienne_categorie": "Technologie numérique"
     },
     {
       "id": "recuperation-donnees",
@@ -542,6 +586,12 @@
       "classification": "methodologie/preservation-tracabilite",
       "domaines": [],
       "ancienne_categorie": "Procédure d’examen forensique"
+    },
+    {
+      "id": "session-utilisateur",
+      "classification": "informatique/comptes-activites",
+      "domaines": [],
+      "ancienne_categorie": "Technologie numérique"
     },
     {
       "id": "signal",
