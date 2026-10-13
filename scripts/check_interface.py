@@ -10,8 +10,11 @@ class Model:
  def createInstance(self,n):return Model()
  def insertByName(self,n,item):self.children[n]=item
 class Control:
- def __init__(self,m):self.m=m;self.SelectedItemPos=-1;self.visible=True
+ def __init__(self,m):self.m=m;self.SelectedItemPos=-1;self.visible=True;self.selection=NS(Min=0,Max=0)
  def getModel(self):return self.m
+ def setSelection(self,v):self.selection=v
+ def getSelection(self):return self.selection
+ def addMouseListener(self,v):pass
  @property
  def Text(self):return self.m.Text
  @Text.setter
@@ -50,17 +53,21 @@ assert len(l.matches)>50
 for name,c in d.m.children.items():
  assert c.PositionX>=0 and c.PositionY>=0 and c.PositionX+c.Width<=420 and c.PositionY+c.Height<=334,(name,vars(c))
 data=m._load_data();family,sub=m._category_parts(next(e for e in data if e['id']=='acquisition-forensique'))
-d.getControl('cmbCategory').setText(family);l.itemStateChanged(NS(Source=d.getControl('cmbCategory')))
+d.getControl('cmbCategory').selectItemPos(l.categories.index(family)+1,True);l.itemStateChanged(NS(Source=d.getControl('cmbCategory')))
 assert all(m._category_parts(e)[0]==family for e in l.matches)
-d.getControl('cmbSubcategory').setText(sub);l.itemStateChanged(NS(Source=d.getControl('cmbSubcategory')))
+d.getControl('cmbSubcategory').selectItemPos(m._available_subcategories(data,family).index(sub)+1,True);l.itemStateChanged(NS(Source=d.getControl('cmbSubcategory')))
 assert all(m._category_parts(e)[1]==sub for e in l.matches)
-assert l.formulation_text.Text and 'FORMULATIONS POUR RAPPORT' not in l.detail_box.Text
+assert 'FORMULATIONS POUR RAPPORT' in l.detail_box.Text
+for item in l.formulation_ranges: assert item['text'] in l.detail_box.Text
+l.detail_box.setSelection(NS(Min=l.formulation_ranges[-1]['start'],Max=l.formulation_ranges[-1]['start']))
+l.mouseReleased(None)
+assert l.selected_formulation_index == len(l.formulation_ranges)-1
 saved=l.current
 for module in ['verify','scenarios','lexicon']:
  nav.select(module)
  assert all(d.getControl(n).visible==(key==module) for key,names in nav.groups.items() for n in names)
 assert l.current==saved
 m.open_scenarios();assert len(m._OPEN_LEXICON_WINDOWS)==1
-l.search_box.Text='ZZZZ-no-result';l.refresh();assert not l.matches and not l.insert_button.getModel().Enabled and not l.formulation_text.Text
+l.search_box.Text='ZZZZ-no-result';l.refresh();assert not l.matches and not l.insert_button.getModel().Enabled
 m._close_module_window(d);assert not any([m._OPEN_LEXICON_WINDOWS,m._OPEN_VERIFY_WINDOWS,m._OPEN_SCENARIO_WINDOWS])
 print('OK: construction, geometry, cascading filters, formulations, module state, window reuse, empty results, cleanup')

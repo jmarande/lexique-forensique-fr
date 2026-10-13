@@ -5,7 +5,7 @@
 ## Rechercher un terme
 Dans LibreOffice Writer, choisir **Lexique forensique > Rechercher un terme…**. Les trois modules **Lexique**, **Vérification du document** et **Scénarios** sont accessibles en haut de la même fenêtre.
 
-Dans **Lexique**, choisir une **Catégorie** puis, si nécessaire, une **Sous-catégorie**. « Toutes » permet d’élargir la sélection. La recherche couvre aussi les synonymes et les termes proches. Consulter la fiche, sélectionner une formulation dans la liste, lire son texte puis cliquer sur **Insérer la formulation**.
+Dans **Lexique**, choisir une **Catégorie** puis, si nécessaire, une **Sous-catégorie**. « Toutes » permet d’élargir la sélection. La recherche couvre aussi les synonymes et les termes proches. Consulter la fiche, lire toutes les formulations dans la fiche, cliquer sur le texte souhaité puis cliquer sur **Insérer la formulation**.
 
 ## Créer ou modifier ses termes
 Le bouton **Mes fiches**, dans le module Lexique, permet de créer des fiches personnelles, avec leur définition, synonymes et plusieurs formulations pour rapport. Les données personnelles restent dans le profil local, indépendamment des mises à jour de l'extension.
