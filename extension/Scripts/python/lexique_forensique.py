@@ -788,8 +788,6 @@ class DialogListener(
         category_box,
         data,
         subcategory_box,
-        formulations_box,
-        formulation_text,
     ):
         self.dialog = dialog
         self.search_box = search_box
@@ -799,8 +797,6 @@ class DialogListener(
         self.insert_button = insert_button
         self.category_box = category_box
         self.subcategory_box = subcategory_box
-        self.formulations_box = formulations_box
-        self.formulation_text = formulation_text
         self.current_subcategory = None
         self.data = data
         self.categories = _available_categories(data)
@@ -809,6 +805,7 @@ class DialogListener(
         self.matches = []
         self.formulation_ranges = []
         self.selected_formulation_index = 0
+        self._updating_filters = False
         self._refresh_subcategories()
         self.refresh()
 
@@ -816,9 +813,14 @@ class DialogListener(
         choices = _available_subcategories(self.data, self.current_category)
         if self.current_subcategory not in choices:
             self.current_subcategory = None
-        self.subcategory_box.getModel().StringItemList = tuple(["Toutes"] + choices)
-        self.subcategory_box.setText(self.current_subcategory or "Toutes")
-        self.subcategory_box.getModel().Enabled = bool(choices)
+        self._updating_filters = True
+        try:
+            self.subcategory_box.getModel().StringItemList = tuple(["Toutes"] + choices)
+            self.subcategory_box.selectItemPos(
+                choices.index(self.current_subcategory) + 1 if self.current_subcategory else 0, True)
+            self.subcategory_box.getModel().Enabled = bool(choices)
+        finally:
+            self._updating_filters = False
 
     def _set_insert_enabled(self, enabled):
         self.insert_button.getModel().Enabled = enabled
@@ -840,21 +842,19 @@ class DialogListener(
 
         if previous_category and previous_category in self.categories:
             self.current_category = previous_category
-            self.category_box.setText(previous_category)
+            self.category_box.selectItemPos(self.categories.index(previous_category) + 1, True)
         else:
             self.current_category = None
-            self.category_box.setText("Toutes")
+            self.category_box.selectItemPos(0, True)
 
         self._refresh_subcategories()
         self.refresh()
 
     def _display_entry(self, entry):
         text, ranges = _format_entry(entry)
-        self.detail_box.Text = text.split("FORMULATIONS POUR RAPPORT\n", 1)[0].rstrip()
+        self.detail_box.Text = text
         self.formulation_ranges = ranges
         self.selected_formulation_index = 0
-        self.formulations_box.getModel().StringItemList = tuple(item["label"] for item in ranges)
-        self.formulation_text.Text = ""
         self._set_insert_enabled(bool(ranges))
         if ranges:
             self._select_formulation(0)
@@ -863,9 +863,10 @@ class DialogListener(
         if not (0 <= index < len(self.formulation_ranges)):
             return
         self.selected_formulation_index = index
-        if self.formulations_box.SelectedItemPos != index:
-            self.formulations_box.selectItemPos(index, True)
-        self.formulation_text.Text = self.formulation_ranges[index]["text"]
+        item = self.formulation_ranges[index]
+        selection = uno.createUnoStruct("com.sun.star.awt.Selection")
+        selection.Min, selection.Max = item["start"], item["end"]
+        self.detail_box.setSelection(selection)
 
     def _show_entry(self, entry):
         self.current = entry
@@ -895,8 +896,6 @@ class DialogListener(
             self.current = None
             self.formulation_ranges = []
             self.detail_box.Text = "Aucun terme trouvé. Modifiez la recherche ou les filtres."
-            self.formulations_box.getModel().StringItemList = ()
-            self.formulation_text.Text = ""
             self._set_insert_enabled(False)
 
     def actionPerformed(self, event):
@@ -945,27 +944,25 @@ class DialogListener(
         pass
 
     def itemStateChanged(self, event):
-        source_name = ""
-        try:
-            source_name = event.Source.getModel().Name
-        except Exception:
-            pass
-        if source_name == "cmbCategory":
-            value = (event.Source.getText() or "").strip()
-            if value == "Toutes":
-                self.current_category = None
-            elif value in self.categories:
-                self.current_category = value
-            else:
+        if self._updating_filters:
+            return
+        source = event.Source
+        name = source.getModel().Name
+        if name == "cmbCategory":
+            position = source.SelectedItemPos
+            if not 0 <= position <= len(self.categories):
                 return
+            self.current_category = self.categories[position - 1] if position else None
+            self.current_subcategory = None
             self._refresh_subcategories()
             self.refresh()
-        elif source_name == "cmbSubcategory":
-            value = event.Source.getText()
-            self.current_subcategory = None if value == "Toutes" else value
+        elif name == "cmbSubcategory":
+            choices = _available_subcategories(self.data, self.current_category)
+            position = source.SelectedItemPos
+            if not 0 <= position <= len(choices):
+                return
+            self.current_subcategory = choices[position - 1] if position else None
             self.refresh()
-        elif source_name == "lstFormulations":
-            self._select_formulation(self.formulations_box.SelectedItemPos)
         else:
             pos = self.results_box.SelectedItemPos
             if 0 <= pos < len(self.matches):
@@ -3742,18 +3739,16 @@ def open_lexicon(*args, _module="lexicon"):
     add("txtSearch", "Edit", 58, 34, 272, 16)
     add("btnSearch", "Button", 336, 34, 76, 16, Label="Rechercher", DefaultButton=True)
     add("lblCategory", "FixedText", 8, 60, 126, 10, Label="Catégorie")
-    add("cmbCategory", "ComboBox", 8, 72, 126, 16, Dropdown=True, ReadOnly=True,
-        StringItemList=tuple(["Toutes"] + _available_categories(data)), Text="Toutes")
+    add("cmbCategory", "ListBox", 8, 72, 126, 16, Dropdown=True,
+        StringItemList=tuple(["Toutes"] + _available_categories(data)), SelectedItems=(0,))
     add("lblSubcategory", "FixedText", 8, 96, 126, 10, Label="Sous-catégorie")
-    add("cmbSubcategory", "ComboBox", 8, 108, 126, 16, Dropdown=True, ReadOnly=True,
-        StringItemList=("Toutes",), Text="Toutes")
+    add("cmbSubcategory", "ListBox", 8, 108, 126, 16, Dropdown=True,
+        StringItemList=("Toutes",), SelectedItems=(0,))
     add("lblStatus", "FixedText", 8, 130, 126, 12, Label="")
     add("lstResults", "ListBox", 8, 146, 126, 148)
     add("btnManageTerms", "Button", 8, 300, 126, 16, Label="Mes fiches")
-    add("txtDetail", "Edit", 142, 60, 270, 130, MultiLine=True, ReadOnly=True, VScroll=True)
-    add("lblFormulations", "FixedText", 142, 196, 270, 12, Label="Formulations pour rapport")
-    add("lstFormulations", "ListBox", 142, 212, 270, 42)
-    add("txtFormulation", "Edit", 142, 260, 270, 34, MultiLine=True, ReadOnly=True, VScroll=True)
+    add("txtDetail", "Edit", 142, 60, 270, 234, MultiLine=True, ReadOnly=True, VScroll=True,
+        HideInactiveSelection=False)
     add("btnInsert", "Button", 292, 300, 120, 16, Label="Insérer la formulation")
     add("btnClose", "Button", 360, 318, 52, 14, Label="Fermer")
     groups = {"lexicon": list(names)}
@@ -3765,8 +3760,7 @@ def open_lexicon(*args, _module="lexicon"):
     listener = DialogListener(dialog, dialog.getControl("txtSearch"), dialog.getControl("lstResults"),
                               dialog.getControl("txtDetail"), dialog.getControl("lblStatus"),
                               dialog.getControl("btnInsert"), dialog.getControl("cmbCategory"), data,
-                              dialog.getControl("cmbSubcategory"), dialog.getControl("lstFormulations"),
-                              dialog.getControl("txtFormulation"))
+                              dialog.getControl("cmbSubcategory"))
     verify = setup_verify(dialog)
     scenarios = setup_scenarios(dialog)
     for name, command in [("btnSearch", "search"), ("btnManageTerms", "manage_terms"),
@@ -3774,8 +3768,9 @@ def open_lexicon(*args, _module="lexicon"):
         control = dialog.getControl(name)
         control.setActionCommand(command)
         control.addActionListener(listener)
-    for name in ("lstResults", "cmbCategory", "cmbSubcategory", "lstFormulations"):
+    for name in ("lstResults", "cmbCategory", "cmbSubcategory"):
         dialog.getControl(name).addItemListener(listener)
+    dialog.getControl("txtDetail").addMouseListener(listener)
     navigation = ModuleNavigationListener(dialog, groups, [listener, verify, scenarios])
     for module in ("lexicon", "verify", "scenarios", "help"):
         control = dialog.getControl("nav_" + module)

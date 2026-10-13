@@ -6,7 +6,7 @@ Extension du projet **Lexique forensique FR**.
 
 Une seule fenêtre regroupe trois modules accessibles en haut : **Lexique**, **Vérification du document** et **Scénarios**. Chaque module conserve sa sélection lors du passage à un autre. Les entrées du menu Writer ouvrent le module demandé dans cette même fenêtre.
 
-Dans **Lexique**, les filtres **Catégorie** puis **Sous-catégorie** affinent la liste des fiches. « Toutes » retire le filtre correspondant. La recherche couvre notamment les termes, synonymes et termes proches. La définition et les informations de la fiche sont séparées de la liste des formulations : sélectionner un intitulé, lire son texte puis cliquer sur **Insérer la formulation**.
+Dans **Lexique**, les filtres **Catégorie** puis **Sous-catégorie** affinent la liste des fiches. « Toutes » retire le filtre correspondant. La recherche couvre notamment les termes, synonymes et termes proches. Toutes les formulations sont affichées ensemble dans la fiche. Cliquer sur le texte souhaité puis sur **Insérer la formulation**.
 
 Le bouton **Mes fiches** ouvre la gestion des fiches personnelles. La vérification conserve sa gestion des occurrences et les scénarios leurs commandes de création, modification et insertion. Le bouton **Aide** donne accès à l'aide hors ligne.
 
