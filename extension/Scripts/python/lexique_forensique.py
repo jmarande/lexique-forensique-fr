@@ -236,8 +236,20 @@ def _entry_category(entry):
     return _CLASSIFICATION.get(entry.get("id")) or entry.get("categorie", "")
 
 
+def _category_parts(entry):
+    category = _entry_category(entry)
+    family, separator, subgroup = category.partition(" → ")
+    return family, subgroup if separator else ""
+
+
 def _available_categories(entries):
-    return sorted({_entry_category(e) for e in entries if _entry_category(e)}, key=_normalize)
+    return sorted({_category_parts(e)[0] for e in entries if _category_parts(e)[0]}, key=_normalize)
+
+
+def _available_subcategories(entries, category=None):
+    return sorted({subgroup for e in entries
+                   for family, subgroup in [_category_parts(e)]
+                   if subgroup and (not category or family == category)}, key=_normalize)
 
 
 def _load_data():
@@ -628,7 +640,7 @@ def _format_entry(e, warning=None):
         parts.append("—")
 
     return "".join(parts), ranges
-def _find_entries(query, data, category=None):
+def _find_entries(query, data, category=None, subcategory=None):
     q = _normalize(query)
     by_id = {entry.get("id"): entry for entry in data if entry.get("id")}
     aliases = {}
@@ -642,7 +654,9 @@ def _find_entries(query, data, category=None):
         # Keep legacy identifiers for links but show only the canonical fiche.
         if entry.get("renvoi_principal") in by_id:
             continue
-        if category and _entry_category(entry) != category:
+        if category and _category_parts(entry)[0] != category:
+            continue
+        if subcategory and _category_parts(entry)[1] != subcategory:
             continue
         searchable = [entry] + aliases.get(entry.get("id"), [])
         if q:
@@ -654,6 +668,7 @@ def _find_entries(query, data, category=None):
                     _entry_category(item),
                     item.get("definition", ""),
                     " ".join(item.get("synonymes", [])),
+                    " ".join(item.get("termes_proches", [])),
                     " ".join(_bad_terms(item)),
                 ])
             if q not in _normalize(" ".join(fields)):
@@ -772,6 +787,9 @@ class DialogListener(
         insert_button,
         category_box,
         data,
+        subcategory_box,
+        formulations_box,
+        formulation_text,
     ):
         self.dialog = dialog
         self.search_box = search_box
@@ -780,6 +798,10 @@ class DialogListener(
         self.status_label = status_label
         self.insert_button = insert_button
         self.category_box = category_box
+        self.subcategory_box = subcategory_box
+        self.formulations_box = formulations_box
+        self.formulation_text = formulation_text
+        self.current_subcategory = None
         self.data = data
         self.categories = _available_categories(data)
         self.current_category = None
@@ -787,7 +809,16 @@ class DialogListener(
         self.matches = []
         self.formulation_ranges = []
         self.selected_formulation_index = 0
+        self._refresh_subcategories()
         self.refresh()
+
+    def _refresh_subcategories(self):
+        choices = _available_subcategories(self.data, self.current_category)
+        if self.current_subcategory not in choices:
+            self.current_subcategory = None
+        self.subcategory_box.getModel().StringItemList = tuple(["Toutes"] + choices)
+        self.subcategory_box.setText(self.current_subcategory or "Toutes")
+        self.subcategory_box.getModel().Enabled = bool(choices)
 
     def _set_insert_enabled(self, enabled):
         self.insert_button.getModel().Enabled = enabled
@@ -814,28 +845,27 @@ class DialogListener(
             self.current_category = None
             self.category_box.setText("Toutes")
 
+        self._refresh_subcategories()
         self.refresh()
 
     def _display_entry(self, entry):
         text, ranges = _format_entry(entry)
-        self.detail_box.Text = text
+        self.detail_box.Text = text.split("FORMULATIONS POUR RAPPORT\n", 1)[0].rstrip()
         self.formulation_ranges = ranges
         self.selected_formulation_index = 0
+        self.formulations_box.getModel().StringItemList = tuple(item["label"] for item in ranges)
+        self.formulation_text.Text = ""
+        self._set_insert_enabled(bool(ranges))
         if ranges:
             self._select_formulation(0)
-            self._set_insert_enabled(True)
-        else:
-            self._set_insert_enabled(False)
 
     def _select_formulation(self, index):
         if not (0 <= index < len(self.formulation_ranges)):
             return
         self.selected_formulation_index = index
-        item = self.formulation_ranges[index]
-        selection = uno.createUnoStruct("com.sun.star.awt.Selection")
-        selection.Min = item["start"]
-        selection.Max = item["end"]
-        self.detail_box.setSelection(selection)
+        if self.formulations_box.SelectedItemPos != index:
+            self.formulations_box.selectItemPos(index, True)
+        self.formulation_text.Text = self.formulation_ranges[index]["text"]
 
     def _show_entry(self, entry):
         self.current = entry
@@ -846,7 +876,9 @@ class DialogListener(
             self.search_box.Text,
             self.data,
             category=self.current_category,
+            subcategory=self.current_subcategory,
         )
+        previous_id = self.current.get("id") if self.current else None
         self._clear_results()
         for entry in self.matches:
             self.results_box.addItem(entry["terme"], self.results_box.ItemCount)
@@ -856,12 +888,15 @@ class DialogListener(
             f"{count} résultat" if count == 1 else f"{count} résultats"
         )
         if self.matches:
-            self.results_box.selectItemPos(0, True)
-            self._show_entry(self.matches[0])
+            selected = next((i for i, e in enumerate(self.matches) if e.get("id") == previous_id), 0)
+            self.results_box.selectItemPos(selected, True)
+            self._show_entry(self.matches[selected])
         else:
             self.current = None
             self.formulation_ranges = []
-            self.detail_box.Text = "Aucun terme trouvé."
+            self.detail_box.Text = "Aucun terme trouvé. Modifiez la recherche ou les filtres."
+            self.formulations_box.getModel().StringItemList = ()
+            self.formulation_text.Text = ""
             self._set_insert_enabled(False)
 
     def actionPerformed(self, event):
@@ -923,21 +958,21 @@ class DialogListener(
                 self.current_category = value
             else:
                 return
+            self._refresh_subcategories()
             self.refresh()
+        elif source_name == "cmbSubcategory":
+            value = event.Source.getText()
+            self.current_subcategory = None if value == "Toutes" else value
+            self.refresh()
+        elif source_name == "lstFormulations":
+            self._select_formulation(self.formulations_box.SelectedItemPos)
         else:
             pos = self.results_box.SelectedItemPos
             if 0 <= pos < len(self.matches):
                 self._show_entry(self.matches[pos])
 
     def _close_dialog(self):
-        try:
-            self.dialog.setVisible(False)
-            self.dialog.dispose()
-        finally:
-            _OPEN_LEXICON_WINDOWS[:] = [
-                item for item in _OPEN_LEXICON_WINDOWS
-                if item.get("dialog") is not self.dialog
-            ]
+        _close_module_window(self.dialog)
 
     def windowClosing(self, event):
         self._close_dialog()
@@ -979,6 +1014,7 @@ class VerificationListener(
         replace_button,
         data,
         translations,
+        auto_scan=True,
     ):
         self.dialog = dialog
         self.alerts_box = alerts_box
@@ -990,7 +1026,8 @@ class VerificationListener(
         self.alerts = []
         self.current_alert = None
         self.current_found_range = None
-        self.scan()
+        if auto_scan:
+            self.scan()
 
     def _clear_alerts(self):
         if self.alerts_box.ItemCount:
@@ -1123,14 +1160,7 @@ class VerificationListener(
             self._show_alert(self.alerts[pos])
 
     def _close_dialog(self):
-        try:
-            self.dialog.setVisible(False)
-            self.dialog.dispose()
-        finally:
-            _OPEN_VERIFY_WINDOWS[:] = [
-                item for item in _OPEN_VERIFY_WINDOWS
-                if item.get("dialog") is not self.dialog
-            ]
+        _close_module_window(self.dialog)
 
     def windowClosing(self, event):
         self._close_dialog()
@@ -1627,14 +1657,7 @@ class ScenarioListener(
             self._show(pos)
 
     def _close_dialog(self):
-        try:
-            self.dialog.setVisible(False)
-            self.dialog.dispose()
-        finally:
-            _OPEN_SCENARIO_WINDOWS[:] = [
-                item for item in _OPEN_SCENARIO_WINDOWS
-                if item.get("dialog") is not self.dialog
-            ]
+        _close_module_window(self.dialog)
 
     def windowClosing(self, event):
         self._close_dialog()
@@ -2581,26 +2604,21 @@ class AboutListener(unohelper.Base, XActionListener, XTopWindowListener):
 
 
 def open_verification(*args):
-    ctx = _ctx()
-    smgr = ctx.ServiceManager
-    toolkit = smgr.createInstanceWithContext("com.sun.star.awt.Toolkit", ctx)
-    model = smgr.createInstanceWithContext(
-        "com.sun.star.awt.UnoControlDialogModel", ctx
-    )
-    model.PositionX = 92
-    model.PositionY = 58
-    model.Width = 300
-    model.Height = 250
-    model.Title = "Vérification du document"
+    return open_lexicon(_module="verify")
 
+
+def _build_verify_module(model):
+    names = []
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
         item.Name = name
-        item.PositionX, item.PositionY = x, y
-        item.Width, item.Height = w, h
+        item.PositionX, item.PositionY = x, y + 32
+        item.PositionX = round(x * 420 / 300)
+        item.Width, item.Height = round(w * 420 / 300), h
         for key, value in props.items():
             setattr(item, key, value)
         model.insertByName(name, item)
+        names.append(name)
 
     add("lblAlerts", "com.sun.star.awt.UnoControlFixedTextModel",
         8, 8, 104, 10, Label="Éléments détectés")
@@ -2619,35 +2637,34 @@ def open_verification(*args):
     add("btnVerifyClose", "com.sun.star.awt.UnoControlButtonModel",
         240, 228, 52, 16, Label="Fermer")
 
-    dialog = smgr.createInstanceWithContext(
-        "com.sun.star.awt.UnoControlDialog", ctx
-    )
-    dialog.setModel(model)
-    dialog.createPeer(toolkit, None)
+    def setup(dialog):
+        listener = VerificationListener(
+            dialog,
+            dialog.getControl("lstVerifyAlerts"),
+            dialog.getControl("txtVerifyDetail"),
+            dialog.getControl("lblVerifyStatus"),
+            dialog.getControl("btnVerifyReplace"),
+            _load_data(),
+            _load_translations(),
+            auto_scan=False,
+        )
+        for control_name, command in [
+            ("btnVerifyReplace", "replace"),
+            ("btnVerifyRescan", "rescan"),
+            ("btnVerifyManage", "manage_occurrences"),
+            ("btnVerifyClose", "close"),
+        ]:
+            control = dialog.getControl(control_name)
+            control.setActionCommand(command)
+            control.addActionListener(listener)
 
-    listener = VerificationListener(
-        dialog,
-        dialog.getControl("lstVerifyAlerts"),
-        dialog.getControl("txtVerifyDetail"),
-        dialog.getControl("lblVerifyStatus"),
-        dialog.getControl("btnVerifyReplace"),
-        _load_data(),
-        _load_translations(),
-    )
-    for control_name, command in [
-        ("btnVerifyReplace", "replace"),
-        ("btnVerifyRescan", "rescan"),
-        ("btnVerifyManage", "manage_occurrences"),
-        ("btnVerifyClose", "close"),
-    ]:
-        control = dialog.getControl(control_name)
-        control.setActionCommand(command)
-        control.addActionListener(listener)
+        dialog.getControl("lstVerifyAlerts").addItemListener(listener)
+        _OPEN_VERIFY_WINDOWS.append({"dialog": dialog, "listener": listener})
+        return listener
 
-    dialog.getControl("lstVerifyAlerts").addItemListener(listener)
-    dialog.addTopWindowListener(listener)
-    _OPEN_VERIFY_WINDOWS.append({"dialog": dialog, "listener": listener})
-    dialog.setVisible(True)
+
+
+    return names, setup
 
 
 def open_occurrence_editor(parent_listener, item, is_new=False):
@@ -2912,26 +2929,21 @@ def open_scenario_editor(parent_listener, scenario):
 
 
 def open_scenarios(*args):
-    ctx = _ctx()
-    smgr = ctx.ServiceManager
-    toolkit = smgr.createInstanceWithContext("com.sun.star.awt.Toolkit", ctx)
-    model = smgr.createInstanceWithContext(
-        "com.sun.star.awt.UnoControlDialogModel", ctx
-    )
-    model.PositionX = 90
-    model.PositionY = 55
-    model.Width = 390
-    model.Height = 292
-    model.Title = "Scénarios de rédaction"
+    return open_lexicon(_module="scenarios")
 
+
+def _build_scenarios_module(model):
+    names = []
     def add(name, service, x, y, w, h, **props):
         item = model.createInstance(service)
         item.Name = name
-        item.PositionX, item.PositionY = x, y
-        item.Width, item.Height = w, h
+        item.PositionX, item.PositionY = x, y + 32
+        item.PositionX = round(x * 420 / 390)
+        item.Width, item.Height = round(w * 420 / 390), h
         for key, value in props.items():
             setattr(item, key, value)
         model.insertByName(name, item)
+        names.append(name)
 
     add("lblScenarios", "com.sun.star.awt.UnoControlFixedTextModel",
         8, 8, 142, 10, Label="Choisir un scénario")
@@ -2954,37 +2966,35 @@ def open_scenarios(*args):
     add("btnScenarioClose", "com.sun.star.awt.UnoControlButtonModel",
         330, 274, 52, 14, Label="Fermer")
 
-    dialog = smgr.createInstanceWithContext(
-        "com.sun.star.awt.UnoControlDialog", ctx
-    )
-    dialog.setModel(model)
-    dialog.createPeer(toolkit, None)
+    def setup(dialog):
+        listener = ScenarioListener(
+            dialog,
+            dialog.getControl("lstScenarios"),
+            dialog.getControl("txtScenarioDetail"),
+            dialog.getControl("lblScenarioStatus"),
+            _load_data(),
+            _load_scenarios(),
+            _load_user_scenarios(),
+        )
+        for control_name, command in [
+            ("btnScenarioNew", "new"),
+            ("btnScenarioDuplicate", "duplicate"),
+            ("btnScenarioEdit", "edit"),
+            ("btnScenarioDelete", "delete"),
+            ("btnScenarioInsert", "insert"),
+            ("btnScenarioClose", "close"),
+        ]:
+            control = dialog.getControl(control_name)
+            control.setActionCommand(command)
+            control.addActionListener(listener)
 
-    listener = ScenarioListener(
-        dialog,
-        dialog.getControl("lstScenarios"),
-        dialog.getControl("txtScenarioDetail"),
-        dialog.getControl("lblScenarioStatus"),
-        _load_data(),
-        _load_scenarios(),
-        _load_user_scenarios(),
-    )
-    for control_name, command in [
-        ("btnScenarioNew", "new"),
-        ("btnScenarioDuplicate", "duplicate"),
-        ("btnScenarioEdit", "edit"),
-        ("btnScenarioDelete", "delete"),
-        ("btnScenarioInsert", "insert"),
-        ("btnScenarioClose", "close"),
-    ]:
-        control = dialog.getControl(control_name)
-        control.setActionCommand(command)
-        control.addActionListener(listener)
+        dialog.getControl("lstScenarios").addItemListener(listener)
+        _OPEN_SCENARIO_WINDOWS.append({"dialog": dialog, "listener": listener})
+        return listener
 
-    dialog.getControl("lstScenarios").addItemListener(listener)
-    dialog.addTopWindowListener(listener)
-    _OPEN_SCENARIO_WINDOWS.append({"dialog": dialog, "listener": listener})
-    dialog.setVisible(True)
+
+
+    return names, setup
 
 
 def open_term_editor(parent_listener, entry):
@@ -3297,10 +3307,11 @@ _HELP_TOPICS = [
      "Les définitions et formulations sont des aides à la rédaction : elles doivent être adaptées aux constatations."),
     ("Rechercher un terme",
      "Menu Lexique forensique > Rechercher un terme…\n\n"
-     "Recherchez un terme ou filtrez par catégorie. Consultez sa définition, les synonymes et, "
+     "Passez entre Lexique, Vérification du document et Scénarios en haut de la fenêtre. "
+     "Filtrez par catégorie puis sous-catégorie. Consultez la définition, les synonymes et, "
      "le cas échéant, les formulations pour rapport. Vérifiez leur adéquation avec les faits observés."),
     ("Fiches personnelles",
-     "Dans la gestion des termes, créez ou modifiez vos propres fiches.\n\n"
+     "Dans Lexique > Mes fiches, créez ou modifiez vos propres fiches.\n\n"
      "Une fiche peut comporter un terme, sa traduction, une catégorie, une définition, "
      "des synonymes et plusieurs formulations pour rapport.\n\n"
      "Les fiches personnelles sont conservées dans votre profil utilisateur."),
@@ -3652,165 +3663,127 @@ def check_updates(*args):
         )
 
 
-def open_lexicon(*args):
+class ModuleNavigationListener(unohelper.Base, XActionListener, XTopWindowListener):
+    def __init__(self, dialog, groups, listeners):
+        self.dialog, self.groups, self.listeners = dialog, groups, listeners
+        self.verification_started = False
+
+    def select(self, module):
+        if module == "verify" and not self.verification_started:
+            self.listeners[1].scan()
+            self.verification_started = True
+        for key, names in self.groups.items():
+            for name in names:
+                self.dialog.getControl(name).setVisible(key == module)
+            self.dialog.getControl("nav_" + key).getModel().Enabled = key != module
+
+    def actionPerformed(self, event):
+        if event.ActionCommand == "help":
+            show_help()
+        else:
+            self.select(event.ActionCommand)
+
+    def windowClosing(self, event):
+        _close_module_window(self.dialog)
+
+    def windowOpened(self, event): pass
+    def windowClosed(self, event): pass
+    def windowMinimized(self, event): pass
+    def windowNormalized(self, event): pass
+    def windowActivated(self, event): pass
+    def windowDeactivated(self, event): pass
+    def disposing(self, event): pass
+
+
+def _close_module_window(dialog):
+    for item in _OPEN_LEXICON_WINDOWS:
+        if item.get("dialog") is dialog and item.get("navigation"):
+            dialog.removeTopWindowListener(item["navigation"])
+    dialog.setVisible(False)
+    for windows in (_OPEN_LEXICON_WINDOWS, _OPEN_VERIFY_WINDOWS, _OPEN_SCENARIO_WINDOWS):
+        windows[:] = [item for item in windows if item.get("dialog") is not dialog]
+    dialog.dispose()
+
+
+def open_lexicon(*args, _module="lexicon"):
+    # Reuse the same workspace from Writer menu entries.
+    for window in _OPEN_LEXICON_WINDOWS:
+        if window.get("navigation"):
+            window["navigation"].select(_module)
+            window["dialog"].setVisible(True)
+            window["dialog"].toFront()
+            return
     ctx = _ctx()
     smgr = ctx.ServiceManager
     toolkit = smgr.createInstanceWithContext("com.sun.star.awt.Toolkit", ctx)
-    model = smgr.createInstanceWithContext(
-        "com.sun.star.awt.UnoControlDialogModel", ctx
-    )
-
-    model.PositionX = 70
-    model.PositionY = 45
-    model.Width = 310
-    model.Height = 334
+    model = smgr.createInstanceWithContext("com.sun.star.awt.UnoControlDialogModel", ctx)
+    model.PositionX, model.PositionY = 60, 35
+    model.Width, model.Height = 420, 334
     model.Title = f"Lexique forensique FR — v{CURRENT_VERSION}"
-
     data = _load_data()
-    categories = _available_categories(data)
+    names = []
 
-    def add(name, service, x, y, w, h, **props):
-        item = model.createInstance(service)
+    def add(name, kind, x, y, w, h, **props):
+        item = model.createInstance("com.sun.star.awt.UnoControl" + kind + "Model")
         item.Name = name
-        item.PositionX = x
-        item.PositionY = y
-        item.Width = w
-        item.Height = h
+        item.PositionX, item.PositionY, item.Width, item.Height = x, y, w, h
         for key, value in props.items():
             setattr(item, key, value)
         model.insertByName(name, item)
+        names.append(name)
 
-    add(
-        "lblSearch",
-        "com.sun.star.awt.UnoControlFixedTextModel",
-        8, 8, 44, 12,
-        Label="Recherche :",
-    )
-    add(
-        "txtSearch",
-        "com.sun.star.awt.UnoControlEditModel",
-        52, 6, 178, 14,
-    )
-    add(
-        "btnSearch",
-        "com.sun.star.awt.UnoControlButtonModel",
-        234, 6, 68, 14,
-        Label="Rechercher",
-    )
-    add(
-        "btnVerify",
-        "com.sun.star.awt.UnoControlButtonModel",
-        8, 174, 105, 16,
-        Label="Vérifier le document",
-    )
-    add(
-        "btnScenarios",
-        "com.sun.star.awt.UnoControlButtonModel",
-        8, 194, 105, 16,
-        Label="Scénarios",
-    )
-    add(
-        "btnManageTerms",
-        "com.sun.star.awt.UnoControlButtonModel",
-        8, 214, 105, 16,
-        Label="Gérer les termes",
-    )
-    add(
-        "lblCategory",
-        "com.sun.star.awt.UnoControlFixedTextModel",
-        8, 27, 42, 10,
-        Label="Catégorie :",
-    )
-    add(
-        "cmbCategory",
-        "com.sun.star.awt.UnoControlComboBoxModel",
-        50, 25, 104, 14,
-        Dropdown=True,
-        StringItemList=tuple(["Toutes"] + categories),
-        Text="Toutes",
-    )
-    add(
-        "lblStatus",
-        "com.sun.star.awt.UnoControlFixedTextModel",
-        160, 27, 142, 10,
-        Label="",
-    )
-    add(
-        "lblLexique",
-        "com.sun.star.awt.UnoControlFixedTextModel",
-        8, 44, 105, 10,
-        Label="Lexique",
-    )
-    add(
-        "lstResults",
-        "com.sun.star.awt.UnoControlListBoxModel",
-        8, 56, 105, 112,
-    )
-    add(
-        "txtDetail",
-        "com.sun.star.awt.UnoControlEditModel",
-        118, 46, 184, 236,
-        MultiLine=True,
-        ReadOnly=True,
-        VScroll=True,
-        HideInactiveSelection=False,
-    )
-    add(
-        "btnInsert",
-        "com.sun.star.awt.UnoControlButtonModel",
-        214, 288, 88, 16,
-        Label="Insérer formule",
-    )
-    add(
-        "btnClose",
-        "com.sun.star.awt.UnoControlButtonModel",
-        258, 314, 44, 16,
-        Label="Fermer",
-    )
-
-    dialog = smgr.createInstanceWithContext(
-        "com.sun.star.awt.UnoControlDialog", ctx
-    )
+    for name, label, x, w in [("lexicon", "Lexique", 8, 82),
+                               ("verify", "Vérification du document", 94, 144),
+                               ("scenarios", "Scénarios", 242, 92)]:
+        add("nav_" + name, "Button", x, 6, w, 20, Label=label)
+    add("nav_help", "Button", 358, 6, 54, 20, Label="Aide")
+    names.clear()
+    add("lblSearch", "FixedText", 8, 38, 48, 10, Label="Recherche :")
+    add("txtSearch", "Edit", 58, 34, 272, 16)
+    add("btnSearch", "Button", 336, 34, 76, 16, Label="Rechercher", DefaultButton=True)
+    add("lblCategory", "FixedText", 8, 60, 126, 10, Label="Catégorie")
+    add("cmbCategory", "ComboBox", 8, 72, 126, 16, Dropdown=True, ReadOnly=True,
+        StringItemList=tuple(["Toutes"] + _available_categories(data)), Text="Toutes")
+    add("lblSubcategory", "FixedText", 8, 96, 126, 10, Label="Sous-catégorie")
+    add("cmbSubcategory", "ComboBox", 8, 108, 126, 16, Dropdown=True, ReadOnly=True,
+        StringItemList=("Toutes",), Text="Toutes")
+    add("lblStatus", "FixedText", 8, 130, 126, 12, Label="")
+    add("lstResults", "ListBox", 8, 146, 126, 148)
+    add("btnManageTerms", "Button", 8, 300, 126, 16, Label="Mes fiches")
+    add("txtDetail", "Edit", 142, 60, 270, 130, MultiLine=True, ReadOnly=True, VScroll=True)
+    add("lblFormulations", "FixedText", 142, 196, 270, 12, Label="Formulations pour rapport")
+    add("lstFormulations", "ListBox", 142, 212, 270, 42)
+    add("txtFormulation", "Edit", 142, 260, 270, 34, MultiLine=True, ReadOnly=True, VScroll=True)
+    add("btnInsert", "Button", 292, 300, 120, 16, Label="Insérer la formulation")
+    add("btnClose", "Button", 360, 318, 52, 14, Label="Fermer")
+    groups = {"lexicon": list(names)}
+    groups["verify"], setup_verify = _build_verify_module(model)
+    groups["scenarios"], setup_scenarios = _build_scenarios_module(model)
+    dialog = smgr.createInstanceWithContext("com.sun.star.awt.UnoControlDialog", ctx)
     dialog.setModel(model)
     dialog.createPeer(toolkit, None)
-
-    search_box = dialog.getControl("txtSearch")
-    results_box = dialog.getControl("lstResults")
-    detail_box = dialog.getControl("txtDetail")
-    status_label = dialog.getControl("lblStatus")
-    insert_button = dialog.getControl("btnInsert")
-    category_box = dialog.getControl("cmbCategory")
-    listener = DialogListener(
-        dialog,
-        search_box,
-        results_box,
-        detail_box,
-        status_label,
-        insert_button,
-        category_box,
-        data,
-    )
-
-    for control, command in [
-        (dialog.getControl("btnSearch"), "search"),
-        (dialog.getControl("btnVerify"), "verify"),
-        (dialog.getControl("btnScenarios"), "scenarios"),
-        (dialog.getControl("btnManageTerms"), "manage_terms"),
-        (insert_button, "insert"),
-        (dialog.getControl("btnClose"), "close"),
-    ]:
+    listener = DialogListener(dialog, dialog.getControl("txtSearch"), dialog.getControl("lstResults"),
+                              dialog.getControl("txtDetail"), dialog.getControl("lblStatus"),
+                              dialog.getControl("btnInsert"), dialog.getControl("cmbCategory"), data,
+                              dialog.getControl("cmbSubcategory"), dialog.getControl("lstFormulations"),
+                              dialog.getControl("txtFormulation"))
+    verify = setup_verify(dialog)
+    scenarios = setup_scenarios(dialog)
+    for name, command in [("btnSearch", "search"), ("btnManageTerms", "manage_terms"),
+                          ("btnInsert", "insert"), ("btnClose", "close")]:
+        control = dialog.getControl(name)
         control.setActionCommand(command)
         control.addActionListener(listener)
-
-    results_box.addItemListener(listener)
-    category_box.addItemListener(listener)
-    detail_box.addMouseListener(listener)
-    dialog.addTopWindowListener(listener)
-
-    _OPEN_LEXICON_WINDOWS.append({
-        "dialog": dialog,
-        "listener": listener,
-    })
+    for name in ("lstResults", "cmbCategory", "cmbSubcategory", "lstFormulations"):
+        dialog.getControl(name).addItemListener(listener)
+    navigation = ModuleNavigationListener(dialog, groups, [listener, verify, scenarios])
+    for module in ("lexicon", "verify", "scenarios", "help"):
+        control = dialog.getControl("nav_" + module)
+        control.setActionCommand(module)
+        control.addActionListener(navigation)
+    dialog.addTopWindowListener(navigation)
+    _OPEN_LEXICON_WINDOWS.append({"dialog": dialog, "listener": listener, "navigation": navigation})
+    navigation.select(_module)
     dialog.setVisible(True)
 
 
