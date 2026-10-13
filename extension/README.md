@@ -4,14 +4,11 @@ Extension du projet **Lexique forensique FR**.
 
 ## Fonctions
 
-La fenêtre principale permet de rechercher les termes, filtrer par catégorie, consulter les fiches et insérer une formulation dans Writer.
+Une seule fenêtre regroupe trois modules accessibles en haut : **Lexique**, **Vérification du document** et **Scénarios**. Chaque module conserve sa sélection lors du passage à un autre. Les entrées du menu Writer ouvrent le module demandé dans cette même fenêtre.
 
-Des fenêtres dédiées gèrent les fonctions plus riches :
+Dans **Lexique**, les filtres **Catégorie** puis **Sous-catégorie** affinent la liste des fiches. « Toutes » retire le filtre correspondant. La recherche couvre notamment les termes, synonymes et termes proches. La définition et les informations de la fiche sont séparées de la liste des formulations : sélectionner un intitulé, lire son texte puis cliquer sur **Insérer la formulation**.
 
-- **Vérifier le document** : termes déconseillés, occurrences et francisation de libellés anglais ;
-- **Scénarios** : assemblage et insertion de plusieurs formulations ;
-- **Gérer les termes** : création et modification de termes utilisateur ;
-- **Gérer les occurrences** : création de règles de détection personnelles.
+Le bouton **Mes fiches** ouvre la gestion des fiches personnelles. La vérification conserve sa gestion des occurrences et les scénarios leurs commandes de création, modification et insertion. Le bouton **Aide** donne accès à l'aide hors ligne.
 
 Les données officielles restent protégées. Les données utilisateur sont enregistrées dans `~/.lexique-forensique-fr/`.
 
@@ -48,6 +45,6 @@ Installer l’extension pour l’utilisateur actif puis redémarrer complètemen
 
 Version de référence du dépôt : **0.8.1**.
 
-## Classification en préparation
+## Classification hiérarchique
 
-La future navigation emploiera les petits pictogrammes 🔬 📱 💻 🌐 🧩 💾 💬 ☁️ pour distinguer les familles. Les 63 fiches sont couvertes par la [proposition de taxonomie](../docs/PROPOSITION-TAXONOMIE.md). Tant que l'intégration Writer n'est pas validée, le filtre actuel continue de fonctionner avec les catégories historiques.
+Les catégories et sous-catégories reposent sur `data/taxonomie.json`. Une fiche personnelle sans classement hiérarchique reste accessible sous sa catégorie habituelle. Le filtre de sous-catégorie est désactivé lorsqu'aucune sous-catégorie n'est disponible.

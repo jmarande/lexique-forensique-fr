@@ -3,10 +3,12 @@
 **Cette aide est aussi disponible hors ligne dans une fenêtre LibreOffice** : menu **Lexique forensique > Aide…**. Elle est incluse directement dans le code de l'extension OXT et ne dépend pas de GitHub ou d'une connexion réseau. Les liens ci-dessous restent des ressources complémentaires en ligne.
 
 ## Rechercher un terme
-Dans LibreOffice Writer, choisir **Lexique forensique > Rechercher un terme…**. Parcourir le lexique, consulter la définition et utiliser une formulation pour rapport si elle convient aux constatations.
+Dans LibreOffice Writer, choisir **Lexique forensique > Rechercher un terme…**. Les trois modules **Lexique**, **Vérification du document** et **Scénarios** sont accessibles en haut de la même fenêtre.
+
+Dans **Lexique**, choisir une **Catégorie** puis, si nécessaire, une **Sous-catégorie**. « Toutes » permet d’élargir la sélection. La recherche couvre aussi les synonymes et les termes proches. Consulter la fiche, sélectionner une formulation dans la liste, lire son texte puis cliquer sur **Insérer la formulation**.
 
 ## Créer ou modifier ses termes
-La **Gestion des termes** permet de créer des fiches personnelles, avec leur définition, synonymes et plusieurs formulations pour rapport. Les données personnelles restent dans le profil local, indépendamment des mises à jour de l'extension.
+Le bouton **Mes fiches**, dans le module Lexique, permet de créer des fiches personnelles, avec leur définition, synonymes et plusieurs formulations pour rapport. Les données personnelles restent dans le profil local, indépendamment des mises à jour de l'extension.
 
 ## Exporter, importer et proposer
 Dans le menu **Lexique forensique > Exporter / Importer…** :
