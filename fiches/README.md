@@ -3,7 +3,7 @@
 Catalogue généré automatiquement depuis [data/lexique.json](../data/lexique.json).
 Ce catalogue n'est pas une validation juridique ou normative des définitions.
 
-**74 fiches disponibles**
+**81 fiches disponibles**
 
 ## 🔬 Méthodologie forensique
 
@@ -106,6 +106,19 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Système d'exploitation](systeme-exploitation.md)
 - [Système de fichiers](systeme-fichiers.md)
 
+### Comptes et activités utilisateurs
+
+- [Compte utilisateur](compte-utilisateur.md)
+- [Exécution d'applications](execution-applications.md)
+- [Fichiers récents](fichiers-recents.md)
+- [Profil utilisateur](profil-utilisateur.md)
+- [Session utilisateur](session-utilisateur.md)
+
+### Périphériques et connexions
+
+- [Connexion de supports USB](connexion-supports-usb.md)
+- [Périphériques connectés](peripheriques-connectes.md)
+
 ## 🌐 Réseaux
 
 ### Adressage et communications
@@ -161,6 +174,8 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Chiffrement](chiffrement.md)
 - [Clé USB](cle-usb.md)
 - [Code de déverrouillage](code-deverrouillage.md)
+- [Compte utilisateur](compte-utilisateur.md)
+- [Connexion de supports USB](connexion-supports-usb.md)
 - [Copie forensique](copie-forensique.md)
 - [Criminalistique numérique](criminalistique-numerique.md)
 - [Disque dur](disque-dur.md)
@@ -176,7 +191,9 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Extraction du système de fichiers](extraction-systeme-fichiers.md)
 - [Extraction logique](extraction-logique.md)
 - [Extraction physique](extraction-physique.md)
+- [Exécution d'applications](execution-applications.md)
 - [Fichier multimédia](fichier-multimedia.md)
+- [Fichiers récents](fichiers-recents.md)
 - [Force brute](force-brute.md)
 - [Fournisseur d’accès à Internet](fai.md)
 - [Google Chrome](google-chrome.md)
@@ -201,12 +218,15 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Navigateur Internet](navigateur-internet.md)
 - [Numéro de série](numero-serie.md)
 - [Preuve numérique](preuve-numerique.md)
+- [Profil utilisateur](profil-utilisateur.md)
+- [Périphériques connectés](peripheriques-connectes.md)
 - [Remise des résultats](remise-resultats.md)
 - [Récupération de données](recuperation-donnees.md)
 - [Réparation du support](reparation-support.md)
 - [Réseau de communications](reseau-communications.md)
 - [Réseau sans fil](reseau-sans-fil.md)
 - [Scellé](scelle.md)
+- [Session utilisateur](session-utilisateur.md)
 - [Signal](signal.md)
 - [Snapchat](snapchat.md)
 - [Source de données](source-donnees.md)
