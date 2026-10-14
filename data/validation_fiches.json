@@ -1,22 +1,4 @@
 {
-  "biome-ios": {
-    "statut": "validee",
-    "date": "2026-10-14",
-    "validateur": "jmarande",
-    "reference": "https://github.com/jmarande/lexique-forensique-fr/pull/95"
-  },
-  "knowledgec-ios": {
-    "statut": "validee",
-    "date": "2026-10-14",
-    "validateur": "jmarande",
-    "reference": "https://github.com/jmarande/lexique-forensique-fr/pull/95"
-  },
-  "notification-and-suggestion-db-ios": {
-    "statut": "validee",
-    "date": "2026-10-14",
-    "validateur": "jmarande",
-    "reference": "https://github.com/jmarande/lexique-forensique-fr/pull/95"
-  },
   "precision-mission-requerant": {
     "statut": "validee",
     "date": "2026-10-14",
