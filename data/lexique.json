@@ -2887,6 +2887,79 @@
     ]
   },
   {
+    "id": "notifications-ios",
+    "terme": "Notifications (iOS)",
+    "anglais": "iOS notifications",
+    "categorie": "Téléphonie : iOS : Artefacts système",
+    "definition": "Les notifications iOS sont des informations générées par les applications ou par le système d’exploitation afin de signaler un événement, une activité ou la disponibilité de nouveaux contenus. Le système peut conserver des traces de leur réception, de leur présentation ou de leur traitement, comprenant selon les artefacts des horodatages, identifiants applicatifs, métadonnées ou éléments de contenu. Leur analyse peut contribuer à contextualiser une activité applicative et à reconstituer une chronologie partielle.",
+    "synonymes": [
+      "Notifications système",
+      "Notifications applicatives"
+    ],
+    "termes_proches": [
+      "KnowledgeC (iOS)",
+      "Biome (iOS)",
+      "Traces d'activité",
+      "Activité applicative"
+    ],
+    "termes_deconseilles": [],
+    "donnees_potentielles": [
+      "Horodatages d’événements relatifs aux notifications",
+      "Identifiants techniques des applications concernées",
+      "Titres, aperçus ou textes de notification lorsqu’ils sont conservés",
+      "Métadonnées associées à une conversation ou à un événement selon les artefacts",
+      "Événements de présentation, de traitement ou de retrait lorsque disponibles"
+    ],
+    "points_attention": [
+      "La réception d’une notification ne démontre pas son affichage effectif, sa consultation ou sa lecture.",
+      "Un événement de disparition ou de traitement peut résulter du fonctionnement automatique d’iOS ; une suppression volontaire ne peut être déduite sans corroboration.",
+      "Les informations et leur conservation varient selon la version d’iOS, l’acquisition et l’application ; elles ne sont pas systématiquement réunies dans un même artefact.",
+      "Une notification peut ne contenir que des métadonnées et ne restitue pas nécessairement le contenu de l’événement qui l’a générée.",
+      "L’absence d’une notification ne démontre pas l’absence du message ou de l’événement associé.",
+      "Ces traces ne suffisent pas à identifier la personne qui utilisait l’appareil."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Présentation de l’artefact",
+        "texte": "Le système iOS est susceptible de conserver des informations relatives aux notifications générées par les applications et aux événements associés à leur traitement."
+      },
+      {
+        "type": "Notifications identifiées",
+        "texte": "L’analyse des données extraites met en évidence plusieurs notifications associées aux applications présentes sur le terminal."
+      },
+      {
+        "type": "Notification liée à une application",
+        "texte": "Nous identifions un événement de notification horodaté associé à l’application concernée."
+      },
+      {
+        "type": "Contenu de notification retrouvé",
+        "texte": "L’examen des données système permet de retrouver le contenu d’une notification associée à l’application concernée."
+      },
+      {
+        "type": "Contenu absent de l’application",
+        "texte": "Nous identifions dans les données de notification des informations associées à une communication dont le contenu correspondant n’a pas été retrouvé dans les données applicatives accessibles."
+      },
+      {
+        "type": "Interaction avec une notification",
+        "texte": "Les données analysées mettent en évidence des événements relatifs au traitement de certaines notifications, sans permettre à eux seuls de déterminer précisément les actions réalisées par l’utilisateur."
+      },
+      {
+        "type": "Corrélation avec les communications",
+        "texte": "Le rapprochement des notifications avec les données de communication permet de contextualiser certains événements enregistrés sur le terminal."
+      },
+      {
+        "type": "Limites de l’interprétation",
+        "texte": "La présence d’une notification dans les données extraites ne permet pas, à elle seule, d’établir que son contenu a été consulté par l’utilisateur du terminal."
+      }
+    ],
+    "sources": [
+      "Scott Koenig — iOS KnowledgeC.db Notifications, DFIR Review (2022), https://dfir.pubpub.org/pub/g2v1z97i/release/1",
+      "Geraldine Blay et Alexis Brignoni — Peeking at User Notification Events in iOS 15, DFIR Review (2023), https://dfir.pubpub.org/pub/6amsr72k/release/1",
+      "Mattia Epifani — After the Signal Fix, ZENA Forensics (2026), https://blog.digital-forensics.it/2026/07/after-signal-fix-exploring-apples.html",
+      "Apple Developer — UNUserNotificationCenter, https://developer.apple.com/documentation/usernotifications/unusernotificationcenter/getdeliverednotifications%28completionhandler%3A%29"
+    ]
+  },
+  {
     "id": "numero-serie",
     "terme": "Numéro de série",
     "anglais": "Serial number",
