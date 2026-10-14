@@ -276,6 +276,55 @@
     ]
   },
   {
+    "id": "biome-ios",
+    "terme": "Biome (iOS)",
+    "anglais": "Biome",
+    "categorie": "Téléphonie : iOS : Artefacts système",
+    "definition": "Sous-système d’iOS enregistrant certains événements du fonctionnement de l’appareil et de l’activité applicative sous forme de flux de données (streams), notamment dans des fichiers binaires SEGB. Selon la version d’iOS et les données accessibles, ces traces peuvent contribuer à documenter une chronologie d’activité, sans constituer à elles seules une preuve de l’identité de la personne ayant utilisé l’appareil.",
+    "synonymes": [
+      "Apple Biome"
+    ],
+    "termes_proches": [
+      "Traces d'activité",
+      "Journaux système",
+      "Exécution d'applications",
+      "Horodatage"
+    ],
+    "termes_deconseilles": [],
+    "donnees_potentielles": [
+      "Événements horodatés liés à l’activité de certaines applications",
+      "Événements d’interaction ou d’intention applicative (AppIntent)",
+      "Événements relatifs à l’état et au fonctionnement de l’appareil selon les flux",
+      "Informations contextuelles et de navigation lorsque les flux correspondants existent"
+    ],
+    "points_attention": [
+      "La couverture des flux varie selon la version d’iOS, les applications et le niveau d’acquisition ; un flux absent n’exclut pas l’activité recherchée.",
+      "Une acquisition logique standard ne garantit pas l’accès aux répertoires Biome, qui sont plus couramment examinés dans une acquisition complète du système de fichiers.",
+      "Un événement applicatif ne démontre pas nécessairement une action volontaire, la lecture d’un contenu ou l’identité de l’utilisateur.",
+      "L’origine locale ou synchronisée d’un événement et la conversion des horodatages doivent être vérifiées.",
+      "Confronter les événements Biome aux autres artefacts, conserver les chemins d’origine et les données sources avant décodage."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Présentation de l’artefact",
+        "texte": "Le système iOS conserve, au sein du sous-système Biome, des enregistrements relatifs à l’activité des applications et à certains événements de fonctionnement de l’appareil."
+      },
+      {
+        "type": "Exploitation des données",
+        "texte": "L’analyse des fichiers Biome a permis de relever des événements horodatés relatifs à l’utilisation de certaines applications présentes sur le terminal."
+      },
+      {
+        "type": "Limites de l’interprétation",
+        "texte": "Les événements identifiés constituent des traces d’activité enregistrées par le système. Leur présence ne permet pas, à elle seule, d’établir l’identité de l’utilisateur ni de caractériser précisément les actions réalisées."
+      }
+    ],
+    "sources": [
+      "Mattia Epifani, ZENA Forensics — « 84 Streams Later: Exploring the Evolution of Apple Biome » (2026), https://blog.digital-forensics.it/2026/07/84-streams-later-exploring-evolution-of.html",
+      "Apple Developer Documentation — INInteraction, https://developer.apple.com/documentation/intents/ininteraction",
+      "CCL Forensics — ccl-segb (décodage SEGB), https://github.com/cclgroupltd/ccl-segb"
+    ]
+  },
+  {
     "id": "cache-applicatif",
     "terme": "Cache applicatif",
     "anglais": "Application cache",
@@ -1342,6 +1391,54 @@
     ]
   },
   {
+    "id": "extraction-systeme-fichiers",
+    "terme": "Extraction du système de fichiers",
+    "anglais": "File system extraction",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Opération technique consistant à obtenir tout ou partie de l'arborescence d'un système de fichiers, des fichiers qu'il contient et de leurs métadonnées accessibles, selon les possibilités d'accès offertes par l'équipement et la méthode utilisée. Cette extraction peut notamment permettre de récupérer des données applicatives, des bases de données, des journaux système et des fichiers de configuration, sans nécessiter une copie bit à bit du support physique.",
+    "synonymes": [
+      "Extraction filesystem",
+      "File system extraction"
+    ],
+    "termes_deconseilles": [],
+    "points_attention": [
+      "L’étendue des données obtenues dépend du niveau d’accès, du système, du chiffrement et de l’outil utilisé.",
+      "Une extraction du système de fichiers peut contenir des bases de données, fichiers applicatifs, journaux, caches et métadonnées."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Extraction réalisée",
+        "texte": "Nous procédons à une extraction du système de fichiers du support afin d’examiner les données accessibles."
+      },
+      {
+        "type": "Extraction partielle",
+        "texte": "Nos moyens techniques ne permettent d’obtenir qu’une extraction partielle du système de fichiers."
+      },
+      {
+        "type": "Extraction impossible",
+        "texte": "Nos moyens techniques ne permettent pas de procéder à l’extraction du système de fichiers du support."
+      },
+      {
+        "type": "Limites de l'extraction du système de fichiers",
+        "texte": "Une extraction du système de fichiers ne permet pas nécessairement d'obtenir l'intégralité des données contenues sur le support. Elle peut notamment exclure les espaces non alloués, certaines données supprimées ainsi que les zones de stockage non accessibles par la méthode employée."
+      }
+    ],
+    "sources": [
+      "Lexique forensique FR — usage professionnel"
+    ],
+    "renvois": [
+      {
+        "id": "extraction",
+        "nuance": "L’extraction du système de fichiers constitue une modalité d’extraction, distincte de l’extraction logique selon les possibilités de l’outil."
+      }
+    ],
+    "termes_proches": [
+      "Extraction",
+      "Extraction logique",
+      "Extraction physique"
+    ]
+  },
+  {
     "id": "extraction-logique",
     "terme": "Extraction logique",
     "anglais": "Logical extraction",
@@ -1428,70 +1525,6 @@
       "SWGDE — Best Practices for Computer Forensic Acquisition (17-F-002)",
       "SWGDE — Mobile Device Evidence Collection, Preservation, Handling and Acquisition (18-F-003)",
       "NIST SP 800-86 — Guide to Integrating Forensic Techniques into Incident Response"
-    ]
-  },
-  {
-    "id": "extraction-systeme-fichiers",
-    "terme": "Extraction du système de fichiers",
-    "anglais": "File system extraction",
-    "categorie": "Méthode de criminalistique numérique",
-    "definition": "Opération technique consistant à obtenir tout ou partie de l'arborescence d'un système de fichiers, des fichiers qu'il contient et de leurs métadonnées accessibles, selon les possibilités d'accès offertes par l'équipement et la méthode utilisée. Cette extraction peut notamment permettre de récupérer des données applicatives, des bases de données, des journaux système et des fichiers de configuration, sans nécessiter une copie bit à bit du support physique.",
-    "synonymes": [
-      "Extraction filesystem",
-      "File system extraction"
-    ],
-    "termes_deconseilles": [],
-    "points_attention": [
-      "L’étendue des données obtenues dépend du niveau d’accès, du système, du chiffrement et de l’outil utilisé.",
-      "Une extraction du système de fichiers peut contenir des bases de données, fichiers applicatifs, journaux, caches et métadonnées."
-    ],
-    "formulations_rapport": [
-      {
-        "type": "Extraction réalisée",
-        "texte": "Nous procédons à une extraction du système de fichiers du support afin d’examiner les données accessibles."
-      },
-      {
-        "type": "Extraction partielle",
-        "texte": "Nos moyens techniques ne permettent d’obtenir qu’une extraction partielle du système de fichiers."
-      },
-      {
-        "type": "Extraction impossible",
-        "texte": "Nos moyens techniques ne permettent pas de procéder à l’extraction du système de fichiers du support."
-      },
-      {
-        "type": "Limites de l'extraction du système de fichiers",
-        "texte": "Une extraction du système de fichiers ne permet pas nécessairement d'obtenir l'intégralité des données contenues sur le support. Elle peut notamment exclure les espaces non alloués, certaines données supprimées ainsi que les zones de stockage non accessibles par la méthode employée."
-      }
-    ],
-    "sources": [
-      "Lexique forensique FR — usage professionnel"
-    ],
-    "renvois": [
-      {
-        "id": "extraction",
-        "nuance": "L’extraction du système de fichiers constitue une modalité d’extraction, distincte de l’extraction logique selon les possibilités de l’outil."
-      }
-    ],
-    "termes_proches": [
-      "Extraction",
-      "Extraction logique",
-      "Extraction physique"
-    ]
-  },
-  {
-    "id": "fai",
-    "terme": "Fournisseur d’accès à Internet",
-    "anglais": "Internet Service Provider (ISP)",
-    "categorie": "Technologie numérique",
-    "definition": "Entreprise fournissant une connectivité Internet à ses utilisateurs et susceptible de conserver des journaux relatifs notamment aux dates, heures et abonnés auxquels des adresses IP ont été attribuées.",
-    "synonymes": [
-      "FAI",
-      "ISP"
-    ],
-    "termes_deconseilles": [],
-    "exemple_rapport": "L’attribution de l’adresse IP peut nécessiter l’exploitation des informations conservées par le fournisseur d’accès à Internet.",
-    "sources": [
-      "CLARUS D3.2 — ISP"
     ]
   },
   {
@@ -1660,6 +1693,22 @@
         "type": "Recherche interrompue à la demande du requérant",
         "texte": "Sur demande du requérant, nous interrompons les opérations de recherche par force brute sans identification d'un code ou d'un mot de passe valide."
       }
+    ]
+  },
+  {
+    "id": "fai",
+    "terme": "Fournisseur d’accès à Internet",
+    "anglais": "Internet Service Provider (ISP)",
+    "categorie": "Technologie numérique",
+    "definition": "Entreprise fournissant une connectivité Internet à ses utilisateurs et susceptible de conserver des journaux relatifs notamment aux dates, heures et abonnés auxquels des adresses IP ont été attribuées.",
+    "synonymes": [
+      "FAI",
+      "ISP"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "L’attribution de l’adresse IP peut nécessiter l’exploitation des informations conservées par le fournisseur d’accès à Internet.",
+    "sources": [
+      "CLARUS D3.2 — ISP"
     ]
   },
   {
@@ -3414,6 +3463,25 @@
     ]
   },
   {
+    "id": "support-stockage",
+    "terme": "Support de stockage",
+    "anglais": "Storage media",
+    "categorie": "Équipement numérique",
+    "definition": "Équipement ou matériau utilisé pour stocker des données numériques. La notion peut également inclure, dans le contexte décrit par CLARUS, des données stockées à distance et accessibles au moyen d’un équipement soumis à examen.",
+    "synonymes": [
+      "Média de stockage"
+    ],
+    "termes_deconseilles": [],
+    "sources": [
+      "CLARUS D3.2 — Storage media"
+    ],
+    "renvoi_principal": "support-numerique",
+    "termes_proches": [
+      "Support numérique"
+    ],
+    "formulations_rapport": []
+  },
+  {
     "id": "support-numerique",
     "terme": "Support numérique",
     "anglais": "Digital media / Media",
@@ -3451,25 +3519,6 @@
         "texte": "Les caractéristiques ou l'état du support limitent les possibilités d'accès aux données dans les conditions de l'examen."
       }
     ]
-  },
-  {
-    "id": "support-stockage",
-    "terme": "Support de stockage",
-    "anglais": "Storage media",
-    "categorie": "Équipement numérique",
-    "definition": "Équipement ou matériau utilisé pour stocker des données numériques. La notion peut également inclure, dans le contexte décrit par CLARUS, des données stockées à distance et accessibles au moyen d’un équipement soumis à examen.",
-    "synonymes": [
-      "Média de stockage"
-    ],
-    "termes_deconseilles": [],
-    "sources": [
-      "CLARUS D3.2 — Storage media"
-    ],
-    "renvoi_principal": "support-numerique",
-    "termes_proches": [
-      "Support numérique"
-    ],
-    "formulations_rapport": []
   },
   {
     "id": "systeme-exploitation",
