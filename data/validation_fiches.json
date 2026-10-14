@@ -1,16 +1,4 @@
 {
-  "precision-mission-requerant": {
-    "statut": "validee",
-    "date": "2026-10-14",
-    "validateur": "jmarande",
-    "reference": "https://github.com/jmarande/lexique-forensique-fr/pull/95"
-  },
-  "limites-techniques-orientation": {
-    "statut": "validee",
-    "date": "2026-10-14",
-    "validateur": "jmarande",
-    "reference": "https://github.com/jmarande/lexique-forensique-fr/pull/95"
-  },
   "etat-afu-ios": {
     "statut": "validee",
     "date": "2026-10-14",
