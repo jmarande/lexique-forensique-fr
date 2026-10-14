@@ -3,7 +3,7 @@
 Catalogue généré automatiquement depuis [data/lexique.json](../data/lexique.json).
 Ce catalogue n'est pas une validation juridique ou normative des définitions.
 
-**87 fiches disponibles** — 4 validées, 83 en attente de relecture.
+**85 fiches disponibles** — 2 validées, 83 en attente de relecture.
 
 [Procédure de validation](../docs/VALIDATION-FICHES.md)
 
@@ -174,11 +174,9 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 
 ### Échanges avec le requérant
 
-- [Précision de la mission avec le requérant](precision-mission-requerant.md)
 
 ### Limites et orientation
 
-- [Limites techniques et orientation vers un service spécialisé](limites-techniques-orientation.md)
 
 ## Index alphabétique
 
@@ -229,7 +227,6 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Investigation numérique](investigation-numerique.md)
 - [Journaux applicatifs](journaux-applicatifs.md)
 - [Journaux système](journaux-systeme.md)
-- [Limites techniques et orientation vers un service spécialisé](limites-techniques-orientation.md)
 - [Messages (Apple)](messages-apple.md)
 - [Messenger](messenger.md)
 - [Mode avion](mode-avion.md)
@@ -243,7 +240,6 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Numéro de série](numero-serie.md)
 - [Preuve numérique](preuve-numerique.md)
 - [Profil utilisateur](profil-utilisateur.md)
-- [Précision de la mission avec le requérant](precision-mission-requerant.md)
 - [Périphériques connectés](peripheriques-connectes.md)
 - [Remise des résultats](remise-resultats.md)
 - [Récupération de données](recuperation-donnees.md)
