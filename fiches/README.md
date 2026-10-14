@@ -3,7 +3,7 @@
 Catalogue généré automatiquement depuis [data/lexique.json](../data/lexique.json).
 Ce catalogue n'est pas une validation juridique ou normative des définitions.
 
-**83 fiches disponibles** — 0 validées, 83 en attente de relecture.
+**84 fiches disponibles** — 0 validées, 84 en attente de relecture.
 
 [Procédure de validation](../docs/VALIDATION-FICHES.md)
 
@@ -148,6 +148,7 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Instagram Direct](instagram-direct.md)
 - [Messages (Apple)](messages-apple.md)
 - [Messenger](messenger.md)
+- [Potato / Tato Talk](potato-tato-talk.md)
 - [Signal](signal.md)
 - [Snapchat](snapchat.md)
 - [Telegram](telegram.md)
@@ -225,6 +226,7 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Navigateur Internet](navigateur-internet.md)
 - [Notifications (iOS)](notifications-ios.md)
 - [Numéro de série](numero-serie.md)
+- [Potato / Tato Talk](potato-tato-talk.md)
 - [Preuve numérique](preuve-numerique.md)
 - [Profil utilisateur](profil-utilisateur.md)
 - [Périphériques connectés](peripheriques-connectes.md)
