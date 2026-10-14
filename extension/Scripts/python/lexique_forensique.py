@@ -3531,3 +3531,347 @@ def show_help(*args):
     close.addActionListener(listener)
     dialog.addTopWindowListener(listener)
     _OPEN_HELP_WINDOWS.append({"dialog": dialog, "listener": listener})
+    dialog.setVisible(True)
+
+
+def show_about(*args):
+    ctx = _ctx()
+    smgr = ctx.ServiceManager
+    toolkit = smgr.createInstanceWithContext("com.sun.star.awt.Toolkit", ctx)
+    model = smgr.createInstanceWithContext(
+        "com.sun.star.awt.UnoControlDialogModel", ctx
+    )
+    model.PositionX = 95
+    model.PositionY = 65
+    model.Width = 250
+    model.Height = 118
+    model.Title = "À propos de Lexique forensique FR"
+
+    def add(name, service, x, y, w, h, **props):
+        item = model.createInstance(service)
+        item.Name = name
+        item.PositionX, item.PositionY = x, y
+        item.Width, item.Height = w, h
+        for key, value in props.items():
+            setattr(item, key, value)
+        model.insertByName(name, item)
+
+    logo_path = os.path.join(_extension_root(), "images", "logo.png")
+    logo_url = uno.systemPathToFileUrl(logo_path)
+    add(
+        "imgAboutLogo",
+        "com.sun.star.awt.UnoControlImageControlModel",
+        10, 10, 42, 42,
+        ImageURL=logo_url,
+        ScaleImage=True,
+        Border=0,
+    )
+    add(
+        "txtAbout",
+        "com.sun.star.awt.UnoControlFixedTextModel",
+        60, 10, 180, 54,
+        Label=(
+            "Lexique forensique FR\n"
+            f"Version {CURRENT_VERSION}\n"
+            "Auteur : Jérémy MARANDE\n"
+            "Lexique français de criminalistique numérique"
+        ),
+        MultiLine=True,
+    )
+    add(
+        "btnGitHub",
+        "com.sun.star.awt.UnoControlButtonModel",
+        10, 84, 62, 16,
+        Label="GitHub",
+    )
+    add(
+        "btnClose",
+        "com.sun.star.awt.UnoControlButtonModel",
+        188, 84, 52, 16,
+        Label="Fermer",
+    )
+
+    dialog = smgr.createInstanceWithContext(
+        "com.sun.star.awt.UnoControlDialog", ctx
+    )
+    dialog.setModel(model)
+    dialog.createPeer(toolkit, None)
+
+    listener = AboutListener(dialog)
+    dialog.addTopWindowListener(listener)
+    for control_name, command in [
+        ("btnGitHub", "github"),
+        ("btnClose", "close"),
+    ]:
+        control = dialog.getControl(control_name)
+        control.setActionCommand(command)
+        control.addActionListener(listener)
+
+    _OPEN_ABOUT_WINDOWS.append({
+        "dialog": dialog,
+        "listener": listener,
+    })
+    dialog.setVisible(True)
+
+
+
+def _release_notes_text(release):
+    body = (release.get("body") or "").strip()
+    if not body:
+        return "Aucune note de version fournie."
+    body = body.replace("\r\n", "\n").replace("\r", "\n")
+    lines = []
+    for raw in body.split("\n"):
+        line = raw.strip()
+        if not line:
+            continue
+        if line.startswith("##"):
+            line = line.lstrip("#").strip()
+        if line.startswith("- "):
+            line = "• " + line[2:].strip()
+        lines.append(line)
+    text = "\n".join(lines)
+    if len(text) > 1200:
+        text = text[:1197].rstrip() + "..."
+    return text or "Aucune note de version fournie."
+
+
+def _download_update(download_url, expected_sha256):
+    update_dir = tempfile.mkdtemp(prefix="lexique-forensique-fr-")
+    target = os.path.join(update_dir, UPDATE_ASSET_NAME)
+
+    urls = [download_url]
+    if expected_sha256:
+        separator = "&" if "?" in download_url else "?"
+        urls.append(
+            download_url
+            + separator
+            + "lexique_sha256="
+            + expected_sha256[:12]
+        )
+
+    last_digest = ""
+    for url in urls:
+        request = urllib.request.Request(
+            url,
+            headers={
+                "User-Agent": "Lexique-forensique-FR-LibreOffice",
+                "Cache-Control": "no-cache",
+                "Pragma": "no-cache",
+            },
+        )
+        with urllib.request.urlopen(request, timeout=30) as response:
+            data = response.read()
+
+        last_digest = hashlib.sha256(data).hexdigest().lower()
+        if not expected_sha256 or last_digest == expected_sha256.lower():
+            with open(target, "wb") as f:
+                f.write(data)
+            return target
+
+    raise RuntimeError(
+        "L'empreinte SHA-256 de la mise à jour ne correspond pas "
+        "(téléchargement possiblement mis en cache par GitHub)."
+    )
+
+
+def check_updates(*args):
+    try:
+        request = urllib.request.Request(
+            GITHUB_LATEST_RELEASE_API,
+            headers={
+                "Accept": "application/vnd.github+json",
+                "User-Agent": "Lexique-forensique-FR-LibreOffice",
+            },
+        )
+        with urllib.request.urlopen(request, timeout=8) as response:
+            release = json.loads(response.read().decode("utf-8"))
+
+        latest = release.get("tag_name", "")
+        if not latest:
+            raise RuntimeError("La dernière release GitHub ne fournit pas de version.")
+
+        if _version_tuple(latest) <= _version_tuple(CURRENT_VERSION):
+            _message_box(
+                "Lexique forensique FR",
+                f"La version {CURRENT_VERSION} est à jour.",
+            )
+            return
+
+        asset = None
+        for item in release.get("assets", []):
+            if item.get("name") == UPDATE_ASSET_NAME:
+                asset = item
+                break
+
+        if not asset:
+            raise RuntimeError(
+                f"Le fichier {UPDATE_ASSET_NAME} est absent de la release {latest}."
+            )
+
+        download_url = asset.get("browser_download_url", "")
+        if not download_url:
+            raise RuntimeError("URL de téléchargement de la mise à jour introuvable.")
+
+        expected_sha256 = ""
+        digest = asset.get("digest") or ""
+        if digest.lower().startswith("sha256:"):
+            expected_sha256 = digest.split(":", 1)[1].strip()
+
+        release_notes = _release_notes_text(release)
+        _message_box(
+            "Mise à jour disponible",
+            (
+                f"Version installée : {CURRENT_VERSION}\n"
+                f"Dernière version : {latest}\n\n"
+                "NOUVEAUTÉS\n"
+                f"{release_notes}\n\n"
+                "La nouvelle extension va être téléchargée."
+            ),
+        )
+
+        package_path = _download_update(download_url, expected_sha256)
+        _open_url(uno.systemPathToFileUrl(package_path))
+
+    except Exception as exc:
+        _message_box(
+            "Mise à jour",
+            (
+                "Impossible d'effectuer la mise à jour automatique.\n\n"
+                f"Détail : {exc}\n\n"
+                "Aucune page web ne sera ouverte automatiquement."
+            ),
+        )
+
+
+class ModuleNavigationListener(unohelper.Base, XActionListener, XTopWindowListener):
+    def __init__(self, dialog, groups, listeners):
+        self.dialog, self.groups, self.listeners = dialog, groups, listeners
+        self.verification_started = False
+
+    def select(self, module):
+        if module == "verify" and not self.verification_started:
+            self.listeners[1].scan()
+            self.verification_started = True
+        for key, names in self.groups.items():
+            for name in names:
+                self.dialog.getControl(name).setVisible(key == module)
+            self.dialog.getControl("nav_" + key).getModel().Enabled = key != module
+
+    def actionPerformed(self, event):
+        if event.ActionCommand == "help":
+            show_help()
+        else:
+            self.select(event.ActionCommand)
+
+    def windowClosing(self, event):
+        _close_module_window(self.dialog)
+
+    def windowOpened(self, event): pass
+    def windowClosed(self, event): pass
+    def windowMinimized(self, event): pass
+    def windowNormalized(self, event): pass
+    def windowActivated(self, event): pass
+    def windowDeactivated(self, event): pass
+    def disposing(self, event): pass
+
+
+def _close_module_window(dialog):
+    for item in _OPEN_LEXICON_WINDOWS:
+        if item.get("dialog") is dialog and item.get("navigation"):
+            dialog.removeTopWindowListener(item["navigation"])
+    dialog.setVisible(False)
+    for windows in (_OPEN_LEXICON_WINDOWS, _OPEN_VERIFY_WINDOWS, _OPEN_SCENARIO_WINDOWS):
+        windows[:] = [item for item in windows if item.get("dialog") is not dialog]
+    dialog.dispose()
+
+
+def open_lexicon(*args, _module="lexicon"):
+    # Reuse the same workspace from Writer menu entries.
+    for window in _OPEN_LEXICON_WINDOWS:
+        if window.get("navigation"):
+            window["navigation"].select(_module)
+            window["dialog"].setVisible(True)
+            window["dialog"].toFront()
+            return
+    ctx = _ctx()
+    smgr = ctx.ServiceManager
+    toolkit = smgr.createInstanceWithContext("com.sun.star.awt.Toolkit", ctx)
+    model = smgr.createInstanceWithContext("com.sun.star.awt.UnoControlDialogModel", ctx)
+    model.PositionX, model.PositionY = 60, 35
+    model.Width, model.Height = 420, 334
+    model.Title = f"Lexique forensique FR — v{CURRENT_VERSION}"
+    data = _load_data()
+    names = []
+
+    def add(name, kind, x, y, w, h, **props):
+        item = model.createInstance("com.sun.star.awt.UnoControl" + kind + "Model")
+        item.Name = name
+        item.PositionX, item.PositionY, item.Width, item.Height = x, y, w, h
+        for key, value in props.items():
+            setattr(item, key, value)
+        model.insertByName(name, item)
+        names.append(name)
+
+    for name, label, x, w in [("lexicon", "Lexique", 8, 82),
+                               ("verify", "Vérification du document", 94, 144),
+                               ("scenarios", "Scénarios", 242, 92)]:
+        add("nav_" + name, "Button", x, 6, w, 20, Label=label)
+    add("nav_help", "Button", 358, 6, 54, 20, Label="Aide")
+    names.clear()
+    add("lblSearch", "FixedText", 8, 38, 48, 10, Label="Recherche :")
+    add("txtSearch", "Edit", 58, 34, 272, 16)
+    add("btnSearch", "Button", 336, 34, 76, 16, Label="Rechercher", DefaultButton=True)
+    add("lblCategory", "FixedText", 8, 60, 126, 10, Label="Catégorie")
+    add("cmbCategory", "ListBox", 8, 72, 126, 16, Dropdown=True,
+        StringItemList=tuple(["Toutes"] + _available_categories(data)), SelectedItems=(0,))
+    add("lblSubcategory", "FixedText", 8, 96, 126, 10, Label="Sous-catégorie")
+    add("cmbSubcategory", "ListBox", 8, 108, 126, 16, Dropdown=True,
+        StringItemList=("Toutes",), SelectedItems=(0,))
+    add("lblStatus", "FixedText", 8, 130, 126, 12, Label="")
+    add("lstResults", "ListBox", 8, 146, 126, 148)
+    add("btnManageTerms", "Button", 8, 300, 126, 16, Label="Mes fiches")
+    add("txtDetail", "Edit", 142, 60, 270, 234, MultiLine=True, ReadOnly=True, VScroll=True,
+        HideInactiveSelection=False)
+    add("btnInsert", "Button", 292, 300, 120, 16, Label="Insérer la formulation")
+    add("btnClose", "Button", 360, 318, 52, 14, Label="Fermer")
+    groups = {"lexicon": list(names)}
+    groups["verify"], setup_verify = _build_verify_module(model)
+    groups["scenarios"], setup_scenarios = _build_scenarios_module(model)
+    dialog = smgr.createInstanceWithContext("com.sun.star.awt.UnoControlDialog", ctx)
+    dialog.setModel(model)
+    dialog.createPeer(toolkit, None)
+    listener = DialogListener(dialog, dialog.getControl("txtSearch"), dialog.getControl("lstResults"),
+                              dialog.getControl("txtDetail"), dialog.getControl("lblStatus"),
+                              dialog.getControl("btnInsert"), dialog.getControl("cmbCategory"), data,
+                              dialog.getControl("cmbSubcategory"))
+    verify = setup_verify(dialog)
+    scenarios = setup_scenarios(dialog)
+    for name, command in [("btnSearch", "search"), ("btnManageTerms", "manage_terms"),
+                          ("btnInsert", "insert"), ("btnClose", "close")]:
+        control = dialog.getControl(name)
+        control.setActionCommand(command)
+        control.addActionListener(listener)
+    for name in ("lstResults", "cmbCategory", "cmbSubcategory"):
+        dialog.getControl(name).addItemListener(listener)
+    dialog.getControl("txtDetail").addMouseListener(listener)
+    navigation = ModuleNavigationListener(dialog, groups, [listener, verify, scenarios])
+    for module in ("lexicon", "verify", "scenarios", "help"):
+        control = dialog.getControl("nav_" + module)
+        control.setActionCommand(module)
+        control.addActionListener(navigation)
+    dialog.addTopWindowListener(navigation)
+    _OPEN_LEXICON_WINDOWS.append({"dialog": dialog, "listener": listener, "navigation": navigation})
+    navigation.select(_module)
+    dialog.setVisible(True)
+
+
+g_exportedScripts = (
+    open_lexicon,
+    open_verification,
+    open_scenarios,
+    open_term_manager,
+    open_user_data_transfer,
+    show_about,
+    check_updates,
+)
