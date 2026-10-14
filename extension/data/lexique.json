@@ -372,6 +372,10 @@
       {
         "type": "Extraction partielle",
         "texte": "Les données accessibles sur la carte SIM ne permettent qu’une extraction partielle de son contenu."
+      },
+      {
+        "type": "Contacts préenregistrés par l’opérateur",
+        "texte": "L’examen de la carte SIM révèle uniquement la présence de contacts de service préenregistrés par l’opérateur. Aucun contact personnel n’a été identifié dans les données examinées."
       }
     ]
   },
