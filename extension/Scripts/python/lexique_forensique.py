@@ -1981,7 +1981,7 @@ class TermManagerListener(
         if self.terms_box.ItemCount:
             self.terms_box.removeItems(0, self.terms_box.ItemCount)
         self.data = sorted(
-            self.builtin_data + self.user_data,
+            _deduplicate_entries(self.builtin_data + self.user_data),
             key=lambda e: _normalize(e.get("terme", "")),
         )
         for entry in self.data:
