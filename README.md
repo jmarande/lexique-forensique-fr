@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>Le vocabulaire de la criminalistique numérique, au service de vos rapports.</strong><br>
-  Un lexique français collaboratif et une extension pour LibreOffice Writer.
+  Des ressources terminologiques et rédactionnelles intégrées à LibreOffice Writer.
 </p>
 
 <p align="center">
@@ -24,13 +24,15 @@
 
 ---
 
-## Un vocabulaire commun pour des rapports précis
+## Un outil d’aide à la rédaction en criminalistique numérique
 
-**Lexique forensique FR** accompagne les professionnels de la criminalistique numérique dans la recherche d’un terme, la compréhension d’une notion et la rédaction en français. Il rassemble des définitions, des équivalents anglais, des synonymes, des termes proches et des formulations adaptées à différentes situations d’examen.
+**Lexique forensique FR** est un projet libre consacré à la terminologie et à la rédaction des rapports de criminalistique numérique. Il propose des fiches techniques, des définitions en français, des équivalents anglais, des synonymes, des termes proches et des formulations de rapport adaptées à différentes situations d’examen.
 
-Le [catalogue des fiches](fiches/README.md) se consulte directement sur GitHub. L’extension intègre ces ressources à **LibreOffice Writer** pour les utiliser pendant la rédaction.
+Le [catalogue des fiches](fiches/README.md) peut être consulté directement sur GitHub. L’extension permet d’utiliser ces ressources dans **LibreOffice Writer**, au cours de la rédaction d’un document.
 
-## Le lexique en chiffres
+Le projet s’organise autour de **trois modules complémentaires**, accessibles depuis Writer : le **Lexique**, les **Scénarios de rédaction** et la **Vérification du document**.
+
+## Le projet en chiffres
 
 | Ressource disponible | Nombre |
 | --- | ---: |
@@ -39,20 +41,28 @@ Le [catalogue des fiches](fiches/README.md) se consulte directement sur GitHub. 
 | Scénarios de rédaction | **5** |
 | Règles de francisation des libellés | **18** |
 
-*Chiffres calculés à partir de la base officielle du dépôt au 14 octobre 2026, hors données personnelles. Le catalogue évolue au fil des relectures ; le contenu installé dépend de la version de l’extension.*
+*État de la base officielle au 14 octobre 2026, hors ressources personnelles. Sur les 89 fiches, 5 sont indiquées comme validées et 84 restent en attente de relecture. Leur présence dans le catalogue ne constitue pas une validation systématique. Les ressources disponibles dans Writer dépendent de la version installée.*
 
-## Ce que permet l’extension
+## Trois modules complémentaires
 
-| Usage | Fonctionnalités |
-| --- | --- |
-| **Rechercher un terme** | Recherche insensible à la casse et aux accents, recherche par synonymes et filtre par catégorie. |
-| **Rédiger un rapport** | Consultation des fiches et insertion d’une formulation correspondant à la situation rencontrée. |
-| **Préparer un scénario** | Assemblage de plusieurs formulations ; création, duplication et modification de scénarios personnels. |
-| **Vérifier un document** | Repérage de termes déconseillés et de libellés anglais d’exports forensiques, avec remplacement d’une occurrence. |
-| **Enrichir ses ressources** | Création de termes, de formulations et de règles de détection personnelles. |
-| **Sauvegarder et partager** | Export et import de la base personnelle ; proposition d’une ou plusieurs fiches au projet depuis l’extension. |
+### 1. Lexique — rechercher, comprendre et rédiger
 
-La consultation du lexique, la rédaction et l’aide intégrée fonctionnent **hors ligne**. Le téléchargement des mises à jour et la proposition de fiches sur GitHub nécessitent une connexion.
+Consulter les fiches terminologiques par recherche ou catégorie, retrouver les définitions et notions associées, puis sélectionner une formulation adaptée pour l’insérer dans un rapport. Les utilisateurs peuvent également créer leurs propres termes et formulations.
+
+### 2. Scénarios — assembler des formulations
+
+Construire des passages de rapport à partir de plusieurs formulations, les organiser dans un ordre cohérent et réutiliser des scénarios officiels ou personnels. Les scénarios personnels peuvent être créés, modifiés et dupliqués.
+
+### 3. Vérification du document — harmoniser les libellés
+
+Repérer dans un document des expressions connues, notamment des libellés en anglais provenant d’exports d’analyse numérique, et proposer leur équivalent français. Les règles personnelles permettent d’enrichir progressivement la détection et les remplacements.
+
+### Fonctions transversales
+
+- **Données personnelles :** conservation locale des termes, scénarios et occurrences, séparément de la base officielle.
+- **Exporter / Importer :** sauvegarde au format JSON et import par fusion ou remplacement, avec sauvegarde préalable.
+- **Contribution :** préparation d’une proposition de fiches depuis l’extension, soumise à relecture avant intégration.
+- **Fonctionnement hors ligne :** consultation, rédaction et aide intégrée sans connexion ; celle-ci reste nécessaire pour les mises à jour et les propositions sur GitHub.
 
 ## Aperçu dans LibreOffice Writer
 
@@ -92,9 +102,9 @@ Le menu **Exporter / Importer…** permet de sauvegarder l’ensemble dans un fi
 
 [Comprendre le stockage et les formats de données](docs/DONNEES.md)
 
-## Une démarche documentaire fondée sur plusieurs sources
+## Références documentaires et validation
 
-**Le projet est indépendant.** Il rédige ses propres définitions françaises et formulations de rapport en confrontant, selon le sujet, les références pertinentes : **NIST, SWGDE, CLARUS D3.2, ANSSI, FranceTerme**, ainsi que d’autres guides méthodologiques et documentations techniques. Aucune source ne bénéficie d’une priorité automatique ; les organismes cités ne sont ni éditeurs ni garants du projet.
+**Le projet est indépendant.** Ses définitions et formulations sont élaborées à partir d’un référentiel documentaire commun, comprenant notamment les références **NIST, SWGDE, CLARUS D3.2, ANSSI et FranceTerme**, ainsi que d’autres publications pertinentes. Les sources sont confrontées selon le sujet, sans hiérarchie préétablie ni référence privilégiée. Les organismes cités ne sont ni éditeurs ni garants du projet.
 
 La relecture des fiches se poursuit progressivement : une fiche disponible n’est pas nécessairement une fiche validée. Le circuit prévoit une analyse documentaire, la comparaison des concepts et une **validation humaine explicite**. Les formulations proposées restent à adapter aux constatations et aux limites de chaque examen.
 
