@@ -3,7 +3,7 @@
 Catalogue généré automatiquement depuis [data/lexique.json](../data/lexique.json).
 Ce catalogue n'est pas une validation juridique ou normative des définitions.
 
-**91 fiches disponibles** — 7 validées, 84 en attente de relecture.
+**87 fiches disponibles** — 4 validées, 83 en attente de relecture.
 
 [Procédure de validation](../docs/VALIDATION-FICHES.md)
 
@@ -100,10 +100,6 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 
 ### Artefacts système
 
-- [Biome (iOS)](biome-ios.md)
-- [Biome — activité applicative (App.InFocus)](biome-app-infocus-ios.md)
-- [KnowledgeC (iOS)](knowledgec-ios.md)
-- [notificationAndSuggestionDB.db (iOS)](notification-and-suggestion-db-ios.md)
 - [Notifications (iOS)](notifications-ios.md)
 - [Verrouillage et déverrouillage (iOS)](verrouillage-deverrouillage-ios.md)
 
@@ -192,8 +188,6 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Artefact forensique](artefact-forensique.md)
 - [Authentification](authentification.md)
 - [Base de données](base-de-donnees.md)
-- [Biome (iOS)](biome-ios.md)
-- [Biome — activité applicative (App.InFocus)](biome-app-infocus-ios.md)
 - [Cache applicatif](cache-applicatif.md)
 - [Cache système](cache-systeme.md)
 - [Carte SIM](carte-sim.md)
@@ -235,7 +229,6 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Investigation numérique](investigation-numerique.md)
 - [Journaux applicatifs](journaux-applicatifs.md)
 - [Journaux système](journaux-systeme.md)
-- [KnowledgeC (iOS)](knowledgec-ios.md)
 - [Limites techniques et orientation vers un service spécialisé](limites-techniques-orientation.md)
 - [Messages (Apple)](messages-apple.md)
 - [Messenger](messenger.md)
@@ -246,7 +239,6 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Mémoire cache](memoire-cache.md)
 - [Métadonnées](metadonnees.md)
 - [Navigateur Internet](navigateur-internet.md)
-- [notificationAndSuggestionDB.db (iOS)](notification-and-suggestion-db-ios.md)
 - [Notifications (iOS)](notifications-ios.md)
 - [Numéro de série](numero-serie.md)
 - [Preuve numérique](preuve-numerique.md)
