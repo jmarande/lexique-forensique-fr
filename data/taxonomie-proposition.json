@@ -714,24 +714,12 @@
       "ancienne_categorie": "Application — Messagerie"
     },
     {
-      "id": "limites-techniques-orientation",
-      "classification": "mission/limites-orientation",
-      "domaines": [],
-      "ancienne_categorie": "Mission : Limites et orientation"
-    },
-    {
       "id": "notifications-ios",
       "classification": "telephonie/artefacts-systeme",
       "domaines": [
         "telephonie"
       ],
       "ancienne_categorie": "Téléphonie : iOS : Artefacts système"
-    },
-    {
-      "id": "precision-mission-requerant",
-      "classification": "mission/echanges-requerant",
-      "domaines": [],
-      "ancienne_categorie": "Mission : Échanges avec le requérant"
     },
     {
       "id": "verrouillage-deverrouillage-ios",
