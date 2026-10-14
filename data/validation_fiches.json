@@ -1,14 +1,1 @@
-{
-  "etat-afu-ios": {
-    "statut": "validee",
-    "date": "2026-10-14",
-    "validateur": "jmarande",
-    "reference": "Validation explicite dans la conversation du 14 octobre 2026 — fiches AFU et BFU"
-  },
-  "etat-bfu-ios": {
-    "statut": "validee",
-    "date": "2026-10-14",
-    "validateur": "jmarande",
-    "reference": "Validation explicite dans la conversation du 14 octobre 2026 — fiches AFU et BFU"
-  }
-}
+{}

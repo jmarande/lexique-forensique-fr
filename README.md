@@ -36,12 +36,12 @@ Le projet s’organise autour de **trois modules complémentaires**, accessibles
 
 | Ressource disponible | Nombre |
 | --- | ---: |
-| [Fiches terminologiques](fiches/README.md) | **85** |
-| Formulations de rapport | **402** |
+| [Fiches terminologiques](fiches/README.md) | **83** |
+| Formulations de rapport | **393** |
 | Scénarios de rédaction | **5** |
 | Règles de francisation des libellés | **18** |
 
-*État de la base officielle au 14 octobre 2026, hors ressources personnelles. Sur les 85 fiches publiques, 2 sont indiquées comme validées et 83 restent en attente de relecture. Leur présence dans le catalogue ne constitue pas une validation systématique. Les ressources disponibles dans Writer dépendent de la version installée.*
+*État de la base officielle au 14 octobre 2026, hors ressources personnelles. Sur les 83 fiches publiques, aucune n’est indiquée comme validée et 83 restent en attente de relecture. Leur présence dans le catalogue ne constitue pas une validation systématique. Les ressources disponibles dans Writer dépendent de la version installée.*
 
 ## Trois modules complémentaires
 
