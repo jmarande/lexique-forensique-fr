@@ -2360,6 +2360,80 @@
     ]
   },
   {
+    "id": "knowledgec-ios",
+    "terme": "KnowledgeC (iOS)",
+    "anglais": "KnowledgeC database",
+    "categorie": "Téléphonie : iOS : Artefacts système",
+    "definition": "KnowledgeC est une base de données du sous-système CoreDuet d’Apple, destinée à conserver des informations relatives à l’activité des applications, au fonctionnement du terminal et à certains événements contextuels. Ses enregistrements peuvent comporter des horodatages, des identifiants d’application et des métadonnées. Leur exploitation contribue à reconstituer une chronologie partielle de l’activité du terminal, selon la version d’iOS, les mécanismes de conservation et le niveau d’acquisition.",
+    "synonymes": [
+      "Base KnowledgeC",
+      "knowledgeC.db"
+    ],
+    "termes_proches": [
+      "Biome (iOS)",
+      "Traces d'activité",
+      "Activité applicative",
+      "Événements système"
+    ],
+    "termes_deconseilles": [],
+    "donnees_potentielles": [
+      "Événements horodatés d’activité applicative",
+      "Événements relatifs au verrouillage ou à l’état d’affichage du terminal",
+      "Événements contextuels, de navigation, de notification ou multimédias, selon les flux disponibles",
+      "Métadonnées d’événements et informations sur leurs sources"
+    ],
+    "points_attention": [
+      "Chemin couramment documenté : /private/var/mobile/Library/CoreDuet/Knowledge/knowledgeC.db ; vérifier son existence dans l’acquisition.",
+      "Tenir compte, lorsqu’ils existent, des fichiers SQLite -wal et -shm pour une interprétation cohérente des données.",
+      "Les tables fréquemment documentées comprennent ZOBJECT, ZSTRUCTUREDMETADATA et ZSOURCE ; leur schéma dépend de la version examinée.",
+      "Contrôler la conversion des horodatages Apple (époque du 1er janvier 2001 UTC selon le champ) et leur fuseau horaire.",
+      "Les données peuvent être partielles ou absentes ; un événement manquant n’exclut pas l’activité correspondante.",
+      "Les événements ne permettent pas à eux seuls d’identifier la personne ayant utilisé le téléphone ou de caractériser les actions réalisées.",
+      "Vérifier les interprétations automatiques en les confrontant aux enregistrements sources et, si nécessaire, à Biome ou aux autres artefacts disponibles."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Présentation de la base",
+        "texte": "La base de données KnowledgeC du système iOS conserve des informations relatives à l’activité des applications et à certains événements de fonctionnement du terminal."
+      },
+      {
+        "type": "Base identifiée",
+        "texte": "Nous identifions dans les données extraites une base de données KnowledgeC contenant des enregistrements relatifs à l’activité du terminal."
+      },
+      {
+        "type": "Exploitation des événements",
+        "texte": "L’analyse de la base KnowledgeC met en évidence plusieurs événements horodatés relatifs à l’activité du terminal et des applications."
+      },
+      {
+        "type": "Activité applicative",
+        "texte": "Les données enregistrées dans KnowledgeC permettent de relever des événements d’activité associés à certaines applications présentes sur le terminal."
+      },
+      {
+        "type": "Reconstitution chronologique",
+        "texte": "Le rapprochement des événements enregistrés dans la base KnowledgeC contribue à établir une chronologie partielle de l’activité du terminal pour la période étudiée."
+      },
+      {
+        "type": "Corrélation des artefacts",
+        "texte": "Les événements issus de KnowledgeC ont été rapprochés des autres traces numériques disponibles afin de contextualiser les activités relevées."
+      },
+      {
+        "type": "Limites d’interprétation",
+        "texte": "Les événements identifiés dans la base KnowledgeC constituent des traces d’activité du système. Leur présence ne permet pas, à elle seule, d’établir l’identité de la personne ayant utilisé le terminal ni de déterminer précisément les actions réalisées."
+      },
+      {
+        "type": "Données insuffisantes",
+        "texte": "Les données accessibles dans la base KnowledgeC ne permettent pas de reconstituer de manière exhaustive l’activité du terminal pour la période examinée."
+      }
+    ],
+    "sources": [
+      "Athena Forensics — The KnowledgeC Database, https://athenaforensics.co.uk/the-knowledgec-database/",
+      "Scott Koenig — iOS KnowledgeC.db Notifications, DFIR Review (2022), https://dfir.pubpub.org/pub/g2v1z97i/release/1",
+      "KnowledgeC Parser — https://www.knowledgecparser.com/en",
+      "KnowledgeC Parser — Forensics Guide, https://www.knowledgecparser.com/en/blog/knowledgec-db-forensics-guide",
+      "mac4n6/APOLLO — https://github.com/mac4n6/APOLLO"
+    ]
+  },
+  {
     "id": "memoire",
     "terme": "Mémoire",
     "anglais": "Memory",
