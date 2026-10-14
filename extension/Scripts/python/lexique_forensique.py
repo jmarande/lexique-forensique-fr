@@ -13,7 +13,7 @@ import time
 import uno
 import unohelper
 
-from com.sun.star.awt import XActionListener, XItemListener, XMouseListener, XTopWindowListener
+from com.sun.star.awt import XActionListener, XItemListener, XMouseListener, XTopWindowListener, XTextListener
 
 _OPEN_LEXICON_WINDOWS = []
 _OPEN_VERIFY_WINDOWS = []
@@ -1505,11 +1505,27 @@ class OccurrenceEditorListener(
     def disposing(self, event): pass
 
 
+def _filter_scenarios(scenarios, query="", category=None, sort_order=0, data=None):
+    query = _normalize(query)
+    data = data or []
+    matches = [item for item in scenarios
+               if (not category or ("Scénarios sensibles" if _scenario_is_sensitive(item, data) else item.get("categorie") or "Personnalisé") == category)
+               and (not query or query in _normalize(" ".join(
+                   item.get(key) or "" for key in ("titre", "description", "categorie"))))]
+    if sort_order == 2:
+        return sorted(matches, key=lambda item: (
+            _normalize(item.get("categorie") or "Personnalisé"),
+            _normalize(item.get("titre", ""))))
+    return sorted(matches, key=lambda item: _normalize(item.get("titre", "")),
+                  reverse=sort_order == 1)
+
+
 class ScenarioListener(
     unohelper.Base,
     XActionListener,
     XItemListener,
     XTopWindowListener,
+    XTextListener,
 ):
     def __init__(
         self,
@@ -1520,6 +1536,9 @@ class ScenarioListener(
         data,
         builtin_scenarios,
         user_scenarios,
+        search_box,
+        category_box,
+        sort_box,
     ):
         self.dialog = dialog
         self.scenarios_box = scenarios_box
@@ -1529,29 +1548,55 @@ class ScenarioListener(
         self.builtin_scenarios = builtin_scenarios
         self.user_scenarios = user_scenarios
         self.scenarios = self.builtin_scenarios + self.user_scenarios
+        self.search_box = search_box
+        self.category_box = category_box
+        self.sort_box = sort_box
+        self.current_category = None
+        self.sort_order = 0
+        self.refreshing = False
         self.current = None
         self._populate()
 
-    def _populate(self, select_index=0):
-        if self.scenarios_box.ItemCount:
-            self.scenarios_box.removeItems(0, self.scenarios_box.ItemCount)
-        self.scenarios = sorted(
-            self.builtin_scenarios + self.user_scenarios,
-            key=lambda scenario: (_scenario_is_sensitive(scenario, self.data), _normalize(scenario.get("titre", "")))
-        )
-        for scenario in self.scenarios:
-            prefix = "★ " if scenario.get("_source") == "user" else ""
-            self.scenarios_box.addItem(
-                ("🔴 Scénarios sensibles · " if _scenario_is_sensitive(scenario, self.data) else prefix) + scenario.get("titre", "Scénario"),
-                self.scenarios_box.ItemCount,
-            )
-        if self.scenarios:
-            select_index = min(max(select_index, 0), len(self.scenarios) - 1)
-            self.scenarios_box.selectItemPos(select_index, True)
-            self._show(select_index)
-        else:
-            self.current = None
-            self.detail_box.Text = "Aucun scénario disponible."
+    def _populate(self, select_index=0, selected=None):
+        self.refreshing = True
+        try:
+            all_scenarios = self.builtin_scenarios + self.user_scenarios
+            self.categories = sorted({("Scénarios sensibles" if _scenario_is_sensitive(item, self.data) else item.get("categorie") or "Personnalisé")
+                                      for item in all_scenarios}, key=_normalize)
+            if self.current_category not in self.categories:
+                self.current_category = None
+            self.category_box.getModel().StringItemList = tuple(["Toutes"] + self.categories)
+            position = self.categories.index(self.current_category) + 1 if self.current_category else 0
+            self.category_box.selectItemPos(position, True)
+            self.scenarios = _filter_scenarios(all_scenarios, self.search_box.Text,
+                                               self.current_category, self.sort_order, self.data)
+            if self.scenarios_box.ItemCount:
+                self.scenarios_box.removeItems(0, self.scenarios_box.ItemCount)
+            for scenario in self.scenarios:
+                prefix = "★ " if scenario.get("_source") == "user" else ""
+                if _scenario_is_sensitive(scenario, self.data):
+                    prefix = "🔴 Scénarios sensibles · "
+                self.scenarios_box.addItem(prefix + scenario.get("titre", "Scénario"),
+                                          self.scenarios_box.ItemCount)
+            if self.scenarios:
+                if selected is not None:
+                    select_index = next((i for i, item in enumerate(self.scenarios)
+                                         if item is selected), 0)
+                select_index = min(max(select_index, 0), len(self.scenarios) - 1)
+                self.scenarios_box.selectItemPos(select_index, True)
+                self._show(select_index)
+            else:
+                self.current = None
+                self.detail_box.Text = "Aucun scénario ne correspond aux filtres."
+                self.status_label.getModel().Label = "Aucun résultat"
+        finally:
+            self.refreshing = False
+
+    def _select_saved(self, scenario):
+        # A newly created or renamed scenario must remain visible after saving.
+        self.search_box.Text = ""
+        self.current_category = None
+        self._populate(selected=scenario)
 
     def _show(self, index):
         if not (0 <= index < len(self.scenarios)):
@@ -1566,7 +1611,7 @@ class ScenarioListener(
         )
         sensitive = _scenario_is_sensitive(scenario, self.data)
         parts = [
-            ("⚠ SCÉNARIO SENSIBLE — MERCI DE NE PAS DIFFUSER" if sensitive else "SCÉNARIO STANDARD"),
+            "⚠ SCÉNARIO SENSIBLE — MERCI DE NE PAS DIFFUSER" if sensitive else "SCÉNARIO STANDARD",
             scenario.get("titre", "Scénario").upper(),
             f"Catégorie : {'Scénarios sensibles' if sensitive else scenario.get('categorie', '—')}",
             f"Origine : {origin}",
@@ -1630,7 +1675,7 @@ class ScenarioListener(
         }
         self.user_scenarios.append(duplicate)
         _save_user_scenarios(self.user_scenarios)
-        self._populate(len(self.builtin_scenarios) + len(self.user_scenarios) - 1)
+        self._select_saved(duplicate)
         self.status_label.getModel().Label = "Scénario dupliqué"
 
     def new_from_current(self):
@@ -1645,7 +1690,7 @@ class ScenarioListener(
         self.user_scenarios.append(item)
         _save_user_scenarios(self.user_scenarios)
         index = len(self.builtin_scenarios) + len(self.user_scenarios) - 1
-        self._populate(index)
+        self._select_saved(item)
         open_scenario_editor(self, item)
 
     def edit_current(self):
@@ -1666,18 +1711,20 @@ class ScenarioListener(
             _save_user_scenarios(self.user_scenarios)
             scenario = duplicate
             index = len(self.builtin_scenarios) + len(self.user_scenarios) - 1
-            self._populate(index)
+            self._select_saved(scenario)
         open_scenario_editor(self, scenario)
 
     def delete_current(self):
         index = self._current_index()
-        if index < len(self.builtin_scenarios):
-            self.status_label.getModel().Label = (
-                "Les scénarios fournis ne peuvent pas être supprimés"
-            )
+        if index < 0:
             return
-        user_index = index - len(self.builtin_scenarios)
-        if not (0 <= user_index < len(self.user_scenarios)):
+        scenario = self.scenarios[index]
+        if scenario.get("_source") != "user":
+            self.status_label.getModel().Label = "Les scénarios fournis ne peuvent pas être supprimés"
+            return
+        user_index = next((i for i, item in enumerate(self.user_scenarios)
+                           if item is scenario), None)
+        if user_index is None:
             return
         self.user_scenarios.pop(user_index)
         _save_user_scenarios(self.user_scenarios)
@@ -1698,7 +1745,22 @@ class ScenarioListener(
         elif event.ActionCommand == "close":
             self._close_dialog()
 
+    def textChanged(self, event):
+        if not self.refreshing:
+            self._populate(selected=self.current)
+
     def itemStateChanged(self, event):
+        if self.refreshing:
+            return
+        if event.Source == self.category_box:
+            pos = self.category_box.SelectedItemPos
+            self.current_category = self.categories[pos - 1] if 0 < pos <= len(self.categories) else None
+            self._populate(selected=self.current)
+            return
+        if event.Source == self.sort_box:
+            self.sort_order = max(0, self.sort_box.SelectedItemPos)
+            self._populate(selected=self.current)
+            return
         pos = self.scenarios_box.SelectedItemPos
         if 0 <= pos < len(self.scenarios):
             self._show(pos)
@@ -1867,15 +1929,7 @@ class ScenarioEditorListener(
         self.scenario["etapes"] = [dict(step) for step in self.steps]
         self.scenario["_source"] = "user"
         _save_user_scenarios(self.parent_listener.user_scenarios)
-        selected = (
-            len(self.parent_listener.builtin_scenarios)
-            + self.parent_listener.user_scenarios.index(self.scenario)
-        )
-        self.parent_listener._populate()
-        selected = next((i for i, sc in enumerate(self.parent_listener.scenarios)
-                         if sc is self.scenario), 0)
-        self.parent_listener.scenarios_box.selectItemPos(selected, True)
-        self.parent_listener._show(selected)
+        self.parent_listener._select_saved(self.scenario)
         self.parent_listener.status_label.getModel().Label = (
             "Scénario personnalisé enregistré"
         )
@@ -2899,8 +2953,11 @@ def open_scenario_editor(parent_listener, scenario):
         54, 6, 358, 14, Text=scenario.get("titre", ""))
     add("lblEditCategory", "com.sun.star.awt.UnoControlFixedTextModel",
         8, 28, 44, 10, Label="Catégorie :")
-    add("txtEditCategory", "com.sun.star.awt.UnoControlEditModel",
-        54, 26, 160, 14, Text=scenario.get("categorie", "Personnalisé"))
+    add("txtEditCategory", "com.sun.star.awt.UnoControlComboBoxModel",
+        54, 26, 160, 14, Dropdown=True,
+        StringItemList=tuple(sorted({item.get("categorie") or "Personnalisé"
+                                    for item in parent_listener.builtin_scenarios + parent_listener.user_scenarios}, key=_normalize)),
+        Text=scenario.get("categorie", "Personnalisé"))
     add("lblEditDescription", "com.sun.star.awt.UnoControlFixedTextModel",
         8, 48, 52, 10, Label="Description :")
     add("txtEditDescription", "com.sun.star.awt.UnoControlEditModel",
@@ -2996,12 +3053,25 @@ def _build_scenarios_module(model):
         model.insertByName(name, item)
         names.append(name)
 
+    add("lblScenarioSearch", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 6, 54, 10, Label="Recherche")
+    add("txtScenarioSearch", "com.sun.star.awt.UnoControlEditModel",
+        64, 4, 318, 14)
+    add("lblScenarioCategory", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 26, 54, 10, Label="Catégorie")
+    add("lstScenarioCategory", "com.sun.star.awt.UnoControlListBoxModel",
+        64, 24, 154, 14, Dropdown=True, StringItemList=("Toutes",), SelectedItems=(0,))
+    add("lblScenarioSort", "com.sun.star.awt.UnoControlFixedTextModel",
+        226, 26, 24, 10, Label="Tri")
+    add("lstScenarioSort", "com.sun.star.awt.UnoControlListBoxModel",
+        252, 24, 130, 14, Dropdown=True,
+        StringItemList=("Titre : A à Z", "Titre : Z à A", "Catégorie puis titre"), SelectedItems=(0,))
     add("lblScenarios", "com.sun.star.awt.UnoControlFixedTextModel",
-        8, 8, 142, 10, Label="Choisir un scénario")
+        8, 46, 142, 10, Label="Choisir un scénario")
     add("lstScenarios", "com.sun.star.awt.UnoControlListBoxModel",
-        8, 20, 142, 232)
+        8, 58, 142, 194)
     add("txtScenarioDetail", "com.sun.star.awt.UnoControlEditModel",
-        158, 20, 224, 232, MultiLine=True, ReadOnly=True, VScroll=True)
+        158, 58, 224, 194, MultiLine=True, ReadOnly=True, VScroll=True)
     add("lblScenarioStatus", "com.sun.star.awt.UnoControlFixedTextModel",
         158, 258, 96, 10, Label="")
     add("btnScenarioNew", "com.sun.star.awt.UnoControlButtonModel",
@@ -3026,6 +3096,9 @@ def _build_scenarios_module(model):
             _load_data(),
             _load_scenarios(),
             _load_user_scenarios(),
+            dialog.getControl("txtScenarioSearch"),
+            dialog.getControl("lstScenarioCategory"),
+            dialog.getControl("lstScenarioSort"),
         )
         for control_name, command in [
             ("btnScenarioNew", "new"),
@@ -3039,6 +3112,9 @@ def _build_scenarios_module(model):
             control.setActionCommand(command)
             control.addActionListener(listener)
 
+        dialog.getControl("txtScenarioSearch").addTextListener(listener)
+        dialog.getControl("lstScenarioCategory").addItemListener(listener)
+        dialog.getControl("lstScenarioSort").addItemListener(listener)
         dialog.getControl("lstScenarios").addItemListener(listener)
         _OPEN_SCENARIO_WINDOWS.append({"dialog": dialog, "listener": listener})
         return listener
