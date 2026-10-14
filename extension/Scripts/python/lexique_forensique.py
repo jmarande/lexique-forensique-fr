@@ -1929,15 +1929,7 @@ class ScenarioEditorListener(
         self.scenario["etapes"] = [dict(step) for step in self.steps]
         self.scenario["_source"] = "user"
         _save_user_scenarios(self.parent_listener.user_scenarios)
-        selected = (
-            len(self.parent_listener.builtin_scenarios)
-            + self.parent_listener.user_scenarios.index(self.scenario)
-        )
-        self.parent_listener._populate()
-        selected = next((i for i, sc in enumerate(self.parent_listener.scenarios)
-                         if sc is self.scenario), 0)
-        self.parent_listener.scenarios_box.selectItemPos(selected, True)
-        self.parent_listener._show(selected)
+        self.parent_listener._select_saved(self.scenario)
         self.parent_listener.status_label.getModel().Label = (
             "Scénario personnalisé enregistré"
         )
