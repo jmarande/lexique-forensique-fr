@@ -3,7 +3,7 @@
 Catalogue généré automatiquement depuis [data/lexique.json](../data/lexique.json).
 Ce catalogue n'est pas une validation juridique ou normative des définitions.
 
-**83 fiches disponibles** — 0 validée, 83 en attente de relecture.
+**83 fiches disponibles** — 0 validées, 83 en attente de relecture.
 
 [Procédure de validation](../docs/VALIDATION-FICHES.md)
 
@@ -102,9 +102,6 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 
 - [Notifications (iOS)](notifications-ios.md)
 - [Verrouillage et déverrouillage (iOS)](verrouillage-deverrouillage-ios.md)
-
-### État de protection
-
 
 ## 💻 Informatique
 
