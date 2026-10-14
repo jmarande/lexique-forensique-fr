@@ -2887,6 +2887,87 @@
     ]
   },
   {
+    "id": "notification-and-suggestion-db-ios",
+    "terme": "notificationAndSuggestionDB.db (iOS)",
+    "anglais": "Notification and Suggestion Database",
+    "categorie": "Téléphonie : iOS : Artefacts système",
+    "synonymes": [
+      "Base des métadonnées de notifications"
+    ],
+    "termes_proches": [
+      "Notifications (iOS)",
+      "Biome (iOS)",
+      "KnowledgeC (iOS)"
+    ],
+    "termes_deconseilles": [],
+    "definition": "Base de données SQLite du sous-système DuetExpertCenter d'Apple qui conserve des métadonnées relatives aux notifications enregistrées sur un appareil iOS. Elle peut contenir des horodatages, des identifiants d'applications, de conversations ou de correspondants et des indicateurs relatifs au traitement des notifications. Son exploitation permet de rechercher des événements de notification et de contribuer à leur contextualisation chronologique. Les travaux examinés n'ont pas mis en évidence la conservation du contenu textuel des notifications dans cette base.",
+    "donnees_potentielles": [
+      "Horodatages de réception et d'état des notifications",
+      "Identifiants des applications (BundleID)",
+      "Identifiants de conversations ou correspondants (ThreadID, ContactID, rawIdentifier)",
+      "Indicateurs de message individuel ou de groupe (isMessage, isGroupMessage)",
+      "Longueur déclarée du corps de notification (notificationBodyLength), sans conservation garantie du texte",
+      "Métadonnées d'état et de traitement (latestOutcome, latestOutcomeTimestamp, isActive, isProminent)"
+    ],
+    "points_attention": [
+      "Emplacement documenté : /private/var/mobile/Library/DuetExpertCenter/streams/notificationAndSuggestionDB.db ; contrôler la présence réelle dans l'acquisition.",
+      "La table notifications compte 36 colonnes dans les versions étudiées ; le schéma doit être vérifié selon l'appareil.",
+      "Des historiques de l'ordre de 60 jours ont été observés sur certains appareils sous iOS 15 à 26 : ce n'est ni un délai garanti ni une politique officielle Apple.",
+      "Un enregistrement n'établit pas l'affichage effectif, la lecture ou l'ouverture de la notification.",
+      "Un identifiant de conversation ou de correspondant nécessite une corroboration et ne suffit pas à attribuer une communication à une personne.",
+      "L'heure enregistrée pour la notification peut différer de celle de l'événement d'origine.",
+      "Les valeurs des champs non suffisamment documentés doivent être conservées sans interprétation hasardeuse.",
+      "L'absence d'un enregistrement n'établit pas l'absence de notification ou de communication."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Présentation de la base",
+        "texte": "Le système iOS conserve, au sein de la base notificationAndSuggestionDB.db, des métadonnées relatives aux notifications associées aux applications du terminal."
+      },
+      {
+        "type": "Base identifiée",
+        "texte": "Nous identifions dans les données extraites la base notificationAndSuggestionDB.db, contenant des enregistrements relatifs aux notifications du terminal."
+      },
+      {
+        "type": "Notifications identifiées",
+        "texte": "L'analyse de cette base met en évidence plusieurs événements de notification horodatés associés à différentes applications."
+      },
+      {
+        "type": "Notification associée à une application",
+        "texte": "Nous identifions un enregistrement de notification associé à l'application concernée, accompagné d'un horodatage de réception."
+      },
+      {
+        "type": "Correspondant identifié",
+        "texte": "L'examen des métadonnées de notification met en évidence un identifiant susceptible de correspondre à un numéro de téléphone associé à une communication."
+      },
+      {
+        "type": "Conversation identifiée",
+        "texte": "Les données analysées comportent un identifiant de conversation associé à une notification provenant de l'application concernée."
+      },
+      {
+        "type": "Reconstitution chronologique",
+        "texte": "Le rapprochement des horodatages de notification contribue à établir une chronologie partielle des événements enregistrés par le système."
+      },
+      {
+        "type": "Corrélation des données",
+        "texte": "Les métadonnées de notification ont été rapprochées des autres données accessibles afin de rechercher des correspondances avec les communications identifiées sur le terminal."
+      },
+      {
+        "type": "Limites d'interprétation",
+        "texte": "Les enregistrements identifiés correspondent à des métadonnées de notification et ne permettent pas, à eux seuls, d'établir la consultation des notifications par l'utilisateur ni de déterminer leur contenu."
+      },
+      {
+        "type": "Données insuffisantes",
+        "texte": "Les données accessibles dans cette base ne permettent pas de reconstituer de manière exhaustive l'historique des notifications du terminal."
+      }
+    ],
+    "sources": [
+      "Mattia Epifani — After the Signal Fix: Exploring Apple's notificationAndSuggestionDB.db (28 juillet 2026), https://blog.digital-forensics.it/2026/07/after-signal-fix-exploring-apples.html",
+      "iLEAPP — iOS Logs, Events, And Plist Parser, https://github.com/abrignoni/iLEAPP",
+      "Mattia Epifani — 84 Streams Later, Part 2: Inside Apple Biome (27 juillet 2026), https://blog.digital-forensics.it/2026/07/84-streams-later-part-2-inside-apple.html"
+    ]
+  },
+  {
     "id": "notifications-ios",
     "terme": "Notifications (iOS)",
     "anglais": "iOS notifications",
