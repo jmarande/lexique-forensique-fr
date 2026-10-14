@@ -6,6 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "lexique.json"
+VALIDATION = ROOT / "data" / "validation_fiches.json"
 DEST = ROOT / "fiches"
 TAXONOMY = ROOT / "data" / "taxonomie-proposition.json"
 
@@ -21,6 +22,13 @@ def generate():
     ids = [f["id"] for f in fiches]
     if len(ids) != len(set(ids)) or any(not x or "/" in x or "\\" in x or x in (".", "..") for x in ids):
         raise ValueError("Identifiants invalides ou dupliqués")
+    validations = json.loads(VALIDATION.read_text(encoding="utf-8"))
+    if not isinstance(validations, dict) or set(validations) - set(ids):
+        raise ValueError("Registre de validation invalide ou identifiants inconnus")
+    for key, record in validations.items():
+        if (not isinstance(record, dict) or record.get("statut") != "validee"
+                or not all(clean(record.get(k)) for k in ("date", "validateur", "reference"))):
+            raise ValueError(f"Validation incomplète ou inconnue : {key}")
     taxonomy = json.loads(TAXONOMY.read_text(encoding="utf-8"))
     families = {f["id"]: f for f in taxonomy["familles"]}
     mapping = {x["id"]: x for x in taxonomy["classement"]}
@@ -56,6 +64,10 @@ def generate():
         family, subcategory = category(cls)
         lines = ["# " + clean(f["terme"]), "",
                  "**Classification :** " + clean(family.get("icone")) + " " + clean(family["label"]) + " → " + clean(subcategory["label"]), ""]
+        review = validations.get(f["id"])
+        lines += ["**Statut :** " + ("Validée" if review else "En attente de relecture"), ""]
+        if review:
+            lines += ["**Validation éditoriale :** " + clean(review["date"]) + " — " + clean(review["validateur"]) + " (" + clean(review["reference"]) + ")", ""]
         selected_domains = [domains[x]["label"] for x in cls.get("domaines", [])]
         if selected_domains:
             lines += ["**Domaines d’application :** " + ", ".join(selected_domains), ""]
@@ -100,7 +112,8 @@ def generate():
     index = ["# Catalogue des fiches — Lexique forensique FR", "",
              "Catalogue généré automatiquement depuis [data/lexique.json](../data/lexique.json).",
              "Ce catalogue n'est pas une validation juridique ou normative des définitions.", "",
-             f"**{len(entries)} fiches disponibles**", ""]
+             f"**{len(entries)} fiches disponibles** — {len(validations)} validées, {len(entries) - len(validations)} en attente de relecture.", "",
+             "[Procédure de validation](../docs/VALIDATION-FICHES.md)", ""]
     for family in taxonomy["familles"]:
         grouped = [f for f in entries if mapping[f["id"]]["classification"].split("/")[0] == family["id"]]
         if not grouped:

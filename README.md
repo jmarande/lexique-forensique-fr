@@ -34,12 +34,12 @@ Le [catalogue des fiches](fiches/README.md) se consulte directement sur GitHub. 
 
 | Ressource disponible | Nombre |
 | --- | ---: |
-| [Fiches terminologiques](fiches/README.md) | **68** |
-| Formulations de rapport | **200** |
+| [Fiches terminologiques](fiches/README.md) | **89** |
+| Formulations de rapport | **429** |
 | Scénarios de rédaction | **5** |
 | Règles de francisation des libellés | **18** |
 
-*Chiffres calculés à partir de la base officielle du dépôt au 12 octobre 2026, hors données personnelles. Le catalogue évolue au fil des relectures ; le contenu installé dépend de la version de l’extension.*
+*Chiffres calculés à partir de la base officielle du dépôt au 14 octobre 2026, hors données personnelles. Le catalogue évolue au fil des relectures ; le contenu installé dépend de la version de l’extension.*
 
 ## Ce que permet l’extension
 

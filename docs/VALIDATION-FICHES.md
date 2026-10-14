@@ -30,3 +30,9 @@ Pour chaque fiche revue, consigner : identifiant, terme, références effectivem
 - Vérifier la recherche par terme, synonymes et anciens accès après fusion.
 - Vérifier les scénarios, les liens et les formulations de rapport.
 - Soumettre les modifications de contenu à une PR et à la revue humaine avant publication.
+
+## Registre et statuts publiés
+
+Le registre `data/validation_fiches.json` consigne les validations explicites avec les champs `statut: validee`, `date`, `validateur` et `reference`. Une fiche absente du registre apparaît « En attente de relecture » dans le catalogue ; aucune fiche historique n’est validée automatiquement. Les propositions utilisateur restent distinctes des fiches officielles et leur transmission est volontaire.
+
+Après une modification substantielle d’une fiche validée, retirer son entrée jusqu’à nouvelle relecture. Le catalogue affiche la date, le validateur et la référence de la décision. Ces statuts éditoriaux ne constituent pas une certification et ne sont pas encore affichés dans l’extension.

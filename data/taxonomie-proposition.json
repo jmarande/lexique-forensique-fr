@@ -66,6 +66,10 @@
         {
           "id": "connectivite",
           "label": "Connectivité"
+        },
+        {
+          "id": "artefacts-systeme",
+          "label": "Artefacts système"
         }
       ],
       "icone": "📱"
@@ -136,6 +140,25 @@
         }
       ],
       "icone": "🌐"
+    },
+    {
+      "id": "mission",
+      "label": "Mission",
+      "icone": "📋",
+      "sous_categories": [
+        {
+          "id": "echanges-requerant",
+          "label": "Échanges avec le requérant"
+        },
+        {
+          "id": "perimetre-recherches",
+          "label": "Périmètre des recherches"
+        },
+        {
+          "id": "limites-orientation",
+          "label": "Limites et orientation"
+        }
+      ]
     }
   ],
   "domaines": [
@@ -685,6 +708,66 @@
         "informatique"
       ],
       "ancienne_categorie": "Application — Messagerie"
+    },
+    {
+      "id": "biome-app-infocus-ios",
+      "classification": "telephonie/artefacts-systeme",
+      "domaines": [
+        "telephonie"
+      ],
+      "ancienne_categorie": "Téléphonie : iOS : Artefacts système"
+    },
+    {
+      "id": "biome-ios",
+      "classification": "telephonie/artefacts-systeme",
+      "domaines": [
+        "telephonie"
+      ],
+      "ancienne_categorie": "Téléphonie : iOS : Artefacts système"
+    },
+    {
+      "id": "knowledgec-ios",
+      "classification": "telephonie/artefacts-systeme",
+      "domaines": [
+        "telephonie"
+      ],
+      "ancienne_categorie": "Téléphonie : iOS : Artefacts système"
+    },
+    {
+      "id": "limites-techniques-orientation",
+      "classification": "mission/limites-orientation",
+      "domaines": [],
+      "ancienne_categorie": "Mission : Limites et orientation"
+    },
+    {
+      "id": "notification-and-suggestion-db-ios",
+      "classification": "telephonie/artefacts-systeme",
+      "domaines": [
+        "telephonie"
+      ],
+      "ancienne_categorie": "Téléphonie : iOS : Artefacts système"
+    },
+    {
+      "id": "notifications-ios",
+      "classification": "telephonie/artefacts-systeme",
+      "domaines": [
+        "telephonie"
+      ],
+      "ancienne_categorie": "Téléphonie : iOS : Artefacts système"
+    },
+    {
+      "id": "precision-mission-requerant",
+      "classification": "mission/echanges-requerant",
+      "domaines": [],
+      "ancienne_categorie": "Mission : Échanges avec le requérant"
+    },
+    {
+      "id": "verrouillage-deverrouillage-ios",
+      "classification": "telephonie/artefacts-systeme",
+      "domaines": [
+        "telephonie"
+      ],
+      "ancienne_categorie": "Téléphonie : iOS : Artefacts système"
     }
   ]
 }
