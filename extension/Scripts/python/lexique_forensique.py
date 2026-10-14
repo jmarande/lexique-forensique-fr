@@ -255,8 +255,32 @@ def _available_subcategories(entries, category=None):
                    if subgroup and (not category or family == category)}, key=_normalize)
 
 
+def _is_mission(entry):
+    category = _entry_category(entry)
+    family = _normalize(category.split(" → ")[0].replace("📋", "").strip())
+    legacy_family = _normalize(entry.get("categorie", "")).split(" : ")[0]
+    return family == "mission" or legacy_family == "mission"
+
+
+def _deduplicate_entries(entries):
+    result = []
+    keys = set()
+    # La version utilisateur est prioritaire, notamment après un import sensible.
+    for entry in reversed(entries):
+        item_id = str(entry.get("id") or "").strip()
+        name = _normalize(entry.get("terme", ""))
+        if (item_id and ("id", item_id) in keys) or (name and ("nom", name) in keys):
+            continue
+        result.append(entry)
+        if item_id:
+            keys.add(("id", item_id))
+        if name:
+            keys.add(("nom", name))
+    return list(reversed(result))
+
+
 def _load_data():
-    return _load_builtin_data() + _load_user_data()
+    return _deduplicate_entries(_load_builtin_data() + _load_user_data())
 
 
 def _user_occurrences_path():
@@ -599,7 +623,11 @@ def _normalize(value):
 
 
 def _is_sensitive(entry):
-    return entry.get("sensible") is True
+    return entry.get("sensible") is True or _is_mission(entry)
+
+
+def _sensitive_label(entry):
+    return ("🔴 [SENSIBLE] " if _is_sensitive(entry) else "") + entry.get("terme", "Terme")
 
 
 def _scenario_is_sensitive(scenario, data):
@@ -623,7 +651,7 @@ def _format_entry(e, warning=None):
         )
 
     if _is_sensitive(e):
-        prefix += "⚠ FICHE SENSIBLE — MERCI DE NE PAS DIFFUSER\n\n"
+        prefix += "🔴 FICHE SENSIBLE — MERCI DE NE PAS DIFFUSER\n\n"
     base = (
         prefix
         + f"{e['terme']}\n"
@@ -899,7 +927,7 @@ class DialogListener(
         previous_id = self.current.get("id") if self.current else None
         self._clear_results()
         for entry in self.matches:
-            self.results_box.addItem(entry["terme"], self.results_box.ItemCount)
+            self.results_box.addItem(_sensitive_label(entry), self.results_box.ItemCount)
 
         count = len(self.matches)
         self.status_label.getModel().Label = (
@@ -1514,7 +1542,7 @@ class ScenarioListener(
         for scenario in self.scenarios:
             prefix = "★ " if scenario.get("_source") == "user" else ""
             self.scenarios_box.addItem(
-                ("⚠ Scénarios sensibles · " if _scenario_is_sensitive(scenario, self.data) else prefix) + scenario.get("titre", "Scénario"),
+                ("🔴 Scénarios sensibles · " if _scenario_is_sensitive(scenario, self.data) else prefix) + scenario.get("titre", "Scénario"),
                 self.scenarios_box.ItemCount,
             )
         if self.scenarios:
@@ -1749,7 +1777,7 @@ class ScenarioEditorListener(
     def _populate_terms(self):
         self._clear(self.term_box)
         for entry in self.entries:
-            self.term_box.addItem(("⚠ [SENSIBLE] " if _is_sensitive(entry) else "") + entry.get("terme", ""), self.term_box.ItemCount)
+            self.term_box.addItem(("🔴 [SENSIBLE] " if _is_sensitive(entry) else "") + entry.get("terme", ""), self.term_box.ItemCount)
         if self.entries:
             self.term_box.selectItemPos(0, True)
             self._populate_formulations(0)
@@ -1953,13 +1981,13 @@ class TermManagerListener(
         if self.terms_box.ItemCount:
             self.terms_box.removeItems(0, self.terms_box.ItemCount)
         self.data = sorted(
-            self.builtin_data + self.user_data,
+            _deduplicate_entries(self.builtin_data + self.user_data),
             key=lambda e: _normalize(e.get("terme", "")),
         )
         for entry in self.data:
             prefix = "★ " if entry.get("_source") == "user" else ""
             self.terms_box.addItem(
-                ("⚠ [SENSIBLE] " if _is_sensitive(entry) else prefix) + entry.get("terme", "Terme"),
+                ("🔴 [SENSIBLE] " if _is_sensitive(entry) else prefix) + entry.get("terme", "Terme"),
                 self.terms_box.ItemCount,
             )
         if self.data:

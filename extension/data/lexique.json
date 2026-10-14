@@ -2367,58 +2367,6 @@
     ]
   },
   {
-    "id": "limites-techniques-orientation",
-    "terme": "Limites techniques et orientation vers un service spécialisé",
-    "anglais": "",
-    "categorie": "Mission : Limites et orientation",
-    "definition": "Situation dans laquelle une opération demandée ne peut pas être réalisée avec les moyens techniques disponibles au sein du service. Une orientation vers un service spécialisé peut alors être proposée au requérant.",
-    "synonymes": [
-      "Moyens techniques insuffisants",
-      "Extraction non réalisable",
-      "Orientation vers un service spécialisé"
-    ],
-    "termes_proches": [
-      "Extraction des données",
-      "Accès aux données",
-      "Examen complémentaire"
-    ],
-    "termes_deconseilles": [],
-    "points_attention": [
-      "La formulation doit préciser l’opération concernée et, lorsqu’elle est connue, la difficulté rencontrée. L’impossibilité de réaliser une extraction avec les moyens du service ne permet pas de conclure qu’elle serait impossible avec d’autres moyens.",
-      "Les indications entre crochets sont à remplacer avant insertion dans le rapport.",
-      "La formulation relative aux tentatives d’extraction s’utilise uniquement si celles-ci ont effectivement été réalisées."
-    ],
-    "formulations_rapport": [
-      {
-        "type": "Extraction non réalisable avec les moyens disponibles",
-        "texte": "Les moyens techniques dont nous disposons ne permettent pas de procéder à l’extraction des données du support examiné."
-      },
-      {
-        "type": "Extraction tentée sans succès",
-        "texte": "Les tentatives d’extraction réalisées avec les moyens techniques disponibles au sein de notre service n’ont pas permis d’extraire les données du support examiné."
-      },
-      {
-        "type": "Orientation avec indication du service",
-        "texte": "Les moyens techniques dont nous disposons ne permettent pas de procéder à l’extraction des données du support examiné. Nous invitons le requérant à solliciter [nom du service spécialisé] afin d’évaluer les possibilités d’extraction."
-      },
-      {
-        "type": "Orientation sans service désigné",
-        "texte": "L’extraction des données du support examiné ne peut pas être réalisée avec les moyens techniques disponibles au sein de notre service. Nous invitons le requérant à solliciter un service spécialisé afin d’évaluer les possibilités de prise en charge."
-      },
-      {
-        "type": "Difficulté identifiée",
-        "texte": "En raison de [difficulté technique constatée], nous ne sommes pas en mesure de procéder à l’extraction des données du support avec les moyens disponibles. Nous invitons le requérant à solliciter [nom du service spécialisé] pour un examen complémentaire."
-      },
-      {
-        "type": "Extraction partielle et orientation",
-        "texte": "L’extraction réalisée a permis d’obtenir [données obtenues]. Les moyens techniques disponibles ne permettent toutefois pas d’accéder à [données ou partie du support concernée]. Nous invitons le requérant à solliciter [nom du service spécialisé] afin d’évaluer les possibilités d’extraction complémentaire."
-      }
-    ],
-    "sources": [
-      "Lexique forensique FR — usage professionnel"
-    ]
-  },
-  {
     "id": "memoire",
     "terme": "Mémoire",
     "anglais": "Memory",
@@ -3057,56 +3005,6 @@
         "systeme": "macOS",
         "sources": "IORegistry, journaux unifiés"
       }
-    ]
-  },
-  {
-    "id": "precision-mission-requerant",
-    "terme": "Précision de la mission avec le requérant",
-    "anglais": "",
-    "categorie": "Mission : Échanges avec le requérant",
-    "definition": "Échange avec le requérant permettant de préciser les éléments à rechercher, les questions auxquelles l’examen doit répondre ou les priorités de l’analyse.",
-    "synonymes": [
-      "Prise de contact avec le requérant",
-      "Précision de la demande",
-      "Clarification de la mission"
-    ],
-    "termes_proches": [
-      "Périmètre des recherches",
-      "Objectifs de la mission"
-    ],
-    "termes_deconseilles": [],
-    "points_attention": [
-      "Ces formulations permettent de rendre compte des précisions apportées à la demande initiale. Elles doivent correspondre au contenu de l’échange et distinguer les recherches demandées des résultats obtenus.",
-      "Les indications entre crochets sont à remplacer avant insertion dans le rapport."
-    ],
-    "formulations_rapport": [
-      {
-        "type": "Définition des recherches après prise de contact",
-        "texte": "À la suite d’une prise de contact avec le requérant, il nous est demandé de rechercher les éléments suivants : [éléments recherchés]."
-      },
-      {
-        "type": "Précision de la demande initiale",
-        "texte": "Après échange avec le requérant, les recherches à effectuer dans le cadre de la mission sont précisées comme suit : [éléments recherchés]."
-      },
-      {
-        "type": "Échange daté",
-        "texte": "Le [date], nous prenons contact avec [nom ou qualité du requérant]. À l’issue de cet échange, il nous est demandé de rechercher [éléments recherchés]."
-      },
-      {
-        "type": "Priorités de l’analyse",
-        "texte": "À la suite d’un échange avec le requérant, l’analyse porte en priorité sur [éléments prioritaires]."
-      },
-      {
-        "type": "Période à examiner",
-        "texte": "Après échange avec le requérant, les recherches portent sur [éléments recherchés], pour la période comprise entre le [date de début] et le [date de fin]."
-      },
-      {
-        "type": "Questions à examiner",
-        "texte": "À la suite d’un échange avec le requérant, notre examen vise à apporter des éléments de réponse aux questions suivantes : [questions à examiner]."
-      }
-    ],
-    "sources": [
-      "Lexique forensique FR — usage professionnel"
     ]
   },
   {
