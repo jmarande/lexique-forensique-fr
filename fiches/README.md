@@ -170,14 +170,6 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 
 - [Historique de navigation](historique-navigation.md)
 
-## 📋 Mission
-
-### Échanges avec le requérant
-
-
-### Limites et orientation
-
-
 ## Index alphabétique
 
 - [Acquisition forensique](acquisition-forensique.md)
