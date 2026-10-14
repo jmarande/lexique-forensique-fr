@@ -13,7 +13,7 @@ import time
 import uno
 import unohelper
 
-from com.sun.star.awt import XActionListener, XItemListener, XMouseListener, XTopWindowListener
+from com.sun.star.awt import XActionListener, XItemListener, XMouseListener, XTopWindowListener, XTextListener
 
 _OPEN_LEXICON_WINDOWS = []
 _OPEN_VERIFY_WINDOWS = []
@@ -1460,11 +1460,26 @@ class OccurrenceEditorListener(
     def disposing(self, event): pass
 
 
+def _filter_scenarios(scenarios, query="", category=None, sort_order=0):
+    query = _normalize(query)
+    matches = [item for item in scenarios
+               if (not category or (item.get("categorie") or "Personnalisé") == category)
+               and (not query or query in _normalize(" ".join(
+                   item.get(key) or "" for key in ("titre", "description", "categorie"))))]
+    if sort_order == 2:
+        return sorted(matches, key=lambda item: (
+            _normalize(item.get("categorie") or "Personnalisé"),
+            _normalize(item.get("titre", ""))))
+    return sorted(matches, key=lambda item: _normalize(item.get("titre", "")),
+                  reverse=sort_order == 1)
+
+
 class ScenarioListener(
     unohelper.Base,
     XActionListener,
     XItemListener,
     XTopWindowListener,
+    XTextListener,
 ):
     def __init__(
         self,
@@ -1475,6 +1490,9 @@ class ScenarioListener(
         data,
         builtin_scenarios,
         user_scenarios,
+        search_box,
+        category_box,
+        sort_box,
     ):
         self.dialog = dialog
         self.scenarios_box = scenarios_box
@@ -1484,26 +1502,53 @@ class ScenarioListener(
         self.builtin_scenarios = builtin_scenarios
         self.user_scenarios = user_scenarios
         self.scenarios = self.builtin_scenarios + self.user_scenarios
+        self.search_box = search_box
+        self.category_box = category_box
+        self.sort_box = sort_box
+        self.current_category = None
+        self.sort_order = 0
+        self.refreshing = False
         self.current = None
         self._populate()
 
-    def _populate(self, select_index=0):
-        if self.scenarios_box.ItemCount:
-            self.scenarios_box.removeItems(0, self.scenarios_box.ItemCount)
-        self.scenarios = self.builtin_scenarios + self.user_scenarios
-        for scenario in self.scenarios:
-            prefix = "★ " if scenario.get("_source") == "user" else ""
-            self.scenarios_box.addItem(
-                prefix + scenario.get("titre", "Scénario"),
-                self.scenarios_box.ItemCount,
-            )
-        if self.scenarios:
-            select_index = min(max(select_index, 0), len(self.scenarios) - 1)
-            self.scenarios_box.selectItemPos(select_index, True)
-            self._show(select_index)
-        else:
-            self.current = None
-            self.detail_box.Text = "Aucun scénario disponible."
+    def _populate(self, select_index=0, selected=None):
+        self.refreshing = True
+        try:
+            all_scenarios = self.builtin_scenarios + self.user_scenarios
+            self.categories = sorted({item.get("categorie") or "Personnalisé"
+                                      for item in all_scenarios}, key=_normalize)
+            if self.current_category not in self.categories:
+                self.current_category = None
+            self.category_box.getModel().StringItemList = tuple(["Toutes"] + self.categories)
+            position = self.categories.index(self.current_category) + 1 if self.current_category else 0
+            self.category_box.selectItemPos(position, True)
+            self.scenarios = _filter_scenarios(all_scenarios, self.search_box.Text,
+                                               self.current_category, self.sort_order)
+            if self.scenarios_box.ItemCount:
+                self.scenarios_box.removeItems(0, self.scenarios_box.ItemCount)
+            for scenario in self.scenarios:
+                prefix = "★ " if scenario.get("_source") == "user" else ""
+                self.scenarios_box.addItem(prefix + scenario.get("titre", "Scénario"),
+                                          self.scenarios_box.ItemCount)
+            if self.scenarios:
+                if selected is not None:
+                    select_index = next((i for i, item in enumerate(self.scenarios)
+                                         if item is selected), 0)
+                select_index = min(max(select_index, 0), len(self.scenarios) - 1)
+                self.scenarios_box.selectItemPos(select_index, True)
+                self._show(select_index)
+            else:
+                self.current = None
+                self.detail_box.Text = "Aucun scénario ne correspond aux filtres."
+                self.status_label.getModel().Label = "Aucun résultat"
+        finally:
+            self.refreshing = False
+
+    def _select_saved(self, scenario):
+        # A newly created or renamed scenario must remain visible after saving.
+        self.search_box.Text = ""
+        self.current_category = None
+        self._populate(selected=scenario)
 
     def _show(self, index):
         if not (0 <= index < len(self.scenarios)):
@@ -1580,7 +1625,7 @@ class ScenarioListener(
         }
         self.user_scenarios.append(duplicate)
         _save_user_scenarios(self.user_scenarios)
-        self._populate(len(self.builtin_scenarios) + len(self.user_scenarios) - 1)
+        self._select_saved(duplicate)
         self.status_label.getModel().Label = "Scénario dupliqué"
 
     def new_from_current(self):
@@ -1595,7 +1640,7 @@ class ScenarioListener(
         self.user_scenarios.append(item)
         _save_user_scenarios(self.user_scenarios)
         index = len(self.builtin_scenarios) + len(self.user_scenarios) - 1
-        self._populate(index)
+        self._select_saved(item)
         open_scenario_editor(self, item)
 
     def edit_current(self):
@@ -1616,18 +1661,20 @@ class ScenarioListener(
             _save_user_scenarios(self.user_scenarios)
             scenario = duplicate
             index = len(self.builtin_scenarios) + len(self.user_scenarios) - 1
-            self._populate(index)
+            self._select_saved(scenario)
         open_scenario_editor(self, scenario)
 
     def delete_current(self):
         index = self._current_index()
-        if index < len(self.builtin_scenarios):
-            self.status_label.getModel().Label = (
-                "Les scénarios fournis ne peuvent pas être supprimés"
-            )
+        if index < 0:
             return
-        user_index = index - len(self.builtin_scenarios)
-        if not (0 <= user_index < len(self.user_scenarios)):
+        scenario = self.scenarios[index]
+        if scenario.get("_source") != "user":
+            self.status_label.getModel().Label = "Les scénarios fournis ne peuvent pas être supprimés"
+            return
+        user_index = next((i for i, item in enumerate(self.user_scenarios)
+                           if item is scenario), None)
+        if user_index is None:
             return
         self.user_scenarios.pop(user_index)
         _save_user_scenarios(self.user_scenarios)
@@ -1648,7 +1695,22 @@ class ScenarioListener(
         elif event.ActionCommand == "close":
             self._close_dialog()
 
+    def textChanged(self, event):
+        if not self.refreshing:
+            self._populate(selected=self.current)
+
     def itemStateChanged(self, event):
+        if self.refreshing:
+            return
+        if event.Source == self.category_box:
+            pos = self.category_box.SelectedItemPos
+            self.current_category = self.categories[pos - 1] if 0 < pos <= len(self.categories) else None
+            self._populate(selected=self.current)
+            return
+        if event.Source == self.sort_box:
+            self.sort_order = max(0, self.sort_box.SelectedItemPos)
+            self._populate(selected=self.current)
+            return
         pos = self.scenarios_box.SelectedItemPos
         if 0 <= pos < len(self.scenarios):
             self._show(pos)
@@ -1821,7 +1883,7 @@ class ScenarioEditorListener(
             len(self.parent_listener.builtin_scenarios)
             + self.parent_listener.user_scenarios.index(self.scenario)
         )
-        self.parent_listener._populate(selected)
+        self.parent_listener._select_saved(self.scenario)
         self.parent_listener.status_label.getModel().Label = (
             "Scénario personnalisé enregistré"
         )
@@ -2845,8 +2907,11 @@ def open_scenario_editor(parent_listener, scenario):
         54, 6, 358, 14, Text=scenario.get("titre", ""))
     add("lblEditCategory", "com.sun.star.awt.UnoControlFixedTextModel",
         8, 28, 44, 10, Label="Catégorie :")
-    add("txtEditCategory", "com.sun.star.awt.UnoControlEditModel",
-        54, 26, 160, 14, Text=scenario.get("categorie", "Personnalisé"))
+    add("txtEditCategory", "com.sun.star.awt.UnoControlComboBoxModel",
+        54, 26, 160, 14, Dropdown=True,
+        StringItemList=tuple(sorted({item.get("categorie") or "Personnalisé"
+                                    for item in parent_listener.builtin_scenarios + parent_listener.user_scenarios}, key=_normalize)),
+        Text=scenario.get("categorie", "Personnalisé"))
     add("lblEditDescription", "com.sun.star.awt.UnoControlFixedTextModel",
         8, 48, 52, 10, Label="Description :")
     add("txtEditDescription", "com.sun.star.awt.UnoControlEditModel",
@@ -2942,12 +3007,25 @@ def _build_scenarios_module(model):
         model.insertByName(name, item)
         names.append(name)
 
+    add("lblScenarioSearch", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 6, 54, 10, Label="Recherche")
+    add("txtScenarioSearch", "com.sun.star.awt.UnoControlEditModel",
+        64, 4, 318, 14)
+    add("lblScenarioCategory", "com.sun.star.awt.UnoControlFixedTextModel",
+        8, 26, 54, 10, Label="Catégorie")
+    add("lstScenarioCategory", "com.sun.star.awt.UnoControlListBoxModel",
+        64, 24, 154, 14, Dropdown=True, StringItemList=("Toutes",), SelectedItems=(0,))
+    add("lblScenarioSort", "com.sun.star.awt.UnoControlFixedTextModel",
+        226, 26, 24, 10, Label="Tri")
+    add("lstScenarioSort", "com.sun.star.awt.UnoControlListBoxModel",
+        252, 24, 130, 14, Dropdown=True,
+        StringItemList=("Titre : A à Z", "Titre : Z à A", "Catégorie puis titre"), SelectedItems=(0,))
     add("lblScenarios", "com.sun.star.awt.UnoControlFixedTextModel",
-        8, 8, 142, 10, Label="Choisir un scénario")
+        8, 46, 142, 10, Label="Choisir un scénario")
     add("lstScenarios", "com.sun.star.awt.UnoControlListBoxModel",
-        8, 20, 142, 232)
+        8, 58, 142, 194)
     add("txtScenarioDetail", "com.sun.star.awt.UnoControlEditModel",
-        158, 20, 224, 232, MultiLine=True, ReadOnly=True, VScroll=True)
+        158, 58, 224, 194, MultiLine=True, ReadOnly=True, VScroll=True)
     add("lblScenarioStatus", "com.sun.star.awt.UnoControlFixedTextModel",
         158, 258, 96, 10, Label="")
     add("btnScenarioNew", "com.sun.star.awt.UnoControlButtonModel",
@@ -2972,6 +3050,9 @@ def _build_scenarios_module(model):
             _load_data(),
             _load_scenarios(),
             _load_user_scenarios(),
+            dialog.getControl("txtScenarioSearch"),
+            dialog.getControl("lstScenarioCategory"),
+            dialog.getControl("lstScenarioSort"),
         )
         for control_name, command in [
             ("btnScenarioNew", "new"),
@@ -2985,6 +3066,9 @@ def _build_scenarios_module(model):
             control.setActionCommand(command)
             control.addActionListener(listener)
 
+        dialog.getControl("txtScenarioSearch").addTextListener(listener)
+        dialog.getControl("lstScenarioCategory").addItemListener(listener)
+        dialog.getControl("lstScenarioSort").addItemListener(listener)
         dialog.getControl("lstScenarios").addItemListener(listener)
         _OPEN_SCENARIO_WINDOWS.append({"dialog": dialog, "listener": listener})
         return listener
@@ -3447,347 +3531,3 @@ def show_help(*args):
     close.addActionListener(listener)
     dialog.addTopWindowListener(listener)
     _OPEN_HELP_WINDOWS.append({"dialog": dialog, "listener": listener})
-    dialog.setVisible(True)
-
-
-def show_about(*args):
-    ctx = _ctx()
-    smgr = ctx.ServiceManager
-    toolkit = smgr.createInstanceWithContext("com.sun.star.awt.Toolkit", ctx)
-    model = smgr.createInstanceWithContext(
-        "com.sun.star.awt.UnoControlDialogModel", ctx
-    )
-    model.PositionX = 95
-    model.PositionY = 65
-    model.Width = 250
-    model.Height = 118
-    model.Title = "À propos de Lexique forensique FR"
-
-    def add(name, service, x, y, w, h, **props):
-        item = model.createInstance(service)
-        item.Name = name
-        item.PositionX, item.PositionY = x, y
-        item.Width, item.Height = w, h
-        for key, value in props.items():
-            setattr(item, key, value)
-        model.insertByName(name, item)
-
-    logo_path = os.path.join(_extension_root(), "images", "logo.png")
-    logo_url = uno.systemPathToFileUrl(logo_path)
-    add(
-        "imgAboutLogo",
-        "com.sun.star.awt.UnoControlImageControlModel",
-        10, 10, 42, 42,
-        ImageURL=logo_url,
-        ScaleImage=True,
-        Border=0,
-    )
-    add(
-        "txtAbout",
-        "com.sun.star.awt.UnoControlFixedTextModel",
-        60, 10, 180, 54,
-        Label=(
-            "Lexique forensique FR\n"
-            f"Version {CURRENT_VERSION}\n"
-            "Auteur : Jérémy MARANDE\n"
-            "Lexique français de criminalistique numérique"
-        ),
-        MultiLine=True,
-    )
-    add(
-        "btnGitHub",
-        "com.sun.star.awt.UnoControlButtonModel",
-        10, 84, 62, 16,
-        Label="GitHub",
-    )
-    add(
-        "btnClose",
-        "com.sun.star.awt.UnoControlButtonModel",
-        188, 84, 52, 16,
-        Label="Fermer",
-    )
-
-    dialog = smgr.createInstanceWithContext(
-        "com.sun.star.awt.UnoControlDialog", ctx
-    )
-    dialog.setModel(model)
-    dialog.createPeer(toolkit, None)
-
-    listener = AboutListener(dialog)
-    dialog.addTopWindowListener(listener)
-    for control_name, command in [
-        ("btnGitHub", "github"),
-        ("btnClose", "close"),
-    ]:
-        control = dialog.getControl(control_name)
-        control.setActionCommand(command)
-        control.addActionListener(listener)
-
-    _OPEN_ABOUT_WINDOWS.append({
-        "dialog": dialog,
-        "listener": listener,
-    })
-    dialog.setVisible(True)
-
-
-
-def _release_notes_text(release):
-    body = (release.get("body") or "").strip()
-    if not body:
-        return "Aucune note de version fournie."
-    body = body.replace("\r\n", "\n").replace("\r", "\n")
-    lines = []
-    for raw in body.split("\n"):
-        line = raw.strip()
-        if not line:
-            continue
-        if line.startswith("##"):
-            line = line.lstrip("#").strip()
-        if line.startswith("- "):
-            line = "• " + line[2:].strip()
-        lines.append(line)
-    text = "\n".join(lines)
-    if len(text) > 1200:
-        text = text[:1197].rstrip() + "..."
-    return text or "Aucune note de version fournie."
-
-
-def _download_update(download_url, expected_sha256):
-    update_dir = tempfile.mkdtemp(prefix="lexique-forensique-fr-")
-    target = os.path.join(update_dir, UPDATE_ASSET_NAME)
-
-    urls = [download_url]
-    if expected_sha256:
-        separator = "&" if "?" in download_url else "?"
-        urls.append(
-            download_url
-            + separator
-            + "lexique_sha256="
-            + expected_sha256[:12]
-        )
-
-    last_digest = ""
-    for url in urls:
-        request = urllib.request.Request(
-            url,
-            headers={
-                "User-Agent": "Lexique-forensique-FR-LibreOffice",
-                "Cache-Control": "no-cache",
-                "Pragma": "no-cache",
-            },
-        )
-        with urllib.request.urlopen(request, timeout=30) as response:
-            data = response.read()
-
-        last_digest = hashlib.sha256(data).hexdigest().lower()
-        if not expected_sha256 or last_digest == expected_sha256.lower():
-            with open(target, "wb") as f:
-                f.write(data)
-            return target
-
-    raise RuntimeError(
-        "L'empreinte SHA-256 de la mise à jour ne correspond pas "
-        "(téléchargement possiblement mis en cache par GitHub)."
-    )
-
-
-def check_updates(*args):
-    try:
-        request = urllib.request.Request(
-            GITHUB_LATEST_RELEASE_API,
-            headers={
-                "Accept": "application/vnd.github+json",
-                "User-Agent": "Lexique-forensique-FR-LibreOffice",
-            },
-        )
-        with urllib.request.urlopen(request, timeout=8) as response:
-            release = json.loads(response.read().decode("utf-8"))
-
-        latest = release.get("tag_name", "")
-        if not latest:
-            raise RuntimeError("La dernière release GitHub ne fournit pas de version.")
-
-        if _version_tuple(latest) <= _version_tuple(CURRENT_VERSION):
-            _message_box(
-                "Lexique forensique FR",
-                f"La version {CURRENT_VERSION} est à jour.",
-            )
-            return
-
-        asset = None
-        for item in release.get("assets", []):
-            if item.get("name") == UPDATE_ASSET_NAME:
-                asset = item
-                break
-
-        if not asset:
-            raise RuntimeError(
-                f"Le fichier {UPDATE_ASSET_NAME} est absent de la release {latest}."
-            )
-
-        download_url = asset.get("browser_download_url", "")
-        if not download_url:
-            raise RuntimeError("URL de téléchargement de la mise à jour introuvable.")
-
-        expected_sha256 = ""
-        digest = asset.get("digest") or ""
-        if digest.lower().startswith("sha256:"):
-            expected_sha256 = digest.split(":", 1)[1].strip()
-
-        release_notes = _release_notes_text(release)
-        _message_box(
-            "Mise à jour disponible",
-            (
-                f"Version installée : {CURRENT_VERSION}\n"
-                f"Dernière version : {latest}\n\n"
-                "NOUVEAUTÉS\n"
-                f"{release_notes}\n\n"
-                "La nouvelle extension va être téléchargée."
-            ),
-        )
-
-        package_path = _download_update(download_url, expected_sha256)
-        _open_url(uno.systemPathToFileUrl(package_path))
-
-    except Exception as exc:
-        _message_box(
-            "Mise à jour",
-            (
-                "Impossible d'effectuer la mise à jour automatique.\n\n"
-                f"Détail : {exc}\n\n"
-                "Aucune page web ne sera ouverte automatiquement."
-            ),
-        )
-
-
-class ModuleNavigationListener(unohelper.Base, XActionListener, XTopWindowListener):
-    def __init__(self, dialog, groups, listeners):
-        self.dialog, self.groups, self.listeners = dialog, groups, listeners
-        self.verification_started = False
-
-    def select(self, module):
-        if module == "verify" and not self.verification_started:
-            self.listeners[1].scan()
-            self.verification_started = True
-        for key, names in self.groups.items():
-            for name in names:
-                self.dialog.getControl(name).setVisible(key == module)
-            self.dialog.getControl("nav_" + key).getModel().Enabled = key != module
-
-    def actionPerformed(self, event):
-        if event.ActionCommand == "help":
-            show_help()
-        else:
-            self.select(event.ActionCommand)
-
-    def windowClosing(self, event):
-        _close_module_window(self.dialog)
-
-    def windowOpened(self, event): pass
-    def windowClosed(self, event): pass
-    def windowMinimized(self, event): pass
-    def windowNormalized(self, event): pass
-    def windowActivated(self, event): pass
-    def windowDeactivated(self, event): pass
-    def disposing(self, event): pass
-
-
-def _close_module_window(dialog):
-    for item in _OPEN_LEXICON_WINDOWS:
-        if item.get("dialog") is dialog and item.get("navigation"):
-            dialog.removeTopWindowListener(item["navigation"])
-    dialog.setVisible(False)
-    for windows in (_OPEN_LEXICON_WINDOWS, _OPEN_VERIFY_WINDOWS, _OPEN_SCENARIO_WINDOWS):
-        windows[:] = [item for item in windows if item.get("dialog") is not dialog]
-    dialog.dispose()
-
-
-def open_lexicon(*args, _module="lexicon"):
-    # Reuse the same workspace from Writer menu entries.
-    for window in _OPEN_LEXICON_WINDOWS:
-        if window.get("navigation"):
-            window["navigation"].select(_module)
-            window["dialog"].setVisible(True)
-            window["dialog"].toFront()
-            return
-    ctx = _ctx()
-    smgr = ctx.ServiceManager
-    toolkit = smgr.createInstanceWithContext("com.sun.star.awt.Toolkit", ctx)
-    model = smgr.createInstanceWithContext("com.sun.star.awt.UnoControlDialogModel", ctx)
-    model.PositionX, model.PositionY = 60, 35
-    model.Width, model.Height = 420, 334
-    model.Title = f"Lexique forensique FR — v{CURRENT_VERSION}"
-    data = _load_data()
-    names = []
-
-    def add(name, kind, x, y, w, h, **props):
-        item = model.createInstance("com.sun.star.awt.UnoControl" + kind + "Model")
-        item.Name = name
-        item.PositionX, item.PositionY, item.Width, item.Height = x, y, w, h
-        for key, value in props.items():
-            setattr(item, key, value)
-        model.insertByName(name, item)
-        names.append(name)
-
-    for name, label, x, w in [("lexicon", "Lexique", 8, 82),
-                               ("verify", "Vérification du document", 94, 144),
-                               ("scenarios", "Scénarios", 242, 92)]:
-        add("nav_" + name, "Button", x, 6, w, 20, Label=label)
-    add("nav_help", "Button", 358, 6, 54, 20, Label="Aide")
-    names.clear()
-    add("lblSearch", "FixedText", 8, 38, 48, 10, Label="Recherche :")
-    add("txtSearch", "Edit", 58, 34, 272, 16)
-    add("btnSearch", "Button", 336, 34, 76, 16, Label="Rechercher", DefaultButton=True)
-    add("lblCategory", "FixedText", 8, 60, 126, 10, Label="Catégorie")
-    add("cmbCategory", "ListBox", 8, 72, 126, 16, Dropdown=True,
-        StringItemList=tuple(["Toutes"] + _available_categories(data)), SelectedItems=(0,))
-    add("lblSubcategory", "FixedText", 8, 96, 126, 10, Label="Sous-catégorie")
-    add("cmbSubcategory", "ListBox", 8, 108, 126, 16, Dropdown=True,
-        StringItemList=("Toutes",), SelectedItems=(0,))
-    add("lblStatus", "FixedText", 8, 130, 126, 12, Label="")
-    add("lstResults", "ListBox", 8, 146, 126, 148)
-    add("btnManageTerms", "Button", 8, 300, 126, 16, Label="Mes fiches")
-    add("txtDetail", "Edit", 142, 60, 270, 234, MultiLine=True, ReadOnly=True, VScroll=True,
-        HideInactiveSelection=False)
-    add("btnInsert", "Button", 292, 300, 120, 16, Label="Insérer la formulation")
-    add("btnClose", "Button", 360, 318, 52, 14, Label="Fermer")
-    groups = {"lexicon": list(names)}
-    groups["verify"], setup_verify = _build_verify_module(model)
-    groups["scenarios"], setup_scenarios = _build_scenarios_module(model)
-    dialog = smgr.createInstanceWithContext("com.sun.star.awt.UnoControlDialog", ctx)
-    dialog.setModel(model)
-    dialog.createPeer(toolkit, None)
-    listener = DialogListener(dialog, dialog.getControl("txtSearch"), dialog.getControl("lstResults"),
-                              dialog.getControl("txtDetail"), dialog.getControl("lblStatus"),
-                              dialog.getControl("btnInsert"), dialog.getControl("cmbCategory"), data,
-                              dialog.getControl("cmbSubcategory"))
-    verify = setup_verify(dialog)
-    scenarios = setup_scenarios(dialog)
-    for name, command in [("btnSearch", "search"), ("btnManageTerms", "manage_terms"),
-                          ("btnInsert", "insert"), ("btnClose", "close")]:
-        control = dialog.getControl(name)
-        control.setActionCommand(command)
-        control.addActionListener(listener)
-    for name in ("lstResults", "cmbCategory", "cmbSubcategory"):
-        dialog.getControl(name).addItemListener(listener)
-    dialog.getControl("txtDetail").addMouseListener(listener)
-    navigation = ModuleNavigationListener(dialog, groups, [listener, verify, scenarios])
-    for module in ("lexicon", "verify", "scenarios", "help"):
-        control = dialog.getControl("nav_" + module)
-        control.setActionCommand(module)
-        control.addActionListener(navigation)
-    dialog.addTopWindowListener(navigation)
-    _OPEN_LEXICON_WINDOWS.append({"dialog": dialog, "listener": listener, "navigation": navigation})
-    navigation.select(_module)
-    dialog.setVisible(True)
-
-
-g_exportedScripts = (
-    open_lexicon,
-    open_verification,
-    open_scenarios,
-    open_term_manager,
-    open_user_data_transfer,
-    show_about,
-    check_updates,
-)
