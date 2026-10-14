@@ -1,6 +1,6 @@
 # Carte SIM
 
-**Catégorie :** Preuve numérique
+**Classification :** 📱 Téléphonie mobile → SIM et identifiants
 
 **Équivalent anglais :** SIM card
 

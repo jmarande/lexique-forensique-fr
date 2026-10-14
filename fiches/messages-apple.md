@@ -1,6 +1,6 @@
 # Messages (Apple)
 
-**Catégorie :** Application — Messagerie
+**Classification :** 💬 Applications → Messageries et réseaux sociaux
 
 **Équivalent anglais :** Messages
 

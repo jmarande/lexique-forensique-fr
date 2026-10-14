@@ -1,6 +1,6 @@
 # MSISDN
 
-**Catégorie :** Preuve numérique
+**Classification :** 📱 Téléphonie mobile → SIM et identifiants
 
 **Équivalent anglais :** Mobile Station Integrated Services Digital Network (MSISDN)
 

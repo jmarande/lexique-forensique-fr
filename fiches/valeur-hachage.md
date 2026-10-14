@@ -1,12 +1,12 @@
 # Valeur de hachage
 
-**Catégorie :** Preuve numérique
+**Classification :** 🧩 Données et traces → Hachage et cryptographie
 
 **Équivalent anglais :** Hash value
 
 ## Définition
 
-Valeur obtenue par l’application d’une fonction de hachage à un ensemble de données. La comparaison de valeurs de hachage permet notamment de vérifier qu’une copie n’a pas été modifiée par rapport à la donnée de référence.
+Valeur produite par une fonction de hachage appliquée à des données numériques. Voir « Hachage et empreinte numérique » pour les formulations de rapport.
 
 ## Synonymes
 
@@ -17,19 +17,7 @@ Valeur obtenue par l’application d’une fonction de hachage à un ensemble de
 
 - Checksum cryptographique
 
-## Formulations pour rapport
-
-### Calcul de l’empreinte
-
-Nous calculons la valeur de hachage SHA-256 du fichier afin d’en disposer comme empreinte de référence.
-
-### Remise avec empreinte
-
-Les fichiers remis sont accompagnés de leur valeur de hachage SHA-256.
-
-### Valeurs concordantes
-
-Les valeurs de hachage calculées sont identiques, permettant de vérifier l’intégrité des données comparées.
+**Fiche regroupée :** [Hachage et empreinte numérique](hachage.md)
 
 > Ces fiches sont des documents de travail du projet : les définitions restent soumises à la revue terminologique et documentaire.
 

@@ -3,70 +3,243 @@
 Catalogue généré automatiquement depuis [data/lexique.json](../data/lexique.json).
 Ce catalogue n'est pas une validation juridique ou normative des définitions.
 
-**63 fiches disponibles**
+**81 fiches disponibles**
 
-- [Acquisition forensique](acquisition-forensique.md) — Méthode de criminalistique numérique
-- [Adresse IP](adresse-ip.md) — Technologie numérique
-- [Analyse des données](analyse-donnees.md) — Procédure d’examen forensique
-- [Artefact forensique](artefact-forensique.md) — Preuve numérique
-- [Authentification](authentification.md) — Méthode de criminalistique numérique
-- [Base de données](base-de-donnees.md) — Preuve numérique
-- [Carte SIM](carte-sim.md) — Preuve numérique
-- [Chaîne de traçabilité](chaine-tracabilite.md) — Méthode de criminalistique numérique
-- [Chiffrement](chiffrement.md) — Cryptographie
-- [Clé USB](cle-usb.md) — Équipement numérique
-- [Code de déverrouillage](code-deverrouillage.md) — Procédure d’examen forensique
-- [Copie forensique](copie-forensique.md) — Méthode de criminalistique numérique
-- [Criminalistique numérique](criminalistique-numerique.md) — Méthode de criminalistique numérique
-- [Disque dur](disque-dur.md) — Équipement numérique
-- [Donnée reconstruite](donnee-reconstruite.md) — Preuve numérique
-- [Donnée supprimée](donnee-supprimee.md) — Preuve numérique
-- [Données numériques](donnees-numeriques.md) — Preuve numérique
-- [Dossier](dossier.md) — Preuve numérique
-- [Décodage des données](decodage-donnees.md) — Méthode de criminalistique numérique
-- [Empreinte numérique](empreinte-numerique.md) — Méthode de criminalistique numérique
-- [EXIF](exif.md) — Preuve numérique
-- [Extraction](extraction.md) — Méthode de criminalistique numérique
-- [Extraction du système de fichiers](extraction-systeme-fichiers.md) — Méthode de criminalistique numérique
-- [Extraction logique](extraction-logique.md) — Méthode de criminalistique numérique
-- [Fichier multimédia](fichier-multimedia.md) — Preuve numérique
-- [Force brute](force-brute.md) — Méthode de criminalistique numérique
-- [Fournisseur d’accès à Internet](fai.md) — Technologie numérique
-- [Hachage](hachage.md) — Méthode de criminalistique numérique
-- [Horodatage](horodatage.md) — Preuve numérique
-- [ICCID](iccid.md) — Preuve numérique
-- [IMEI](imei.md) — Preuve numérique
-- [Instagram Direct](instagram-direct.md) — Application — Messagerie et réseau social
-- [Intégrité des données](integrite-donnees.md) — Principe de criminalistique numérique
-- [Investigation numérique](investigation-numerique.md) — Méthode de criminalistique numérique
-- [Journaux système](journaux-systeme.md) — Preuve numérique
-- [Messages (Apple)](messages-apple.md) — Application — Messagerie
-- [Messenger](messenger.md) — Application — Messagerie
-- [Mode avion](mode-avion.md) — Méthode de criminalistique numérique
-- [MSISDN](msisdn.md) — Preuve numérique
-- [Mémoire](memoire.md) — Équipement numérique
-- [Mémoire cache](memoire-cache.md) — Preuve numérique
-- [Métadonnées](metadonnees.md) — Preuve numérique
-- [Numéro de série](numero-serie.md) — Preuve numérique
-- [Preuve numérique](preuve-numerique.md) — Preuve numérique
-- [Remise des résultats](remise-resultats.md) — Procédure d’examen forensique
-- [Récupération de données](recuperation-donnees.md) — Méthode de criminalistique numérique
-- [Réparation du support](reparation-support.md) — Procédure d’examen forensique
-- [Réseau de communications](reseau-communications.md) — Technologie numérique
-- [Réseau sans fil](reseau-sans-fil.md) — Technologie numérique
-- [Scellé](scelle.md) — Procédure d’examen forensique
-- [Signal](signal.md) — Application — Messagerie
-- [Snapchat](snapchat.md) — Application — Messagerie et réseau social
-- [Source de données](source-donnees.md) — Preuve numérique
-- [Stockage dans le cloud](stockage-cloud.md) — Technologie numérique
-- [Stockage de données](stockage-donnees.md) — Technologie numérique
-- [Support de stockage](support-stockage.md) — Équipement numérique
-- [Support numérique](support-numerique.md) — Équipement numérique
-- [Système d'exploitation](systeme-exploitation.md) — Technologie numérique
-- [Système de fichiers](systeme-fichiers.md) — Technologie numérique
-- [Telegram](telegram.md) — Application — Messagerie
-- [Valeur de hachage](valeur-hachage.md) — Preuve numérique
-- [WhatsApp](whatsapp.md) — Application — Messagerie
-- [État du support](etat-support.md) — Procédure d’examen forensique
+## 🔬 Méthodologie forensique
+
+### Acquisition et extraction
+
+- [Acquisition forensique](acquisition-forensique.md)
+- [Copie forensique](copie-forensique.md)
+- [Extraction](extraction.md)
+- [Extraction du système de fichiers](extraction-systeme-fichiers.md)
+- [Extraction logique](extraction-logique.md)
+- [Extraction physique](extraction-physique.md)
+- [Récupération de données](recuperation-donnees.md)
+
+### Examen et analyse
+
+- [Analyse des données](analyse-donnees.md)
+- [Carving de fichiers](carving-fichiers.md)
+- [Criminalistique numérique](criminalistique-numerique.md)
+- [Décodage des données](decodage-donnees.md)
+- [Investigation numérique](investigation-numerique.md)
+
+### Préservation et traçabilité
+
+- [Chaîne de traçabilité](chaine-tracabilite.md)
+- [Intégrité des données](integrite-donnees.md)
+- [Remise des résultats](remise-resultats.md)
+- [Réparation du support](reparation-support.md)
+- [Scellé](scelle.md)
+- [État du support](etat-support.md)
+
+### Accès et authentification
+
+- [Authentification](authentification.md)
+- [Code de déverrouillage](code-deverrouillage.md)
+- [Force brute](force-brute.md)
+
+## 🧩 Données et traces
+
+### Preuves et traces numériques
+
+- [Artefact forensique](artefact-forensique.md)
+- [Donnée reconstruite](donnee-reconstruite.md)
+- [Donnée supprimée](donnee-supprimee.md)
+- [Données numériques](donnees-numeriques.md)
+- [Journaux applicatifs](journaux-applicatifs.md)
+- [Journaux système](journaux-systeme.md)
+- [Preuve numérique](preuve-numerique.md)
+- [Source de données](source-donnees.md)
+- [Traces d'activité](traces-activite.md)
+
+### Formats et métadonnées
+
+- [Base de données](base-de-donnees.md)
+- [Dossier](dossier.md)
+- [EXIF](exif.md)
+- [Fichier multimédia](fichier-multimedia.md)
+- [Horodatage](horodatage.md)
+- [Métadonnées](metadonnees.md)
+
+### Hachage et cryptographie
+
+- [Chiffrement](chiffrement.md)
+- [Déchiffrement](dechiffrement.md)
+- [Empreinte numérique](empreinte-numerique.md)
+- [Hachage et empreinte numérique](hachage.md)
+- [Valeur de hachage](valeur-hachage.md)
+
+## 💾 Équipements et supports
+
+### Supports et stockage
+
+- [Clé USB](cle-usb.md)
+- [Disque dur](disque-dur.md)
+- [Mémoire](memoire.md)
+- [Stockage de données](stockage-donnees.md)
+- [Support de stockage](support-stockage.md)
+- [Support numérique](support-numerique.md)
+
+## 📱 Téléphonie mobile
+
+### SIM et identifiants
+
+- [Carte SIM](carte-sim.md)
+- [ICCID](iccid.md)
+- [IMEI](imei.md)
+- [MSISDN](msisdn.md)
+- [Numéro de série](numero-serie.md)
+
+### Connectivité
+
+- [Mode avion](mode-avion.md)
+
+## 💻 Informatique
+
+### Systèmes d’exploitation et fichiers
+
+- [Cache applicatif](cache-applicatif.md)
+- [Cache système](cache-systeme.md)
+- [Mémoire cache](memoire-cache.md)
+- [Système d'exploitation](systeme-exploitation.md)
+- [Système de fichiers](systeme-fichiers.md)
+
+### Comptes et activités utilisateurs
+
+- [Compte utilisateur](compte-utilisateur.md)
+- [Exécution d'applications](execution-applications.md)
+- [Fichiers récents](fichiers-recents.md)
+- [Profil utilisateur](profil-utilisateur.md)
+- [Session utilisateur](session-utilisateur.md)
+
+### Périphériques et connexions
+
+- [Connexion de supports USB](connexion-supports-usb.md)
+- [Périphériques connectés](peripheriques-connectes.md)
+
+## 🌐 Réseaux
+
+### Adressage et communications
+
+- [Adresse IP](adresse-ip.md)
+- [Fournisseur d’accès à Internet](fai.md)
+- [Réseau de communications](reseau-communications.md)
+- [Réseau sans fil](reseau-sans-fil.md)
+
+## ☁️ Services numériques
+
+### Cloud
+
+- [Stockage dans le cloud](stockage-cloud.md)
+
+## 💬 Applications
+
+### Messageries et réseaux sociaux
+
+- [Instagram Direct](instagram-direct.md)
+- [Messages (Apple)](messages-apple.md)
+- [Messenger](messenger.md)
+- [Signal](signal.md)
+- [Snapchat](snapchat.md)
+- [Telegram](telegram.md)
+- [WhatsApp](whatsapp.md)
+
+## 🌐 Navigation Internet
+
+### Navigateurs
+
+- [Google Chrome](google-chrome.md)
+- [Mozilla Firefox](mozilla-firefox.md)
+- [Navigateur Internet](navigateur-internet.md)
+
+### Historique et traces de navigation
+
+- [Historique de navigation](historique-navigation.md)
+
+## Index alphabétique
+
+- [Acquisition forensique](acquisition-forensique.md)
+- [Adresse IP](adresse-ip.md)
+- [Analyse des données](analyse-donnees.md)
+- [Artefact forensique](artefact-forensique.md)
+- [Authentification](authentification.md)
+- [Base de données](base-de-donnees.md)
+- [Cache applicatif](cache-applicatif.md)
+- [Cache système](cache-systeme.md)
+- [Carte SIM](carte-sim.md)
+- [Carving de fichiers](carving-fichiers.md)
+- [Chaîne de traçabilité](chaine-tracabilite.md)
+- [Chiffrement](chiffrement.md)
+- [Clé USB](cle-usb.md)
+- [Code de déverrouillage](code-deverrouillage.md)
+- [Compte utilisateur](compte-utilisateur.md)
+- [Connexion de supports USB](connexion-supports-usb.md)
+- [Copie forensique](copie-forensique.md)
+- [Criminalistique numérique](criminalistique-numerique.md)
+- [Disque dur](disque-dur.md)
+- [Donnée reconstruite](donnee-reconstruite.md)
+- [Donnée supprimée](donnee-supprimee.md)
+- [Données numériques](donnees-numeriques.md)
+- [Dossier](dossier.md)
+- [Déchiffrement](dechiffrement.md)
+- [Décodage des données](decodage-donnees.md)
+- [Empreinte numérique](empreinte-numerique.md)
+- [EXIF](exif.md)
+- [Extraction](extraction.md)
+- [Extraction du système de fichiers](extraction-systeme-fichiers.md)
+- [Extraction logique](extraction-logique.md)
+- [Extraction physique](extraction-physique.md)
+- [Exécution d'applications](execution-applications.md)
+- [Fichier multimédia](fichier-multimedia.md)
+- [Fichiers récents](fichiers-recents.md)
+- [Force brute](force-brute.md)
+- [Fournisseur d’accès à Internet](fai.md)
+- [Google Chrome](google-chrome.md)
+- [Hachage et empreinte numérique](hachage.md)
+- [Historique de navigation](historique-navigation.md)
+- [Horodatage](horodatage.md)
+- [ICCID](iccid.md)
+- [IMEI](imei.md)
+- [Instagram Direct](instagram-direct.md)
+- [Intégrité des données](integrite-donnees.md)
+- [Investigation numérique](investigation-numerique.md)
+- [Journaux applicatifs](journaux-applicatifs.md)
+- [Journaux système](journaux-systeme.md)
+- [Messages (Apple)](messages-apple.md)
+- [Messenger](messenger.md)
+- [Mode avion](mode-avion.md)
+- [Mozilla Firefox](mozilla-firefox.md)
+- [MSISDN](msisdn.md)
+- [Mémoire](memoire.md)
+- [Mémoire cache](memoire-cache.md)
+- [Métadonnées](metadonnees.md)
+- [Navigateur Internet](navigateur-internet.md)
+- [Numéro de série](numero-serie.md)
+- [Preuve numérique](preuve-numerique.md)
+- [Profil utilisateur](profil-utilisateur.md)
+- [Périphériques connectés](peripheriques-connectes.md)
+- [Remise des résultats](remise-resultats.md)
+- [Récupération de données](recuperation-donnees.md)
+- [Réparation du support](reparation-support.md)
+- [Réseau de communications](reseau-communications.md)
+- [Réseau sans fil](reseau-sans-fil.md)
+- [Scellé](scelle.md)
+- [Session utilisateur](session-utilisateur.md)
+- [Signal](signal.md)
+- [Snapchat](snapchat.md)
+- [Source de données](source-donnees.md)
+- [Stockage dans le cloud](stockage-cloud.md)
+- [Stockage de données](stockage-donnees.md)
+- [Support de stockage](support-stockage.md)
+- [Support numérique](support-numerique.md)
+- [Système d'exploitation](systeme-exploitation.md)
+- [Système de fichiers](systeme-fichiers.md)
+- [Telegram](telegram.md)
+- [Traces d'activité](traces-activite.md)
+- [Valeur de hachage](valeur-hachage.md)
+- [WhatsApp](whatsapp.md)
+- [État du support](etat-support.md)
 
 [← Présentation du projet](../README.md)

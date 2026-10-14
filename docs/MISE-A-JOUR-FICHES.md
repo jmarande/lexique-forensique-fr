@@ -28,19 +28,6 @@ git push
 
 Ne lancez `git push` qu'après avoir vérifié le diff, les droits de réutilisation et le contenu des formulations.
 
-## Formulations pour rapport
-
-Chaque fiche peut comporter **plusieurs formulations adaptées à des situations distinctes** dans `formulations_rapport`. Chaque objet comprend `type` (intitulé de la situation) et `texte` (formulation professionnelle). Ces formulations s'affichent automatiquement sur la fiche Markdown GitHub lorsque le catalogue est régénéré.
-
-```json
-"formulations_rapport": [
-  {"type": "Opération réalisée", "texte": "Nous procédons à l'opération selon les modalités précisées au présent rapport."},
-  {"type": "Opération partielle", "texte": "Les conditions techniques ne permettent qu'une réalisation partielle de l'opération."}
-]
-```
-
-Pour une **fiche proposée par un utilisateur**, ces formulations font partie des éléments transmis volontairement pour relecture. Elles sont modifiables avant validation. Ne pas inclure de données personnelles ou de détails d'une procédure réelle dans un exemple public.
-
 ## Ajouter une nouvelle fiche
 
 Insérer un nouvel objet dans le tableau `data/lexique.json`, avec au minimum un `id` unique et stable, un `terme`, une `categorie`, une `definition` et une liste `sources`. Exemple fictif :
@@ -68,3 +55,7 @@ Insérer un nouvel objet dans le tableau `data/lexique.json`, avec au minimum un
 - Vérifier le résultat dans le catalogue et dans l'extension lors de la prochaine version distribuée.
 
 Le catalogue ne modifie pas automatiquement une extension **déjà installée** : la copie embarquée est prise en compte lors de la construction et de l'installation de la nouvelle version OXT.
+
+## Contrôle documentaire transversal
+
+Avant validation, appliquer la [méthode multi-sources](VALIDATION-FICHES.md) et consulter le [référentiel commun](../sources/REFERENTIEL.md). Aucune source, y compris CLARUS, n'est présumée supérieure. Documenter uniquement les références réellement examinées. Une fusion de fiches nécessite de préserver les anciens accès de recherche, les scénarios et les formulations pertinentes.

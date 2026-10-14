@@ -1,6 +1,6 @@
 # Disque dur
 
-**Catégorie :** Équipement numérique
+**Classification :** 💾 Équipements et supports → Supports et stockage
 
 **Équivalent anglais :** Hard disk / Hard drive / HDD
 

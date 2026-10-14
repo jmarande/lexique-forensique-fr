@@ -4,29 +4,66 @@
     "terme": "Acquisition forensique",
     "anglais": "Forensic acquisition",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Processus systématique consistant à créer une copie ou une image forensique de données numériques tout en préservant les données d’origine et leur intégrité pour les besoins de l’analyse et de la procédure.",
+    "definition": "Opération technique documentée visant à obtenir une copie ou une représentation de données numériques à partir d'un support ou d'un système, selon une méthode déterminée, en précisant le périmètre de l'opération, ses limites et les contrôles d'intégrité réalisés.",
     "synonymes": [
       "Acquisition numérique forensique",
       "Extraction"
     ],
     "termes_deconseilles": [],
-    "exemple_rapport": "Nous procédons à l’acquisition forensique du support afin de préserver les données d’origine en vue de leur analyse.",
+    "exemple_rapport": "Nous procédons à l'acquisition des données du support selon les modalités techniques décrites dans le présent rapport.",
     "sources": [
       "CLARUS D3.2 — Forensic acquisition"
     ],
     "formulations_rapport": [
       {
         "type": "Acquisition réalisée",
-        "texte": "Nous procédons à l’acquisition forensique du support afin d’en extraire les données accessibles tout en préservant les données d’origine."
+        "texte": "Nous procédons à l'acquisition des données du support selon les modalités techniques décrites dans le présent rapport."
       },
       {
         "type": "Acquisition partielle",
-        "texte": "Nos moyens techniques ne nous permettent de procéder qu’à une acquisition partielle des données du support."
+        "texte": "Les conditions techniques rencontrées ne nous permettent de procéder qu'à une acquisition partielle des données du support."
       },
       {
         "type": "Acquisition impossible",
-        "texte": "Nos moyens techniques ne nous permettent pas de procéder à l’acquisition des données du support."
+        "texte": "Les conditions techniques rencontrées ne nous permettent pas de procéder à l'acquisition des données du support."
       }
+    ],
+    "renvois": [
+      {
+        "id": "extraction",
+        "nuance": "L’acquisition désigne une opération documentée d’obtention des données ; l’extraction décrit plus précisément leur récupération depuis un équipement ou un système."
+      }
+    ],
+    "guide_choix": [
+      {
+        "situation": "Observer un équipement et relever ses caractéristiques",
+        "terme": "Constatation numérique",
+        "justification": "Observation et documentation, sans récupération nécessaire de données."
+      },
+      {
+        "situation": "Réaliser une image forensique d’un disque",
+        "terme": "Acquisition forensique",
+        "justification": "Obtention documentée d’une représentation du contenu du support."
+      },
+      {
+        "situation": "Récupérer des données accessibles d’un téléphone",
+        "terme": "Extraction",
+        "justification": "Désigne la récupération des données ; préciser la méthode utilisée."
+      },
+      {
+        "situation": "Copier un ensemble ciblé de fichiers pour examen",
+        "terme": "Acquisition ciblée ou copie de fichiers",
+        "justification": "Préciser la portée, la méthode et les contrôles effectivement réalisés."
+      },
+      {
+        "situation": "Enregistrer un trafic réseau dans un PCAP",
+        "terme": "Acquisition de données réseau",
+        "justification": "Conservation d’une capture documentée pour un examen ultérieur."
+      }
+    ],
+    "termes_proches": [
+      "Extraction",
+      "Copie forensique"
     ]
   },
   {
@@ -49,7 +86,7 @@
     "terme": "Analyse des données",
     "anglais": "Data analysis",
     "categorie": "Procédure d’examen forensique",
-    "definition": "Phase d’examen et d’interprétation des données extraites visant à identifier les éléments susceptibles de présenter un intérêt au regard de la mission confiée, sans dépasser ce que permettent d’établir les données disponibles.",
+    "definition": "Opération consistant à examiner, interpréter et mettre en relation des données numériques afin d'identifier les informations susceptibles de présenter un intérêt au regard de la mission confiée. L'analyse repose sur les données disponibles et doit tenir compte de leurs limites, de leur contexte et des éventuelles incertitudes d'interprétation.",
     "synonymes": [
       "Examen des données"
     ],
@@ -59,21 +96,26 @@
     ],
     "formulations_rapport": [
       {
-        "type": "Éléments susceptibles d’éclairer l’affaire",
-        "texte": "Nous identifions des éléments susceptibles d’éclairer l’affaire."
+        "type": "Éléments susceptibles d'éclairer l'affaire",
+        "texte": "L'analyse des données permet d'identifier des éléments susceptibles d'éclairer l'affaire ou de présenter un intérêt au regard des faits examinés."
       },
       {
-        "type": "Éléments pouvant être en rapport avec les faits",
-        "texte": "Nous identifions des éléments pouvant être en rapport avec les faits."
+        "type": "Éléments susceptibles de caractériser une autre infraction",
+        "texte": "Au cours de l'analyse, nous identifions des éléments sans lien apparent avec les faits faisant l'objet de la mission, mais susceptibles de révéler des faits constitutifs d'une autre infraction."
       },
       {
-        "type": "Échanges pouvant être liés aux faits",
-        "texte": "Nous identifions des échanges pouvant être en rapport avec les faits."
+        "type": "Absence d'éléments en rapport avec la mission",
+        "texte": "L'analyse des données examinées ne permet pas d'identifier d'éléments présentant un lien apparent avec les faits faisant l'objet de la mission."
       },
       {
-        "type": "Échanges pouvant être liés à un trafic de stupéfiants",
-        "texte": "Nous identifions des échanges pouvant être en rapport avec les faits et/ou en lien avec un trafic de stupéfiants."
+        "type": "Éléments présentant un intérêt potentiel",
+        "texte": "Nous relevons des éléments présentant un intérêt potentiel, sans que les informations disponibles permettent d'en déterminer la signification ou le lien éventuel avec les faits examinés."
       }
+    ],
+    "termes_proches": [
+      "Décodage des données",
+      "Donnée reconstruite",
+      "Preuve numérique"
     ]
   },
   {
@@ -81,7 +123,7 @@
     "terme": "Artefact forensique",
     "anglais": "Forensic artifact",
     "categorie": "Preuve numérique",
-    "definition": "Élément d’information interprété à partir de données numériques et présentant un intérêt pour l’examen forensique, par exemple un message, un appel, un compte, une localisation ou une activité applicative.",
+    "definition": "Élément d'information identifié ou reconstitué à partir de données numériques, notamment par l'interprétation de structures, de fichiers, de bases de données ou de traces d'activité. Un artefact peut correspondre à un message, un appel, un contact, une localisation, un historique de navigation ou une activité applicative. Son interprétation dépend des données sources, du contexte et des méthodes de décodage ou d'analyse employées.",
     "synonymes": [
       "Artefact numérique"
     ],
@@ -93,15 +135,34 @@
     "formulations_rapport": [
       {
         "type": "Artefacts identifiés",
-        "texte": "L’examen des données extraites met en évidence plusieurs artefacts numériques susceptibles de présenter un intérêt au regard de la mission confiée."
+        "texte": "L'examen des données extraites permet d'identifier plusieurs artefacts numériques susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Artefacts décodés automatiquement",
+        "texte": "Les logiciels employés permettent d'identifier et de restituer des artefacts numériques à partir des données extraites du support."
+      },
+      {
+        "type": "Artefacts identifiés par l'analyste",
+        "texte": "L'examen complémentaire des données permet d'identifier des artefacts numériques qui n'avaient pas été restitués par les traitements automatisés."
       },
       {
         "type": "Interprétation prudente",
         "texte": "Les artefacts identifiés sont interprétés au regard de leur source, de leur contexte et des autres éléments disponibles."
+      },
+      {
+        "type": "Limites d'interprétation",
+        "texte": "Les informations disponibles ne permettent pas de déterminer avec suffisamment de certitude le contexte de création ou d'utilisation de certains artefacts identifiés."
       }
     ],
     "sources": [
       "Lexique forensique FR — usage professionnel"
+    ],
+    "termes_proches": [
+      "Donnée reconstruite",
+      "Décodage des données",
+      "Métadonnées",
+      "Analyse des données",
+      "Preuve numérique"
     ]
   },
   {
@@ -109,7 +170,7 @@
     "terme": "Authentification",
     "anglais": "Authentication",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Processus de vérification de l’identité d’un utilisateur, de la validité de données ou de l’intégrité d’une preuve numérique.",
+    "definition": "Mécanisme permettant de vérifier l'identité déclarée d'un utilisateur, d'un équipement ou d'un service, au moyen d'un ou plusieurs facteurs d'authentification. En criminalistique numérique, l'authentification doit être distinguée de la vérification de l'intégrité des données et de l'authenticité de leur provenance.",
     "synonymes": [
       "Vérification d’identité"
     ],
@@ -119,6 +180,30 @@
     "exemple_rapport": "L’accès au service est soumis à une procédure d’authentification.",
     "sources": [
       "CLARUS D3.2 — Authentication"
+    ],
+    "termes_proches": [
+      "Identification",
+      "Code de déverrouillage",
+      "Contrôle d'accès",
+      "Intégrité des données"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Authentification requise",
+        "texte": "L'accès aux données du support nécessite une authentification préalable."
+      },
+      {
+        "type": "Authentification réussie",
+        "texte": "Nous procédons à l'authentification sur le support au moyen des éléments d'accès mis à notre disposition, permettant ainsi la poursuite des opérations techniques."
+      },
+      {
+        "type": "Authentification impossible",
+        "texte": "Nos moyens techniques et les éléments d'accès disponibles ne permettent pas de satisfaire aux mécanismes d'authentification nécessaires pour accéder aux données concernées."
+      },
+      {
+        "type": "Authentification non tentée",
+        "texte": "Aucune tentative d'authentification n'est réalisée sur le support, compte tenu des conditions techniques rencontrées et des risques susceptibles d'affecter son état ou l'accès aux données."
+      }
     ]
   },
   {
@@ -126,12 +211,241 @@
     "terme": "Base de données",
     "anglais": "Database",
     "categorie": "Preuve numérique",
-    "definition": "Collection structurée d'informations organisée afin de permettre la recherche, la comparaison, l'identification et la récupération d'enregistrements.",
-    "synonymes": [],
+    "definition": "Ensemble organisé de données numériques, structuré selon un modèle déterminé afin d'en permettre l'enregistrement, la consultation, la modification et l'exploitation. Une base de données peut notamment contenir des informations relatives à des comptes, des contacts, des messages, des événements, des historiques ou des paramètres applicatifs. En criminalistique numérique, son examen peut permettre d'identifier des enregistrements accessibles, des relations entre différentes informations ainsi que, selon le format et l'état des données, certains éléments résiduels. L'interprétation nécessite de tenir compte de la structure de la base, du fonctionnement de l'application, des mécanismes de transaction et des conditions d'acquisition.",
+    "synonymes": [
+      "Banque de données"
+    ],
     "termes_deconseilles": [],
     "exemple_rapport": "Les enregistrements pertinents ont été recherchés dans la base de données de l'application.",
     "sources": [
-      "CLARUS D3.2"
+      "NIST SP 800-86 — Guide to Integrating Forensic Techniques into Incident Response",
+      "SQLite — Database File Format",
+      "SQLite — Write-Ahead Logging",
+      "SQLite — The Schema Table"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Identification d'une base de données",
+        "texte": "L'examen des données du support permet d'identifier une base de données associée à l'application [nom de l'application]."
+      },
+      {
+        "type": "Examen d'une base de données",
+        "texte": "Nous procédons à l'examen de la base de données identifiée afin de rechercher les enregistrements susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Enregistrements identifiés",
+        "texte": "L'exploitation de la base de données permet d'identifier des enregistrements relatifs à [nature des informations]."
+      },
+      {
+        "type": "Corrélation des enregistrements",
+        "texte": "Nous procédons au rapprochement des informations contenues dans différentes tables de la base de données afin d'en apprécier les relations et la cohérence."
+      },
+      {
+        "type": "Données résiduelles",
+        "texte": "L'examen des structures de la base de données permet d'identifier des informations résiduelles qui ne figurent pas parmi les enregistrements couramment accessibles."
+      },
+      {
+        "type": "Données partiellement accessibles",
+        "texte": "L'état de la base de données ou les conditions techniques de l'examen ne permettent qu'une exploitation partielle des informations qu'elle contient."
+      },
+      {
+        "type": "Base de données non exploitable",
+        "texte": "Les opérations techniques réalisées ne permettent pas d'exploiter la base de données identifiée dans les conditions de l'examen."
+      },
+      {
+        "type": "Exploitation des journaux de transactions",
+        "texte": "L'examen des fichiers associés à la base de données permet d'identifier des informations complémentaires relatives aux transactions enregistrées."
+      },
+      {
+        "type": "Limites d'interprétation",
+        "texte": "Les enregistrements identifiés dans la base de données sont interprétés en tenant compte de leur structure, de leur provenance et des mécanismes de fonctionnement de l'application concernée."
+      }
+    ],
+    "termes_proches": [
+      "SQLite",
+      "Données numériques",
+      "Artefact forensique",
+      "Métadonnées",
+      "Donnée supprimée",
+      "Cache applicatif"
+    ],
+    "points_attention": [
+      "La présence d'une donnée stockée ne démontre pas sa visibilité dans l'application.",
+      "Pour SQLite, les fichiers -wal et -shm ont des fonctions distinctes.",
+      "Les bases peuvent être chiffrées et les horodatages nécessitent un décodage."
+    ]
+  },
+  {
+    "id": "biome-app-infocus-ios",
+    "terme": "Biome — activité applicative (App.InFocus)",
+    "anglais": "App.InFocus",
+    "categorie": "Téléphonie : iOS : Artefacts système",
+    "definition": "Flux d’événements Biome susceptible d’enregistrer les transitions de certaines applications vers ou hors de l’état de premier plan. Les enregistrements peuvent comporter un horodatage, un identifiant d’application (bundle ID) et un état de transition. Leur rapprochement aide à reconstituer une chronologie d’activité applicative, sous réserve de la disponibilité et de l’interprétation correcte des événements.",
+    "synonymes": [
+      "_DKEvent.App.InFocus"
+    ],
+    "termes_proches": [
+      "Biome (iOS)",
+      "Exécution d'applications",
+      "Traces d'activité",
+      "Horodatage"
+    ],
+    "termes_deconseilles": [],
+    "donnees_potentielles": [
+      "Identifiant technique de l’application (bundle ID)",
+      "Événements horodatés de prise et perte du premier plan",
+      "Valeurs d’état ou de transition selon le décodage",
+      "Enregistrements locaux ou synchronisés suivant l’emplacement d’origine"
+    ],
+    "points_attention": [
+      "La dénomination et le répertoire du flux peuvent différer entre versions d’iOS : repérer les flux présents dans l’acquisition plutôt que supposer un chemin unique.",
+      "Une prise de premier plan ne prouve ni interaction tactile, ni lecture d’un contenu, ni identité de la personne tenant l’appareil.",
+      "Une durée calculée à partir d’une paire d’événements peut être inexacte si un événement manque ou si l’appareil reste inactif.",
+      "Vérifier le fuseau horaire, les horodatages décodés, l’origine locale ou distante et les éventuelles limites du parseur.",
+      "Confronter à l’état de verrouillage, aux données applicatives et aux autres traces disponibles. L’absence de trace ne démontre pas l’absence d’usage."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Événements identifiés",
+        "texte": "L’analyse du flux Biome relatif à l’activité applicative met en évidence des événements horodatés de passage de certaines applications au premier plan."
+      },
+      {
+        "type": "Application au premier plan",
+        "texte": "Un événement enregistré dans le flux App.InFocus indique que l’application identifiée par son identifiant technique était signalée au premier plan à l’horodatage considéré."
+      },
+      {
+        "type": "Chronologie d’activité",
+        "texte": "Le rapprochement des événements d’activité applicative permet de proposer une chronologie partielle des applications signalées au premier plan sur le terminal examiné."
+      },
+      {
+        "type": "Limite d’interprétation",
+        "texte": "Ces événements ne permettent pas, à eux seuls, de déterminer si une personne a effectivement interagi avec l’application, ni d’établir son identité ou le contenu consulté."
+      }
+    ],
+    "sources": [
+      "Mattia Epifani, ZENA Forensics — « 84 Streams Later, Part 2: Inside Apple Biome » (27 juillet 2026), https://blog.digital-forensics.it/2026/07/84-streams-later-part-2-inside-apple.html",
+      "iLEAPP — analyse des artefacts iOS et flux Biome, https://github.com/abrignoni/iLEAPP",
+      "Be-binary 4n6 — « Beyond the C — SEGB and Biome Forensics with crush » (mai 2026), https://bebinary4n6.blogspot.com/2026/05/beyond-c-segb-and-biome-forensics-with.html"
+    ]
+  },
+  {
+    "id": "biome-ios",
+    "terme": "Biome (iOS)",
+    "anglais": "Biome",
+    "categorie": "Téléphonie : iOS : Artefacts système",
+    "definition": "Sous-système d’iOS enregistrant certains événements du fonctionnement de l’appareil et de l’activité applicative sous forme de flux de données (streams), notamment dans des fichiers binaires SEGB. Selon la version d’iOS et les données accessibles, ces traces peuvent contribuer à documenter une chronologie d’activité, sans constituer à elles seules une preuve de l’identité de la personne ayant utilisé l’appareil.",
+    "synonymes": [
+      "Apple Biome"
+    ],
+    "termes_proches": [
+      "Traces d'activité",
+      "Journaux système",
+      "Exécution d'applications",
+      "Horodatage"
+    ],
+    "termes_deconseilles": [],
+    "donnees_potentielles": [
+      "Événements horodatés liés à l’activité de certaines applications",
+      "Événements d’interaction ou d’intention applicative (AppIntent)",
+      "Événements relatifs à l’état et au fonctionnement de l’appareil selon les flux",
+      "Informations contextuelles et de navigation lorsque les flux correspondants existent"
+    ],
+    "points_attention": [
+      "La couverture des flux varie selon la version d’iOS, les applications et le niveau d’acquisition ; un flux absent n’exclut pas l’activité recherchée.",
+      "Une acquisition logique standard ne garantit pas l’accès aux répertoires Biome, qui sont plus couramment examinés dans une acquisition complète du système de fichiers.",
+      "Un événement applicatif ne démontre pas nécessairement une action volontaire, la lecture d’un contenu ou l’identité de l’utilisateur.",
+      "L’origine locale ou synchronisée d’un événement et la conversion des horodatages doivent être vérifiées.",
+      "Confronter les événements Biome aux autres artefacts, conserver les chemins d’origine et les données sources avant décodage."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Présentation de l’artefact",
+        "texte": "Le système iOS conserve, au sein du sous-système Biome, des enregistrements relatifs à l’activité des applications et à certains événements de fonctionnement de l’appareil."
+      },
+      {
+        "type": "Exploitation des données",
+        "texte": "L’analyse des fichiers Biome a permis de relever des événements horodatés relatifs à l’utilisation de certaines applications présentes sur le terminal."
+      },
+      {
+        "type": "Limites de l’interprétation",
+        "texte": "Les événements identifiés constituent des traces d’activité enregistrées par le système. Leur présence ne permet pas, à elle seule, d’établir l’identité de l’utilisateur ni de caractériser précisément les actions réalisées."
+      }
+    ],
+    "sources": [
+      "Mattia Epifani, ZENA Forensics — « 84 Streams Later: Exploring the Evolution of Apple Biome » (2026), https://blog.digital-forensics.it/2026/07/84-streams-later-exploring-evolution-of.html",
+      "Apple Developer Documentation — INInteraction, https://developer.apple.com/documentation/intents/ininteraction",
+      "CCL Forensics — ccl-segb (décodage SEGB), https://github.com/cclgroupltd/ccl-segb"
+    ]
+  },
+  {
+    "id": "cache-applicatif",
+    "terme": "Cache applicatif",
+    "anglais": "Application cache",
+    "categorie": "Preuve numérique",
+    "definition": "Ensemble de données conservées par une application afin d'accélérer son fonctionnement, de faciliter l'accès à certains contenus ou d'éviter leur téléchargement répété. Ces données peuvent notamment comprendre des images, des vidéos, des fichiers temporaires ou des informations résiduelles.",
+    "synonymes": [
+      "Cache d'application"
+    ],
+    "termes_deconseilles": [],
+    "termes_proches": [
+      "Cache système",
+      "Mémoire cache",
+      "Données temporaires",
+      "Fichiers résiduels",
+      "Historique de navigation"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Données de cache identifiées",
+        "texte": "L'examen des données met en évidence des éléments conservés dans le cache de l'application."
+      },
+      {
+        "type": "Fichiers multimédias en cache",
+        "texte": "Nous identifions des fichiers multimédias présents dans les données de cache de l'application examinée."
+      },
+      {
+        "type": "Attribution prudente",
+        "texte": "La présence d'un élément dans le cache applicatif ne permet pas, à elle seule, de déterminer les circonstances de son enregistrement ou d'établir qu'il a été volontairement consulté par l'utilisateur."
+      },
+      {
+        "type": "Données résiduelles",
+        "texte": "L'examen des données de cache permet d'identifier des éléments résiduels dont la présence peut résulter du fonctionnement de l'application."
+      }
+    ],
+    "sources": [
+      "Lexique forensique FR — usage professionnel"
+    ]
+  },
+  {
+    "id": "cache-systeme",
+    "terme": "Cache système",
+    "anglais": "System cache",
+    "categorie": "Preuve numérique",
+    "definition": "Ensemble de données conservées temporairement par un système d'exploitation afin d'optimiser son fonctionnement et l'accès aux ressources. Selon le système et ses mécanismes, ces caches peuvent contenir des fichiers temporaires, des métadonnées, des informations relatives aux opérations effectuées ou des traces d'utilisation.",
+    "synonymes": [],
+    "termes_deconseilles": [],
+    "termes_proches": [
+      "Cache applicatif",
+      "Mémoire cache",
+      "Fichiers temporaires",
+      "Artefacts système"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Données de cache système identifiées",
+        "texte": "L'examen du support permet d'identifier des données conservées dans les mécanismes de cache du système d'exploitation."
+      },
+      {
+        "type": "Traces d'activité identifiées",
+        "texte": "L'analyse des données de cache système met en évidence des éléments susceptibles de renseigner sur certaines activités réalisées sur le support."
+      },
+      {
+        "type": "Attribution prudente",
+        "texte": "La présence d'éléments dans le cache système ne permet pas, à elle seule, de déterminer les circonstances de leur création ou de leur utilisation."
+      }
+    ],
+    "sources": [
+      "Lexique forensique FR — usage professionnel"
     ]
   },
   {
@@ -160,7 +474,64 @@
       {
         "type": "Extraction partielle",
         "texte": "Les données accessibles sur la carte SIM ne permettent qu’une extraction partielle de son contenu."
+      },
+      {
+        "type": "Contacts préenregistrés par l’opérateur",
+        "texte": "L’examen de la carte SIM révèle uniquement la présence de contacts de service préenregistrés par l’opérateur. Aucun contact personnel n’a été identifié dans les données examinées."
       }
+    ]
+  },
+  {
+    "id": "carving-fichiers",
+    "terme": "Carving de fichiers",
+    "anglais": "File carving / Data carving",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Technique de récupération consistant à rechercher et, lorsque cela est possible, à reconstituer des fichiers à partir de leur contenu binaire, notamment de leurs signatures, de leurs structures internes ou d'autres caractéristiques propres à leur format, sans nécessiter les métadonnées d'allocation du système de fichiers. Cette méthode peut être employée sur des données brutes accessibles, notamment dans les espaces non alloués, et permet éventuellement de retrouver des fichiers dont les références d'origine sont absentes ou inexploitables. Les fichiers obtenus peuvent être complets ou partiels, et leur récupération ne démontre pas nécessairement qu'ils ont été supprimés.",
+    "synonymes": [
+      "File carving",
+      "Data carving",
+      "Extraction par signature"
+    ],
+    "termes_deconseilles": [],
+    "termes_proches": [
+      "Donnée supprimée",
+      "Donnée reconstruite",
+      "Récupération de données",
+      "Extraction physique",
+      "Artefact forensique"
+    ],
+    "points_attention": [
+      "La fragmentation et l'écrasement peuvent empêcher la reconstruction.",
+      "Le nom, le chemin et les horodatages d'origine ne sont pas nécessairement retrouvés.",
+      "Une récupération par carving n'établit pas à elle seule une suppression préalable."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Recherche par carving réalisée",
+        "texte": "Nous procédons à une recherche de fichiers par carving à partir des données accessibles du support examiné."
+      },
+      {
+        "type": "Fichiers identifiés par carving",
+        "texte": "Les opérations de carving permettent d'identifier et de reconstituer des fichiers à partir des données examinées, sans nécessairement permettre de retrouver leur nom ou leur emplacement d'origine."
+      },
+      {
+        "type": "Récupération partielle",
+        "texte": "Les opérations de carving permettent de récupérer partiellement certains fichiers, dont le contenu demeure incomplet."
+      },
+      {
+        "type": "Absence de résultat exploitable",
+        "texte": "Les opérations de carving réalisées ne permettent pas d'identifier de fichiers exploitables dans les données examinées."
+      },
+      {
+        "type": "Limites d'interprétation",
+        "texte": "Les fichiers récupérés par carving peuvent être incomplets ou dépourvus de certaines métadonnées. Leur présence ne permet pas, à elle seule, de déterminer les circonstances de leur création, de leur utilisation ou de leur éventuelle suppression."
+      }
+    ],
+    "sources": [
+      "NIST — A Strategy for Testing Graphic File Carving Tools (2014)",
+      "NIST — Scientific Foundation Review of Digital Forensics (2022)",
+      "SWGDE — Establishing Confidence in Digital Forensic Results",
+      "CGSecurity — PhotoRec documentation"
     ]
   },
   {
@@ -168,7 +539,7 @@
     "terme": "Chaîne de traçabilité",
     "anglais": "Chain of custody",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Ensemble des enregistrements permettant de documenter chronologiquement la prise en charge, les transferts, les opérations, le stockage et, le cas échéant, la restitution ou la destruction d’un élément de preuve afin d’en assurer la traçabilité et l’intégrité.",
+    "definition": "Ensemble des informations et enregistrements permettant de retracer chronologiquement la prise en charge, la conservation, les transferts et les opérations effectuées sur un élément de preuve, depuis sa collecte jusqu'à sa restitution, son archivage ou sa destruction éventuelle. Cette documentation permet d'identifier les personnes intervenues, les opérations réalisées et leurs circonstances.",
     "synonymes": [
       "Chaîne de possession",
       "Traçabilité du scellé"
@@ -177,6 +548,25 @@
     "exemple_rapport": "Les différentes opérations réalisées sur le scellé sont consignées afin d’en assurer la traçabilité.",
     "sources": [
       "CLARUS D3.2 — Chain of custody"
+    ],
+    "termes_proches": [
+      "Scellé",
+      "Intégrité des données",
+      "Preuve numérique"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Traçabilité des opérations",
+        "texte": "Les opérations réalisées sur le scellé sont consignées afin d'en assurer la traçabilité."
+      },
+      {
+        "type": "Prise en charge du scellé",
+        "texte": "Le scellé est pris en charge dans les conditions décrites au présent rapport. Les opérations réalisées et les mouvements du scellé sont documentés."
+      },
+      {
+        "type": "Conservation des données",
+        "texte": "Les données acquises sont conservées selon des modalités permettant de documenter leur origine, les opérations effectuées et les éventuels transferts."
+      }
     ]
   },
   {
@@ -184,7 +574,7 @@
     "terme": "Chiffrement",
     "anglais": "Encryption / Encrypted",
     "categorie": "Cryptographie",
-    "definition": "Procédé cryptographique transformant des données afin de les rendre inintelligibles sans la clé, le mot de passe ou le mécanisme cryptographique approprié.",
+    "definition": "Procédé cryptographique consistant à transformer des données intelligibles en données chiffrées au moyen d'un algorithme et d'une clé cryptographique, afin d'en préserver la confidentialité. L'accès aux données en clair nécessite la mise en œuvre d'un mécanisme de déchiffrement approprié. Selon les équipements, ce mécanisme peut être lié à un code de déverrouillage, à une clé cryptographique ou à un dispositif matériel de sécurité.",
     "synonymes": [
       "Données chiffrées"
     ],
@@ -201,13 +591,19 @@
         "texte": "Les données présentes sur le support sont protégées par chiffrement."
       },
       {
-        "type": "Code de déchiffrement inconnu",
-        "texte": "Le code de déchiffrement du support n’est pas connu lors de notre examen."
+        "type": "Moyen de déchiffrement inconnu",
+        "texte": "Les éléments nécessaires au déchiffrement des données ne sont pas connus lors de notre examen."
       },
       {
         "type": "Accès aux données impossible",
-        "texte": "En l’absence du mécanisme de déchiffrement approprié, nos moyens techniques ne nous permettent pas d’accéder aux données protégées."
+        "texte": "En l'absence du mécanisme de déchiffrement approprié, nos moyens techniques ne nous permettent pas d'accéder aux données protégées."
       }
+    ],
+    "termes_proches": [
+      "Déchiffrement",
+      "Code de déverrouillage",
+      "Authentification",
+      "Force brute"
     ]
   },
   {
@@ -233,7 +629,7 @@
     "terme": "Code de déverrouillage",
     "anglais": "Device passcode / Unlock code",
     "categorie": "Procédure d’examen forensique",
-    "definition": "Code, mot de passe ou autre secret utilisé pour déverrouiller un équipement numérique et permettre l’accès à ses fonctions ou à ses données.",
+    "definition": "Code numérique, alphanumérique, mot de passe ou autre secret utilisé pour déverrouiller un équipement numérique et permettre l'accès à ses fonctions ou à certaines de ses données. Son absence ou sa méconnaissance peut limiter les possibilités d'examen, sans nécessairement exclure toute acquisition de données.",
     "synonymes": [
       "Code utilisateur",
       "Code de verrouillage",
@@ -246,15 +642,207 @@
     "formulations_rapport": [
       {
         "type": "Code inconnu",
-        "texte": "Le code de déverrouillage du support n’est pas connu lors de notre prise en charge."
+        "texte": "Le code de déverrouillage du support n'est pas connu lors de notre prise en charge."
       },
       {
         "type": "Aucun code identifié",
-        "texte": "Aucun code de déverrouillage n’a pu être identifié."
+        "texte": "Aucun code de déverrouillage n'a pu être identifié."
       },
       {
         "type": "Code communiqué",
-        "texte": "Le code de déverrouillage communiqué permet l’accès au support."
+        "texte": "Le code de déverrouillage communiqué permet l'accès au support."
+      },
+      {
+        "type": "Code non communiqué",
+        "texte": "Aucun code de déverrouillage ne nous est communiqué dans le cadre de la mission."
+      },
+      {
+        "type": "Tentative de déverrouillage infructueuse",
+        "texte": "Nous procédons à une tentative de déverrouillage au moyen du code disponible. Cette tentative ne permet pas d'accéder au support."
+      },
+      {
+        "type": "Accès limité par le verrouillage",
+        "texte": "En l'absence de code de déverrouillage connu, les possibilités d'accès aux données du support sont limitées dans les conditions techniques rencontrées."
+      }
+    ],
+    "termes_proches": [
+      "Authentification",
+      "Force brute",
+      "Chiffrement"
+    ]
+  },
+  {
+    "id": "compte-utilisateur",
+    "categorie": "Technologie numérique",
+    "synonymes": [
+      "Compte d'utilisateur",
+      "User account"
+    ],
+    "termes_deconseilles": [],
+    "terme": "Compte utilisateur",
+    "anglais": "User account",
+    "definition": "Identité logique enregistrée ou reconnue par un système informatique, permettant d'identifier un utilisateur ou un contexte d'exécution et de lui associer des paramètres, des droits d'accès et des ressources. Un compte peut notamment être caractérisé par un nom, un identifiant technique, un profil, des appartenances à des groupes et des autorisations. En criminalistique numérique, son examen peut permettre d'identifier les comptes présents sur un équipement, leurs caractéristiques ainsi que certaines informations relatives aux sessions, connexions et activités associées. L'association d'un compte à des données ou à des événements ne permet pas, à elle seule, d'établir l'identité de la personne physique qui les a produits.",
+    "formulations_rapport": [
+      {
+        "type": "Identification d'un compte utilisateur",
+        "texte": "L'examen des données du système permet d'identifier un compte utilisateur désigné sous le nom [nom du compte]."
+      },
+      {
+        "type": "Plusieurs comptes identifiés",
+        "texte": "L'examen du support permet d'identifier [nombre] comptes utilisateurs enregistrés dans le système d'exploitation."
+      },
+      {
+        "type": "Caractéristiques du compte",
+        "texte": "Nous procédons à l'examen des caractéristiques techniques du compte utilisateur [nom du compte], notamment de son identifiant, de son profil et des autorisations associées."
+      },
+      {
+        "type": "Compte disposant de privilèges administratifs",
+        "texte": "Les informations examinées indiquent que le compte utilisateur [nom du compte] dispose de privilèges d'administration sur le système."
+      },
+      {
+        "type": "Données associées à un profil utilisateur",
+        "texte": "L'examen permet d'identifier des données enregistrées dans le profil associé au compte utilisateur [nom du compte]."
+      },
+      {
+        "type": "Événements de connexion",
+        "texte": "L'analyse des journaux système permet d'identifier des événements de connexion associés au compte utilisateur [nom du compte]."
+      },
+      {
+        "type": "Compte utilisateur désactivé",
+        "texte": "Les informations disponibles indiquent que le compte utilisateur [nom du compte] est désactivé au moment de l'état du système examiné."
+      },
+      {
+        "type": "Compte sans activité identifiée",
+        "texte": "L'examen des données accessibles ne permet pas d'identifier d'événements d'activité exploitables associés au compte utilisateur [nom du compte] pour la période examinée."
+      },
+      {
+        "type": "Corrélation des activités",
+        "texte": "Nous procédons au rapprochement des traces associées au compte utilisateur [nom du compte] avec les autres informations numériques disponibles afin d'en apprécier la cohérence."
+      },
+      {
+        "type": "Limites d'attribution",
+        "texte": "Les données techniques associées au compte utilisateur [nom du compte] ne permettent pas, à elles seules, d'établir l'identité de la personne ayant effectivement utilisé ce compte."
+      }
+    ],
+    "termes_proches": [
+      "Profil utilisateur",
+      "Session utilisateur",
+      "Authentification",
+      "Journaux système",
+      "Traces d'activité"
+    ],
+    "sources": [
+      "Microsoft — Local Accounts",
+      "Microsoft — Security Identifiers",
+      "Linux — passwd(5)",
+      "Microsoft — Manage User Accounts"
+    ],
+    "points_attention": [
+      "Un compte n'identifie pas nécessairement une personne physique.",
+      "La présence d'un compte n'atteste pas une ouverture de session.",
+      "Distinguer comptes humains et comptes système.",
+      "Un SID ou UID peut être plus significatif qu'un nom affiché."
+    ],
+    "artefacts_techniques": [
+      {
+        "systeme": "Windows",
+        "sources": "SAM, SID, journaux de sécurité, NTUSER.DAT"
+      },
+      {
+        "systeme": "Linux",
+        "sources": "/etc/passwd, /etc/shadow, UID/GID, journaux"
+      },
+      {
+        "systeme": "macOS",
+        "sources": "Annuaire local, UID, journaux"
+      }
+    ]
+  },
+  {
+    "id": "connexion-supports-usb",
+    "categorie": "Technologie numérique",
+    "synonymes": [
+      "Branchement d'un support USB",
+      "Connexion USB d'un support de stockage"
+    ],
+    "termes_deconseilles": [],
+    "terme": "Connexion de supports USB",
+    "anglais": "USB storage device connection",
+    "definition": "Opération par laquelle un support de stockage utilisant une interface USB est relié à un équipement informatique et peut être détecté, reconnu ou rendu accessible par son système d'exploitation. Les supports concernés comprennent notamment les clés USB, les disques externes et certains équipements proposant un accès à leur stockage par USB. En criminalistique numérique, l'examen des traces conservées par le système peut permettre d'identifier des supports précédemment connectés, leurs caractéristiques techniques, certains événements de connexion et, selon les sources disponibles, des informations relatives aux volumes associés. L'interprétation nécessite de distinguer le branchement physique, la reconnaissance du périphérique, le montage éventuel d'un volume et les opérations effectivement réalisées sur les données.",
+    "formulations_rapport": [
+      {
+        "type": "Recherche de supports USB",
+        "texte": "Nous procédons à l'examen des traces système susceptibles de renseigner sur la connexion de supports de stockage USB à l'équipement examiné."
+      },
+      {
+        "type": "Supports USB identifiés",
+        "texte": "L'examen des données du système permet d'identifier des informations relatives à [nombre] supports de stockage USB distincts."
+      },
+      {
+        "type": "Identification d'un support",
+        "texte": "Les informations techniques examinées permettent d'identifier un support de stockage USB présentant les caractéristiques suivantes : [marque, modèle, identifiants]."
+      },
+      {
+        "type": "Connexion datée",
+        "texte": "L'examen des événements système permet d'identifier une trace de connexion associée au support USB [désignation], enregistrée le [date et heure]."
+      },
+      {
+        "type": "Première installation enregistrée",
+        "texte": "Les journaux système comportent un événement d'installation associé au support USB [désignation], enregistré le [date et heure]."
+      },
+      {
+        "type": "Association à un volume",
+        "texte": "Les données du système permettent d'identifier une association entre le support USB [désignation] et le volume [identifiant ou désignation]."
+      },
+      {
+        "type": "Plusieurs connexions identifiées",
+        "texte": "L'examen des traces disponibles permet d'identifier plusieurs événements de connexion associés au support USB [désignation] au cours de la période étudiée."
+      },
+      {
+        "type": "Recherche d'échanges de fichiers",
+        "texte": "Nous procédons au rapprochement des traces associées au support USB [désignation] avec les informations relatives aux fichiers récemment utilisés afin de rechercher d'éventuels indices d'accès ou de transfert de données."
+      },
+      {
+        "type": "Absence de traces exploitables",
+        "texte": "L'examen des données accessibles ne permet pas d'identifier de traces exploitables relatives à la connexion du support USB recherché."
+      },
+      {
+        "type": "Limites d'interprétation",
+        "texte": "Les traces techniques identifiées permettent de documenter l'association ou la connexion du support USB à l'équipement, sans établir à elles seules l'existence d'un transfert de fichiers ni l'identité de la personne à l'origine de cette opération."
+      }
+    ],
+    "termes_proches": [
+      "Périphériques connectés",
+      "Clé USB",
+      "Support de stockage",
+      "Fichiers récents",
+      "Journaux système"
+    ],
+    "sources": [
+      "Microsoft — SetupAPI Device Installation Log Entries",
+      "Microsoft — Audit Removable Storage",
+      "Linux — systemd-udevd",
+      "Apple — USB Descriptor and IORegistry Constants",
+      "Apple — Unified Logging"
+    ],
+    "points_attention": [
+      "Le premier événement d'installation conservé n'est pas nécessairement le premier branchement historique.",
+      "VID/PID et numéros de série ne garantissent pas une identification unique.",
+      "Montage, connexion et transfert de fichiers sont distincts.",
+      "Une ancienne entrée du registre ne date pas à elle seule le branchement."
+    ],
+    "artefacts_techniques": [
+      {
+        "systeme": "Windows",
+        "sources": "USBSTOR, USB, MountedDevices, MountPoints2, SetupAPI, EVTX"
+      },
+      {
+        "systeme": "Linux",
+        "sources": "udev, journaux noyau et journalctl"
+      },
+      {
+        "systeme": "macOS",
+        "sources": "IORegistry, journaux unifiés"
       }
     ]
   },
@@ -263,7 +851,7 @@
     "terme": "Copie forensique",
     "anglais": "Forensic copy / Forensic image",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Copie de données numériques réalisée au moyen de procédures contrôlées afin de préserver les données d’origine pour leur examen et leur analyse.",
+    "definition": "Copie de données numériques réalisée selon une méthode documentée et contrôlée, visant à reproduire fidèlement les données sources dans un périmètre déterminé, afin de permettre leur examen et leur analyse tout en préservant l'original.",
     "synonymes": [
       "Image forensique",
       "Copie de travail forensique"
@@ -274,6 +862,22 @@
     "exemple_rapport": "Nous réalisons une copie forensique du support afin de préserver les données d’origine lors des opérations d’analyse.",
     "sources": [
       "CLARUS D3.2 — Forensic copy"
+    ],
+    "termes_proches": [
+      "Acquisition forensique",
+      "Extraction physique",
+      "Hachage et empreinte numérique",
+      "Intégrité des données"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Copie forensique réalisée",
+        "texte": "Nous réalisons une copie forensique du support afin de préserver les données d’origine lors des opérations d’analyse."
+      },
+      {
+        "type": "Vérification de l'intégrité de la copie",
+        "texte": "Nous procédons au calcul des empreintes numériques du support source et de sa copie forensique. La concordance des valeurs obtenues permet de vérifier l'intégrité de la copie au regard des données ayant fait l'objet du contrôle."
+      }
     ]
   },
   {
@@ -281,10 +885,12 @@
     "terme": "Criminalistique numérique",
     "anglais": "Digital forensics",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Discipline couvrant la récupération, l’examen et l’interprétation de données provenant d’ordinateurs, de téléphones mobiles, de réseaux et d’autres supports de stockage numérique dans le cadre d’enquêtes et de procédures judiciaires.",
+    "definition": "Discipline scientifique et technique consacrée à l'identification, la préservation, l'acquisition, l'examen, l'analyse et l'interprétation de données numériques susceptibles de contribuer à l'établissement de faits. Elle repose sur des méthodes documentées permettant d'apprécier l'origine, l'intégrité, le contexte et les limites des informations examinées. L'investigation numérique désigne une démarche de recherche et d'examen conduite dans le cadre d'une mission déterminée, pouvant mobiliser ces méthodes.",
     "synonymes": [
       "Forensique numérique",
-      "Informatique forensique"
+      "Informatique forensique",
+      "Investigation numérique",
+      "Enquête numérique"
     ],
     "termes_deconseilles": [
       "Forensic informatique"
@@ -292,6 +898,67 @@
     "exemple_rapport": "Les opérations réalisées relèvent de la criminalistique numérique et portent sur la récupération, l’examen et l’interprétation des données accessibles.",
     "sources": [
       "CLARUS D3.2 — Digital forensics"
+    ],
+    "termes_proches": [
+      "Investigation numérique",
+      "Acquisition forensique",
+      "Analyse des données",
+      "Preuve numérique"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Opérations de criminalistique numérique",
+        "texte": "Les opérations de criminalistique numérique réalisées portent sur l'acquisition, l'examen et l'analyse des données numériques accessibles, dans les limites techniques précisées au présent rapport."
+      },
+      {
+        "type": "Investigation numérique",
+        "texte": "Nous procédons à l'examen des données numériques accessibles dans le cadre de la mission confiée."
+      },
+      {
+        "type": "Périmètre des opérations",
+        "texte": "Les opérations techniques sont réalisées dans le périmètre défini par la mission, compte tenu des moyens disponibles et des caractéristiques des supports examinés."
+      }
+    ]
+  },
+  {
+    "id": "dechiffrement",
+    "terme": "Déchiffrement",
+    "anglais": "Decryption",
+    "categorie": "Cryptographie",
+    "definition": "Opération cryptographique consistant à restituer des données en clair à partir de données chiffrées, au moyen de la clé ou du mécanisme cryptographique approprié. En criminalistique numérique, le déchiffrement peut être réalisé par un logiciel, un équipement ou un mécanisme intégré au système examiné. Il doit être distingué du déverrouillage d'un appareil et du décodage des données.",
+    "synonymes": [],
+    "termes_deconseilles": [],
+    "termes_proches": [
+      "Chiffrement",
+      "Code de déverrouillage",
+      "Authentification",
+      "Force brute",
+      "Décodage des données"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Déchiffrement réalisé",
+        "texte": "Nous procédons au déchiffrement des données protégées, permettant leur exploitation dans le cadre de l'examen."
+      },
+      {
+        "type": "Déchiffrement partiel",
+        "texte": "Les moyens techniques employés permettent de déchiffrer une partie des données protégées. Les autres données demeurent inaccessibles dans les conditions de l'examen."
+      },
+      {
+        "type": "Déchiffrement impossible",
+        "texte": "Nos moyens techniques ne permettent pas de procéder au déchiffrement des données protégées dans les conditions de l'examen."
+      },
+      {
+        "type": "Déchiffrement non nécessaire",
+        "texte": "L'accès aux données concernées ne nécessite pas d'opération de déchiffrement supplémentaire dans les conditions techniques rencontrées."
+      },
+      {
+        "type": "Déchiffrement par mécanisme intégré",
+        "texte": "L'accès aux données en clair est obtenu au moyen du mécanisme de déchiffrement intégré à l'équipement ou au système examiné."
+      }
+    ],
+    "sources": [
+      "Lexique forensique FR — usage professionnel"
     ]
   },
   {
@@ -299,7 +966,7 @@
     "terme": "Décodage des données",
     "anglais": "Data decoding",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Opération consistant à interpréter des données brutes ou structurées afin de les rendre lisibles et exploitables pour l’analyse.",
+    "definition": "Opération technique consistant à interpréter des données numériques encodées ou structurées selon un format déterminé, afin de restituer des informations lisibles et exploitables. Le décodage peut être effectué automatiquement par un logiciel spécialisé ou au moyen d'opérations complémentaires réalisées par l'analyste. Les résultats obtenus dépendent des formats pris en charge et des capacités de décodage employées.",
     "synonymes": [
       "Décodage"
     ],
@@ -320,10 +987,32 @@
       {
         "type": "Décodage impossible",
         "texte": "Nos moyens techniques ne permettent pas de décoder les données extraites."
+      },
+      {
+        "type": "Limites du décodage automatisé",
+        "texte": "Le décodage automatisé des données repose sur les capacités des logiciels employés. Les résultats obtenus peuvent ne pas restituer l'ensemble des informations présentes dans les données extraites."
+      },
+      {
+        "type": "Décodage manuel par l'analyste",
+        "texte": "Nous procédons au décodage manuel de certaines données extraites, afin d'en interpréter la structure et le contenu et de restituer les informations susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Décodage manuel complémentaire",
+        "texte": "Le décodage automatisé ne permettant pas de restituer certaines informations, nous procédons à un décodage manuel complémentaire des données concernées."
+      },
+      {
+        "type": "Vérification du décodage automatisé",
+        "texte": "Nous procédons à la vérification de certaines données décodées automatiquement par les logiciels employés, par confrontation avec les données sources, afin de contrôler la cohérence des informations restituées."
       }
     ],
     "sources": [
       "Lexique forensique FR — usage professionnel"
+    ],
+    "termes_proches": [
+      "Extraction",
+      "Analyse des données",
+      "Donnée reconstruite",
+      "Déchiffrement"
     ]
   },
   {
@@ -347,7 +1036,7 @@
     "terme": "Donnée reconstruite",
     "anglais": "Reconstructed data",
     "categorie": "Preuve numérique",
-    "definition": "Donnée reconstituée ou interprétée par un logiciel d’analyse à partir d’éléments présents dans les données examinées, et qui doit être distinguée d’une donnée directement accessible dans la source extraite.",
+    "definition": "Information reconstituée à partir de données numériques partielles, fragmentées ou nécessitant une interprétation technique, au moyen d'un logiciel spécialisé ou d'une intervention de l'analyste. La reconstruction peut notamment permettre de restituer des messages, des fichiers ou des enregistrements à partir de différentes structures de données. Le résultat obtenu doit être distingué des données directement accessibles dans la source et apprécié au regard de la fiabilité de la méthode employée.",
     "synonymes": [
       "Donnée reconstituée",
       "Élément reconstruit"
@@ -358,13 +1047,31 @@
     ],
     "formulations_rapport": [
       {
-        "type": "Donnée reconstruite par le logiciel",
-        "texte": "Il est à noter que les éléments signalés comme reconstruits correspondent à des données reconstituées automatiquement par le logiciel d’analyse."
+        "type": "Reconstruction automatisée",
+        "texte": "Certains éléments restitués correspondent à des données reconstruites automatiquement par le logiciel d'analyse à partir des informations disponibles dans la source examinée."
+      },
+      {
+        "type": "Reconstruction manuelle par l'analyste",
+        "texte": "Nous procédons à la reconstruction manuelle de certaines données à partir des éléments identifiés dans la source examinée."
+      },
+      {
+        "type": "Reconstruction partielle",
+        "texte": "Les éléments disponibles ne permettent qu'une reconstruction partielle des données concernées."
       },
       {
         "type": "Interprétation prudente",
-        "texte": "Cette donnée résulte d’une reconstruction effectuée par le logiciel d’analyse et doit être interprétée avec prudence."
+        "texte": "Les données reconstruites doivent être interprétées avec prudence, leur contenu et leur contexte pouvant dépendre des méthodes de reconstruction employées."
+      },
+      {
+        "type": "Reconstruction non concluante",
+        "texte": "Les opérations de reconstruction réalisées ne permettent pas de restituer des informations suffisamment exploitables pour en proposer une interprétation fiable."
       }
+    ],
+    "termes_proches": [
+      "Artefact forensique",
+      "Donnée supprimée",
+      "Décodage des données",
+      "Analyse des données"
     ]
   },
   {
@@ -372,32 +1079,49 @@
     "terme": "Donnée supprimée",
     "anglais": "Deleted data",
     "categorie": "Preuve numérique",
-    "definition": "Donnée ayant fait l’objet d’une suppression logique ou applicative et dont tout ou partie du contenu, des métadonnées ou des traces peuvent éventuellement subsister dans les données examinées.",
+    "definition": "Donnée ayant fait l'objet d'une opération de suppression au sein d'un système de fichiers, d'une application ou d'une structure de stockage. Selon le mécanisme de suppression, l'état du support et les possibilités d'acquisition, tout ou partie de son contenu peut demeurer accessible ou ne subsister qu'au travers de métadonnées, de références ou de traces résiduelles. L'identification d'une donnée supprimée ne permet pas, à elle seule, d'établir les circonstances, la date ou l'auteur de sa suppression.",
     "synonymes": [
       "Élément supprimé",
       "Fichier supprimé"
     ],
     "termes_deconseilles": [],
     "sources": [
-      "Lexique forensique FR — usage professionnel"
+      "NIST — Scientific Foundation Review of Digital Forensics (2022)",
+      "NIST — Deleted File Recovery",
+      "SWGDE — Digital & Multimedia Evidence Glossary"
     ],
     "formulations_rapport": [
       {
         "type": "Donnée supprimée récupérée",
-        "texte": "Nous identifions une donnée supprimée dont le contenu demeure accessible dans les données extraites."
+        "texte": "Les opérations techniques permettent de récupérer le contenu d'une donnée identifiée comme supprimée."
       },
       {
-        "type": "Trace sans contenu",
-        "texte": "Nous identifions la trace d’un élément supprimé, sans que son contenu soit disponible dans les données extraites."
+        "type": "Trace d'une donnée supprimée",
+        "texte": "Nous identifions la trace d'un élément supprimé, sans que son contenu soit disponible dans les données extraites."
       },
       {
         "type": "Média supprimé",
-        "texte": "Un média supprimé est identifié ; son contenu n’est pas disponible dans les données extraites."
+        "texte": "Un média supprimé est identifié ; son contenu n'est pas disponible dans les données extraites."
+      },
+      {
+        "type": "Récupération partielle",
+        "texte": "Les opérations techniques permettent de récupérer partiellement le contenu d'une donnée identifiée comme supprimée."
+      },
+      {
+        "type": "Circonstances de suppression indéterminées",
+        "texte": "Les informations disponibles ne permettent pas de déterminer les circonstances dans lesquelles cet élément a été supprimé."
       }
     ],
     "points_attention": [
       "La présence d’une trace supprimée ne permet pas nécessairement de déterminer la date ou les circonstances de sa suppression.",
       "Le contenu peut être partiellement ou totalement indisponible alors que des métadonnées ou références persistent."
+    ],
+    "termes_proches": [
+      "Récupération de données",
+      "Carving de fichiers",
+      "Donnée reconstruite",
+      "Artefact forensique",
+      "Métadonnées"
     ]
   },
   {
@@ -437,16 +1161,20 @@
     "terme": "Empreinte numérique",
     "anglais": "Digital fingerprint",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Valeur de hachage calculée à partir d’un fichier, d’un équipement ou d’un ensemble de données et utilisée comme identifiant vérifiable de son contenu et de son intégrité.",
+    "definition": "Valeur obtenue par l'application d'une fonction de hachage à des données numériques. Voir la fiche « Hachage et empreinte numérique » pour les formulations et le tableau des empreintes.",
     "synonymes": [
       "Empreinte cryptographique"
     ],
     "termes_deconseilles": [
       "Empreinte digitale"
     ],
-    "exemple_rapport": "Une empreinte numérique est calculée afin de disposer d’un identifiant vérifiable du contenu acquis.",
     "sources": [
       "CLARUS D3.2 — Digital fingerprint"
+    ],
+    "renvoi_principal": "hachage",
+    "formulations_rapport": [],
+    "termes_proches": [
+      "Hachage et empreinte numérique"
     ]
   },
   {
@@ -454,7 +1182,7 @@
     "terme": "État du support",
     "anglais": "Device condition / State of the device",
     "categorie": "Procédure d’examen forensique",
-    "definition": "État matériel et fonctionnel constaté lors de la prise en charge d’un support numérique, notamment son alimentation, son verrouillage, son intégrité physique et sa capacité à être examiné.",
+    "definition": "Ensemble des caractéristiques matérielles, fonctionnelles et des conditions d'accès constatées sur un équipement ou un support numérique lors de sa prise en charge et de son examen. Ces constatations peuvent concerner son alimentation, son fonctionnement, son état physique, son verrouillage, son chiffrement ou les limitations techniques rencontrées.",
     "synonymes": [
       "État du terminal",
       "État de l’équipement"
@@ -483,6 +1211,120 @@
       {
         "type": "Support non fonctionnel",
         "texte": "Lors de notre prise en charge, nous constatons que le support n’est pas fonctionnel."
+      },
+      {
+        "type": "Support détérioré, accès limité",
+        "texte": "Le support présente des dégradations matérielles qui limitent les possibilités d'accès aux données dans les conditions techniques rencontrées."
+      },
+      {
+        "type": "Support partiellement fonctionnel",
+        "texte": "Le support présente un fonctionnement partiel permettant certaines opérations techniques, sans garantir l'accès à l'ensemble des données."
+      },
+      {
+        "type": "Support non reconnu",
+        "texte": "Le support n'est pas reconnu par les moyens techniques employés, empêchant son examen dans les conditions rencontrées."
+      },
+      {
+        "type": "Erreurs de lecture",
+        "texte": "Les opérations d'acquisition mettent en évidence des erreurs de lecture limitant la quantité de données pouvant être obtenues."
+      },
+      {
+        "type": "Support chiffré — accès limité",
+        "texte": "Les données du support sont protégées par un mécanisme de chiffrement ne permettant pas leur exploitation dans les conditions techniques rencontrées."
+      }
+    ],
+    "termes_proches": [
+      "Support numérique",
+      "Réparation du support",
+      "Chiffrement",
+      "Code de déverrouillage"
+    ]
+  },
+  {
+    "id": "execution-applications",
+    "categorie": "Technologie numérique",
+    "synonymes": [
+      "Lancement d'application",
+      "Exécution de programme"
+    ],
+    "termes_deconseilles": [],
+    "terme": "Exécution d'applications",
+    "anglais": "Application execution / Program execution",
+    "definition": "Opération par laquelle un système informatique lance ou fait fonctionner un programme, une application ou un processus logiciel. Cette exécution peut résulter d'une action de l'utilisateur, d'un mécanisme automatique du système, d'une tâche planifiée ou de l'intervention d'un autre programme. En criminalistique numérique, l'examen de certains artefacts techniques, journaux, fichiers de configuration ou données applicatives peut permettre d'identifier des indices relatifs à l'exécution d'un programme, à ses caractéristiques et, selon les sources, à certaines informations temporelles. L'interprétation de ces indices nécessite de tenir compte de leur mécanisme de production, de leur fiabilité et des limites techniques propres au système examiné.",
+    "formulations_rapport": [
+      {
+        "type": "Recherche d'indices d'exécution",
+        "texte": "Nous procédons à la recherche et à l'examen des traces techniques susceptibles de renseigner sur l'exécution de programmes ou d'applications sur le support examiné."
+      },
+      {
+        "type": "Indices d'exécution identifiés",
+        "texte": "L'examen des données du système permet d'identifier des indices techniques compatibles avec l'exécution du programme [nom du programme]."
+      },
+      {
+        "type": "Exécution documentée par les journaux",
+        "texte": "Les journaux système examinés comportent des événements relatifs à la création d'un processus associé au programme [nom du programme]."
+      },
+      {
+        "type": "Informations temporelles d'exécution",
+        "texte": "Les traces identifiées comportent des informations temporelles associées à l'exécution du programme [nom du programme], dont l'interprétation dépend du mécanisme ayant produit ces enregistrements."
+      },
+      {
+        "type": "Plusieurs exécutions enregistrées",
+        "texte": "Les données examinées permettent d'identifier plusieurs événements ou indices d'exécution associés au programme [nom du programme] au cours de la période étudiée."
+      },
+      {
+        "type": "Corrélation des artefacts",
+        "texte": "Nous procédons au rapprochement des différents artefacts techniques associés au programme [nom du programme] afin d'apprécier la cohérence des indices relatifs à son exécution."
+      },
+      {
+        "type": "Présence d'un programme sans exécution établie",
+        "texte": "Nous identifions des informations relatives à la présence du programme [nom du programme], sans que les traces disponibles permettent d'en établir l'exécution."
+      },
+      {
+        "type": "Absence d'indices exploitables",
+        "texte": "L'examen des données accessibles ne permet pas d'identifier d'indices exploitables relatifs à l'exécution du programme [nom du programme] au cours de la période étudiée."
+      },
+      {
+        "type": "Exécution automatisée possible",
+        "texte": "Les traces identifiées peuvent correspondre à une exécution automatisée du programme, sans qu'une intervention directe de l'utilisateur puisse être établie."
+      },
+      {
+        "type": "Limites d'attribution",
+        "texte": "Les éléments techniques identifiés ne permettent pas, à eux seuls, d'établir l'identité de la personne à l'origine de l'exécution du programme concerné."
+      }
+    ],
+    "termes_proches": [
+      "Application installée",
+      "Prefetch",
+      "Amcache",
+      "ShimCache",
+      "Journaux système",
+      "Session utilisateur",
+      "Traces d'activité"
+    ],
+    "sources": [
+      "Microsoft Security — Leveraging Windows Internals for Forensic Investigation",
+      "Microsoft — Event 4688",
+      "SWGDE — Best Practices for Computer Forensic Examinations"
+    ],
+    "points_attention": [
+      "L'installation d'un programme n'établit pas son exécution.",
+      "Amcache et ShimCache ne prouvent pas systématiquement l'exécution.",
+      "Une création de processus peut résulter de mécanismes automatisés.",
+      "Le contexte informatique doit être distingué de l'utilisation des applications mobiles."
+    ],
+    "artefacts_techniques": [
+      {
+        "systeme": "Windows",
+        "sources": "Prefetch, Event ID 4688, Amcache, ShimCache"
+      },
+      {
+        "systeme": "Linux",
+        "sources": "auditd et journaux système selon configuration"
+      },
+      {
+        "systeme": "macOS",
+        "sources": "Journaux unifiés, traces de lancement selon version"
       }
     ]
   },
@@ -491,22 +1333,62 @@
     "terme": "EXIF",
     "anglais": "Exchangeable Image File Format (EXIF)",
     "categorie": "Preuve numérique",
-    "definition": "Format normalisé de métadonnées intégré notamment à des fichiers d’image et pouvant contenir des informations techniques relatives aux conditions, à la date, à l’heure ou au lieu de création du fichier.",
+    "definition": "Ensemble normalisé de métadonnées pouvant être intégré à certains fichiers d'images numériques afin de décrire leurs caractéristiques techniques et les conditions déclarées de leur acquisition. Ces informations peuvent comprendre les caractéristiques de l'appareil, les paramètres de prise de vue, des dates, des heures et des coordonnées géographiques. Leur présence, leur exactitude et leur conservation dépendent de l'appareil, du format et des traitements effectués ; elles doivent être interprétées au regard des autres informations disponibles.",
     "synonymes": [
       "Métadonnées EXIF"
     ],
     "termes_deconseilles": [],
     "exemple_rapport": "L’examen des métadonnées EXIF fournit des informations techniques complémentaires relatives au fichier.",
     "sources": [
-      "CLARUS D3.2 — EXIF"
+      "CIPA — Exif Version 3.1",
+      "ExifTool — FAQ",
+      "ExifTool — GPS Tag Names",
+      "SWGDE — Guidelines for Forensic Image Analysis"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Examen des métadonnées EXIF",
+        "texte": "Nous procédons à l'examen des métadonnées EXIF associées aux fichiers photographiques afin de relever les informations techniques disponibles."
+      },
+      {
+        "type": "Informations de prise de vue",
+        "texte": "Les métadonnées EXIF du fichier comportent des informations relatives à l'appareil et aux paramètres de prise de vue."
+      },
+      {
+        "type": "Coordonnées géographiques",
+        "texte": "Les métadonnées EXIF du fichier comportent des coordonnées géographiques susceptibles de renseigner sur le lieu de prise de vue déclaré."
+      },
+      {
+        "type": "Horodatage EXIF",
+        "texte": "Les métadonnées EXIF du fichier comportent des informations de date et d'heure associées à la prise de vue, dont l'interprétation nécessite de tenir compte des paramètres temporels de l'appareil."
+      },
+      {
+        "type": "Métadonnées EXIF absentes",
+        "texte": "L'examen du fichier ne permet pas d'identifier de métadonnées EXIF exploitables."
+      },
+      {
+        "type": "Divergence des horodatages",
+        "texte": "Nous constatons une différence entre les informations temporelles enregistrées dans les métadonnées EXIF et celles associées au fichier par le système de fichiers, sans que cette différence permette, à elle seule, d'en déterminer l'origine."
+      }
+    ],
+    "termes_proches": [
+      "Métadonnées",
+      "Horodatage",
+      "Fichier multimédia",
+      "Géolocalisation"
+    ],
+    "points_attention": [
+      "Les coordonnées GPS ne garantissent pas la localisation effective de la prise de vue.",
+      "Certains horodatages EXIF n'incluent pas de fuseau.",
+      "Un transfert peut supprimer les métadonnées sans intention de dissimulation."
     ]
   },
   {
     "id": "extraction",
     "terme": "Extraction",
-    "anglais": "Extract",
+    "anglais": "Data extraction",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Opération consistant à récupérer ou obtenir des données à partir d'un dispositif numérique, d'un support de stockage ou d'un système afin de les rendre accessibles à des fins d'analyse ou d'exploitation.",
+    "definition": "Opération technique consistant à récupérer des données depuis un équipement, un support ou un système numérique, afin de les rendre accessibles pour leur examen ou leur exploitation. L'extraction peut être complète ou partielle, selon les possibilités techniques et les conditions d'accès aux données.",
     "synonymes": [],
     "termes_deconseilles": [],
     "exemple_rapport": "Nous procédons à l'extraction des données accessibles présentes sur le support.",
@@ -530,6 +1412,128 @@
         "type": "Échec d’extraction",
         "texte": "Nos moyens techniques ne nous permettent pas de procéder à l’extraction des données du support."
       }
+    ],
+    "renvois": [
+      {
+        "id": "acquisition-forensique",
+        "nuance": "L’extraction vise la récupération des données ; une acquisition forensique englobe également la méthode, le périmètre et les contrôles documentés."
+      },
+      {
+        "id": "extraction-logique",
+        "nuance": "L’extraction logique constitue une méthode particulière d’extraction."
+      }
+    ],
+    "guide_choix": [
+      {
+        "situation": "Récupérer les données accessibles d’un téléphone ou d’une carte SIM",
+        "terme": "Extraction",
+        "justification": "Préciser la méthode et les éventuelles limites d’accès."
+      },
+      {
+        "situation": "Réaliser une image bit à bit d’un disque",
+        "terme": "Acquisition forensique",
+        "justification": "Désigne précisément la réalisation d’une copie image."
+      },
+      {
+        "situation": "Consulter seulement des informations affichées à l’écran",
+        "terme": "Constatation numérique",
+        "justification": "L’observation n’implique pas nécessairement la récupération de données."
+      }
+    ],
+    "termes_proches": [
+      "Acquisition forensique",
+      "Extraction logique",
+      "Extraction du système de fichiers",
+      "Extraction physique"
+    ]
+  },
+  {
+    "id": "extraction-logique",
+    "terme": "Extraction logique",
+    "anglais": "Logical extraction",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Opération technique consistant à récupérer des données numériques au moyen des interfaces logiques mises à disposition par un système, un équipement ou une application, sans nécessiter une copie bit à bit de l'ensemble du support physique. L'étendue des données obtenues dépend des interfaces utilisées, des autorisations d'accès et des fonctionnalités de la méthode d'extraction.",
+    "synonymes": [
+      "Acquisition logique"
+    ],
+    "termes_deconseilles": [],
+    "points_attention": [
+      "Une extraction logique ne restitue pas nécessairement l’ensemble des données présentes sur le support.",
+      "Le contenu obtenu dépend notamment de l’état du support, du niveau d’accès et des interfaces disponibles."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Extraction logique réalisée",
+        "texte": "Nous procédons à une extraction logique des données accessibles du support."
+      },
+      {
+        "type": "Extraction logique partielle",
+        "texte": "Nos moyens techniques ne permettent d’obtenir qu’une extraction logique partielle des données du support."
+      },
+      {
+        "type": "Échec de l’extraction logique",
+        "texte": "La tentative d’extraction logique des données du support échoue."
+      },
+      {
+        "type": "Limites de l'extraction logique",
+        "texte": "Une extraction logique ne permet pas nécessairement d'accéder à l'ensemble des données contenues sur le support. Les résultats obtenus dépendent notamment des interfaces utilisées, des autorisations d'accès et des possibilités techniques de la méthode employée."
+      }
+    ],
+    "sources": [
+      "Lexique forensique FR — usage professionnel"
+    ],
+    "renvois": [
+      {
+        "id": "extraction",
+        "nuance": "L’extraction logique est une forme d’extraction, limitée aux données accessibles par les interfaces et mécanismes utilisés."
+      }
+    ],
+    "termes_proches": [
+      "Extraction",
+      "Extraction physique",
+      "Extraction du système de fichiers"
+    ]
+  },
+  {
+    "id": "extraction-physique",
+    "terme": "Extraction physique",
+    "anglais": "Physical extraction / Physical acquisition",
+    "categorie": "Méthode de criminalistique numérique",
+    "definition": "Opération technique consistant à réaliser une copie bit à bit des données d'un support de stockage physique, afin d'en obtenir une représentation fidèle, indépendante de l'organisation logique des fichiers. Elle peut notamment comprendre les espaces non alloués et les données résiduelles accessibles. La fidélité et l'exhaustivité de la copie s'apprécient au regard du périmètre effectivement acquis et des contrôles d'intégrité réalisés.",
+    "synonymes": [
+      "Acquisition physique",
+      "Copie physique bit à bit"
+    ],
+    "termes_deconseilles": [],
+    "termes_proches": [
+      "Extraction",
+      "Acquisition forensique",
+      "Extraction logique",
+      "Extraction du système de fichiers",
+      "Copie forensique"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Extraction physique réalisée",
+        "texte": "Nous procédons à une extraction physique du support, permettant d'obtenir une copie bit à bit des données contenues dans le périmètre acquis."
+      },
+      {
+        "type": "Extraction physique partielle",
+        "texte": "Nous procédons à une extraction physique partielle du support, limitée aux zones de stockage techniquement accessibles."
+      },
+      {
+        "type": "Extraction physique impossible",
+        "texte": "Les conditions techniques rencontrées ne nous permettent pas de réaliser une extraction physique des données du support."
+      },
+      {
+        "type": "Extraction physique de données chiffrées",
+        "texte": "Nous procédons à une extraction physique du support. Les données obtenues sont conservées sous leur forme chiffrée, leur déchiffrement et leur exploitation faisant l'objet d'opérations distinctes."
+      }
+    ],
+    "sources": [
+      "SWGDE — Best Practices for Computer Forensic Acquisition (17-F-002)",
+      "SWGDE — Mobile Device Evidence Collection, Preservation, Handling and Acquisition (18-F-003)",
+      "NIST SP 800-86 — Guide to Integrating Forensic Techniques into Incident Response"
     ]
   },
   {
@@ -537,7 +1541,7 @@
     "terme": "Extraction du système de fichiers",
     "anglais": "File system extraction",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Méthode d’extraction visant à obtenir tout ou partie de la structure du système de fichiers et des fichiers accessibles d’un support ou d’un appareil.",
+    "definition": "Opération technique consistant à obtenir tout ou partie de l'arborescence d'un système de fichiers, des fichiers qu'il contient et de leurs métadonnées accessibles, selon les possibilités d'accès offertes par l'équipement et la méthode utilisée. Cette extraction peut notamment permettre de récupérer des données applicatives, des bases de données, des journaux système et des fichiers de configuration, sans nécessiter une copie bit à bit du support physique.",
     "synonymes": [
       "Extraction filesystem",
       "File system extraction"
@@ -559,42 +1563,41 @@
       {
         "type": "Extraction impossible",
         "texte": "Nos moyens techniques ne permettent pas de procéder à l’extraction du système de fichiers du support."
+      },
+      {
+        "type": "Limites de l'extraction du système de fichiers",
+        "texte": "Une extraction du système de fichiers ne permet pas nécessairement d'obtenir l'intégralité des données contenues sur le support. Elle peut notamment exclure les espaces non alloués, certaines données supprimées ainsi que les zones de stockage non accessibles par la méthode employée."
       }
     ],
     "sources": [
       "Lexique forensique FR — usage professionnel"
+    ],
+    "renvois": [
+      {
+        "id": "extraction",
+        "nuance": "L’extraction du système de fichiers constitue une modalité d’extraction, distincte de l’extraction logique selon les possibilités de l’outil."
+      }
+    ],
+    "termes_proches": [
+      "Extraction",
+      "Extraction logique",
+      "Extraction physique"
     ]
   },
   {
-    "id": "extraction-logique",
-    "terme": "Extraction logique",
-    "anglais": "Logical extraction",
-    "categorie": "Méthode de criminalistique numérique",
-    "definition": "Méthode d’extraction obtenant les données accessibles par les interfaces logiques du système, de l’application ou du protocole utilisé.",
+    "id": "fai",
+    "terme": "Fournisseur d’accès à Internet",
+    "anglais": "Internet Service Provider (ISP)",
+    "categorie": "Technologie numérique",
+    "definition": "Entreprise fournissant une connectivité Internet à ses utilisateurs et susceptible de conserver des journaux relatifs notamment aux dates, heures et abonnés auxquels des adresses IP ont été attribuées.",
     "synonymes": [
-      "Acquisition logique"
+      "FAI",
+      "ISP"
     ],
     "termes_deconseilles": [],
-    "points_attention": [
-      "Une extraction logique ne restitue pas nécessairement l’ensemble des données présentes sur le support.",
-      "Le contenu obtenu dépend notamment de l’état du support, du niveau d’accès et des interfaces disponibles."
-    ],
-    "formulations_rapport": [
-      {
-        "type": "Extraction logique réalisée",
-        "texte": "Nous procédons à une extraction logique des données accessibles du support."
-      },
-      {
-        "type": "Extraction logique partielle",
-        "texte": "Nos moyens techniques ne permettent d’obtenir qu’une extraction logique partielle des données du support."
-      },
-      {
-        "type": "Échec de l’extraction logique",
-        "texte": "La tentative d’extraction logique des données du support échoue."
-      }
-    ],
+    "exemple_rapport": "L’attribution de l’adresse IP peut nécessiter l’exploitation des informations conservées par le fournisseur d’accès à Internet.",
     "sources": [
-      "Lexique forensique FR — usage professionnel"
+      "CLARUS D3.2 — ISP"
     ]
   },
   {
@@ -635,11 +1638,99 @@
     ]
   },
   {
+    "id": "fichiers-recents",
+    "categorie": "Technologie numérique",
+    "synonymes": [
+      "Documents récents",
+      "Éléments récemment utilisés"
+    ],
+    "termes_deconseilles": [],
+    "terme": "Fichiers récents",
+    "anglais": "Recent files / Recently used files",
+    "definition": "Ensemble des références ou enregistrements conservés par un système d'exploitation ou une application concernant des fichiers ou ressources récemment utilisés, ouverts, sélectionnés ou enregistrés. Ces informations peuvent notamment comprendre le nom d'un fichier, son chemin d'accès, l'application associée, certains horodatages ou des indications relatives à sa dernière utilisation. En criminalistique numérique, leur examen peut contribuer à identifier des fichiers ayant fait l'objet d'interactions enregistrées et à reconstituer certaines activités associées à un compte ou à un environnement utilisateur. L'interprétation de ces informations dépend des mécanismes ayant généré les traces. Leur présence ne permet pas, à elle seule, d'établir qu'un fichier a effectivement été lu, modifié ou manipulé volontairement par une personne déterminée.",
+    "formulations_rapport": [
+      {
+        "type": "Recherche de fichiers récents",
+        "texte": "Nous procédons à l'examen des traces relatives aux fichiers récemment utilisés afin d'identifier les références susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Références à des fichiers identifiées",
+        "texte": "L'examen des données du système permet d'identifier des références à des fichiers dans les enregistrements d'éléments récemment utilisés."
+      },
+      {
+        "type": "Fichiers associés à un compte utilisateur",
+        "texte": "Les traces identifiées comportent des références à des fichiers associées au profil du compte utilisateur [nom du compte]."
+      },
+      {
+        "type": "Identification d'un fichier déterminé",
+        "texte": "Nous identifions une référence au fichier [nom du fichier] parmi les éléments récemment utilisés enregistrés par le système ou l'application."
+      },
+      {
+        "type": "Reconstitution chronologique",
+        "texte": "L'exploitation des informations temporelles disponibles permet de proposer une chronologie partielle des événements associés aux fichiers récemment utilisés."
+      },
+      {
+        "type": "Fichier référencé mais absent",
+        "texte": "Nous identifions une référence au fichier [nom du fichier], dont le contenu n'est pas retrouvé dans les données accessibles du support examiné."
+      },
+      {
+        "type": "Synthèse quantitative",
+        "texte": "L'examen des traces de fichiers récents permet d'identifier [nombre] références à des fichiers distincts sur la période comprise entre le [date de début] et le [date de fin]."
+      },
+      {
+        "type": "Absence de traces exploitables",
+        "texte": "L'examen des données accessibles ne permet pas d'identifier de références à des fichiers récemment utilisés présentant un intérêt au regard de la mission."
+      },
+      {
+        "type": "Corrélation des traces",
+        "texte": "Nous procédons au rapprochement des références à des fichiers récemment utilisés avec les autres traces numériques disponibles afin d'en apprécier la cohérence."
+      },
+      {
+        "type": "Limites d'interprétation",
+        "texte": "Les références identifiées dans les listes de fichiers récents ne permettent pas, à elles seules, d'établir les circonstances exactes d'accès aux fichiers ni l'identité de la personne à l'origine des opérations correspondantes."
+      }
+    ],
+    "termes_proches": [
+      "Compte utilisateur",
+      "Traces d'activité",
+      "Fichiers LNK",
+      "Jump Lists",
+      "Horodatage",
+      "Métadonnées"
+    ],
+    "sources": [
+      "Microsoft — SHAddToRecentDocs",
+      "Microsoft — Recent Items",
+      "Freedesktop — Desktop Bookmark Specification",
+      "Apple — Shared File Lists"
+    ],
+    "points_attention": [
+      "Une référence ne prouve pas que le fichier existe ou a été lu.",
+      "Certaines listes sont mises à jour automatiquement.",
+      "Distinguer les références des fichiers distincts et des événements.",
+      "Présenter les dates selon le référentiel UTC+00:00 après vérification."
+    ],
+    "artefacts_techniques": [
+      {
+        "systeme": "Windows",
+        "sources": "Recent, LNK, Jump Lists, RecentDocs, OpenSavePidlMRU"
+      },
+      {
+        "systeme": "Linux",
+        "sources": "recently-used.xbel et historiques applicatifs"
+      },
+      {
+        "systeme": "macOS",
+        "sources": "Listes de documents récents, préférences applicatives"
+      }
+    ]
+  },
+  {
     "id": "force-brute",
     "terme": "Force brute",
     "anglais": "Brute force",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Méthode consistant à tester systématiquement un ensemble de clés, mots de passe ou combinaisons possibles afin de tenter d'accéder à des données ou à un système protégé.",
+    "definition": "Méthode consistant à tester successivement des combinaisons de codes, de mots de passe ou de clés cryptographiques afin d'identifier une valeur permettant de satisfaire un mécanisme d'authentification, de déverrouillage ou de déchiffrement. Selon les conditions techniques, les essais peuvent être exhaustifs ou limités à un ensemble de valeurs, notamment lorsqu'ils reposent sur un dictionnaire ou sur des informations connues.",
     "synonymes": [
       "Attaque par force brute"
     ],
@@ -647,40 +1738,267 @@
     "exemple_rapport": "Une tentative d'accès par force brute peut être mise en œuvre lorsque le cadre technique et juridique le permet.",
     "sources": [
       "CLARUS D3.2"
+    ],
+    "termes_proches": [
+      "Code de déverrouillage",
+      "Authentification",
+      "Chiffrement",
+      "Attaque par dictionnaire"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Recherche par force brute",
+        "texte": "Nous procédons à une recherche par force brute afin de tenter d'identifier le code ou le mot de passe permettant l'accès aux données protégées."
+      },
+      {
+        "type": "Recherche par force brute infructueuse",
+        "texte": "Les opérations de recherche par force brute mises en œuvre ne permettent pas d'identifier un code ou un mot de passe valide."
+      },
+      {
+        "type": "Recherche par force brute fructueuse",
+        "texte": "Les opérations de recherche par force brute permettent d'identifier un code ou un mot de passe valide, autorisant l'accès aux données concernées."
+      },
+      {
+        "type": "Recherche techniquement impossible",
+        "texte": "Les caractéristiques du mécanisme de protection et les moyens techniques disponibles ne permettent pas de mettre en œuvre une recherche par force brute dans les conditions de l'examen."
+      },
+      {
+        "type": "Recherche interrompue à la demande du requérant",
+        "texte": "Sur demande du requérant, nous interrompons les opérations de recherche par force brute sans identification d'un code ou d'un mot de passe valide."
+      }
     ]
   },
   {
-    "id": "fai",
-    "terme": "Fournisseur d’accès à Internet",
-    "anglais": "Internet Service Provider (ISP)",
-    "categorie": "Technologie numérique",
-    "definition": "Entreprise fournissant une connectivité Internet à ses utilisateurs et susceptible de conserver des journaux relatifs notamment aux dates, heures et abonnés auxquels des adresses IP ont été attribuées.",
+    "id": "google-chrome",
+    "terme": "Google Chrome",
+    "definition": "Navigateur Internet développé par Google et reposant sur Chromium. Il peut conserver des historiques, téléchargements, favoris, cookies, données de formulaires, sessions et paramètres de profils. Les traces doivent être interprétées en tenant compte des opérations automatiques, de la synchronisation, des profils et des conditions d'acquisition.",
+    "formulations_rapport": [
+      {
+        "type": "Identification",
+        "texte": "Nous identifions la présence du navigateur Internet Google Chrome sur le support examiné."
+      },
+      {
+        "type": "Examen",
+        "texte": "Nous procédons à l'examen des données accessibles associées à Google Chrome afin d'identifier les éléments susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Historique identifié",
+        "texte": "L'examen des données de Google Chrome permet d'identifier des enregistrements d'historique de navigation associés à différentes adresses Internet."
+      },
+      {
+        "type": "Téléchargements",
+        "texte": "Les données de Google Chrome comportent des enregistrements relatifs à des opérations de téléchargement."
+      },
+      {
+        "type": "Plusieurs profils",
+        "texte": "Nous identifions plusieurs profils associés à Google Chrome et procédons à l'examen des données accessibles de chacun d'eux."
+      },
+      {
+        "type": "Accès partiel",
+        "texte": "Les conditions techniques de l'examen ne permettent d'accéder qu'à une partie des données associées au navigateur Google Chrome."
+      },
+      {
+        "type": "Absence de données",
+        "texte": "L'examen des données accessibles de Google Chrome ne permet pas d'identifier d'éléments exploitables au regard de la mission."
+      },
+      {
+        "type": "Limites d'attribution",
+        "texte": "Les traces identifiées dans les données de Google Chrome ne permettent pas, à elles seules, d'établir l'identité de la personne ayant réalisé les opérations de navigation correspondantes."
+      },
+      {
+        "type": "Données de formulaires",
+        "texte": "L'examen des données de Google Chrome permet d'identifier des informations enregistrées au titre du remplissage automatique de formulaires."
+      },
+      {
+        "type": "Adresses distinctes",
+        "texte": "L'examen des données de Google Chrome permet d'identifier [nombre] adresses Internet distinctes dans l'historique de navigation, pour une période comprise entre le [date de début] et le [date de fin]."
+      },
+      {
+        "type": "Événements de navigation",
+        "texte": "L'analyse de l'historique de Google Chrome permet de relever [nombre] événements de navigation enregistrés entre le [date de début] et le [date de fin]."
+      }
+    ],
+    "sources": [
+      "Chromium — User Data Directory",
+      "Chromium — History",
+      "Chromium — Downloads",
+      "Google Chrome — Navigation privée"
+    ],
+    "anglais": "Google Chrome",
+    "categorie": "Logiciel et application",
     "synonymes": [
-      "FAI",
-      "ISP"
+      "Chrome"
     ],
     "termes_deconseilles": [],
-    "exemple_rapport": "L’attribution de l’adresse IP peut nécessiter l’exploitation des informations conservées par le fournisseur d’accès à Internet.",
-    "sources": [
-      "CLARUS D3.2 — ISP"
+    "termes_proches": [
+      "Navigateur Internet",
+      "Historique de navigation",
+      "Chromium",
+      "Cookies"
+    ],
+    "points_attention": [
+      "Distinguer URL distinctes et événements de visite.",
+      "Les saisies de formulaires n'attestent pas une soumission.",
+      "Les données Android/iOS dépendent des protections et des versions.",
+      "Vérifier la présentation des horodatages en UTC+00:00."
+    ],
+    "artefacts_techniques": [
+      "History — Visites et téléchargements",
+      "Bookmarks — Favoris",
+      "Cookies — Cookies",
+      "Login Data — Identifiants protégés",
+      "Web Data — Saisies de formulaires",
+      "Preferences — Paramètres",
+      "Sessions — Sessions",
+      "Cache — Ressources"
+    ],
+    "emplacements_par_systeme": [
+      {
+        "systeme": "Windows",
+        "chemin": "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\"
+      },
+      {
+        "systeme": "Linux",
+        "chemin": "~/.config/google-chrome/"
+      },
+      {
+        "systeme": "macOS",
+        "chemin": "~/Library/Application Support/Google/Chrome/"
+      },
+      {
+        "systeme": "Android",
+        "chemin": "/data/user/0/com.android.chrome/app_chrome/ (selon version)"
+      },
+      {
+        "systeme": "iOS",
+        "chemin": "Conteneur privé : Library/Application Support/Google/Chrome/ (selon version)"
+      }
     ]
   },
   {
     "id": "hachage",
-    "terme": "Hachage",
-    "anglais": "Hash / Hashing",
+    "terme": "Hachage et empreinte numérique",
+    "anglais": "Hashing / Hash value",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Technique cryptographique permettant de calculer, à partir de données, une valeur de taille fixe utilisée notamment pour contrôler leur intégrité et comparer un original à une copie forensique.",
+    "definition": "Le hachage est une opération consistant à appliquer une fonction mathématique à des données numériques pour produire une empreinte de longueur déterminée, appelée valeur de hachage. Cette empreinte permet notamment de comparer des données et de contribuer à la vérification de leur intégrité. La concordance de valeurs calculées avec le même algorithme ne suffit pas, à elle seule, à établir l'origine ou l'authenticité des données.",
     "synonymes": [
       "Calcul d’empreinte",
-      "Fonction de hachage"
+      "Fonction de hachage",
+      "Hachage",
+      "Empreinte numérique",
+      "Valeur de hachage",
+      "Empreinte cryptographique",
+      "Calcul d'empreinte numérique",
+      "Hash",
+      "Hashing"
     ],
     "termes_deconseilles": [
-      "Hashage"
+      "Hashage",
+      "Empreinte digitale",
+      "Checksum cryptographique"
     ],
     "exemple_rapport": "Une valeur de hachage est calculée afin de contrôler l’intégrité des données extraites.",
     "sources": [
       "CLARUS D3.2 — Hash/Hashing"
+    ],
+    "termes_proches": [
+      "Intégrité des données",
+      "Copie forensique"
+    ],
+    "tableau_rapport": {
+      "colonnes": [
+        "Algorithme",
+        "Valeur"
+      ],
+      "lignes": []
+    },
+    "formulations_rapport": [
+      {
+        "type": "Calcul d'empreinte numérique",
+        "texte": "Nous procédons au calcul des empreintes numériques des données au moyen des algorithmes de hachage indiqués ci-dessous."
+      },
+      {
+        "type": "Calcul d'une empreinte de référence",
+        "texte": "Nous calculons l'empreinte numérique du fichier au moyen de l'algorithme indiqué dans le présent rapport, afin de disposer d'une valeur de référence."
+      },
+      {
+        "type": "Vérification d'intégrité",
+        "texte": "Nous procédons à la comparaison des empreintes numériques calculées sur les données de référence et les données contrôlées. Les valeurs obtenues sont concordantes."
+      },
+      {
+        "type": "Empreintes différentes",
+        "texte": "La comparaison des empreintes numériques met en évidence des valeurs différentes entre les données de référence et les données contrôlées."
+      },
+      {
+        "type": "Remise avec empreintes numériques",
+        "texte": "Les fichiers remis sont accompagnés de leurs valeurs de hachage afin de permettre un contrôle ultérieur de leur intégrité."
+      }
+    ]
+  },
+  {
+    "id": "historique-navigation",
+    "terme": "Historique de navigation",
+    "definition": "Ensemble des enregistrements conservés par un navigateur concernant les accès à des pages ou ressources Web. Ils peuvent comprendre URL, titres, dates, nombre de visites et types de transition. Conservé localement ou synchronisé, cet historique n'est pas nécessairement exhaustif et doit être interprété selon les redirections, chargements automatiques, suppressions éventuelles et limites d'acquisition.",
+    "formulations_rapport": [
+      {
+        "type": "Examen",
+        "texte": "Nous procédons à l'examen des historiques de navigation accessibles afin d'identifier les adresses et événements de navigation susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Historique identifié",
+        "texte": "L'examen des données du navigateur permet d'identifier des enregistrements d'historique associés à différentes adresses Internet."
+      },
+      {
+        "type": "Site déterminé",
+        "texte": "Nous identifions dans l'historique du navigateur des enregistrements associés au site Internet [adresse ou nom du site]."
+      },
+      {
+        "type": "Chronologie",
+        "texte": "L'exploitation des informations temporelles disponibles permet d'établir une chronologie des événements de navigation enregistrés, dans les limites précisées au présent rapport."
+      },
+      {
+        "type": "Historique partiel",
+        "texte": "Les données disponibles ne permettent de restituer qu'une partie des événements de navigation susceptibles d'avoir été enregistrés par le navigateur."
+      },
+      {
+        "type": "Absence d'historique",
+        "texte": "L'examen des données accessibles du navigateur ne permet pas d'identifier d'historique de navigation exploitable au regard de la mission."
+      },
+      {
+        "type": "Historique résiduel",
+        "texte": "Les opérations d'examen permettent d'identifier des traces résiduelles d'historique de navigation, sans permettre nécessairement de reconstituer l'ensemble des événements correspondants."
+      },
+      {
+        "type": "Synchronisation",
+        "texte": "Les données examinées comportent des informations de navigation susceptibles de provenir d'une synchronisation entre plusieurs équipements, sans qu'il soit possible d'attribuer avec certitude chaque événement au support examiné."
+      },
+      {
+        "type": "Limites d'interprétation",
+        "texte": "Les enregistrements d'historique ne permettent pas, à eux seuls, d'établir qu'une personne déterminée a volontairement consulté le contenu des pages correspondantes."
+      }
+    ],
+    "sources": [
+      "Mozilla — Places",
+      "Chromium — History API",
+      "SWGDE — Computer Forensic Examinations"
+    ],
+    "anglais": "Browsing history / Web browsing history",
+    "categorie": "Logiciel et application",
+    "synonymes": [
+      "Historique Web",
+      "Historique du navigateur"
+    ],
+    "termes_deconseilles": [],
+    "termes_proches": [
+      "Navigateur Internet",
+      "Traces d'activité",
+      "Cookies",
+      "Horodatage"
+    ],
+    "points_attention": [
+      "Une URL enregistrée ne prouve pas la lecture du contenu.",
+      "Une absence d'historique n'implique pas une suppression.",
+      "Les redirections et synchronisations influencent l'attribution."
     ]
   },
   {
@@ -688,7 +2006,7 @@
     "terme": "Horodatage",
     "anglais": "Timestamp",
     "categorie": "Preuve numérique",
-    "definition": "Marque enregistrée indiquant une date et une heure associées à un événement numérique ou à une opération portant sur des données, par exemple leur création, modification, accès ou transmission.",
+    "definition": "Information temporelle associant une date et une heure à une donnée numérique, un événement ou une opération enregistrée par un système, une application ou un équipement. Un horodatage peut notamment concerner la création, la modification ou l'accès à un fichier, un message ou une activité système. Son interprétation nécessite de tenir compte de son origine, du référentiel temporel, du fuseau horaire, de la précision et de la fiabilité de l'horloge.",
     "synonymes": [
       "Marque temporelle",
       "Timestamp"
@@ -696,7 +2014,51 @@
     "termes_deconseilles": [],
     "exemple_rapport": "L’horodatage associé au fichier indique la date et l’heure enregistrées pour sa création ou sa modification.",
     "sources": [
-      "CLARUS D3.2 — Timestamp"
+      "NIST SP 800-86",
+      "SWGDE — Mobile Device Forensic Analysis",
+      "Microsoft — File Times",
+      "SWGDE — Computer Forensic Acquisition"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Examen des horodatages",
+        "texte": "Nous procédons à l'examen des informations temporelles associées aux données afin d'en relever les dates et heures disponibles."
+      },
+      {
+        "type": "Conversion du fuseau horaire",
+        "texte": "Les horodatages relevés sont convertis dans le fuseau horaire indiqué au présent rapport, à partir des informations temporelles disponibles."
+      },
+      {
+        "type": "Divergence des horodatages",
+        "texte": "L'examen met en évidence des différences entre les informations temporelles associées à certains éléments, dont l'origine ne peut être déterminée avec certitude à partir des seules données disponibles."
+      },
+      {
+        "type": "Décalage de l'horloge",
+        "texte": "Les informations disponibles mettent en évidence un décalage de l'horloge de l'équipement, susceptible d'affecter l'interprétation chronologique des événements enregistrés."
+      },
+      {
+        "type": "Référentiel temporel indéterminé",
+        "texte": "Les informations disponibles ne permettent pas de déterminer avec certitude le référentiel temporel utilisé pour les horodatages concernés."
+      },
+      {
+        "type": "Limites d'interprétation",
+        "texte": "Les horodatages identifiés doivent être interprétés en tenant compte des caractéristiques du système et des éventuels décalages ou modifications des informations temporelles."
+      },
+      {
+        "type": "Uniformisation UTC+00:00",
+        "texte": "Afin de garantir la cohérence de la présentation chronologique, l'ensemble des dates et heures mentionnées dans le présent rapport est exprimé en temps universel coordonné (UTC+00:00)."
+      }
+    ],
+    "termes_proches": [
+      "Métadonnées",
+      "EXIF",
+      "Journaux système",
+      "Analyse des données"
+    ],
+    "points_attention": [
+      "La formulation UTC+00:00 exige une conversion ou vérification effective de toutes les dates concernées.",
+      "L'horloge d'un appareil peut être décalée.",
+      "Une date de fichier ne correspond pas nécessairement à la création de son contenu."
     ]
   },
   {
@@ -719,7 +2081,7 @@
     "terme": "IMEI",
     "anglais": "International Mobile Equipment Identity (IMEI)",
     "categorie": "Preuve numérique",
-    "definition": "Identifiant de quinze chiffres associé à un équipement mobile et permettant notamment d’identifier le fabricant et le modèle de l’appareil.",
+    "definition": "Identifiant numérique généralement composé de 15 chiffres, attribué à un équipement de téléphonie mobile pour son identification sur les réseaux cellulaires. Un équipement peut disposer de plusieurs IMEI, notamment lorsqu'il prend en charge plusieurs lignes mobiles. L'IMEI peut contribuer à identifier ou caractériser un équipement, mais ne permet pas, à lui seul, d'établir avec certitude son modèle exact, son propriétaire ou son utilisateur.",
     "synonymes": [
       "Numéro IMEI"
     ],
@@ -731,6 +2093,31 @@
     "points_attention": [
       "L’IMEI identifie un équipement ou une interface cellulaire et ne permet pas, à lui seul, d’identifier son utilisateur.",
       "Certains appareils disposent de plusieurs IMEI, notamment lorsqu’ils prennent en charge plusieurs lignes ou eSIM."
+    ],
+    "termes_proches": [
+      "IMEISV",
+      "IMSI",
+      "ICCID",
+      "Carte SIM",
+      "eSIM"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "IMEI relevé",
+        "texte": "Nous relevons le numéro IMEI [NUMÉRO] associé au terminal examiné."
+      },
+      {
+        "type": "Plusieurs IMEI identifiés",
+        "texte": "L'examen du terminal permet d'identifier plusieurs numéros IMEI, dont les valeurs sont consignées dans les résultats des opérations techniques."
+      },
+      {
+        "type": "IMEI non accessible",
+        "texte": "Les conditions techniques de l'examen ne permettent pas de relever le numéro IMEI du terminal."
+      },
+      {
+        "type": "Identification du modèle à partir de l'IMEI",
+        "texte": "Les informations associées au numéro IMEI permettent de proposer une identification du fabricant et du modèle de l'équipement, sous réserve des limites des référentiels consultés."
+      }
     ]
   },
   {
@@ -806,7 +2193,7 @@
     "terme": "Intégrité des données",
     "anglais": "Data integrity / Evidence integrity",
     "categorie": "Principe de criminalistique numérique",
-    "definition": "Propriété selon laquelle les données demeurent complètes et non altérées au cours des opérations de collecte, copie, stockage, analyse ou transfert. En criminalistique numérique, son contrôle repose notamment sur des procédures adaptées et sur la comparaison de valeurs de hachage.",
+    "definition": "Propriété caractérisant des données numériques dont le contenu n'a pas été altéré par rapport à un état de référence déterminé. En criminalistique numérique, l'intégrité peut être contrôlée notamment par comparaison d'empreintes numériques et par la mise en œuvre de procédures documentées.",
     "synonymes": [
       "Intégrité de la preuve numérique"
     ],
@@ -820,12 +2207,21 @@
     "formulations_rapport": [
       {
         "type": "Intégrité vérifiée",
-        "texte": "L’intégrité des données est vérifiée par comparaison des valeurs de hachage calculées."
+        "texte": "L'intégrité des données est vérifiée par comparaison des valeurs de hachage calculées sur les données de référence et les données contrôlées. Les valeurs obtenues sont concordantes."
       },
       {
         "type": "Intégrité lors de la remise",
         "texte": "Les résultats sont remis accompagnés de leurs valeurs de hachage afin de permettre le contrôle ultérieur de leur intégrité."
+      },
+      {
+        "type": "Intégrité non vérifiée",
+        "texte": "Aucun contrôle d'intégrité par comparaison d'empreintes numériques n'a pu être réalisé dans les conditions techniques rencontrées. Cette limite est prise en compte dans l'appréciation des résultats."
       }
+    ],
+    "termes_proches": [
+      "Hachage et empreinte numérique",
+      "Chaîne de traçabilité",
+      "Copie forensique"
     ]
   },
   {
@@ -838,27 +2234,259 @@
       "Enquête numérique"
     ],
     "termes_deconseilles": [],
-    "exemple_rapport": "Les opérations réalisées s'inscrivent dans le cadre d'une investigation numérique du support.",
     "sources": [
       "CLARUS D3.2"
+    ],
+    "renvoi_principal": "criminalistique-numerique",
+    "termes_proches": [
+      "Criminalistique numérique"
+    ],
+    "formulations_rapport": []
+  },
+  {
+    "id": "journaux-applicatifs",
+    "terme": "Journaux applicatifs",
+    "definition": "Enregistrements générés par une application ou ses composants pour conserver des informations relatives à son fonctionnement, à certaines opérations et aux événements détectés. Ils peuvent concerner connexions, authentifications, erreurs, échanges avec des services distants et certaines actions applicatives. Conservés localement ou à distance, leur contenu, leur disponibilité et leur durée de conservation dépendent de la configuration et des conditions d'acquisition.",
+    "formulations_rapport": [
+      {
+        "type": "Examen",
+        "texte": "Nous procédons à l'examen des journaux applicatifs accessibles afin d'identifier les événements susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Événements identifiés",
+        "texte": "L'examen des journaux applicatifs permet d'identifier des événements techniques enregistrés."
+      },
+      {
+        "type": "Connexions et authentifications",
+        "texte": "Les journaux applicatifs examinés comportent des événements relatifs à des opérations de connexion ou d'authentification."
+      },
+      {
+        "type": "Reconstitution chronologique",
+        "texte": "L'analyse des journaux applicatifs permet d'établir une chronologie partielle des événements enregistrés, sous réserve de la fiabilité des informations temporelles disponibles."
+      },
+      {
+        "type": "Journaux incomplets",
+        "texte": "Les journaux applicatifs accessibles ne permettent pas de reconstituer l'ensemble des événements survenus pendant la période examinée."
+      },
+      {
+        "type": "Absence de journaux exploitables",
+        "texte": "L'examen des données disponibles ne permet pas d'identifier de journaux applicatifs exploitables au regard de la mission."
+      },
+      {
+        "type": "Corrélation",
+        "texte": "Nous procédons au rapprochement des événements identifiés dans les journaux applicatifs avec les autres traces numériques disponibles afin d'en apprécier la cohérence."
+      },
+      {
+        "type": "Limites d'attribution",
+        "texte": "Les événements identifiés dans les journaux applicatifs ne permettent pas, à eux seuls, de déterminer l'identité de la personne à l'origine des actions correspondantes."
+      }
+    ],
+    "sources": [
+      "NIST SP 800-92",
+      "OWASP — Logging Cheat Sheet",
+      "SWGDE — Computer Forensic Examinations"
+    ],
+    "anglais": "Application logs",
+    "synonymes": [
+      "Logs applicatifs",
+      "Journaux d'application"
+    ],
+    "categorie": "Preuve numérique",
+    "termes_deconseilles": [],
+    "termes_proches": [
+      "Horodatage",
+      "Métadonnées",
+      "Traces d'activité"
+    ],
+    "points_attention": [
+      "Un événement absent des journaux ne prouve pas son absence réelle.",
+      "La rotation et les réglages de conservation limitent l'exhaustivité.",
+      "Les horodatages et les attributions demandent une analyse contextualisée."
     ]
   },
   {
     "id": "journaux-systeme",
     "terme": "Journaux système",
-    "anglais": "Logs / Log files",
+    "anglais": "System logs / System event logs",
     "categorie": "Preuve numérique",
-    "definition": "Enregistrements produits par un système afin de conserver la trace d’événements significatifs, tels que des connexions utilisateur, l’utilisation de périphériques, des connexions réseau ou d’autres activités du système.",
+    "definition": "Ensemble d'enregistrements générés par un système d'exploitation ou ses composants, relatifs à son fonctionnement et aux événements détectés ou signalés. Ils peuvent concerner démarrages, connexions, authentifications, erreurs et activités de services. Leur contenu dépend de la configuration, des conditions de fonctionnement et de conservation. Ils peuvent être incomplets, absents, altérés ou écrasés.",
     "synonymes": [
-      "Fichiers journaux",
-      "Logs",
-      "Journaux d’événements"
+      "Journaux d'événements système",
+      "Logs système"
     ],
     "termes_deconseilles": [],
     "exemple_rapport": "L’examen des journaux système met en évidence plusieurs événements susceptibles de contribuer à la chronologie des faits.",
     "sources": [
-      "CLARUS D3.2 — Logs",
-      "CLARUS D3.2 — Log files"
+      "NIST SP 800-92",
+      "SWGDE — Computer Forensic Examinations",
+      "Microsoft — Event Log Records",
+      "systemd-journald"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Examen des journaux système",
+        "texte": "Nous procédons à l'examen des journaux système accessibles afin d'identifier les événements techniques susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Événements identifiés",
+        "texte": "L'examen des journaux système permet d'identifier plusieurs événements techniques enregistrés par l'équipement au cours de son fonctionnement."
+      },
+      {
+        "type": "Reconstitution chronologique",
+        "texte": "L'analyse des journaux système permet d'établir une chronologie partielle des événements enregistrés, sous réserve de la fiabilité des informations temporelles disponibles."
+      },
+      {
+        "type": "Journaux incomplets",
+        "texte": "Les journaux système accessibles ne permettent pas de reconstituer l'ensemble des événements survenus pendant la période examinée."
+      },
+      {
+        "type": "Absence de journaux exploitables",
+        "texte": "L'examen des données disponibles ne permet pas d'identifier de journaux système exploitables au regard de la mission."
+      },
+      {
+        "type": "Corrélation",
+        "texte": "Nous procédons au rapprochement des événements identifiés dans les journaux système avec les autres traces numériques disponibles afin d'en apprécier la cohérence."
+      },
+      {
+        "type": "Limites d'attribution",
+        "texte": "Les événements identifiés dans les journaux système ne permettent pas, à eux seuls, de déterminer l'identité de la personne à l'origine des actions correspondantes."
+      }
+    ],
+    "termes_proches": [
+      "Horodatage",
+      "Métadonnées",
+      "Traces d'activité"
+    ],
+    "points_attention": [
+      "Un événement absent des journaux ne prouve pas son absence réelle.",
+      "La rotation et les réglages de conservation limitent l'exhaustivité.",
+      "Les horodatages et les attributions demandent une analyse contextualisée."
+    ]
+  },
+  {
+    "id": "knowledgec-ios",
+    "terme": "KnowledgeC (iOS)",
+    "anglais": "KnowledgeC database",
+    "categorie": "Téléphonie : iOS : Artefacts système",
+    "definition": "KnowledgeC est une base de données du sous-système CoreDuet d’Apple, destinée à conserver des informations relatives à l’activité des applications, au fonctionnement du terminal et à certains événements contextuels. Ses enregistrements peuvent comporter des horodatages, des identifiants d’application et des métadonnées. Leur exploitation contribue à reconstituer une chronologie partielle de l’activité du terminal, selon la version d’iOS, les mécanismes de conservation et le niveau d’acquisition.",
+    "synonymes": [
+      "Base KnowledgeC",
+      "knowledgeC.db"
+    ],
+    "termes_proches": [
+      "Biome (iOS)",
+      "Traces d'activité",
+      "Activité applicative",
+      "Événements système"
+    ],
+    "termes_deconseilles": [],
+    "donnees_potentielles": [
+      "Événements horodatés d’activité applicative",
+      "Événements relatifs au verrouillage ou à l’état d’affichage du terminal",
+      "Événements contextuels, de navigation, de notification ou multimédias, selon les flux disponibles",
+      "Métadonnées d’événements et informations sur leurs sources"
+    ],
+    "points_attention": [
+      "Chemin couramment documenté : /private/var/mobile/Library/CoreDuet/Knowledge/knowledgeC.db ; vérifier son existence dans l’acquisition.",
+      "Tenir compte, lorsqu’ils existent, des fichiers SQLite -wal et -shm pour une interprétation cohérente des données.",
+      "Les tables fréquemment documentées comprennent ZOBJECT, ZSTRUCTUREDMETADATA et ZSOURCE ; leur schéma dépend de la version examinée.",
+      "Contrôler la conversion des horodatages Apple (époque du 1er janvier 2001 UTC selon le champ) et leur fuseau horaire.",
+      "Les données peuvent être partielles ou absentes ; un événement manquant n’exclut pas l’activité correspondante.",
+      "Les événements ne permettent pas à eux seuls d’identifier la personne ayant utilisé le téléphone ou de caractériser les actions réalisées.",
+      "Vérifier les interprétations automatiques en les confrontant aux enregistrements sources et, si nécessaire, à Biome ou aux autres artefacts disponibles."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Présentation de la base",
+        "texte": "La base de données KnowledgeC du système iOS conserve des informations relatives à l’activité des applications et à certains événements de fonctionnement du terminal."
+      },
+      {
+        "type": "Base identifiée",
+        "texte": "Nous identifions dans les données extraites une base de données KnowledgeC contenant des enregistrements relatifs à l’activité du terminal."
+      },
+      {
+        "type": "Exploitation des événements",
+        "texte": "L’analyse de la base KnowledgeC met en évidence plusieurs événements horodatés relatifs à l’activité du terminal et des applications."
+      },
+      {
+        "type": "Activité applicative",
+        "texte": "Les données enregistrées dans KnowledgeC permettent de relever des événements d’activité associés à certaines applications présentes sur le terminal."
+      },
+      {
+        "type": "Reconstitution chronologique",
+        "texte": "Le rapprochement des événements enregistrés dans la base KnowledgeC contribue à établir une chronologie partielle de l’activité du terminal pour la période étudiée."
+      },
+      {
+        "type": "Corrélation des artefacts",
+        "texte": "Les événements issus de KnowledgeC ont été rapprochés des autres traces numériques disponibles afin de contextualiser les activités relevées."
+      },
+      {
+        "type": "Limites d’interprétation",
+        "texte": "Les événements identifiés dans la base KnowledgeC constituent des traces d’activité du système. Leur présence ne permet pas, à elle seule, d’établir l’identité de la personne ayant utilisé le terminal ni de déterminer précisément les actions réalisées."
+      },
+      {
+        "type": "Données insuffisantes",
+        "texte": "Les données accessibles dans la base KnowledgeC ne permettent pas de reconstituer de manière exhaustive l’activité du terminal pour la période examinée."
+      }
+    ],
+    "sources": [
+      "Athena Forensics — The KnowledgeC Database, https://athenaforensics.co.uk/the-knowledgec-database/",
+      "Scott Koenig — iOS KnowledgeC.db Notifications, DFIR Review (2022), https://dfir.pubpub.org/pub/g2v1z97i/release/1",
+      "KnowledgeC Parser — https://www.knowledgecparser.com/en",
+      "KnowledgeC Parser — Forensics Guide, https://www.knowledgecparser.com/en/blog/knowledgec-db-forensics-guide",
+      "mac4n6/APOLLO — https://github.com/mac4n6/APOLLO"
+    ]
+  },
+  {
+    "id": "limites-techniques-orientation",
+    "terme": "Limites techniques et orientation vers un service spécialisé",
+    "anglais": "",
+    "categorie": "Mission : Limites et orientation",
+    "definition": "Situation dans laquelle une opération demandée ne peut pas être réalisée avec les moyens techniques disponibles au sein du service. Une orientation vers un service spécialisé peut alors être proposée au requérant.",
+    "synonymes": [
+      "Moyens techniques insuffisants",
+      "Extraction non réalisable",
+      "Orientation vers un service spécialisé"
+    ],
+    "termes_proches": [
+      "Extraction des données",
+      "Accès aux données",
+      "Examen complémentaire"
+    ],
+    "termes_deconseilles": [],
+    "points_attention": [
+      "La formulation doit préciser l’opération concernée et, lorsqu’elle est connue, la difficulté rencontrée. L’impossibilité de réaliser une extraction avec les moyens du service ne permet pas de conclure qu’elle serait impossible avec d’autres moyens.",
+      "Les indications entre crochets sont à remplacer avant insertion dans le rapport.",
+      "La formulation relative aux tentatives d’extraction s’utilise uniquement si celles-ci ont effectivement été réalisées."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Extraction non réalisable avec les moyens disponibles",
+        "texte": "Les moyens techniques dont nous disposons ne permettent pas de procéder à l’extraction des données du support examiné."
+      },
+      {
+        "type": "Extraction tentée sans succès",
+        "texte": "Les tentatives d’extraction réalisées avec les moyens techniques disponibles au sein de notre service n’ont pas permis d’extraire les données du support examiné."
+      },
+      {
+        "type": "Orientation avec indication du service",
+        "texte": "Les moyens techniques dont nous disposons ne permettent pas de procéder à l’extraction des données du support examiné. Nous invitons le requérant à solliciter [nom du service spécialisé] afin d’évaluer les possibilités d’extraction."
+      },
+      {
+        "type": "Orientation sans service désigné",
+        "texte": "L’extraction des données du support examiné ne peut pas être réalisée avec les moyens techniques disponibles au sein de notre service. Nous invitons le requérant à solliciter un service spécialisé afin d’évaluer les possibilités de prise en charge."
+      },
+      {
+        "type": "Difficulté identifiée",
+        "texte": "En raison de [difficulté technique constatée], nous ne sommes pas en mesure de procéder à l’extraction des données du support avec les moyens disponibles. Nous invitons le requérant à solliciter [nom du service spécialisé] pour un examen complémentaire."
+      },
+      {
+        "type": "Extraction partielle et orientation",
+        "texte": "L’extraction réalisée a permis d’obtenir [données obtenues]. Les moyens techniques disponibles ne permettent toutefois pas d’accéder à [données ou partie du support concernée]. Nous invitons le requérant à solliciter [nom du service spécialisé] afin d’évaluer les possibilités d’extraction complémentaire."
+      }
+    ],
+    "sources": [
+      "Lexique forensique FR — usage professionnel"
     ]
   },
   {
@@ -881,24 +2509,19 @@
     "terme": "Mémoire cache",
     "anglais": "Cache memory",
     "categorie": "Preuve numérique",
-    "definition": "Type de mémoire utilisé par un système ou une application pour stocker temporairement des fichiers et d’autres données. Les éléments présents dans le cache peuvent présenter une valeur probatoire.",
+    "definition": "Mémoire intermédiaire à accès rapide, utilisée notamment par les processeurs et certains composants informatiques pour conserver temporairement des données ou des instructions et réduire les délais d'accès aux informations. Son contenu est généralement volatil et dépend du fonctionnement du matériel et du système. La mémoire cache matérielle doit être distinguée des caches applicatifs et des caches système susceptibles de conserver des données sur un support de stockage.",
     "synonymes": [
-      "Cache"
+      "Cache mémoire"
     ],
     "termes_deconseilles": [],
-    "exemple_rapport": "L’analyse de la mémoire cache permet d’identifier des fichiers temporaires et autres éléments résiduels.",
     "sources": [
       "CLARUS D3.2 — Cache memory"
     ],
-    "formulations_rapport": [
-      {
-        "type": "Données de cache identifiées",
-        "texte": "L’examen des données met en évidence des éléments présents dans la mémoire cache de l’application."
-      },
-      {
-        "type": "Attribution prudente",
-        "texte": "La présence d’un élément dans la mémoire cache atteste de sa présence dans les données locales, sans permettre à elle seule d’en déterminer l’auteur, le destinataire ou le contexte d’utilisation."
-      }
+    "formulations_rapport": [],
+    "termes_proches": [
+      "Cache applicatif",
+      "Cache système",
+      "Mémoire vive (RAM)"
     ]
   },
   {
@@ -1040,12 +2663,55 @@
     "terme": "Métadonnées",
     "anglais": "Metadata",
     "categorie": "Preuve numérique",
-    "definition": "Données décrivant d’autres données, notamment leurs caractéristiques, propriétés, contexte ou structure. En criminalistique numérique, elles peuvent contribuer à établir l’origine, l’historique ou les attributs d’un fichier ou d’un système.",
-    "synonymes": [],
+    "definition": "Informations associées à des données numériques et permettant d'en décrire les caractéristiques, la structure, l'origine technique ou certaines propriétés. Les métadonnées peuvent être enregistrées dans les fichiers eux-mêmes, dans les structures d'un système de fichiers ou dans celles d'une application. Leur interprétation nécessite de tenir compte de leur provenance, des mécanismes qui les produisent et des opérations susceptibles de les modifier.",
+    "synonymes": [
+      "Métainformations"
+    ],
     "termes_deconseilles": [],
     "exemple_rapport": "L’examen des métadonnées permet d’apporter des éléments complémentaires sur l’origine et l’historique du fichier.",
     "sources": [
-      "CLARUS D3.2 — Metadata"
+      "NIST SP 800-86",
+      "SWGDE — Computer Forensic Acquisition",
+      "ExifTool — FAQ",
+      "NIST — Provenience-based Cross-verification of Digital Forensic Artifacts Applied to NTFS (2024)"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Examen des métadonnées",
+        "texte": "Nous procédons à l'examen des métadonnées associées aux fichiers afin de relever les informations techniques disponibles."
+      },
+      {
+        "type": "Métadonnées présentant un intérêt",
+        "texte": "L'analyse des métadonnées permet d'identifier des informations susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Absence ou données incomplètes",
+        "texte": "Les fichiers examinés ne comportent pas, ou seulement partiellement, les métadonnées recherchées."
+      },
+      {
+        "type": "Limites d'interprétation",
+        "texte": "Les métadonnées relevées ne permettent pas, à elles seules, d'établir les circonstances exactes de création, de modification ou d'utilisation des fichiers concernés."
+      },
+      {
+        "type": "Incohérence des métadonnées",
+        "texte": "L'examen met en évidence des incohérences entre certaines métadonnées, dont l'origine ne peut être déterminée avec certitude à partir des seules informations disponibles."
+      },
+      {
+        "type": "Divergence entre sources",
+        "texte": "Nous constatons des différences entre les métadonnées enregistrées dans les fichiers et celles issues du système de fichiers ou des applications, sans que les informations disponibles permettent d'en déterminer avec certitude l'origine."
+      }
+    ],
+    "termes_proches": [
+      "EXIF",
+      "Horodatage",
+      "Artefact forensique",
+      "Système de fichiers",
+      "Journaux système"
+    ],
+    "points_attention": [
+      "La date de création du fichier peut différer de celle du contenu.",
+      "Les copies et exportations peuvent modifier les métadonnées.",
+      "Une incohérence ne démontre pas une manipulation volontaire."
     ]
   },
   {
@@ -1053,7 +2719,7 @@
     "terme": "Mode avion",
     "anglais": "Airplane mode",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Réglage d’un appareil qui désactive ses fonctions de communication sans fil afin d’empêcher l’accès aux réseaux. Il peut être utilisé, lorsque les conditions le permettent, pour contribuer à préserver l’intégrité des données d’un appareil mobile.",
+    "definition": "Fonction d'un équipement mobile permettant de désactiver ou de limiter certaines communications radio, notamment les connexions cellulaires. Selon l'appareil et sa configuration, les interfaces Wi-Fi et Bluetooth peuvent rester actives ou être réactivées indépendamment. L'activation du mode avion ne garantit donc pas, à elle seule, l'isolement complet de l'équipement vis-à-vis des réseaux.",
     "synonymes": [
       "Mode hors-ligne"
     ],
@@ -1079,6 +2745,119 @@
         "type": "Activation non réalisée pour préserver l’état du support",
         "texte": "Afin de préserver l’état du support et de ne pas compromettre l’accès aux données, nous ne procédons pas à l’activation du mode avion."
       }
+    ],
+    "termes_proches": [
+      "Isolement réseau",
+      "Acquisition forensique",
+      "Préservation des données"
+    ]
+  },
+  {
+    "id": "mozilla-firefox",
+    "terme": "Mozilla Firefox",
+    "definition": "Navigateur Internet développé par Mozilla. Il peut conserver des historiques, recherches, téléchargements, favoris, formulaires, cookies, sessions et données de comptes. Leur présence et leur interprétation dépendent du profil, de la plateforme, de la version, de la synchronisation et des conditions d'acquisition.",
+    "formulations_rapport": [
+      {
+        "type": "Identification",
+        "texte": "Nous identifions la présence du navigateur Internet Mozilla Firefox sur le support examiné."
+      },
+      {
+        "type": "Examen",
+        "texte": "Nous procédons à l'examen des données accessibles associées à Mozilla Firefox afin d'identifier les éléments susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Historique identifié",
+        "texte": "L'examen des données de Mozilla Firefox permet d'identifier des enregistrements d'historique de navigation associés à différentes adresses Internet."
+      },
+      {
+        "type": "Téléchargements",
+        "texte": "Les données de Mozilla Firefox comportent des enregistrements relatifs à des opérations de téléchargement."
+      },
+      {
+        "type": "Plusieurs profils",
+        "texte": "Nous identifions plusieurs profils associés à Mozilla Firefox et procédons à l'examen des données accessibles de chacun d'eux."
+      },
+      {
+        "type": "Accès partiel",
+        "texte": "Les conditions techniques de l'examen ne permettent d'accéder qu'à une partie des données associées au navigateur Mozilla Firefox."
+      },
+      {
+        "type": "Absence de données",
+        "texte": "L'examen des données accessibles de Mozilla Firefox ne permet pas d'identifier d'éléments exploitables au regard de la mission."
+      },
+      {
+        "type": "Limites d'attribution",
+        "texte": "Les traces identifiées dans les données de Mozilla Firefox ne permettent pas, à elles seules, d'établir l'identité de la personne ayant réalisé les opérations de navigation correspondantes."
+      },
+      {
+        "type": "Données de formulaires",
+        "texte": "L'examen des données de Mozilla Firefox permet d'identifier des informations conservées au titre du remplissage automatique de formulaires."
+      },
+      {
+        "type": "Adresses distinctes",
+        "texte": "L'examen des données de Mozilla Firefox permet d'identifier [nombre] adresses Internet distinctes dans l'historique de navigation, pour une période comprise entre le [date de début] et le [date de fin]."
+      },
+      {
+        "type": "Événements de navigation",
+        "texte": "L'analyse de l'historique de Mozilla Firefox permet de relever [nombre] événements de navigation enregistrés entre le [date de début] et le [date de fin]."
+      }
+    ],
+    "sources": [
+      "Mozilla — Données et fichiers importants",
+      "Mozilla — Profils Firefox",
+      "Mozilla — Firefox Data Stores",
+      "Mozilla — Firefox iOS"
+    ],
+    "anglais": "Mozilla Firefox / Firefox Web Browser",
+    "categorie": "Logiciel et application",
+    "synonymes": [
+      "Firefox"
+    ],
+    "termes_deconseilles": [],
+    "termes_proches": [
+      "Navigateur Internet",
+      "Historique de navigation",
+      "Google Chrome",
+      "Cookies"
+    ],
+    "points_attention": [
+      "Les bases mobiles peuvent différer des versions de bureau.",
+      "formhistory.sqlite n'établit pas un envoi de formulaire.",
+      "Considérer les journaux SQLite WAL et SHM le cas échéant.",
+      "Présenter les horodatages après conversion vérifiée."
+    ],
+    "artefacts_techniques": [
+      "places.sqlite — Historique et favoris",
+      "formhistory.sqlite — Formulaires",
+      "cookies.sqlite — Cookies",
+      "logins.json / key4.db — Identifiants",
+      "favicons.sqlite — Icônes",
+      "permissions.sqlite — Autorisations",
+      "prefs.js — Préférences",
+      "sessionstore.jsonlz4 — Sessions",
+      "storage/ — Stockage Web"
+    ],
+    "emplacements_par_systeme": [
+      {
+        "systeme": "Windows",
+        "chemin": "%APPDATA%\\Mozilla\\Firefox\\Profiles\\"
+      },
+      {
+        "systeme": "Linux",
+        "chemin": "~/.mozilla/firefox/"
+      },
+      {
+        "systeme": "macOS",
+        "chemin": "~/Library/Application Support/Firefox/Profiles/"
+      },
+      {
+        "systeme": "Android",
+        "chemin": "/data/user/0/org.mozilla.firefox/ (selon version)"
+      },
+      {
+        "systeme": "iOS",
+        "chemin": "Conteneur Firefox/AppGroup, profile.profile/browser.db selon version"
+      }
     ]
   },
   {
@@ -1098,6 +2877,223 @@
     "points_attention": [
       "La valeur MSISDN présente sur une carte SIM peut être absente, obsolète ou modifiée.",
       "Elle doit être corroborée par d’autres éléments avant d’être utilisée pour attribuer un numéro à un abonnement ou à un utilisateur."
+    ]
+  },
+  {
+    "id": "navigateur-internet",
+    "terme": "Navigateur Internet",
+    "definition": "Logiciel permettant d'accéder aux ressources et services disponibles sur le Web, d'en interpréter les contenus et de permettre l'interaction avec eux. Dans un examen numérique, il peut conserver des historiques, recherches, téléchargements, sessions et données de comptes. Les informations peuvent être stockées localement, synchronisées ou conservées à distance ; leur accessibilité dépend de la version, du profil, de la configuration et du type d'acquisition.",
+    "formulations_rapport": [
+      {
+        "type": "Identification",
+        "texte": "Nous identifions la présence du navigateur Internet [nom du navigateur] sur le support examiné."
+      },
+      {
+        "type": "Examen",
+        "texte": "Nous procédons à l'examen des données du navigateur accessibles afin d'identifier les éléments susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Plusieurs navigateurs",
+        "texte": "Nous identifions plusieurs navigateurs Internet sur le support examiné et procédons à l'examen des données accessibles associées à chacun d'eux."
+      },
+      {
+        "type": "Plusieurs profils",
+        "texte": "L'examen met en évidence plusieurs profils associés au navigateur Internet, dont les données sont étudiées séparément."
+      },
+      {
+        "type": "Données identifiées",
+        "texte": "L'examen du navigateur permet d'identifier des données relatives à la navigation Internet, notamment des historiques, des informations de session ou des fichiers conservés localement."
+      },
+      {
+        "type": "Données limitées",
+        "texte": "Les données accessibles du navigateur ne permettent qu'une restitution partielle des informations relatives à son utilisation."
+      },
+      {
+        "type": "Absence de données",
+        "texte": "L'examen des données accessibles associées au navigateur ne permet pas d'identifier d'éléments exploitables au regard de la mission."
+      },
+      {
+        "type": "Limites d'attribution",
+        "texte": "Les informations enregistrées par le navigateur ne permettent pas, à elles seules, d'établir l'identité de la personne ayant réalisé les opérations de navigation correspondantes."
+      }
+    ],
+    "sources": [
+      "Mozilla — Firefox Profiles",
+      "Chromium — User Data Directory",
+      "Mozilla — Places",
+      "Chromium — Incognito"
+    ],
+    "anglais": "Web browser",
+    "categorie": "Logiciel et application",
+    "synonymes": [
+      "Navigateur Web",
+      "Navigateur"
+    ],
+    "termes_deconseilles": [],
+    "termes_proches": [
+      "Historique de navigation",
+      "Cookies",
+      "Cache applicatif",
+      "Traces d'activité"
+    ],
+    "points_attention": [
+      "La présence d'un navigateur ne démontre pas son usage.",
+      "Un historique synchronisé peut provenir d'un autre appareil.",
+      "Une connexion automatisée ne démontre pas une navigation volontaire."
+    ]
+  },
+  {
+    "id": "notification-and-suggestion-db-ios",
+    "terme": "notificationAndSuggestionDB.db (iOS)",
+    "anglais": "Notification and Suggestion Database",
+    "categorie": "Téléphonie : iOS : Artefacts système",
+    "synonymes": [
+      "Base des métadonnées de notifications"
+    ],
+    "termes_proches": [
+      "Notifications (iOS)",
+      "Biome (iOS)",
+      "KnowledgeC (iOS)"
+    ],
+    "termes_deconseilles": [],
+    "definition": "Base de données SQLite du sous-système DuetExpertCenter d'Apple qui conserve des métadonnées relatives aux notifications enregistrées sur un appareil iOS. Elle peut contenir des horodatages, des identifiants d'applications, de conversations ou de correspondants et des indicateurs relatifs au traitement des notifications. Son exploitation permet de rechercher des événements de notification et de contribuer à leur contextualisation chronologique. Les travaux examinés n'ont pas mis en évidence la conservation du contenu textuel des notifications dans cette base.",
+    "donnees_potentielles": [
+      "Horodatages de réception et d'état des notifications",
+      "Identifiants des applications (BundleID)",
+      "Identifiants de conversations ou correspondants (ThreadID, ContactID, rawIdentifier)",
+      "Indicateurs de message individuel ou de groupe (isMessage, isGroupMessage)",
+      "Longueur déclarée du corps de notification (notificationBodyLength), sans conservation garantie du texte",
+      "Métadonnées d'état et de traitement (latestOutcome, latestOutcomeTimestamp, isActive, isProminent)"
+    ],
+    "points_attention": [
+      "Emplacement documenté : /private/var/mobile/Library/DuetExpertCenter/streams/notificationAndSuggestionDB.db ; contrôler la présence réelle dans l'acquisition.",
+      "La table notifications compte 36 colonnes dans les versions étudiées ; le schéma doit être vérifié selon l'appareil.",
+      "Des historiques de l'ordre de 60 jours ont été observés sur certains appareils sous iOS 15 à 26 : ce n'est ni un délai garanti ni une politique officielle Apple.",
+      "Un enregistrement n'établit pas l'affichage effectif, la lecture ou l'ouverture de la notification.",
+      "Un identifiant de conversation ou de correspondant nécessite une corroboration et ne suffit pas à attribuer une communication à une personne.",
+      "L'heure enregistrée pour la notification peut différer de celle de l'événement d'origine.",
+      "Les valeurs des champs non suffisamment documentés doivent être conservées sans interprétation hasardeuse.",
+      "L'absence d'un enregistrement n'établit pas l'absence de notification ou de communication."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Présentation de la base",
+        "texte": "Le système iOS conserve, au sein de la base notificationAndSuggestionDB.db, des métadonnées relatives aux notifications associées aux applications du terminal."
+      },
+      {
+        "type": "Base identifiée",
+        "texte": "Nous identifions dans les données extraites la base notificationAndSuggestionDB.db, contenant des enregistrements relatifs aux notifications du terminal."
+      },
+      {
+        "type": "Notifications identifiées",
+        "texte": "L'analyse de cette base met en évidence plusieurs événements de notification horodatés associés à différentes applications."
+      },
+      {
+        "type": "Notification associée à une application",
+        "texte": "Nous identifions un enregistrement de notification associé à l'application concernée, accompagné d'un horodatage de réception."
+      },
+      {
+        "type": "Correspondant identifié",
+        "texte": "L'examen des métadonnées de notification met en évidence un identifiant susceptible de correspondre à un numéro de téléphone associé à une communication."
+      },
+      {
+        "type": "Conversation identifiée",
+        "texte": "Les données analysées comportent un identifiant de conversation associé à une notification provenant de l'application concernée."
+      },
+      {
+        "type": "Reconstitution chronologique",
+        "texte": "Le rapprochement des horodatages de notification contribue à établir une chronologie partielle des événements enregistrés par le système."
+      },
+      {
+        "type": "Corrélation des données",
+        "texte": "Les métadonnées de notification ont été rapprochées des autres données accessibles afin de rechercher des correspondances avec les communications identifiées sur le terminal."
+      },
+      {
+        "type": "Limites d'interprétation",
+        "texte": "Les enregistrements identifiés correspondent à des métadonnées de notification et ne permettent pas, à eux seuls, d'établir la consultation des notifications par l'utilisateur ni de déterminer leur contenu."
+      },
+      {
+        "type": "Données insuffisantes",
+        "texte": "Les données accessibles dans cette base ne permettent pas de reconstituer de manière exhaustive l'historique des notifications du terminal."
+      }
+    ],
+    "sources": [
+      "Mattia Epifani — After the Signal Fix: Exploring Apple's notificationAndSuggestionDB.db (28 juillet 2026), https://blog.digital-forensics.it/2026/07/after-signal-fix-exploring-apples.html",
+      "iLEAPP — iOS Logs, Events, And Plist Parser, https://github.com/abrignoni/iLEAPP",
+      "Mattia Epifani — 84 Streams Later, Part 2: Inside Apple Biome (27 juillet 2026), https://blog.digital-forensics.it/2026/07/84-streams-later-part-2-inside-apple.html"
+    ]
+  },
+  {
+    "id": "notifications-ios",
+    "terme": "Notifications (iOS)",
+    "anglais": "iOS notifications",
+    "categorie": "Téléphonie : iOS : Artefacts système",
+    "definition": "Les notifications iOS sont des informations générées par les applications ou par le système d’exploitation afin de signaler un événement, une activité ou la disponibilité de nouveaux contenus. Le système peut conserver des traces de leur réception, de leur présentation ou de leur traitement, comprenant selon les artefacts des horodatages, identifiants applicatifs, métadonnées ou éléments de contenu. Leur analyse peut contribuer à contextualiser une activité applicative et à reconstituer une chronologie partielle.",
+    "synonymes": [
+      "Notifications système",
+      "Notifications applicatives"
+    ],
+    "termes_proches": [
+      "KnowledgeC (iOS)",
+      "Biome (iOS)",
+      "Traces d'activité",
+      "Activité applicative"
+    ],
+    "termes_deconseilles": [],
+    "donnees_potentielles": [
+      "Horodatages d’événements relatifs aux notifications",
+      "Identifiants techniques des applications concernées",
+      "Titres, aperçus ou textes de notification lorsqu’ils sont conservés",
+      "Métadonnées associées à une conversation ou à un événement selon les artefacts",
+      "Événements de présentation, de traitement ou de retrait lorsque disponibles"
+    ],
+    "points_attention": [
+      "La réception d’une notification ne démontre pas son affichage effectif, sa consultation ou sa lecture.",
+      "Un événement de disparition ou de traitement peut résulter du fonctionnement automatique d’iOS ; une suppression volontaire ne peut être déduite sans corroboration.",
+      "Les informations et leur conservation varient selon la version d’iOS, l’acquisition et l’application ; elles ne sont pas systématiquement réunies dans un même artefact.",
+      "Une notification peut ne contenir que des métadonnées et ne restitue pas nécessairement le contenu de l’événement qui l’a générée.",
+      "L’absence d’une notification ne démontre pas l’absence du message ou de l’événement associé.",
+      "Ces traces ne suffisent pas à identifier la personne qui utilisait l’appareil."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Présentation de l’artefact",
+        "texte": "Le système iOS est susceptible de conserver des informations relatives aux notifications générées par les applications et aux événements associés à leur traitement."
+      },
+      {
+        "type": "Notifications identifiées",
+        "texte": "L’analyse des données extraites met en évidence plusieurs notifications associées aux applications présentes sur le terminal."
+      },
+      {
+        "type": "Notification liée à une application",
+        "texte": "Nous identifions un événement de notification horodaté associé à l’application concernée."
+      },
+      {
+        "type": "Contenu de notification retrouvé",
+        "texte": "L’examen des données système permet de retrouver le contenu d’une notification associée à l’application concernée."
+      },
+      {
+        "type": "Contenu absent de l’application",
+        "texte": "Nous identifions dans les données de notification des informations associées à une communication dont le contenu correspondant n’a pas été retrouvé dans les données applicatives accessibles."
+      },
+      {
+        "type": "Interaction avec une notification",
+        "texte": "Les données analysées mettent en évidence des événements relatifs au traitement de certaines notifications, sans permettre à eux seuls de déterminer précisément les actions réalisées par l’utilisateur."
+      },
+      {
+        "type": "Corrélation avec les communications",
+        "texte": "Le rapprochement des notifications avec les données de communication permet de contextualiser certains événements enregistrés sur le terminal."
+      },
+      {
+        "type": "Limites de l’interprétation",
+        "texte": "La présence d’une notification dans les données extraites ne permet pas, à elle seule, d’établir que son contenu a été consulté par l’utilisateur du terminal."
+      }
+    ],
+    "sources": [
+      "Scott Koenig — iOS KnowledgeC.db Notifications, DFIR Review (2022), https://dfir.pubpub.org/pub/g2v1z97i/release/1",
+      "Geraldine Blay et Alexis Brignoni — Peeking at User Notification Events in iOS 15, DFIR Review (2023), https://dfir.pubpub.org/pub/6amsr72k/release/1",
+      "Mattia Epifani — After the Signal Fix, ZENA Forensics (2026), https://blog.digital-forensics.it/2026/07/after-signal-fix-exploring-apples.html",
+      "Apple Developer — UNUserNotificationCenter, https://developer.apple.com/documentation/usernotifications/unusernotificationcenter/getdeliverednotifications%28completionhandler%3A%29"
     ]
   },
   {
@@ -1130,6 +3126,142 @@
     ]
   },
   {
+    "id": "peripheriques-connectes",
+    "categorie": "Technologie numérique",
+    "synonymes": [
+      "Périphériques externes",
+      "Équipements connectés"
+    ],
+    "termes_deconseilles": [],
+    "terme": "Périphériques connectés",
+    "anglais": "Connected devices / Peripheral devices",
+    "definition": "Équipements matériels reliés ou ayant été reliés à un système informatique au moyen d'une interface physique ou d'une liaison sans fil, afin de permettre des échanges de données, l'accès à des ressources ou la réalisation de fonctions particulières. Ces équipements peuvent notamment comprendre des supports de stockage amovibles, des téléphones, des imprimantes, des périphériques de saisie, des appareils Bluetooth ou des équipements réseau. En criminalistique numérique, l'examen des traces système peut permettre d'identifier certains périphériques détectés, installés ou connectés, leurs caractéristiques techniques et, selon les sources disponibles, des informations temporelles associées. Leur interprétation nécessite de distinguer la détection d'un équipement, l'établissement d'une connexion et son utilisation effective.",
+    "formulations_rapport": [
+      {
+        "type": "Recherche de périphériques connectés",
+        "texte": "Nous procédons à l'examen des traces système susceptibles de renseigner sur les périphériques connectés ou précédemment associés à l'équipement."
+      },
+      {
+        "type": "Périphériques identifiés",
+        "texte": "L'examen des données du système permet d'identifier des informations relatives à [nombre] périphériques distincts."
+      },
+      {
+        "type": "Identification d'un périphérique",
+        "texte": "Les informations techniques examinées permettent d'identifier un périphérique de type [type], présentant les caractéristiques suivantes : [caractéristiques]."
+      },
+      {
+        "type": "Détection d'un périphérique",
+        "texte": "L'examen des événements système permet d'identifier un événement de détection associé au périphérique [désignation], enregistré le [date et heure]."
+      },
+      {
+        "type": "Installation d'un périphérique",
+        "texte": "Les journaux du système comportent des informations relatives à l'installation du périphérique [désignation] ou de ses composants logiciels."
+      },
+      {
+        "type": "Connexion d'un périphérique",
+        "texte": "Les traces techniques identifiées permettent de relever un événement de connexion associé au périphérique [désignation], dans les conditions décrites au présent rapport."
+      },
+      {
+        "type": "Corrélation des traces",
+        "texte": "Nous procédons au rapprochement des informations relatives au périphérique [désignation] avec les autres traces numériques disponibles afin d'en apprécier la cohérence."
+      },
+      {
+        "type": "Périphérique précédemment associé",
+        "texte": "L'examen du système permet d'identifier des informations résiduelles relatives à un périphérique précédemment associé à l'équipement, sans permettre de déterminer sa présence physique au moment de l'examen."
+      },
+      {
+        "type": "Absence de traces exploitables",
+        "texte": "L'examen des données accessibles ne permet pas d'identifier de traces exploitables relatives à la connexion du périphérique recherché."
+      },
+      {
+        "type": "Limites d'interprétation",
+        "texte": "Les éléments techniques identifiés ne permettent pas, à eux seuls, d'établir les circonstances d'utilisation du périphérique ni l'existence d'éventuels transferts de données."
+      }
+    ],
+    "termes_proches": [
+      "Clé USB",
+      "Support numérique",
+      "Journaux système",
+      "Traces d'activité",
+      "Connexion de supports USB"
+    ],
+    "sources": [
+      "Microsoft — Audit PnP Activity",
+      "Microsoft — SetupAPI Device Installation Log Entries",
+      "Linux — systemd.device"
+    ],
+    "points_attention": [
+      "Détection ne garantit pas fonctionnement opérationnel.",
+      "Installation de pilote ne permet pas de compter les connexions.",
+      "VID/PID n'identifient pas systématiquement un exemplaire unique.",
+      "Un appairage Bluetooth n'établit pas une connexion active."
+    ],
+    "artefacts_techniques": [
+      {
+        "systeme": "Windows",
+        "sources": "USB, USBSTOR, MountedDevices, SetupAPI et PnP"
+      },
+      {
+        "systeme": "Linux",
+        "sources": "udev, journaux du noyau, systemd-journald"
+      },
+      {
+        "systeme": "macOS",
+        "sources": "IORegistry, journaux unifiés"
+      }
+    ]
+  },
+  {
+    "id": "precision-mission-requerant",
+    "terme": "Précision de la mission avec le requérant",
+    "anglais": "",
+    "categorie": "Mission : Échanges avec le requérant",
+    "definition": "Échange avec le requérant permettant de préciser les éléments à rechercher, les questions auxquelles l’examen doit répondre ou les priorités de l’analyse.",
+    "synonymes": [
+      "Prise de contact avec le requérant",
+      "Précision de la demande",
+      "Clarification de la mission"
+    ],
+    "termes_proches": [
+      "Périmètre des recherches",
+      "Objectifs de la mission"
+    ],
+    "termes_deconseilles": [],
+    "points_attention": [
+      "Ces formulations permettent de rendre compte des précisions apportées à la demande initiale. Elles doivent correspondre au contenu de l’échange et distinguer les recherches demandées des résultats obtenus.",
+      "Les indications entre crochets sont à remplacer avant insertion dans le rapport."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Définition des recherches après prise de contact",
+        "texte": "À la suite d’une prise de contact avec le requérant, il nous est demandé de rechercher les éléments suivants : [éléments recherchés]."
+      },
+      {
+        "type": "Précision de la demande initiale",
+        "texte": "Après échange avec le requérant, les recherches à effectuer dans le cadre de la mission sont précisées comme suit : [éléments recherchés]."
+      },
+      {
+        "type": "Échange daté",
+        "texte": "Le [date], nous prenons contact avec [nom ou qualité du requérant]. À l’issue de cet échange, il nous est demandé de rechercher [éléments recherchés]."
+      },
+      {
+        "type": "Priorités de l’analyse",
+        "texte": "À la suite d’un échange avec le requérant, l’analyse porte en priorité sur [éléments prioritaires]."
+      },
+      {
+        "type": "Période à examiner",
+        "texte": "Après échange avec le requérant, les recherches portent sur [éléments recherchés], pour la période comprise entre le [date de début] et le [date de fin]."
+      },
+      {
+        "type": "Questions à examiner",
+        "texte": "À la suite d’un échange avec le requérant, notre examen vise à apporter des éléments de réponse aux questions suivantes : [questions à examiner]."
+      }
+    ],
+    "sources": [
+      "Lexique forensique FR — usage professionnel"
+    ]
+  },
+  {
     "id": "preuve-numerique",
     "terme": "Preuve numérique",
     "anglais": "Digital evidence",
@@ -1145,11 +3277,97 @@
     ]
   },
   {
+    "id": "profil-utilisateur",
+    "categorie": "Technologie numérique",
+    "synonymes": [
+      "Profil de l'utilisateur",
+      "User profile"
+    ],
+    "termes_deconseilles": [],
+    "terme": "Profil utilisateur",
+    "anglais": "User profile",
+    "definition": "Ensemble de données, de paramètres et de ressources associés à un compte utilisateur au sein d'un système d'exploitation. Un profil peut notamment comprendre des documents, des préférences personnelles, des configurations applicatives, des historiques, des caches et différentes informations relatives à l'environnement de travail. En criminalistique numérique, son examen peut permettre d'identifier des données associées à un compte, de rechercher certaines traces d'activité et d'étudier les caractéristiques de l'environnement utilisateur. La présence d'un profil ou de données dans celui-ci ne permet pas, à elle seule, d'établir l'identité de la personne ayant utilisé le compte ni les circonstances dans lesquelles ces données ont été produites.",
+    "formulations_rapport": [
+      {
+        "type": "Identification d'un profil utilisateur",
+        "texte": "L'examen des données du système permet d'identifier un profil utilisateur associé au compte [nom du compte]."
+      },
+      {
+        "type": "Plusieurs profils identifiés",
+        "texte": "Nous identifions [nombre] profils utilisateurs sur le support examiné."
+      },
+      {
+        "type": "Examen du profil utilisateur",
+        "texte": "Nous procédons à l'examen des données accessibles du profil utilisateur [nom du profil] afin d'identifier les éléments susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Données personnelles et applicatives",
+        "texte": "Le profil utilisateur examiné comporte des fichiers personnels et des données applicatives dont le contenu fait l'objet d'un examen complémentaire."
+      },
+      {
+        "type": "Paramètres et environnement utilisateur",
+        "texte": "L'examen du profil permet d'identifier des informations relatives à la configuration de l'environnement utilisateur et aux paramètres de certaines applications."
+      },
+      {
+        "type": "Traces d'activité associées au profil",
+        "texte": "Les données du profil utilisateur comportent des traces d'activité enregistrées par le système ou les applications examinées."
+      },
+      {
+        "type": "Profil partiellement accessible",
+        "texte": "Les conditions techniques de l'examen ne permettent d'accéder qu'à une partie des données associées au profil utilisateur [nom du profil]."
+      },
+      {
+        "type": "Profil utilisateur résiduel",
+        "texte": "Nous identifions des données résiduelles associées à un profil utilisateur dont les informations disponibles ne permettent pas d'établir l'état actuel ou les circonstances de suppression."
+      },
+      {
+        "type": "Corrélation avec un compte utilisateur",
+        "texte": "Nous procédons au rapprochement des informations contenues dans le profil utilisateur avec les caractéristiques du compte associé afin d'en apprécier la cohérence."
+      },
+      {
+        "type": "Limites d'attribution",
+        "texte": "Les données identifiées dans le profil utilisateur ne permettent pas, à elles seules, d'établir l'identité de la personne ayant effectivement utilisé le compte correspondant."
+      }
+    ],
+    "termes_proches": [
+      "Compte utilisateur",
+      "Session utilisateur",
+      "Fichiers récents",
+      "Traces d'activité",
+      "Répertoire personnel"
+    ],
+    "sources": [
+      "Microsoft — User Profiles",
+      "Freedesktop — XDG Base Directory Specification",
+      "Filesystem Hierarchy Standard",
+      "Apple — Dossiers de macOS"
+    ],
+    "points_attention": [
+      "Un compte peut exister sans profil local exploitable.",
+      "Le nom du répertoire ne suffit pas à identifier le compte.",
+      "Les profils itinérants et les données synchronisées peuvent provenir d'ailleurs."
+    ],
+    "emplacements_par_systeme": [
+      {
+        "systeme": "Windows",
+        "chemin": "C:\\Users\\[utilisateur]\\ ; NTUSER.DAT ; AppData"
+      },
+      {
+        "systeme": "Linux",
+        "chemin": "/home/[utilisateur]/ ; .config ; .local/share ; .cache"
+      },
+      {
+        "systeme": "macOS",
+        "chemin": "/Users/[utilisateur]/ ; Library/Preferences ; Library/Application Support"
+      }
+    ]
+  },
+  {
     "id": "recuperation-donnees",
     "terme": "Récupération de données",
     "anglais": "Retrieval / Data recovery",
     "categorie": "Méthode de criminalistique numérique",
-    "definition": "Processus consistant à accéder à des informations numériques et à les obtenir ou les restaurer depuis un support, un système de stockage ou une archive. Il peut inclure la récupération de contenus supprimés, cachés ou archivés.",
+    "definition": "Ensemble d'opérations techniques visant à retrouver et à rendre accessibles des données numériques devenues inaccessibles par les moyens habituels, notamment à la suite d'une suppression, d'une altération logique ou d'un dysfonctionnement du support. La récupération peut reposer sur l'exploitation des structures du système de fichiers, des données résiduelles, du carving ou d'autres méthodes adaptées à la source examinée. Les données récupérées peuvent être complètes, partielles ou nécessiter une reconstruction.",
     "synonymes": [
       "Restauration de données",
       "Récupération de fichiers"
@@ -1158,6 +3376,34 @@
     "exemple_rapport": "Nous procédons à la récupération des données accessibles, y compris lorsque cela est techniquement possible des éléments supprimés ou archivés.",
     "sources": [
       "CLARUS D3.2 — Retrieval"
+    ],
+    "termes_proches": [
+      "Donnée supprimée",
+      "Carving de fichiers",
+      "Donnée reconstruite",
+      "Réparation du support"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Récupération réalisée",
+        "texte": "Nous procédons à des opérations de récupération de données à partir du support examiné."
+      },
+      {
+        "type": "Données récupérées",
+        "texte": "Les opérations techniques permettent de récupérer des données qui n'étaient pas directement accessibles par les moyens habituels."
+      },
+      {
+        "type": "Récupération partielle",
+        "texte": "Les opérations techniques ne permettent de récupérer qu'une partie des données recherchées, dans les limites précisées au présent rapport."
+      },
+      {
+        "type": "Récupération infructueuse",
+        "texte": "Les opérations de récupération mises en œuvre ne permettent pas de restituer les données recherchées."
+      },
+      {
+        "type": "Récupération techniquement impossible",
+        "texte": "L'état du support et les moyens techniques disponibles ne permettent pas de mettre en œuvre une récupération des données dans les conditions de l'examen."
+      }
     ]
   },
   {
@@ -1165,7 +3411,7 @@
     "terme": "Remise des résultats",
     "anglais": "Delivery of results",
     "categorie": "Procédure d’examen forensique",
-    "definition": "Étape consistant à remettre au requérant les données, exports, rapports ou autres résultats produits à l’issue des opérations techniques, dans un format permettant leur exploitation et, lorsque cela est pertinent, leur contrôle d’intégrité.",
+    "definition": "Opération consistant à transmettre au requérant les rapports, données, fichiers ou autres éléments produits à l'issue des examens techniques, selon des modalités permettant leur consultation, leur exploitation et, lorsque cela est prévu, le contrôle de leur intégrité.",
     "synonymes": [
       "Restitution des résultats",
       "Remise des données"
@@ -1180,17 +3426,39 @@
         "texte": "Les résultats sont remis au requérant dans un format exploitable."
       },
       {
-        "type": "Remise avec SHA-256",
-        "texte": "Les fichiers extraits sont remis au requérant accompagnés de leur valeur de hachage SHA-256."
+        "type": "Remise avec empreintes numériques",
+        "texte": "Les fichiers extraits sont remis au requérant accompagnés de leurs valeurs de hachage afin de permettre un contrôle ultérieur de leur intégrité."
       },
       {
         "type": "Extraction et décodage",
-        "texte": "Les résultats des opérations d’extraction et de décodage sont remis au requérant dans un format exploitable."
+        "texte": "Les résultats des opérations d'extraction et de décodage sont remis au requérant dans un format exploitable."
       },
       {
         "type": "Ensemble des supports",
-        "texte": "Nous avons extrait et décodé les données accessibles de l’ensemble des supports examinés et remettons les résultats au requérant dans un format exploitable."
+        "texte": "Nous avons extrait et décodé les données accessibles de l'ensemble des supports examinés et remettons les résultats au requérant dans un format exploitable."
+      },
+      {
+        "type": "Remise de résultats partiels",
+        "texte": "Les résultats obtenus dans les limites techniques précisées au présent rapport sont remis au requérant dans un format exploitable."
+      },
+      {
+        "type": "Remise des données décodées automatiquement",
+        "texte": "L'ensemble des données extraites et décodées par les logiciels employés est remis au requérant dans un format exploitable."
+      },
+      {
+        "type": "Remise des éléments identifiés par l'analyste",
+        "texte": "Les éléments identifiés par l'analyste comme susceptibles de présenter un intérêt au regard de la mission sont sélectionnés et remis au requérant dans un format exploitable."
+      },
+      {
+        "type": "Remise complète : données décodées et éléments sélectionnés",
+        "texte": "Nous remettons au requérant l'ensemble des données extraites et décodées par les logiciels employés, ainsi qu'une sélection distincte des éléments identifiés par l'analyste comme susceptibles de présenter un intérêt au regard de la mission."
       }
+    ],
+    "termes_proches": [
+      "Extraction",
+      "Décodage des données",
+      "Intégrité des données",
+      "Chaîne de traçabilité"
     ]
   },
   {
@@ -1198,7 +3466,7 @@
     "terme": "Réparation du support",
     "anglais": "Device repair",
     "categorie": "Procédure d’examen forensique",
-    "definition": "Intervention matérielle limitée réalisée sur un support numérique afin de restaurer temporairement ou suffisamment son fonctionnement pour permettre les opérations techniques d’examen ou d’extraction.",
+    "definition": "Intervention technique réalisée sur un équipement ou un support numérique présentant un dysfonctionnement ou une dégradation, afin de rétablir tout ou partie de son fonctionnement et de permettre les opérations d'examen ou d'acquisition des données. L'intervention peut être temporaire ou limitée aux fonctions nécessaires à l'examen. Elle doit être documentée, notamment lorsqu'elle est susceptible de modifier l'état matériel ou les données du support.",
     "synonymes": [
       "Réparation sommaire",
       "Remise en état du support"
@@ -1219,7 +3487,28 @@
       {
         "type": "Réparation insuffisante",
         "texte": "L’état du support ne permet pas une remise en fonctionnement suffisante pour procéder aux opérations d’extraction."
+      },
+      {
+        "type": "Remise en fonctionnement partielle",
+        "texte": "L'intervention technique permet de rétablir partiellement le fonctionnement du support, autorisant certaines opérations d'examen sans garantir l'accès à l'ensemble des données."
+      },
+      {
+        "type": "Intervention non réalisée",
+        "texte": "Compte tenu de l'état du support et des risques susceptibles d'affecter les données, aucune intervention de réparation n'est réalisée dans les conditions de l'examen."
+      },
+      {
+        "type": "Traçabilité de l'intervention",
+        "texte": "Les opérations réalisées sur le support, ainsi que les éventuelles modifications de son état, sont documentées au présent rapport."
+      },
+      {
+        "type": "Intervention nécessitant un service spécialisé",
+        "texte": "Nos moyens techniques ne permettent pas de procéder à la remise en fonctionnement du support. Une intervention par un service spécialisé serait nécessaire pour envisager la récupération des données."
       }
+    ],
+    "termes_proches": [
+      "État du support",
+      "Acquisition forensique",
+      "Récupération de données"
     ]
   },
   {
@@ -1260,7 +3549,7 @@
     "terme": "Scellé",
     "anglais": "Evidence seal / Sealed evidence",
     "categorie": "Procédure d’examen forensique",
-    "definition": "Conditionnement ou dispositif de scellement permettant d’identifier et de protéger un élément remis pour examen, dont l’état est constaté lors de sa prise en charge.",
+    "definition": "Élément ou ensemble d'éléments placé sous un conditionnement identifié et, le cas échéant, fermé par un dispositif de scellement, afin d'en assurer la conservation, la traçabilité et de permettre la constatation d'une éventuelle ouverture ou altération.",
     "synonymes": [
       "Scellé judiciaire"
     ],
@@ -1280,6 +3569,104 @@
       {
         "type": "Ouverture pour examen",
         "texte": "Nous procédons à l’ouverture du scellé numéroté [RÉFÉRENCE] afin de réaliser les opérations techniques demandées."
+      },
+      {
+        "type": "Reconditionnement après examen",
+        "texte": "À l'issue des opérations techniques, les éléments examinés sont reconditionnés sous le scellé numéro [RÉFÉRENCE], dans les conditions précisées au présent rapport."
+      }
+    ],
+    "termes_proches": [
+      "Chaîne de traçabilité",
+      "Preuve numérique",
+      "Intégrité des données"
+    ]
+  },
+  {
+    "id": "session-utilisateur",
+    "categorie": "Technologie numérique",
+    "synonymes": [
+      "Session de connexion",
+      "Session d'utilisateur"
+    ],
+    "termes_deconseilles": [],
+    "terme": "Session utilisateur",
+    "anglais": "User session / Logon session",
+    "definition": "Contexte d'accès à un système informatique associé à un compte utilisateur, établi selon un mécanisme d'ouverture de session ou d'authentification. Une session peut notamment être locale, distante, interactive ou liée à l'exécution de processus et de services. Selon le système, elle peut être caractérisée par un identifiant, un type de connexion, des informations temporelles et des événements relatifs à son activité ou à sa fermeture. En criminalistique numérique, l'examen des informations de session peut contribuer à identifier des périodes d'accès au système, des connexions et certaines activités associées à un compte. L'existence d'une session ne permet pas, à elle seule, d'établir la présence physique d'une personne ni l'identité de l'utilisateur effectif.",
+    "formulations_rapport": [
+      {
+        "type": "Recherche des sessions utilisateurs",
+        "texte": "Nous procédons à l'examen des événements de connexion et de session enregistrés par le système afin d'identifier les informations susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Ouverture de session identifiée",
+        "texte": "L'examen des journaux système permet d'identifier un événement d'ouverture de session associé au compte utilisateur [nom du compte], enregistré le [date et heure]."
+      },
+      {
+        "type": "Plusieurs sessions identifiées",
+        "texte": "Les données examinées permettent d'identifier [nombre] sessions associées au compte utilisateur [nom du compte] au cours de la période étudiée."
+      },
+      {
+        "type": "Connexion interactive locale",
+        "texte": "Les événements examinés indiquent une ouverture de session interactive locale associée au compte utilisateur [nom du compte]."
+      },
+      {
+        "type": "Connexion distante",
+        "texte": "Les événements examinés permettent d'identifier une ouverture de session distante associée au compte utilisateur [nom du compte]."
+      },
+      {
+        "type": "Fermeture de session",
+        "texte": "L'examen des journaux système permet d'identifier un événement de fermeture de session associé au compte utilisateur [nom du compte]."
+      },
+      {
+        "type": "Verrouillage ou déverrouillage",
+        "texte": "L'examen des événements système permet d'identifier une opération de [verrouillage/déverrouillage] de la session associée au compte utilisateur [nom du compte]."
+      },
+      {
+        "type": "Reconstitution chronologique des sessions",
+        "texte": "Le rapprochement des événements de connexion et de fermeture de session permet de proposer une chronologie des périodes d'accès au système, dans les limites des informations disponibles."
+      },
+      {
+        "type": "Session incomplètement documentée",
+        "texte": "Les événements disponibles ne permettent pas de déterminer avec certitude l'ensemble des caractéristiques ou la durée effective de la session concernée."
+      },
+      {
+        "type": "Limites d'attribution",
+        "texte": "Les événements de session identifiés ne permettent pas, à eux seuls, d'établir l'identité de la personne ayant effectivement utilisé le compte correspondant."
+      }
+    ],
+    "termes_proches": [
+      "Compte utilisateur",
+      "Profil utilisateur",
+      "Authentification",
+      "Journaux système",
+      "Traces d'activité",
+      "Horodatage"
+    ],
+    "sources": [
+      "Microsoft — Audit Logon Events",
+      "Linux — systemd-logind",
+      "Linux — pam_systemd",
+      "Apple — Security Sessions",
+      "Apple — Unified Logging"
+    ],
+    "points_attention": [
+      "Une session réseau ou de service n'atteste pas une interaction humaine.",
+      "Verrouillage et fermeture de session sont distincts.",
+      "Une durée de session n'établit pas une durée d'activité réelle.",
+      "Windows : 4624, 4634, 4647, 4800 et 4801 ont des significations distinctes."
+    ],
+    "artefacts_techniques": [
+      {
+        "systeme": "Windows",
+        "sources": "EVTX 4624, 4625, 4634, 4647, 4800, 4801 ; types 2, 3 et 10"
+      },
+      {
+        "systeme": "Linux",
+        "sources": "systemd-logind, journaux, wtmp/btmp selon configuration"
+      },
+      {
+        "systeme": "macOS",
+        "sources": "Journaux unifiés, événements d'authentification"
       }
     ]
   },
@@ -1463,6 +3850,45 @@
     ]
   },
   {
+    "id": "support-numerique",
+    "terme": "Support numérique",
+    "anglais": "Digital media / Media",
+    "categorie": "Équipement numérique",
+    "definition": "Équipement ou support physique susceptible de contenir, d'enregistrer ou de permettre l'accès à des données numériques dans le cadre d'un examen technique. Les supports de stockage constituent une catégorie particulière de supports numériques, destinée à conserver des données de manière temporaire ou permanente. La nature du support, ses interfaces et son état peuvent conditionner les possibilités d'acquisition et d'analyse.",
+    "synonymes": [
+      "Média numérique",
+      "Support de données",
+      "Support de stockage",
+      "Média de stockage"
+    ],
+    "termes_deconseilles": [],
+    "exemple_rapport": "Le support numérique est pris en charge en vue de son acquisition et de son analyse.",
+    "sources": [
+      "CLARUS D3.2 — Media",
+      "CLARUS D3.2 — Digital media"
+    ],
+    "termes_proches": [
+      "Disque dur",
+      "Clé USB",
+      "Stockage de données",
+      "Source de données"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Prise en charge du support",
+        "texte": "Nous prenons en charge le support numérique désigné au présent rapport afin de procéder aux opérations techniques demandées."
+      },
+      {
+        "type": "Identification du support de stockage",
+        "texte": "Nous procédons à l'identification et à la documentation des caractéristiques du support de stockage examiné."
+      },
+      {
+        "type": "Limites techniques",
+        "texte": "Les caractéristiques ou l'état du support limitent les possibilités d'accès aux données dans les conditions de l'examen."
+      }
+    ]
+  },
+  {
     "id": "support-stockage",
     "terme": "Support de stockage",
     "anglais": "Storage media",
@@ -1472,43 +3898,88 @@
       "Média de stockage"
     ],
     "termes_deconseilles": [],
-    "exemple_rapport": "Le support de stockage est identifié, documenté et examiné selon les procédures applicables.",
     "sources": [
       "CLARUS D3.2 — Storage media"
-    ]
-  },
-  {
-    "id": "support-numerique",
-    "terme": "Support numérique",
-    "anglais": "Digital media / Media",
-    "categorie": "Équipement numérique",
-    "definition": "Équipement, matériau ou système utilisé pour stocker, enregistrer ou transmettre des informations numériques et susceptible d’être rencontré lors d’une investigation.",
-    "synonymes": [
-      "Média numérique",
-      "Support de données"
     ],
-    "termes_deconseilles": [
-      "Media"
+    "renvoi_principal": "support-numerique",
+    "termes_proches": [
+      "Support numérique"
     ],
-    "exemple_rapport": "Le support numérique est pris en charge en vue de son acquisition et de son analyse.",
-    "sources": [
-      "CLARUS D3.2 — Media",
-      "CLARUS D3.2 — Digital media"
-    ]
+    "formulations_rapport": []
   },
   {
     "id": "systeme-exploitation",
     "terme": "Système d'exploitation",
     "anglais": "Operating system (OS)",
     "categorie": "Technologie numérique",
-    "definition": "Logiciel fondamental assurant la gestion des ressources matérielles et logicielles d'un appareil numérique et générant notamment des données système, journaux et métadonnées.",
+    "definition": "Ensemble de logiciels assurant la gestion des ressources matérielles et logicielles d'un équipement numérique et fournissant les services nécessaires à l'exécution des applications. Un système d'exploitation assure notamment la gestion des processus, de la mémoire, des utilisateurs, des périphériques, des systèmes de fichiers et des mécanismes de sécurité. Dans le cadre d'un examen de criminalistique numérique, il peut constituer une source d'informations relatives à la configuration de l'équipement, aux comptes utilisateurs, aux applications installées, aux connexions, aux événements système et à certaines activités enregistrées. Les données disponibles et leur interprétation dépendent notamment du système d'exploitation, de sa version, de ses paramètres de configuration et des conditions d'acquisition.",
     "synonymes": [
-      "OS"
+      "OS",
+      "Operating system"
     ],
     "termes_deconseilles": [],
     "exemple_rapport": "Le support fonctionne sous un système d'exploitation dont les artefacts ont été examinés.",
     "sources": [
-      "CLARUS D3.2"
+      "NIST SP 800-86 — Guide to Integrating Forensic Techniques into Incident Response",
+      "Microsoft — Windows Registry",
+      "Filesystem Hierarchy Standard"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Identification du système d'exploitation",
+        "texte": "L'examen du support permet d'identifier un système d'exploitation de type [nom du système], dans sa version [version]."
+      },
+      {
+        "type": "Examen des données système",
+        "texte": "Nous procédons à l'examen des données accessibles du système d'exploitation afin d'identifier les informations susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Configuration du système",
+        "texte": "L'examen des données système permet de relever des informations relatives à la configuration de l'équipement et aux paramètres du système d'exploitation."
+      },
+      {
+        "type": "Comptes utilisateurs",
+        "texte": "Les données du système d'exploitation permettent d'identifier des comptes utilisateurs enregistrés sur l'équipement."
+      },
+      {
+        "type": "Applications installées",
+        "texte": "L'examen des données système permet d'identifier des informations relatives aux applications installées sur l'équipement."
+      },
+      {
+        "type": "Traces d'activité du système",
+        "texte": "L'exploitation des données du système d'exploitation permet d'identifier des traces relatives à certaines activités enregistrées sur l'équipement."
+      },
+      {
+        "type": "Identification partielle",
+        "texte": "Les informations accessibles permettent d'identifier le système d'exploitation, sans toutefois déterminer avec certitude l'ensemble de ses caractéristiques ou sa version exacte."
+      },
+      {
+        "type": "Système d'exploitation non identifié",
+        "texte": "Les données accessibles ne permettent pas d'identifier avec suffisamment de certitude le système d'exploitation présent sur le support examiné."
+      },
+      {
+        "type": "Limites d'interprétation",
+        "texte": "Les informations issues du système d'exploitation sont interprétées en tenant compte de sa configuration, des mécanismes de journalisation et des limites des données acquises."
+      }
+    ],
+    "termes_proches": [
+      "Système de fichiers",
+      "Journaux système",
+      "Traces d'activité",
+      "Métadonnées",
+      "Compte utilisateur"
+    ],
+    "points_attention": [
+      "La présence d'un système ne démontre pas son utilisation à la période considérée.",
+      "Plusieurs systèmes peuvent coexister.",
+      "Les comptes, applications et opérations automatiques doivent être interprétés séparément."
+    ],
+    "exemples": [
+      "Windows",
+      "Linux",
+      "macOS",
+      "Android",
+      "iOS"
     ]
   },
   {
@@ -1516,14 +3987,64 @@
     "terme": "Système de fichiers",
     "anglais": "File system",
     "categorie": "Technologie numérique",
-    "definition": "Structure utilisée sur un volume physique ou virtuel pour organiser, stocker et retrouver des fichiers utilisateur et système. En criminalistique numérique, son interprétation est essentielle pour reconstituer l’organisation des données qu’il contient.",
+    "definition": "Ensemble de structures et de mécanismes permettant d'organiser, d'enregistrer, de localiser et de gérer les fichiers et répertoires sur un support ou un volume numérique. Un système de fichiers définit notamment les modalités d'allocation des espaces de stockage, l'organisation des répertoires et la conservation de certaines métadonnées associées aux fichiers. En criminalistique numérique, son examen peut permettre d'identifier les fichiers présents, leurs caractéristiques, leur organisation, ainsi que certaines informations relatives à des fichiers supprimés ou à des espaces non alloués. Les possibilités d'exploitation dépendent du système de fichiers, de son état, des données accessibles et des méthodes d'acquisition employées.",
     "synonymes": [
       "File system"
     ],
     "termes_deconseilles": [],
     "exemple_rapport": "L’analyse du système de fichiers permet d’identifier l’organisation des données présentes sur le support.",
     "sources": [
-      "CLARUS D3.2 — File system"
+      "The Sleuth Kit — File Systems",
+      "The Sleuth Kit — NTFS File Recovery",
+      "Microsoft — File Timestamps"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Identification du système de fichiers",
+        "texte": "L'examen du support permet d'identifier un système de fichiers de type [type du système de fichiers]."
+      },
+      {
+        "type": "Examen du système de fichiers",
+        "texte": "Nous procédons à l'examen des structures du système de fichiers afin d'identifier les fichiers, répertoires et métadonnées accessibles."
+      },
+      {
+        "type": "Organisation des données",
+        "texte": "L'analyse du système de fichiers permet de restituer l'organisation des répertoires et des fichiers accessibles sur le volume examiné."
+      },
+      {
+        "type": "Recherche de fichiers supprimés",
+        "texte": "Nous procédons à la recherche d'entrées et de métadonnées associées à des fichiers identifiés comme supprimés dans les structures du système de fichiers."
+      },
+      {
+        "type": "Système de fichiers endommagé",
+        "texte": "L'examen met en évidence des altérations des structures du système de fichiers, limitant l'accès à certaines données."
+      },
+      {
+        "type": "Exploitation partielle",
+        "texte": "L'état du système de fichiers et les données accessibles ne permettent qu'une exploitation partielle de son contenu dans les conditions techniques rencontrées."
+      },
+      {
+        "type": "Système de fichiers non identifié",
+        "texte": "Les opérations d'examen ne permettent pas d'identifier avec suffisamment de certitude le système de fichiers présent sur le volume concerné."
+      },
+      {
+        "type": "Limites d'interprétation",
+        "texte": "Les informations issues du système de fichiers sont interprétées en tenant compte de ses caractéristiques techniques, de l'état du support et des éventuelles modifications intervenues sur les données."
+      }
+    ],
+    "termes_proches": [
+      "Métadonnées",
+      "Dossier",
+      "Fichier",
+      "Donnée supprimée",
+      "Carving de fichiers",
+      "Acquisition forensique"
+    ],
+    "points_attention": [
+      "Un système de fichiers NTFS n'établit pas à lui seul l'usage de Windows.",
+      "Les horodatages diffèrent selon le système de fichiers.",
+      "Une entrée supprimée ne garantit pas la récupération du contenu.",
+      "Un volume chiffré ou endommagé peut empêcher l'analyse des structures."
     ]
   },
   {
@@ -1594,11 +4115,73 @@
     ]
   },
   {
+    "id": "traces-activite",
+    "terme": "Traces d'activité",
+    "definition": "Ensemble des informations numériques produites, enregistrées ou conservées à l'occasion du fonctionnement d'un système, de l'utilisation d'un équipement, d'une application ou d'un service numérique. Elles peuvent comprendre historiques de navigation, journaux, fichiers récents, bases applicatives, caches ou traces d'exécution. Elles peuvent résulter d'une intervention humaine ou de mécanismes automatisés. Leur interprétation exige de tenir compte de leur origine, de leur contexte et de leurs limites de conservation.",
+    "formulations_rapport": [
+      {
+        "type": "Recherche de traces d'activité",
+        "texte": "Nous procédons à l'examen des traces d'activité accessibles afin d'identifier les éléments susceptibles de présenter un intérêt au regard de la mission."
+      },
+      {
+        "type": "Traces identifiées",
+        "texte": "L'examen des données permet d'identifier plusieurs traces d'activité enregistrées par le système ou les applications examinées."
+      },
+      {
+        "type": "Activité applicative",
+        "texte": "Les traces identifiées permettent de constater l'enregistrement d'événements associés au fonctionnement ou à l'utilisation de l'application concernée."
+      },
+      {
+        "type": "Chronologie",
+        "texte": "Le rapprochement des différentes traces d'activité permet de proposer une chronologie partielle des événements enregistrés, sous réserve des limites liées à leur origine et à leurs horodatages."
+      },
+      {
+        "type": "Corrélation",
+        "texte": "Nous procédons au rapprochement des traces issues de différentes sources numériques afin d'en apprécier la cohérence et de rechercher d'éventuelles correspondances."
+      },
+      {
+        "type": "Absence de traces",
+        "texte": "Les opérations d'examen ne permettent pas d'identifier de traces d'activité exploitables au regard de la mission dans les données accessibles."
+      },
+      {
+        "type": "Limites d'attribution",
+        "texte": "Les traces d'activité identifiées ne permettent pas, à elles seules, d'établir l'identité de la personne à l'origine des opérations correspondantes."
+      },
+      {
+        "type": "Activité automatisée possible",
+        "texte": "Les traces identifiées peuvent résulter du fonctionnement automatique du système ou d'une application, sans qu'une intervention directe de l'utilisateur puisse être établie."
+      }
+    ],
+    "sources": [
+      "SWGDE — Computer Forensic Examinations",
+      "SWGDE — Computer Forensic Acquisition",
+      "SWGDE — Digital Evidence Collection"
+    ],
+    "anglais": "Activity traces / Digital activity artifacts",
+    "categorie": "Preuve numérique",
+    "synonymes": [
+      "Traces d'utilisation"
+    ],
+    "termes_deconseilles": [],
+    "termes_proches": [
+      "Artefact forensique",
+      "Journaux système",
+      "Journaux applicatifs",
+      "Métadonnées",
+      "Horodatage"
+    ],
+    "points_attention": [
+      "Une trace ne démontre pas nécessairement une action volontaire.",
+      "Une trace conservée peut résulter d'un mécanisme automatique.",
+      "Le résultat d'un décodage doit être distingué de la source."
+    ]
+  },
+  {
     "id": "valeur-hachage",
     "terme": "Valeur de hachage",
     "anglais": "Hash value",
     "categorie": "Preuve numérique",
-    "definition": "Valeur obtenue par l’application d’une fonction de hachage à un ensemble de données. La comparaison de valeurs de hachage permet notamment de vérifier qu’une copie n’a pas été modifiée par rapport à la donnée de référence.",
+    "definition": "Valeur produite par une fonction de hachage appliquée à des données numériques. Voir « Hachage et empreinte numérique » pour les formulations de rapport.",
     "synonymes": [
       "Empreinte numérique",
       "Hash"
@@ -1606,27 +4189,78 @@
     "termes_deconseilles": [
       "Checksum cryptographique"
     ],
-    "exemple_rapport": "Les valeurs de hachage calculées avant et après l’opération sont identiques, ce qui permet de vérifier l’intégrité de la copie.",
     "sources": [
       "CLARUS D3.2 — Hash/Hashing"
     ],
-    "formulations_rapport": [
-      {
-        "type": "Calcul de l’empreinte",
-        "texte": "Nous calculons la valeur de hachage SHA-256 du fichier afin d’en disposer comme empreinte de référence."
-      },
-      {
-        "type": "Remise avec empreinte",
-        "texte": "Les fichiers remis sont accompagnés de leur valeur de hachage SHA-256."
-      },
-      {
-        "type": "Valeurs concordantes",
-        "texte": "Les valeurs de hachage calculées sont identiques, permettant de vérifier l’intégrité des données comparées."
-      }
-    ],
+    "formulations_rapport": [],
     "points_attention": [
       "Une valeur de hachage permet de comparer l’intégrité de données, mais ne décrit pas leur contenu.",
       "L’algorithme utilisé doit être identifié dans le rapport ou la documentation technique lorsqu’il présente un intérêt pour la traçabilité."
+    ],
+    "renvoi_principal": "hachage",
+    "termes_proches": [
+      "Hachage et empreinte numérique"
+    ]
+  },
+  {
+    "id": "verrouillage-deverrouillage-ios",
+    "terme": "Verrouillage et déverrouillage (iOS)",
+    "anglais": "Device lock and unlock events",
+    "categorie": "Téléphonie : iOS : Artefacts système",
+    "definition": "Événements correspondant aux changements d’état de verrouillage d’un terminal iOS. Lorsque ces événements sont disponibles dans les données acquises, leur examen contribue à documenter certaines périodes d’activité du terminal et à les rapprocher d’autres événements système ou applicatifs, sans établir à lui seul une interaction humaine ou l’identité de l’utilisateur.",
+    "synonymes": [
+      "Événements de verrouillage iOS",
+      "Événements de déverrouillage iOS"
+    ],
+    "termes_proches": [
+      "Biome (iOS)",
+      "Traces d'activité",
+      "Horodatage",
+      "Activité applicative"
+    ],
+    "termes_deconseilles": [],
+    "donnees_potentielles": [
+      "Événements horodatés de changement d’état de verrouillage",
+      "Périodes pendant lesquelles le terminal est signalé comme verrouillé ou déverrouillé",
+      "Éléments de corrélation avec des événements système et l’activité applicative"
+    ],
+    "points_attention": [
+      "L’état déverrouillé ne démontre pas une manipulation effective de l’appareil ni l’identité de la personne qui l’utilise.",
+      "L’état de verrouillage ne doit pas être confondu avec l’état de l’écran ou avec une action humaine.",
+      "Les événements peuvent être incomplets ou absents selon la version d’iOS, l’acquisition et la conservation des données ; leur absence n’exclut pas une activité.",
+      "Les horodatages et la cohérence chronologique des événements doivent être vérifiés.",
+      "La structure et les emplacements de la base KnowledgeC relèvent d’une fiche technique distincte."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Présentation",
+        "texte": "Le système iOS est susceptible de conserver des événements relatifs aux états de verrouillage et de déverrouillage du terminal, permettant de documenter certaines périodes de son activité."
+      },
+      {
+        "type": "Événements identifiés",
+        "texte": "L’analyse des données système met en évidence plusieurs événements horodatés correspondant à des changements d’état de verrouillage du terminal."
+      },
+      {
+        "type": "Période de déverrouillage",
+        "texte": "Les événements relevés indiquent que le terminal était signalé comme déverrouillé entre les horodatages considérés."
+      },
+      {
+        "type": "Corrélation avec les applications",
+        "texte": "Le rapprochement des événements de verrouillage et de déverrouillage avec les traces d’activité applicative contribue à documenter la chronologie d’utilisation du terminal, sans permettre à lui seul d’identifier la personne à l’origine de ces activités."
+      },
+      {
+        "type": "Limites d’interprétation",
+        "texte": "Les événements de verrouillage et de déverrouillage ne permettent pas, à eux seuls, d’identifier la personne ayant manipulé le terminal ni de déterminer les actions effectivement réalisées."
+      },
+      {
+        "type": "Absence de données",
+        "texte": "Les données accessibles dans l’extraction ne permettent pas de reconstituer les périodes de verrouillage et de déverrouillage du terminal pour la période étudiée."
+      }
+    ],
+    "sources": [
+      "Athena Forensics — The KnowledgeC Database, https://athenaforensics.co.uk/the-knowledgec-database/",
+      "Belkasoft — Apple Biome Forensics Artifacts, https://belkasoft.com/biome-forensics-artifacts",
+      "Mattia Epifani, ZENA Forensics — 84 Streams Later (2026), https://blog.digital-forensics.it/2026/07/84-streams-later-exploring-evolution-of.html"
     ]
   },
   {

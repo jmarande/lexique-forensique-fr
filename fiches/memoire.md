@@ -1,6 +1,6 @@
 # Mémoire
 
-**Catégorie :** Équipement numérique
+**Classification :** 💾 Équipements et supports → Supports et stockage
 
 **Équivalent anglais :** Memory
 

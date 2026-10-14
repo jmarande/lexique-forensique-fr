@@ -1,6 +1,6 @@
 # Instagram Direct
 
-**Catégorie :** Application — Messagerie et réseau social
+**Classification :** 💬 Applications → Messageries et réseaux sociaux
 
 **Équivalent anglais :** Instagram Direct
 

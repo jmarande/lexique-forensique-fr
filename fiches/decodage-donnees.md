@@ -1,12 +1,12 @@
 # Décodage des données
 
-**Catégorie :** Méthode de criminalistique numérique
+**Classification :** 🔬 Méthodologie forensique → Examen et analyse
 
 **Équivalent anglais :** Data decoding
 
 ## Définition
 
-Opération consistant à interpréter des données brutes ou structurées afin de les rendre lisibles et exploitables pour l’analyse.
+Opération technique consistant à interpréter des données numériques encodées ou structurées selon un format déterminé, afin de restituer des informations lisibles et exploitables. Le décodage peut être effectué automatiquement par un logiciel spécialisé ou au moyen d'opérations complémentaires réalisées par l'analyste. Les résultats obtenus dépendent des formats pris en charge et des capacités de décodage employées.
 
 ## Synonymes
 
@@ -25,6 +25,22 @@ Les données extraites ne peuvent être que partiellement décodées au moyen de
 ### Décodage impossible
 
 Nos moyens techniques ne permettent pas de décoder les données extraites.
+
+### Limites du décodage automatisé
+
+Le décodage automatisé des données repose sur les capacités des logiciels employés. Les résultats obtenus peuvent ne pas restituer l'ensemble des informations présentes dans les données extraites.
+
+### Décodage manuel par l'analyste
+
+Nous procédons au décodage manuel de certaines données extraites, afin d'en interpréter la structure et le contenu et de restituer les informations susceptibles de présenter un intérêt au regard de la mission.
+
+### Décodage manuel complémentaire
+
+Le décodage automatisé ne permettant pas de restituer certaines informations, nous procédons à un décodage manuel complémentaire des données concernées.
+
+### Vérification du décodage automatisé
+
+Nous procédons à la vérification de certaines données décodées automatiquement par les logiciels employés, par confrontation avec les données sources, afin de contrôler la cohérence des informations restituées.
 
 > Ces fiches sont des documents de travail du projet : les définitions restent soumises à la revue terminologique et documentaire.
 

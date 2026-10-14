@@ -1,0 +1,29 @@
+# Proposer une fiche au lexique
+
+Depuis LibreOffice Writer : **Lexique forensique > Exporter / Importer…**. Dans la section **Proposer des fiches personnelles**, sélectionner une ou plusieurs fiches avec Ctrl+clic (ou Maj+clic) puis cliquer sur **Proposer les fiches sélectionnées**.
+
+Chaque fiche sélectionnée doit contenir au minimum un **terme** et une **définition**. La proposition reprend le terme français, l'équivalent anglais, la catégorie, la définition, les synonymes, les références documentaires ainsi que les **formulations pour rapport** déjà enregistrées.
+
+L'extension ouvre le navigateur sur une **issue GitHub préremplie regroupant les fiches sélectionnées**. Aucun envoi n'est effectué par l'extension. **L'utilisateur doit se connecter à GitHub, relire la proposition puis confirmer lui-même sa publication**. Le contenu publié dans une issue est public : **ne pas transmettre de données nominatives, d'extraits de dossiers, d'identifiants ou d'informations confidentielles**.
+
+Seules les fiches personnelles apparaissent dans cette liste et peuvent être proposées depuis ce bouton. Les fiches officielles ne peuvent pas être renvoyées directement ; elles peuvent d'abord être dupliquées et adaptées en fiche personnelle. L'envoi ne modifie pas les données locales.
+
+## Traitement des contributions
+
+1. La proposition arrive dans les *Issues* du dépôt, sans droit d'écriture pour le contributeur sur la base officielle.
+2. Le mainteneur élimine spam et doublons et décide de mettre en relecture.
+3. Après comparaison des sources, il propose une modification de `data/lexique.json` par PR.
+4. Une fiche intégrée reste « En attente de relecture » tant qu'aucune décision explicite n'a été prise.
+5. La validation éditoriale est consignée selon [la procédure](VALIDATION-FICHES.md) lorsque celle-ci est intégrée au dépôt.
+
+## Limites de cette première version
+
+- Un compte GitHub est requis et GitHub assure la protection anti-spam à l'entrée.
+- Aucun serveur, jeton GitHub ou mail de réception n'est inclus dans l'extension.
+- Les formulations sont transmises dans la proposition, sans validation automatique.
+- Si le contenu est trop long, l'URL préremplie peut atteindre les limites du navigateur ; réduire alors la proposition.
+- Le statut de proposition n'est pas encore synchronisé automatiquement avec l'extension.
+
+## Vérification des références
+
+Les propositions doivent mentionner les sources consultées et les éventuelles divergences, sans supposer que CLARUS ou toute autre ressource suffit à valider une fiche. Voir le [référentiel commun](../sources/REFERENTIEL.md) et le [circuit de relecture](VALIDATION-FICHES.md). Les formulations de rapport sont propres au projet et soumises à relecture.

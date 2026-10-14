@@ -1,6 +1,6 @@
 # Stockage dans le cloud
 
-**Catégorie :** Technologie numérique
+**Classification :** ☁️ Services numériques → Cloud
 
 **Équivalent anglais :** Cloud storage
 

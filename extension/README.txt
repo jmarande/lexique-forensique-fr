@@ -25,3 +25,7 @@ Installation :
 
 Projet :
 https://github.com/jmarande/lexique-forensique-fr
+
+Classification en préparation : huit familles identifiées par de petits pictogrammes.
+Les catégories historiques et les données personnelles sont conservées ; le filtre
+hiérarchique ne sera activé qu'après validation et tests.

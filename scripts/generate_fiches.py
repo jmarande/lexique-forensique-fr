@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "lexique.json"
 VALIDATION = ROOT / "data" / "validation_fiches.json"
 DEST = ROOT / "fiches"
+TAXONOMY = ROOT / "data" / "taxonomie-proposition.json"
 
 
 def clean(value):
@@ -28,14 +29,49 @@ def generate():
         if (not isinstance(record, dict) or record.get("statut") != "validee"
                 or not all(clean(record.get(k)) for k in ("date", "validateur", "reference"))):
             raise ValueError(f"Validation incomplète ou inconnue : {key}")
+    taxonomy = json.loads(TAXONOMY.read_text(encoding="utf-8"))
+    families = {f["id"]: f for f in taxonomy["familles"]}
+    mapping = {x["id"]: x for x in taxonomy["classement"]}
+    if set(mapping) != set(ids):
+        raise ValueError("Classification incomplète ou fiche inconnue")
+    domains = {x["id"]: x for x in taxonomy["domaines"]}
+    def category(item):
+        segments = item["classification"].split("/")
+        if len(segments) != 2 or segments[0] not in families:
+            raise ValueError("Famille inconnue")
+        family = families[segments[0]]
+        children = {sub["id"]: sub for sub in family["sous_categories"]}
+        if segments[1] not in children:
+            raise ValueError("Sous-catégorie inconnue")
+        return family, children[segments[1]]
+    for item in mapping.values():
+        category(item)
+        if any(d not in domains for d in item.get("domaines", [])):
+            raise ValueError("Domaine inconnu")
+    by_id = {f["id"]: f for f in fiches}
+    for f in fiches:
+        for ref in f.get("renvois", []):
+            if ref.get("id") not in by_id or not clean(ref.get("nuance")):
+                raise ValueError("Renvoi invalide dans " + f["id"])
+    by_id = {item["id"]: item for item in fiches}
+    for item in fiches:
+        if item.get("renvoi_principal") and item["renvoi_principal"] not in by_id:
+            raise ValueError("Renvoi principal invalide")
     DEST.mkdir(exist_ok=True)
     expected = {"README.md"} | {x + ".md" for x in ids}
     for f in fiches:
+        cls = mapping[f["id"]]
+        family, subcategory = category(cls)
+        lines = ["# " + clean(f["terme"]), "",
+                 "**Classification :** " + clean(family.get("icone")) + " " + clean(family["label"]) + " → " + clean(subcategory["label"]), ""]
         review = validations.get(f["id"])
-        status = "Validée" if review else "En attente de relecture"
-        lines = ["# " + clean(f["terme"]), "", "**Statut :** " + status, "", "**Catégorie :** " + clean(f.get("categorie")), ""]
+        lines += ["**Statut :** " + ("Validée" if review else "En attente de relecture"), ""]
         if review:
             lines += ["**Validation éditoriale :** " + clean(review["date"]) + " — " + clean(review["validateur"]) + " (" + clean(review["reference"]) + ")", ""]
+        selected_domains = [domains[x]["label"] for x in cls.get("domaines", [])]
+        if selected_domains:
+            lines += ["**Domaines d’application :** " + ", ".join(selected_domains), ""]
+
         if f.get("anglais"):
             lines += ["**Équivalent anglais :** " + clean(f["anglais"]), ""]
         lines += ["## Définition", "", clean(f["definition"]), ""]
@@ -43,12 +79,32 @@ def generate():
             lines += ["## Synonymes", ""] + ["- " + clean(s) for s in f["synonymes"]] + [""]
         if f.get("termes_deconseilles"):
             lines += ["## Termes déconseillés", ""] + ["- " + clean(s) for s in f["termes_deconseilles"]] + [""]
+        if f.get("renvois") or f.get("guide_choix"):
+            lines += ["<details>", "<summary><strong>Termes proches · aide au choix</strong></summary>", ""]
+            for ref in f.get("renvois", []):
+                target = by_id[ref["id"]]
+                lines += ["- [" + clean(target["terme"]) + "](" + ref["id"] + ".md) — " + clean(ref["nuance"])]
+            if f.get("guide_choix"):
+                lines += ["", "**Quel terme utiliser ?**", "", "| Situation | Terme conseillé | Pourquoi ? |", "|---|---|---|"]
+                for case in f["guide_choix"]:
+                    fields = [clean(case.get(key)).replace("|", r"\\|").replace("\\n", " ") for key in ("situation", "terme", "justification")]
+                    lines += ["| " + " | ".join(fields) + " |"]
+            lines += ["", "</details>", ""]
+        if f.get("renvoi_principal"):
+            target = by_id[f["renvoi_principal"]]
+            lines += ["**Fiche regroupée :** [" + clean(target["terme"]) + "](" + target["id"] + ".md)", ""]
         forms = f.get("formulations_rapport") or []
         if forms:
             lines += ["## Formulations pour rapport", ""]
             for form in forms:
                 lines += ["### " + clean(form.get("type", "Formulation")), "", clean(form.get("texte")), ""]
-        elif f.get("exemple_rapport"):
+        if f.get("tableau_rapport"):
+            columns = f["tableau_rapport"].get("colonnes", [])
+            if columns:
+                lines += ["## Tableau à compléter", "", "| " + " | ".join(columns) + " |",
+                          "|" + "|".join(["---"] * len(columns)) + "|",
+                          "| " + " | ".join(["À renseigner"] * len(columns)) + " |", ""]
+        elif f.get("exemple_rapport") and not forms:
             lines += ["## Exemple de formulation", "", clean(f["exemple_rapport"]), ""]
         lines += ["> Ces fiches sont des documents de travail du projet : les définitions restent soumises à la revue terminologique et documentaire.", "", "[← Retour à l’index](README.md)", ""]
         (DEST / (f["id"] + ".md")).write_text("\n".join(lines), encoding="utf-8")
@@ -58,9 +114,20 @@ def generate():
              "Ce catalogue n'est pas une validation juridique ou normative des définitions.", "",
              f"**{len(entries)} fiches disponibles** — {len(validations)} validées, {len(entries) - len(validations)} en attente de relecture.", "",
              "[Procédure de validation](../docs/VALIDATION-FICHES.md)", ""]
+    for family in taxonomy["familles"]:
+        grouped = [f for f in entries if mapping[f["id"]]["classification"].split("/")[0] == family["id"]]
+        if not grouped:
+            continue
+        index += ["## " + clean(family.get("icone")) + " " + clean(family["label"]), ""]
+        for sub in family["sous_categories"]:
+            members = [f for f in grouped if mapping[f["id"]]["classification"].split("/")[1] == sub["id"]]
+            if members:
+                index += ["### " + clean(sub["label"]), ""]
+                index += ["- [" + clean(f["terme"]) + "](" + f["id"] + ".md)" for f in members]
+                index += [""]
+    index += ["## Index alphabétique", ""]
     for f in entries:
-        state = "Validée" if f["id"] in validations else "En attente de relecture"
-        index.append("- [" + clean(f["terme"]) + "](" + f["id"] + ".md) — " + clean(f.get("categorie")) + " — **" + state + "**")
+        index.append("- [" + clean(f["terme"]) + "](" + f["id"] + ".md)")
     index += ["", "[← Présentation du projet](../README.md)", ""]
     (DEST / "README.md").write_text("\n".join(index), encoding="utf-8")
     for stale in DEST.glob("*.md"):

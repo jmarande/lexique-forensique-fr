@@ -1,12 +1,12 @@
 # Intégrité des données
 
-**Catégorie :** Principe de criminalistique numérique
+**Classification :** 🔬 Méthodologie forensique → Préservation et traçabilité
 
 **Équivalent anglais :** Data integrity / Evidence integrity
 
 ## Définition
 
-Propriété selon laquelle les données demeurent complètes et non altérées au cours des opérations de collecte, copie, stockage, analyse ou transfert. En criminalistique numérique, son contrôle repose notamment sur des procédures adaptées et sur la comparaison de valeurs de hachage.
+Propriété caractérisant des données numériques dont le contenu n'a pas été altéré par rapport à un état de référence déterminé. En criminalistique numérique, l'intégrité peut être contrôlée notamment par comparaison d'empreintes numériques et par la mise en œuvre de procédures documentées.
 
 ## Synonymes
 
@@ -16,11 +16,15 @@ Propriété selon laquelle les données demeurent complètes et non altérées a
 
 ### Intégrité vérifiée
 
-L’intégrité des données est vérifiée par comparaison des valeurs de hachage calculées.
+L'intégrité des données est vérifiée par comparaison des valeurs de hachage calculées sur les données de référence et les données contrôlées. Les valeurs obtenues sont concordantes.
 
 ### Intégrité lors de la remise
 
 Les résultats sont remis accompagnés de leurs valeurs de hachage afin de permettre le contrôle ultérieur de leur intégrité.
+
+### Intégrité non vérifiée
+
+Aucun contrôle d'intégrité par comparaison d'empreintes numériques n'a pu être réalisé dans les conditions techniques rencontrées. Cette limite est prise en compte dans l'appréciation des résultats.
 
 > Ces fiches sont des documents de travail du projet : les définitions restent soumises à la revue terminologique et documentaire.
 

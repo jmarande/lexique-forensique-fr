@@ -5,6 +5,7 @@ on:
     paths:
       - 'data/lexique.json'
       - 'data/validation_fiches.json'
+      - 'data/taxonomie-proposition.json'
       - 'scripts/generate_fiches.py'
   workflow_dispatch:
 permissions:
