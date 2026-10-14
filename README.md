@@ -37,7 +37,7 @@ Le projet s’organise autour de **trois modules complémentaires**, accessibles
 | Ressource disponible | Nombre |
 | --- | ---: |
 | [Fiches terminologiques](fiches/README.md) | **87** |
-| Formulations de rapport | **429** |
+| Formulations de rapport | **414** |
 | Scénarios de rédaction | **5** |
 | Règles de francisation des libellés | **18** |
 
