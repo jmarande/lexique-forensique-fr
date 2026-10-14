@@ -276,6 +276,59 @@
     ]
   },
   {
+    "id": "biome-app-infocus-ios",
+    "terme": "Biome — activité applicative (App.InFocus)",
+    "anglais": "App.InFocus",
+    "categorie": "Téléphonie : iOS : Artefacts système",
+    "definition": "Flux d’événements Biome susceptible d’enregistrer les transitions de certaines applications vers ou hors de l’état de premier plan. Les enregistrements peuvent comporter un horodatage, un identifiant d’application (bundle ID) et un état de transition. Leur rapprochement aide à reconstituer une chronologie d’activité applicative, sous réserve de la disponibilité et de l’interprétation correcte des événements.",
+    "synonymes": [
+      "_DKEvent.App.InFocus"
+    ],
+    "termes_proches": [
+      "Biome (iOS)",
+      "Exécution d'applications",
+      "Traces d'activité",
+      "Horodatage"
+    ],
+    "termes_deconseilles": [],
+    "donnees_potentielles": [
+      "Identifiant technique de l’application (bundle ID)",
+      "Événements horodatés de prise et perte du premier plan",
+      "Valeurs d’état ou de transition selon le décodage",
+      "Enregistrements locaux ou synchronisés suivant l’emplacement d’origine"
+    ],
+    "points_attention": [
+      "La dénomination et le répertoire du flux peuvent différer entre versions d’iOS : repérer les flux présents dans l’acquisition plutôt que supposer un chemin unique.",
+      "Une prise de premier plan ne prouve ni interaction tactile, ni lecture d’un contenu, ni identité de la personne tenant l’appareil.",
+      "Une durée calculée à partir d’une paire d’événements peut être inexacte si un événement manque ou si l’appareil reste inactif.",
+      "Vérifier le fuseau horaire, les horodatages décodés, l’origine locale ou distante et les éventuelles limites du parseur.",
+      "Confronter à l’état de verrouillage, aux données applicatives et aux autres traces disponibles. L’absence de trace ne démontre pas l’absence d’usage."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Événements identifiés",
+        "texte": "L’analyse du flux Biome relatif à l’activité applicative met en évidence des événements horodatés de passage de certaines applications au premier plan."
+      },
+      {
+        "type": "Application au premier plan",
+        "texte": "Un événement enregistré dans le flux App.InFocus indique que l’application identifiée par son identifiant technique était signalée au premier plan à l’horodatage considéré."
+      },
+      {
+        "type": "Chronologie d’activité",
+        "texte": "Le rapprochement des événements d’activité applicative permet de proposer une chronologie partielle des applications signalées au premier plan sur le terminal examiné."
+      },
+      {
+        "type": "Limite d’interprétation",
+        "texte": "Ces événements ne permettent pas, à eux seuls, de déterminer si une personne a effectivement interagi avec l’application, ni d’établir son identité ou le contenu consulté."
+      }
+    ],
+    "sources": [
+      "Mattia Epifani, ZENA Forensics — « 84 Streams Later, Part 2: Inside Apple Biome » (27 juillet 2026), https://blog.digital-forensics.it/2026/07/84-streams-later-part-2-inside-apple.html",
+      "iLEAPP — analyse des artefacts iOS et flux Biome, https://github.com/abrignoni/iLEAPP",
+      "Be-binary 4n6 — « Beyond the C — SEGB and Biome Forensics with crush » (mai 2026), https://bebinary4n6.blogspot.com/2026/05/beyond-c-segb-and-biome-forensics-with.html"
+    ]
+  },
+  {
     "id": "biome-ios",
     "terme": "Biome (iOS)",
     "anglais": "Biome",
