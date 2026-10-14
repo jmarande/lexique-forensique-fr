@@ -728,22 +728,6 @@
         "telephonie"
       ],
       "ancienne_categorie": "Téléphonie : iOS : Artefacts système"
-    },
-    {
-      "id": "etat-afu-ios",
-      "classification": "telephonie/etat-protection",
-      "domaines": [
-        "telephonie"
-      ],
-      "ancienne_categorie": "Téléphonie : iOS : État de protection"
-    },
-    {
-      "id": "etat-bfu-ios",
-      "classification": "telephonie/etat-protection",
-      "domaines": [
-        "telephonie"
-      ],
-      "ancienne_categorie": "Téléphonie : iOS : État de protection"
     }
   ]
 }
