@@ -2,6 +2,8 @@
 
 **Classification :** 🔬 Méthodologie forensique → Examen et analyse
 
+**Statut :** En attente de relecture
+
 **Équivalent anglais :** Data analysis
 
 ## Définition

@@ -2,6 +2,8 @@
 
 **Classification :** 📱 Téléphonie mobile → SIM et identifiants
 
+**Statut :** En attente de relecture
+
 **Équivalent anglais :** Serial number
 
 ## Définition

@@ -2,6 +2,8 @@
 
 **Classification :** 💻 Informatique → Systèmes d’exploitation et fichiers
 
+**Statut :** En attente de relecture
+
 **Équivalent anglais :** Application cache
 
 ## Définition

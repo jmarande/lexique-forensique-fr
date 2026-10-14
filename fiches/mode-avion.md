@@ -2,6 +2,8 @@
 
 **Classification :** 📱 Téléphonie mobile → Connectivité
 
+**Statut :** En attente de relecture
+
 **Équivalent anglais :** Airplane mode
 
 ## Définition

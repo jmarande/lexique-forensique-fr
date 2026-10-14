@@ -2,6 +2,8 @@
 
 **Classification :** 🔬 Méthodologie forensique → Acquisition et extraction
 
+**Statut :** En attente de relecture
+
 **Équivalent anglais :** Forensic copy / Forensic image
 
 ## Définition

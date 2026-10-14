@@ -2,6 +2,8 @@
 
 **Classification :** 🌐 Navigation Internet → Navigateurs
 
+**Statut :** En attente de relecture
+
 **Équivalent anglais :** Mozilla Firefox / Firefox Web Browser
 
 ## Définition

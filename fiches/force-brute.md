@@ -2,6 +2,8 @@
 
 **Classification :** 🔬 Méthodologie forensique → Accès et authentification
 
+**Statut :** En attente de relecture
+
 **Équivalent anglais :** Brute force
 
 ## Définition

@@ -2,6 +2,8 @@
 
 **Classification :** 💬 Applications → Messageries et réseaux sociaux
 
+**Statut :** En attente de relecture
+
 **Équivalent anglais :** Messenger
 
 ## Définition

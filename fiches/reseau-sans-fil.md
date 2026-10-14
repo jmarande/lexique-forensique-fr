@@ -2,6 +2,8 @@
 
 **Classification :** 🌐 Réseaux → Adressage et communications
 
+**Statut :** En attente de relecture
+
 **Équivalent anglais :** Wireless network
 
 ## Définition

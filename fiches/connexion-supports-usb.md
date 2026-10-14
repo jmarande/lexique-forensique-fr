@@ -2,6 +2,8 @@
 
 **Classification :** 💻 Informatique → Périphériques et connexions
 
+**Statut :** En attente de relecture
+
 **Équivalent anglais :** USB storage device connection
 
 ## Définition

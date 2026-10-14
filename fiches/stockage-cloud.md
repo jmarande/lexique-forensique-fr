@@ -2,6 +2,8 @@
 
 **Classification :** ☁️ Services numériques → Cloud
 
+**Statut :** En attente de relecture
+
 **Équivalent anglais :** Cloud storage
 
 ## Définition

@@ -2,6 +2,8 @@
 
 **Classification :** 🧩 Données et traces → Preuves et traces numériques
 
+**Statut :** En attente de relecture
+
 **Équivalent anglais :** Application logs
 
 ## Définition

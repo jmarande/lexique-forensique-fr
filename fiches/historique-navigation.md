@@ -2,6 +2,8 @@
 
 **Classification :** 🌐 Navigation Internet → Historique et traces de navigation
 
+**Statut :** En attente de relecture
+
 **Équivalent anglais :** Browsing history / Web browsing history
 
 ## Définition

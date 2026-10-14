@@ -2,6 +2,8 @@
 
 **Classification :** 🧩 Données et traces → Formats et métadonnées
 
+**Statut :** En attente de relecture
+
 **Équivalent anglais :** Timestamp
 
 ## Définition

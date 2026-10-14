@@ -2,6 +2,8 @@
 
 **Classification :** 💾 Équipements et supports → Supports et stockage
 
+**Statut :** En attente de relecture
+
 **Équivalent anglais :** Memory
 
 ## Définition

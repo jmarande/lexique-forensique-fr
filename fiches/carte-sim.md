@@ -2,6 +2,8 @@
 
 **Classification :** 📱 Téléphonie mobile → SIM et identifiants
 
+**Statut :** En attente de relecture
+
 **Équivalent anglais :** SIM card
 
 ## Définition
@@ -25,6 +27,10 @@ Le code PIN de la carte SIM étant inconnu, nous ne pouvons procéder qu’à un
 ### Extraction partielle
 
 Les données accessibles sur la carte SIM ne permettent qu’une extraction partielle de son contenu.
+
+### Contacts préenregistrés par l’opérateur
+
+L’examen de la carte SIM révèle uniquement la présence de contacts de service préenregistrés par l’opérateur. Aucun contact personnel n’a été identifié dans les données examinées.
 
 > Ces fiches sont des documents de travail du projet : les définitions restent soumises à la revue terminologique et documentaire.
 

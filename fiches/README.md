@@ -3,7 +3,9 @@
 Catalogue généré automatiquement depuis [data/lexique.json](../data/lexique.json).
 Ce catalogue n'est pas une validation juridique ou normative des définitions.
 
-**81 fiches disponibles**
+**89 fiches disponibles** — 5 validées, 84 en attente de relecture.
+
+[Procédure de validation](../docs/VALIDATION-FICHES.md)
 
 ## 🔬 Méthodologie forensique
 
@@ -96,6 +98,15 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 
 - [Mode avion](mode-avion.md)
 
+### Artefacts système
+
+- [Biome (iOS)](biome-ios.md)
+- [Biome — activité applicative (App.InFocus)](biome-app-infocus-ios.md)
+- [KnowledgeC (iOS)](knowledgec-ios.md)
+- [notificationAndSuggestionDB.db (iOS)](notification-and-suggestion-db-ios.md)
+- [Notifications (iOS)](notifications-ios.md)
+- [Verrouillage et déverrouillage (iOS)](verrouillage-deverrouillage-ios.md)
+
 ## 💻 Informatique
 
 ### Systèmes d’exploitation et fichiers
@@ -158,6 +169,16 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 
 - [Historique de navigation](historique-navigation.md)
 
+## 📋 Mission
+
+### Échanges avec le requérant
+
+- [Précision de la mission avec le requérant](precision-mission-requerant.md)
+
+### Limites et orientation
+
+- [Limites techniques et orientation vers un service spécialisé](limites-techniques-orientation.md)
+
 ## Index alphabétique
 
 - [Acquisition forensique](acquisition-forensique.md)
@@ -166,6 +187,8 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Artefact forensique](artefact-forensique.md)
 - [Authentification](authentification.md)
 - [Base de données](base-de-donnees.md)
+- [Biome (iOS)](biome-ios.md)
+- [Biome — activité applicative (App.InFocus)](biome-app-infocus-ios.md)
 - [Cache applicatif](cache-applicatif.md)
 - [Cache système](cache-systeme.md)
 - [Carte SIM](carte-sim.md)
@@ -207,6 +230,8 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Investigation numérique](investigation-numerique.md)
 - [Journaux applicatifs](journaux-applicatifs.md)
 - [Journaux système](journaux-systeme.md)
+- [KnowledgeC (iOS)](knowledgec-ios.md)
+- [Limites techniques et orientation vers un service spécialisé](limites-techniques-orientation.md)
 - [Messages (Apple)](messages-apple.md)
 - [Messenger](messenger.md)
 - [Mode avion](mode-avion.md)
@@ -216,9 +241,12 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Mémoire cache](memoire-cache.md)
 - [Métadonnées](metadonnees.md)
 - [Navigateur Internet](navigateur-internet.md)
+- [notificationAndSuggestionDB.db (iOS)](notification-and-suggestion-db-ios.md)
+- [Notifications (iOS)](notifications-ios.md)
 - [Numéro de série](numero-serie.md)
 - [Preuve numérique](preuve-numerique.md)
 - [Profil utilisateur](profil-utilisateur.md)
+- [Précision de la mission avec le requérant](precision-mission-requerant.md)
 - [Périphériques connectés](peripheriques-connectes.md)
 - [Remise des résultats](remise-resultats.md)
 - [Récupération de données](recuperation-donnees.md)
@@ -239,6 +267,7 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Telegram](telegram.md)
 - [Traces d'activité](traces-activite.md)
 - [Valeur de hachage](valeur-hachage.md)
+- [Verrouillage et déverrouillage (iOS)](verrouillage-deverrouillage-ios.md)
 - [WhatsApp](whatsapp.md)
 - [État du support](etat-support.md)
 

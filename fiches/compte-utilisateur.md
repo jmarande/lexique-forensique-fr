@@ -2,6 +2,8 @@
 
 **Classification :** 💻 Informatique → Comptes et activités utilisateurs
 
+**Statut :** En attente de relecture
+
 **Équivalent anglais :** User account
 
 ## Définition

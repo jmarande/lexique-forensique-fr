@@ -2,6 +2,8 @@
 
 **Classification :** 🔬 Méthodologie forensique → Préservation et traçabilité
 
+**Statut :** En attente de relecture
+
 **Équivalent anglais :** Delivery of results
 
 ## Définition

@@ -2,6 +2,8 @@
 
 **Classification :** 🔬 Méthodologie forensique → Acquisition et extraction
 
+**Statut :** En attente de relecture
+
 **Domaines d’application :** Informatique, Téléphonie
 
 **Équivalent anglais :** Forensic acquisition

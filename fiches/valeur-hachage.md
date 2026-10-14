@@ -2,6 +2,8 @@
 
 **Classification :** 🧩 Données et traces → Hachage et cryptographie
 
+**Statut :** En attente de relecture
+
 **Équivalent anglais :** Hash value
 
 ## Définition
