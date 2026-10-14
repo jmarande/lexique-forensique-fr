@@ -103,6 +103,8 @@ def _prepare_term_proposals(entries):
     """Créer une unique proposition pour une sélection explicite de fiches."""
     if not entries:
         raise ValueError("Sélectionnez au moins une fiche personnelle")
+    if any(_is_sensitive(entry) for entry in entries):
+        raise ValueError("Publication impossible : sélection contenant une fiche sensible.")
     parts = []
     for index, entry in enumerate(entries, 1):
         prepared = _prepare_term_proposal(entry)
@@ -1509,7 +1511,7 @@ class ScenarioListener(
         for scenario in self.scenarios:
             prefix = "★ " if scenario.get("_source") == "user" else ""
             self.scenarios_box.addItem(
-                ("⚠ [SENSIBLE] " if _scenario_is_sensitive(scenario, self.data) else prefix) + scenario.get("titre", "Scénario"),
+                ("⚠ Scénarios sensibles · " if _scenario_is_sensitive(scenario, self.data) else prefix) + scenario.get("titre", "Scénario"),
                 self.scenarios_box.ItemCount,
             )
         if self.scenarios:
