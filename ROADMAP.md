@@ -33,7 +33,7 @@ Le projet dispose désormais d’un socle fonctionnel comprenant :
 - proposer le choix entre plusieurs remplacements lorsqu’une occurrence en possède plusieurs ;
 - ajouter **Remplacer toutes les occurrences** avec confirmation ;
 - améliorer l’affichage du contexte autour de l’occurrence détectée ;
-- enrichir progressivement la base de libellés issus d’exports Cellebrite, AXIOM, XRY, GrayKey et autres outils, en évitant les faux positifs.
+- enrichir progressivement la base de libellés issus des exports de logiciels d’analyse numérique, en évitant les faux positifs.
 
 ### Données utilisateur
 
