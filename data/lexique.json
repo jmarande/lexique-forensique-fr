@@ -3006,6 +3006,103 @@
     ]
   },
   {
+    "id": "potato-tato-talk",
+    "terme": "Potato / Tato Talk",
+    "anglais": "Potato / Potato Chat / Tato Talk",
+    "categorie": "Application — Messagerie et réseau social",
+    "synonymes": [
+      "Potato",
+      "Potato Chat",
+      "Tato Talk",
+      "TatoTalk"
+    ],
+    "termes_proches": [],
+    "termes_deconseilles": [],
+    "definition": "Application de messagerie permettant l’échange de messages, de photographies, de vidéos, de fichiers et les communications audio et vidéo. Elle propose des conversations individuelles, des groupes et des canaux, ainsi qu’une synchronisation entre plusieurs appareils. Des versions sont proposées pour Android, iOS, Windows, macOS et Linux.",
+    "plateformes": [
+      "Android",
+      "iOS",
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "points_attention": [
+      "Le site officiel de Potato présente son téléchargement pour iPhone sous la mention « nouveau nom : Tato Talk ». Ce lien documentaire rapproche les deux dénominations pour la distribution iOS, sans présumer que toutes leurs versions présentent un fonctionnement identique.",
+      "La documentation distingue les conversations synchronisées dans son cloud des conversations secrètes, présentées comme chiffrées de bout en bout et liées aux appareils d’origine. Ces dernières peuvent utiliser un délai de suppression après lecture ou ouverture. Il s’agit de caractéristiques annoncées par le service, sans vérification indépendante de sa sécurité.",
+      "La présence de l’application ne démontre pas son utilisation à une date déterminée.",
+      "Un nom affiché ou un identifiant de compte ne suffit pas à établir l’identité de son utilisateur.",
+      "Une donnée synchronisée ne permet pas, à elle seule, d’attribuer une action au téléphone examiné.",
+      "L’absence d’un échange dans les données examinées ne démontre pas qu’il n’a jamais existé.",
+      "Un média présent localement ne permet pas nécessairement de déterminer son origine, son auteur ou son destinataire.",
+      "Les données reconstruites par un logiciel doivent être distinguées des données directement présentes dans la source."
+    ],
+    "donnees_potentielles": [
+      "Messages et conversations",
+      "Photographies, vidéos, fichiers et messages vocaux",
+      "Informations de comptes, identifiants et noms affichés",
+      "Contacts, groupes, canaux et relations entre comptes",
+      "Informations relatives aux appels",
+      "Horodatages et autres métadonnées associées",
+      "Fichiers locaux et données de cache"
+    ],
+    "sources": [
+      "Potato — site officiel, https://potato.im/",
+      "Potato — applications disponibles, https://m.potato.im/apps",
+      "Potato — FAQ, https://potato.im/faq",
+      "Potato — confidentialité et sécurité, https://potato.im/privacy"
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Application identifiée",
+        "texte": "Nous identifions la présence de l’application Potato sur le support examiné."
+      },
+      {
+        "type": "Présentation de l’application",
+        "texte": "Potato est une application de messagerie permettant notamment l’échange de messages, de fichiers multimédias et les communications audio et vidéo."
+      },
+      {
+        "type": "Données associées",
+        "texte": "L’examen des données extraites met en évidence des éléments associés à l’application Potato."
+      },
+      {
+        "type": "Conversations identifiées",
+        "texte": "Nous identifions plusieurs échanges issus de l’application Potato susceptibles de présenter un intérêt au regard de la mission confiée."
+      },
+      {
+        "type": "Compte identifié",
+        "texte": "Les données examinées permettent d’identifier un compte associé à l’application Potato, portant l’identifiant [identifiant du compte] et le nom affiché [nom affiché]."
+      },
+      {
+        "type": "Groupes ou canaux identifiés",
+        "texte": "Nous identifions des données associées à [nom du groupe ou du canal] dans les éléments examinés de l’application Potato."
+      },
+      {
+        "type": "Médias identifiés",
+        "texte": "Nous identifions plusieurs fichiers multimédias associés à l’application Potato."
+      },
+      {
+        "type": "Données partielles",
+        "texte": "Les données accessibles pour l’application Potato sont partielles et ne permettent pas d’affirmer que l’ensemble des échanges a été récupéré."
+      },
+      {
+        "type": "Média non disponible",
+        "texte": "Un enregistrement associé à l’application Potato fait référence à un fichier multimédia dont le contenu n’est pas disponible dans les données examinées."
+      },
+      {
+        "type": "Données reconstruites",
+        "texte": "Certains éléments associés à l’application Potato ont été reconstruits automatiquement par le logiciel d’analyse et sont interprétés en tenant compte des limites de cette reconstruction."
+      },
+      {
+        "type": "Limite d’attribution au support",
+        "texte": "Les informations disponibles ne permettent pas de déterminer si les échanges identifiés ont été réalisés depuis le support examiné ou synchronisés depuis un autre appareil."
+      },
+      {
+        "type": "Application présentée sous le nom Tato Talk",
+        "texte": "Nous identifions la présence de l’application Tato Talk sur le support examiné. Le site officiel de Potato présente cette dénomination comme le nouveau nom de son application distribuée pour iPhone."
+      }
+    ]
+  },
+  {
     "id": "preuve-numerique",
     "terme": "Preuve numérique",
     "anglais": "Digital evidence",

@@ -744,6 +744,15 @@
         "telephonie"
       ],
       "ancienne_categorie": "Téléphonie : iOS : État de protection"
+    },
+    {
+      "id": "potato-tato-talk",
+      "classification": "applications/messageries",
+      "domaines": [
+        "telephonie",
+        "informatique"
+      ],
+      "ancienne_categorie": "Application — Messagerie et réseau social"
     }
   ]
 }
