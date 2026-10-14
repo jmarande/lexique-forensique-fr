@@ -963,6 +963,18 @@
       {
         "type": "Reconstruction non concluante",
         "texte": "Les opérations de reconstruction réalisées ne permettent pas de restituer des informations suffisamment exploitables pour en proposer une interprétation fiable."
+      },
+      {
+        "type": "Reconstruction automatique et manuelle — synthèse",
+        "texte": "Certaines données présentées dans le présent rapport résultent d'opérations de reconstruction effectuées automatiquement par le logiciel d'analyse ou manuellement par nos soins, à partir des informations techniques disponibles dans les données examinées."
+      },
+      {
+        "type": "Reconstruction manuelle — contexte technique",
+        "texte": "L'examen des structures de données et des traces résiduelles nous conduit à procéder manuellement à la reconstitution de certains éléments présentés dans ce rapport. Cette reconstitution repose sur les informations effectivement observées et sur leur mise en relation."
+      },
+      {
+        "type": "Limites de la reconstruction",
+        "texte": "Les éléments ainsi reconstruits peuvent être partiels et ne permettent pas nécessairement d'établir l'intégralité de leur contenu initial ou de leur contexte d'origine."
       }
     ],
     "termes_proches": [
@@ -970,6 +982,11 @@
       "Donnée supprimée",
       "Décodage des données",
       "Analyse des données"
+    ],
+    "points_attention": [
+      "La reconstruction automatique et la reconstruction manuelle doivent être distinguées du simple décodage des données.",
+      "La reconstruction ne démontre pas en elle-même qu'une donnée a été supprimée.",
+      "La méthode, les sources utilisées et le caractère partiel éventuel de la reconstruction doivent être documentés."
     ]
   },
   {
@@ -1008,6 +1025,14 @@
       {
         "type": "Circonstances de suppression indéterminées",
         "texte": "Les informations disponibles ne permettent pas de déterminer les circonstances dans lesquelles cet élément a été supprimé."
+      },
+      {
+        "type": "Qualification par le logiciel",
+        "texte": "Certains éléments sont signalés comme supprimés par le logiciel d'analyse. Cette qualification repose sur l'interprétation des structures et des traces disponibles et ne permet pas, à elle seule, de déterminer les circonstances de leur suppression."
+      },
+      {
+        "type": "Suppression et reconstruction automatique",
+        "texte": "Parmi les éléments identifiés comme supprimés, certains ont pu être restitués automatiquement par le logiciel d'analyse à partir des données résiduelles accessibles. Leur restitution peut demeurer partielle."
       }
     ],
     "points_attention": [
@@ -3141,6 +3166,10 @@
       {
         "type": "Récupération techniquement impossible",
         "texte": "L'état du support et les moyens techniques disponibles ne permettent pas de mettre en œuvre une récupération des données dans les conditions de l'examen."
+      },
+      {
+        "type": "Récupération et reconstruction combinées",
+        "texte": "L'exploitation des données comprend des opérations automatisées de récupération ainsi que, lorsque les éléments techniques le permettent, des reconstructions complémentaires réalisées manuellement par nos soins."
       }
     ]
   },
