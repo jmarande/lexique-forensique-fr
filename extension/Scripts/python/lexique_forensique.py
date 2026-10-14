@@ -194,6 +194,7 @@ def _load_user_data():
         return []
     for item in data:
         item["_source"] = "user"
+        item["sensible"] = item.get("sensible") is True
     return data
 
 
@@ -595,6 +596,18 @@ def _normalize(value):
     return value.casefold().strip()
 
 
+def _is_sensitive(entry):
+    return entry.get("sensible") is True
+
+
+def _scenario_is_sensitive(scenario, data):
+    sensitive_ids = {entry.get("id") for entry in data if _is_sensitive(entry)}
+    return any(
+        isinstance(step, dict) and step.get("terme") in sensitive_ids
+        for step in scenario.get("etapes", [])
+    )
+
+
 def _format_entry(e, warning=None):
     syn = ", ".join(e.get("synonymes", [])) or "—"
     proches = ", ".join(e.get("termes_proches", [])) or "—"
@@ -607,6 +620,8 @@ def _format_entry(e, warning=None):
             f"Occurrences détectées : {warning['count']}\n\n"
         )
 
+    if _is_sensitive(e):
+        prefix += "⚠ FICHE SENSIBLE — MERCI DE NE PAS DIFFUSER\n\n"
     base = (
         prefix
         + f"{e['terme']}\n"
@@ -1494,7 +1509,7 @@ class ScenarioListener(
         for scenario in self.scenarios:
             prefix = "★ " if scenario.get("_source") == "user" else ""
             self.scenarios_box.addItem(
-                prefix + scenario.get("titre", "Scénario"),
+                ("⚠ [SENSIBLE] " if _scenario_is_sensitive(scenario, self.data) else prefix) + scenario.get("titre", "Scénario"),
                 self.scenarios_box.ItemCount,
             )
         if self.scenarios:
@@ -1516,9 +1531,11 @@ class ScenarioListener(
             if scenario.get("_source") == "user"
             else "Scénario fourni avec l’extension"
         )
+        sensitive = _scenario_is_sensitive(scenario, self.data)
         parts = [
+            ("⚠ SCÉNARIO SENSIBLE — MERCI DE NE PAS DIFFUSER" if sensitive else "SCÉNARIO STANDARD"),
             scenario.get("titre", "Scénario").upper(),
-            f"Catégorie : {scenario.get('categorie', '—')}",
+            f"Catégorie : {'Scénarios sensibles' if sensitive else scenario.get('categorie', '—')}",
             f"Origine : {origin}",
             "",
             scenario.get("description", ""),
@@ -1727,7 +1744,7 @@ class ScenarioEditorListener(
     def _populate_terms(self):
         self._clear(self.term_box)
         for entry in self.entries:
-            self.term_box.addItem(entry.get("terme", ""), self.term_box.ItemCount)
+            self.term_box.addItem(("⚠ [SENSIBLE] " if _is_sensitive(entry) else "") + entry.get("terme", ""), self.term_box.ItemCount)
         if self.entries:
             self.term_box.selectItemPos(0, True)
             self._populate_formulations(0)
@@ -1747,7 +1764,7 @@ class ScenarioEditorListener(
             None,
         )
         term = entry.get("terme", step.get("terme", "Terme")) if entry else step.get("terme", "Terme")
-        return f"{term} — {step.get('formulation', '')}"
+        return f"{'⚠ [SENSIBLE] ' if entry and _is_sensitive(entry) else ''}{term} — {step.get('formulation', '')}"
 
     def _populate_steps(self, select_index=None):
         self._clear(self.steps_box)
@@ -1933,7 +1950,7 @@ class TermManagerListener(
         for entry in self.data:
             prefix = "★ " if entry.get("_source") == "user" else ""
             self.terms_box.addItem(
-                prefix + entry.get("terme", "Terme"),
+                ("⚠ [SENSIBLE] " if _is_sensitive(entry) else prefix) + entry.get("terme", "Terme"),
                 self.terms_box.ItemCount,
             )
         if self.data:
