@@ -68,7 +68,7 @@ Maintenir à jour à chaque évolution significative :
 
 ## Gouvernance documentaire multi-sources
 
-- [x] Regrouper CLARUS avec les autres références dans le référentiel commun, sans source privilégiée.
+- [x] Regrouper l’ensemble des références documentaires (NIST, SWGDE, CLARUS D3.2, ANSSI, FranceTerme et autres sources pertinentes) dans un référentiel commun, sans hiérarchie ni source privilégiée.
 - [x] Documenter un circuit unifié de relecture, comparaison et validation des fiches.
 - [ ] Reprendre les fiches existantes par lots, confronter effectivement les sources pertinentes et consigner les divergences.
 - [ ] Conserver les anciens termes de recherche, synonymes et renvois lors des regroupements de fiches.
