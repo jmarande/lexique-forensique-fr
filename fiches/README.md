@@ -3,7 +3,7 @@
 Catalogue généré automatiquement depuis [data/lexique.json](../data/lexique.json).
 Ce catalogue n'est pas une validation juridique ou normative des définitions.
 
-**85 fiches disponibles** — 2 validées, 83 en attente de relecture.
+**83 fiches disponibles** — 0 validée, 83 en attente de relecture.
 
 [Procédure de validation](../docs/VALIDATION-FICHES.md)
 
@@ -105,8 +105,6 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 
 ### État de protection
 
-- [État AFU (iOS)](etat-afu-ios.md)
-- [État BFU (iOS)](etat-bfu-ios.md)
 
 ## 💻 Informatique
 
@@ -254,8 +252,6 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Valeur de hachage](valeur-hachage.md)
 - [Verrouillage et déverrouillage (iOS)](verrouillage-deverrouillage-ios.md)
 - [WhatsApp](whatsapp.md)
-- [État AFU (iOS)](etat-afu-ios.md)
-- [État BFU (iOS)](etat-bfu-ios.md)
 - [État du support](etat-support.md)
 
 [← Présentation du projet](../README.md)
