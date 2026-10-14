@@ -276,6 +276,108 @@
     ]
   },
   {
+    "id": "biome-app-infocus-ios",
+    "terme": "Biome — activité applicative (App.InFocus)",
+    "anglais": "App.InFocus",
+    "categorie": "Téléphonie : iOS : Artefacts système",
+    "definition": "Flux d’événements Biome susceptible d’enregistrer les transitions de certaines applications vers ou hors de l’état de premier plan. Les enregistrements peuvent comporter un horodatage, un identifiant d’application (bundle ID) et un état de transition. Leur rapprochement aide à reconstituer une chronologie d’activité applicative, sous réserve de la disponibilité et de l’interprétation correcte des événements.",
+    "synonymes": [
+      "_DKEvent.App.InFocus"
+    ],
+    "termes_proches": [
+      "Biome (iOS)",
+      "Exécution d'applications",
+      "Traces d'activité",
+      "Horodatage"
+    ],
+    "termes_deconseilles": [],
+    "donnees_potentielles": [
+      "Identifiant technique de l’application (bundle ID)",
+      "Événements horodatés de prise et perte du premier plan",
+      "Valeurs d’état ou de transition selon le décodage",
+      "Enregistrements locaux ou synchronisés suivant l’emplacement d’origine"
+    ],
+    "points_attention": [
+      "La dénomination et le répertoire du flux peuvent différer entre versions d’iOS : repérer les flux présents dans l’acquisition plutôt que supposer un chemin unique.",
+      "Une prise de premier plan ne prouve ni interaction tactile, ni lecture d’un contenu, ni identité de la personne tenant l’appareil.",
+      "Une durée calculée à partir d’une paire d’événements peut être inexacte si un événement manque ou si l’appareil reste inactif.",
+      "Vérifier le fuseau horaire, les horodatages décodés, l’origine locale ou distante et les éventuelles limites du parseur.",
+      "Confronter à l’état de verrouillage, aux données applicatives et aux autres traces disponibles. L’absence de trace ne démontre pas l’absence d’usage."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Événements identifiés",
+        "texte": "L’analyse du flux Biome relatif à l’activité applicative met en évidence des événements horodatés de passage de certaines applications au premier plan."
+      },
+      {
+        "type": "Application au premier plan",
+        "texte": "Un événement enregistré dans le flux App.InFocus indique que l’application identifiée par son identifiant technique était signalée au premier plan à l’horodatage considéré."
+      },
+      {
+        "type": "Chronologie d’activité",
+        "texte": "Le rapprochement des événements d’activité applicative permet de proposer une chronologie partielle des applications signalées au premier plan sur le terminal examiné."
+      },
+      {
+        "type": "Limite d’interprétation",
+        "texte": "Ces événements ne permettent pas, à eux seuls, de déterminer si une personne a effectivement interagi avec l’application, ni d’établir son identité ou le contenu consulté."
+      }
+    ],
+    "sources": [
+      "Mattia Epifani, ZENA Forensics — « 84 Streams Later, Part 2: Inside Apple Biome » (27 juillet 2026), https://blog.digital-forensics.it/2026/07/84-streams-later-part-2-inside-apple.html",
+      "iLEAPP — analyse des artefacts iOS et flux Biome, https://github.com/abrignoni/iLEAPP",
+      "Be-binary 4n6 — « Beyond the C — SEGB and Biome Forensics with crush » (mai 2026), https://bebinary4n6.blogspot.com/2026/05/beyond-c-segb-and-biome-forensics-with.html"
+    ]
+  },
+  {
+    "id": "biome-ios",
+    "terme": "Biome (iOS)",
+    "anglais": "Biome",
+    "categorie": "Téléphonie : iOS : Artefacts système",
+    "definition": "Sous-système d’iOS enregistrant certains événements du fonctionnement de l’appareil et de l’activité applicative sous forme de flux de données (streams), notamment dans des fichiers binaires SEGB. Selon la version d’iOS et les données accessibles, ces traces peuvent contribuer à documenter une chronologie d’activité, sans constituer à elles seules une preuve de l’identité de la personne ayant utilisé l’appareil.",
+    "synonymes": [
+      "Apple Biome"
+    ],
+    "termes_proches": [
+      "Traces d'activité",
+      "Journaux système",
+      "Exécution d'applications",
+      "Horodatage"
+    ],
+    "termes_deconseilles": [],
+    "donnees_potentielles": [
+      "Événements horodatés liés à l’activité de certaines applications",
+      "Événements d’interaction ou d’intention applicative (AppIntent)",
+      "Événements relatifs à l’état et au fonctionnement de l’appareil selon les flux",
+      "Informations contextuelles et de navigation lorsque les flux correspondants existent"
+    ],
+    "points_attention": [
+      "La couverture des flux varie selon la version d’iOS, les applications et le niveau d’acquisition ; un flux absent n’exclut pas l’activité recherchée.",
+      "Une acquisition logique standard ne garantit pas l’accès aux répertoires Biome, qui sont plus couramment examinés dans une acquisition complète du système de fichiers.",
+      "Un événement applicatif ne démontre pas nécessairement une action volontaire, la lecture d’un contenu ou l’identité de l’utilisateur.",
+      "L’origine locale ou synchronisée d’un événement et la conversion des horodatages doivent être vérifiées.",
+      "Confronter les événements Biome aux autres artefacts, conserver les chemins d’origine et les données sources avant décodage."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Présentation de l’artefact",
+        "texte": "Le système iOS conserve, au sein du sous-système Biome, des enregistrements relatifs à l’activité des applications et à certains événements de fonctionnement de l’appareil."
+      },
+      {
+        "type": "Exploitation des données",
+        "texte": "L’analyse des fichiers Biome a permis de relever des événements horodatés relatifs à l’utilisation de certaines applications présentes sur le terminal."
+      },
+      {
+        "type": "Limites de l’interprétation",
+        "texte": "Les événements identifiés constituent des traces d’activité enregistrées par le système. Leur présence ne permet pas, à elle seule, d’établir l’identité de l’utilisateur ni de caractériser précisément les actions réalisées."
+      }
+    ],
+    "sources": [
+      "Mattia Epifani, ZENA Forensics — « 84 Streams Later: Exploring the Evolution of Apple Biome » (2026), https://blog.digital-forensics.it/2026/07/84-streams-later-exploring-evolution-of.html",
+      "Apple Developer Documentation — INInteraction, https://developer.apple.com/documentation/intents/ininteraction",
+      "CCL Forensics — ccl-segb (décodage SEGB), https://github.com/cclgroupltd/ccl-segb"
+    ]
+  },
+  {
     "id": "cache-applicatif",
     "terme": "Cache applicatif",
     "anglais": "Application cache",
@@ -2258,6 +2360,132 @@
     ]
   },
   {
+    "id": "knowledgec-ios",
+    "terme": "KnowledgeC (iOS)",
+    "anglais": "KnowledgeC database",
+    "categorie": "Téléphonie : iOS : Artefacts système",
+    "definition": "KnowledgeC est une base de données du sous-système CoreDuet d’Apple, destinée à conserver des informations relatives à l’activité des applications, au fonctionnement du terminal et à certains événements contextuels. Ses enregistrements peuvent comporter des horodatages, des identifiants d’application et des métadonnées. Leur exploitation contribue à reconstituer une chronologie partielle de l’activité du terminal, selon la version d’iOS, les mécanismes de conservation et le niveau d’acquisition.",
+    "synonymes": [
+      "Base KnowledgeC",
+      "knowledgeC.db"
+    ],
+    "termes_proches": [
+      "Biome (iOS)",
+      "Traces d'activité",
+      "Activité applicative",
+      "Événements système"
+    ],
+    "termes_deconseilles": [],
+    "donnees_potentielles": [
+      "Événements horodatés d’activité applicative",
+      "Événements relatifs au verrouillage ou à l’état d’affichage du terminal",
+      "Événements contextuels, de navigation, de notification ou multimédias, selon les flux disponibles",
+      "Métadonnées d’événements et informations sur leurs sources"
+    ],
+    "points_attention": [
+      "Chemin couramment documenté : /private/var/mobile/Library/CoreDuet/Knowledge/knowledgeC.db ; vérifier son existence dans l’acquisition.",
+      "Tenir compte, lorsqu’ils existent, des fichiers SQLite -wal et -shm pour une interprétation cohérente des données.",
+      "Les tables fréquemment documentées comprennent ZOBJECT, ZSTRUCTUREDMETADATA et ZSOURCE ; leur schéma dépend de la version examinée.",
+      "Contrôler la conversion des horodatages Apple (époque du 1er janvier 2001 UTC selon le champ) et leur fuseau horaire.",
+      "Les données peuvent être partielles ou absentes ; un événement manquant n’exclut pas l’activité correspondante.",
+      "Les événements ne permettent pas à eux seuls d’identifier la personne ayant utilisé le téléphone ou de caractériser les actions réalisées.",
+      "Vérifier les interprétations automatiques en les confrontant aux enregistrements sources et, si nécessaire, à Biome ou aux autres artefacts disponibles."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Présentation de la base",
+        "texte": "La base de données KnowledgeC du système iOS conserve des informations relatives à l’activité des applications et à certains événements de fonctionnement du terminal."
+      },
+      {
+        "type": "Base identifiée",
+        "texte": "Nous identifions dans les données extraites une base de données KnowledgeC contenant des enregistrements relatifs à l’activité du terminal."
+      },
+      {
+        "type": "Exploitation des événements",
+        "texte": "L’analyse de la base KnowledgeC met en évidence plusieurs événements horodatés relatifs à l’activité du terminal et des applications."
+      },
+      {
+        "type": "Activité applicative",
+        "texte": "Les données enregistrées dans KnowledgeC permettent de relever des événements d’activité associés à certaines applications présentes sur le terminal."
+      },
+      {
+        "type": "Reconstitution chronologique",
+        "texte": "Le rapprochement des événements enregistrés dans la base KnowledgeC contribue à établir une chronologie partielle de l’activité du terminal pour la période étudiée."
+      },
+      {
+        "type": "Corrélation des artefacts",
+        "texte": "Les événements issus de KnowledgeC ont été rapprochés des autres traces numériques disponibles afin de contextualiser les activités relevées."
+      },
+      {
+        "type": "Limites d’interprétation",
+        "texte": "Les événements identifiés dans la base KnowledgeC constituent des traces d’activité du système. Leur présence ne permet pas, à elle seule, d’établir l’identité de la personne ayant utilisé le terminal ni de déterminer précisément les actions réalisées."
+      },
+      {
+        "type": "Données insuffisantes",
+        "texte": "Les données accessibles dans la base KnowledgeC ne permettent pas de reconstituer de manière exhaustive l’activité du terminal pour la période examinée."
+      }
+    ],
+    "sources": [
+      "Athena Forensics — The KnowledgeC Database, https://athenaforensics.co.uk/the-knowledgec-database/",
+      "Scott Koenig — iOS KnowledgeC.db Notifications, DFIR Review (2022), https://dfir.pubpub.org/pub/g2v1z97i/release/1",
+      "KnowledgeC Parser — https://www.knowledgecparser.com/en",
+      "KnowledgeC Parser — Forensics Guide, https://www.knowledgecparser.com/en/blog/knowledgec-db-forensics-guide",
+      "mac4n6/APOLLO — https://github.com/mac4n6/APOLLO"
+    ]
+  },
+  {
+    "id": "limites-techniques-orientation",
+    "terme": "Limites techniques et orientation vers un service spécialisé",
+    "anglais": "",
+    "categorie": "Mission : Limites et orientation",
+    "definition": "Situation dans laquelle une opération demandée ne peut pas être réalisée avec les moyens techniques disponibles au sein du service. Une orientation vers un service spécialisé peut alors être proposée au requérant.",
+    "synonymes": [
+      "Moyens techniques insuffisants",
+      "Extraction non réalisable",
+      "Orientation vers un service spécialisé"
+    ],
+    "termes_proches": [
+      "Extraction des données",
+      "Accès aux données",
+      "Examen complémentaire"
+    ],
+    "termes_deconseilles": [],
+    "points_attention": [
+      "La formulation doit préciser l’opération concernée et, lorsqu’elle est connue, la difficulté rencontrée. L’impossibilité de réaliser une extraction avec les moyens du service ne permet pas de conclure qu’elle serait impossible avec d’autres moyens.",
+      "Les indications entre crochets sont à remplacer avant insertion dans le rapport.",
+      "La formulation relative aux tentatives d’extraction s’utilise uniquement si celles-ci ont effectivement été réalisées."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Extraction non réalisable avec les moyens disponibles",
+        "texte": "Les moyens techniques dont nous disposons ne permettent pas de procéder à l’extraction des données du support examiné."
+      },
+      {
+        "type": "Extraction tentée sans succès",
+        "texte": "Les tentatives d’extraction réalisées avec les moyens techniques disponibles au sein de notre service n’ont pas permis d’extraire les données du support examiné."
+      },
+      {
+        "type": "Orientation avec indication du service",
+        "texte": "Les moyens techniques dont nous disposons ne permettent pas de procéder à l’extraction des données du support examiné. Nous invitons le requérant à solliciter [nom du service spécialisé] afin d’évaluer les possibilités d’extraction."
+      },
+      {
+        "type": "Orientation sans service désigné",
+        "texte": "L’extraction des données du support examiné ne peut pas être réalisée avec les moyens techniques disponibles au sein de notre service. Nous invitons le requérant à solliciter un service spécialisé afin d’évaluer les possibilités de prise en charge."
+      },
+      {
+        "type": "Difficulté identifiée",
+        "texte": "En raison de [difficulté technique constatée], nous ne sommes pas en mesure de procéder à l’extraction des données du support avec les moyens disponibles. Nous invitons le requérant à solliciter [nom du service spécialisé] pour un examen complémentaire."
+      },
+      {
+        "type": "Extraction partielle et orientation",
+        "texte": "L’extraction réalisée a permis d’obtenir [données obtenues]. Les moyens techniques disponibles ne permettent toutefois pas d’accéder à [données ou partie du support concernée]. Nous invitons le requérant à solliciter [nom du service spécialisé] afin d’évaluer les possibilités d’extraction complémentaire."
+      }
+    ],
+    "sources": [
+      "Lexique forensique FR — usage professionnel"
+    ]
+  },
+  {
     "id": "memoire",
     "terme": "Mémoire",
     "anglais": "Memory",
@@ -2711,6 +2939,160 @@
     ]
   },
   {
+    "id": "notification-and-suggestion-db-ios",
+    "terme": "notificationAndSuggestionDB.db (iOS)",
+    "anglais": "Notification and Suggestion Database",
+    "categorie": "Téléphonie : iOS : Artefacts système",
+    "synonymes": [
+      "Base des métadonnées de notifications"
+    ],
+    "termes_proches": [
+      "Notifications (iOS)",
+      "Biome (iOS)",
+      "KnowledgeC (iOS)"
+    ],
+    "termes_deconseilles": [],
+    "definition": "Base de données SQLite du sous-système DuetExpertCenter d'Apple qui conserve des métadonnées relatives aux notifications enregistrées sur un appareil iOS. Elle peut contenir des horodatages, des identifiants d'applications, de conversations ou de correspondants et des indicateurs relatifs au traitement des notifications. Son exploitation permet de rechercher des événements de notification et de contribuer à leur contextualisation chronologique. Les travaux examinés n'ont pas mis en évidence la conservation du contenu textuel des notifications dans cette base.",
+    "donnees_potentielles": [
+      "Horodatages de réception et d'état des notifications",
+      "Identifiants des applications (BundleID)",
+      "Identifiants de conversations ou correspondants (ThreadID, ContactID, rawIdentifier)",
+      "Indicateurs de message individuel ou de groupe (isMessage, isGroupMessage)",
+      "Longueur déclarée du corps de notification (notificationBodyLength), sans conservation garantie du texte",
+      "Métadonnées d'état et de traitement (latestOutcome, latestOutcomeTimestamp, isActive, isProminent)"
+    ],
+    "points_attention": [
+      "Emplacement documenté : /private/var/mobile/Library/DuetExpertCenter/streams/notificationAndSuggestionDB.db ; contrôler la présence réelle dans l'acquisition.",
+      "La table notifications compte 36 colonnes dans les versions étudiées ; le schéma doit être vérifié selon l'appareil.",
+      "Des historiques de l'ordre de 60 jours ont été observés sur certains appareils sous iOS 15 à 26 : ce n'est ni un délai garanti ni une politique officielle Apple.",
+      "Un enregistrement n'établit pas l'affichage effectif, la lecture ou l'ouverture de la notification.",
+      "Un identifiant de conversation ou de correspondant nécessite une corroboration et ne suffit pas à attribuer une communication à une personne.",
+      "L'heure enregistrée pour la notification peut différer de celle de l'événement d'origine.",
+      "Les valeurs des champs non suffisamment documentés doivent être conservées sans interprétation hasardeuse.",
+      "L'absence d'un enregistrement n'établit pas l'absence de notification ou de communication."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Présentation de la base",
+        "texte": "Le système iOS conserve, au sein de la base notificationAndSuggestionDB.db, des métadonnées relatives aux notifications associées aux applications du terminal."
+      },
+      {
+        "type": "Base identifiée",
+        "texte": "Nous identifions dans les données extraites la base notificationAndSuggestionDB.db, contenant des enregistrements relatifs aux notifications du terminal."
+      },
+      {
+        "type": "Notifications identifiées",
+        "texte": "L'analyse de cette base met en évidence plusieurs événements de notification horodatés associés à différentes applications."
+      },
+      {
+        "type": "Notification associée à une application",
+        "texte": "Nous identifions un enregistrement de notification associé à l'application concernée, accompagné d'un horodatage de réception."
+      },
+      {
+        "type": "Correspondant identifié",
+        "texte": "L'examen des métadonnées de notification met en évidence un identifiant susceptible de correspondre à un numéro de téléphone associé à une communication."
+      },
+      {
+        "type": "Conversation identifiée",
+        "texte": "Les données analysées comportent un identifiant de conversation associé à une notification provenant de l'application concernée."
+      },
+      {
+        "type": "Reconstitution chronologique",
+        "texte": "Le rapprochement des horodatages de notification contribue à établir une chronologie partielle des événements enregistrés par le système."
+      },
+      {
+        "type": "Corrélation des données",
+        "texte": "Les métadonnées de notification ont été rapprochées des autres données accessibles afin de rechercher des correspondances avec les communications identifiées sur le terminal."
+      },
+      {
+        "type": "Limites d'interprétation",
+        "texte": "Les enregistrements identifiés correspondent à des métadonnées de notification et ne permettent pas, à eux seuls, d'établir la consultation des notifications par l'utilisateur ni de déterminer leur contenu."
+      },
+      {
+        "type": "Données insuffisantes",
+        "texte": "Les données accessibles dans cette base ne permettent pas de reconstituer de manière exhaustive l'historique des notifications du terminal."
+      }
+    ],
+    "sources": [
+      "Mattia Epifani — After the Signal Fix: Exploring Apple's notificationAndSuggestionDB.db (28 juillet 2026), https://blog.digital-forensics.it/2026/07/after-signal-fix-exploring-apples.html",
+      "iLEAPP — iOS Logs, Events, And Plist Parser, https://github.com/abrignoni/iLEAPP",
+      "Mattia Epifani — 84 Streams Later, Part 2: Inside Apple Biome (27 juillet 2026), https://blog.digital-forensics.it/2026/07/84-streams-later-part-2-inside-apple.html"
+    ]
+  },
+  {
+    "id": "notifications-ios",
+    "terme": "Notifications (iOS)",
+    "anglais": "iOS notifications",
+    "categorie": "Téléphonie : iOS : Artefacts système",
+    "definition": "Les notifications iOS sont des informations générées par les applications ou par le système d’exploitation afin de signaler un événement, une activité ou la disponibilité de nouveaux contenus. Le système peut conserver des traces de leur réception, de leur présentation ou de leur traitement, comprenant selon les artefacts des horodatages, identifiants applicatifs, métadonnées ou éléments de contenu. Leur analyse peut contribuer à contextualiser une activité applicative et à reconstituer une chronologie partielle.",
+    "synonymes": [
+      "Notifications système",
+      "Notifications applicatives"
+    ],
+    "termes_proches": [
+      "KnowledgeC (iOS)",
+      "Biome (iOS)",
+      "Traces d'activité",
+      "Activité applicative"
+    ],
+    "termes_deconseilles": [],
+    "donnees_potentielles": [
+      "Horodatages d’événements relatifs aux notifications",
+      "Identifiants techniques des applications concernées",
+      "Titres, aperçus ou textes de notification lorsqu’ils sont conservés",
+      "Métadonnées associées à une conversation ou à un événement selon les artefacts",
+      "Événements de présentation, de traitement ou de retrait lorsque disponibles"
+    ],
+    "points_attention": [
+      "La réception d’une notification ne démontre pas son affichage effectif, sa consultation ou sa lecture.",
+      "Un événement de disparition ou de traitement peut résulter du fonctionnement automatique d’iOS ; une suppression volontaire ne peut être déduite sans corroboration.",
+      "Les informations et leur conservation varient selon la version d’iOS, l’acquisition et l’application ; elles ne sont pas systématiquement réunies dans un même artefact.",
+      "Une notification peut ne contenir que des métadonnées et ne restitue pas nécessairement le contenu de l’événement qui l’a générée.",
+      "L’absence d’une notification ne démontre pas l’absence du message ou de l’événement associé.",
+      "Ces traces ne suffisent pas à identifier la personne qui utilisait l’appareil."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Présentation de l’artefact",
+        "texte": "Le système iOS est susceptible de conserver des informations relatives aux notifications générées par les applications et aux événements associés à leur traitement."
+      },
+      {
+        "type": "Notifications identifiées",
+        "texte": "L’analyse des données extraites met en évidence plusieurs notifications associées aux applications présentes sur le terminal."
+      },
+      {
+        "type": "Notification liée à une application",
+        "texte": "Nous identifions un événement de notification horodaté associé à l’application concernée."
+      },
+      {
+        "type": "Contenu de notification retrouvé",
+        "texte": "L’examen des données système permet de retrouver le contenu d’une notification associée à l’application concernée."
+      },
+      {
+        "type": "Contenu absent de l’application",
+        "texte": "Nous identifions dans les données de notification des informations associées à une communication dont le contenu correspondant n’a pas été retrouvé dans les données applicatives accessibles."
+      },
+      {
+        "type": "Interaction avec une notification",
+        "texte": "Les données analysées mettent en évidence des événements relatifs au traitement de certaines notifications, sans permettre à eux seuls de déterminer précisément les actions réalisées par l’utilisateur."
+      },
+      {
+        "type": "Corrélation avec les communications",
+        "texte": "Le rapprochement des notifications avec les données de communication permet de contextualiser certains événements enregistrés sur le terminal."
+      },
+      {
+        "type": "Limites de l’interprétation",
+        "texte": "La présence d’une notification dans les données extraites ne permet pas, à elle seule, d’établir que son contenu a été consulté par l’utilisateur du terminal."
+      }
+    ],
+    "sources": [
+      "Scott Koenig — iOS KnowledgeC.db Notifications, DFIR Review (2022), https://dfir.pubpub.org/pub/g2v1z97i/release/1",
+      "Geraldine Blay et Alexis Brignoni — Peeking at User Notification Events in iOS 15, DFIR Review (2023), https://dfir.pubpub.org/pub/6amsr72k/release/1",
+      "Mattia Epifani — After the Signal Fix, ZENA Forensics (2026), https://blog.digital-forensics.it/2026/07/after-signal-fix-exploring-apples.html",
+      "Apple Developer — UNUserNotificationCenter, https://developer.apple.com/documentation/usernotifications/unusernotificationcenter/getdeliverednotifications%28completionhandler%3A%29"
+    ]
+  },
+  {
     "id": "numero-serie",
     "terme": "Numéro de série",
     "anglais": "Serial number",
@@ -2823,6 +3205,56 @@
         "systeme": "macOS",
         "sources": "IORegistry, journaux unifiés"
       }
+    ]
+  },
+  {
+    "id": "precision-mission-requerant",
+    "terme": "Précision de la mission avec le requérant",
+    "anglais": "",
+    "categorie": "Mission : Échanges avec le requérant",
+    "definition": "Échange avec le requérant permettant de préciser les éléments à rechercher, les questions auxquelles l’examen doit répondre ou les priorités de l’analyse.",
+    "synonymes": [
+      "Prise de contact avec le requérant",
+      "Précision de la demande",
+      "Clarification de la mission"
+    ],
+    "termes_proches": [
+      "Périmètre des recherches",
+      "Objectifs de la mission"
+    ],
+    "termes_deconseilles": [],
+    "points_attention": [
+      "Ces formulations permettent de rendre compte des précisions apportées à la demande initiale. Elles doivent correspondre au contenu de l’échange et distinguer les recherches demandées des résultats obtenus.",
+      "Les indications entre crochets sont à remplacer avant insertion dans le rapport."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Définition des recherches après prise de contact",
+        "texte": "À la suite d’une prise de contact avec le requérant, il nous est demandé de rechercher les éléments suivants : [éléments recherchés]."
+      },
+      {
+        "type": "Précision de la demande initiale",
+        "texte": "Après échange avec le requérant, les recherches à effectuer dans le cadre de la mission sont précisées comme suit : [éléments recherchés]."
+      },
+      {
+        "type": "Échange daté",
+        "texte": "Le [date], nous prenons contact avec [nom ou qualité du requérant]. À l’issue de cet échange, il nous est demandé de rechercher [éléments recherchés]."
+      },
+      {
+        "type": "Priorités de l’analyse",
+        "texte": "À la suite d’un échange avec le requérant, l’analyse porte en priorité sur [éléments prioritaires]."
+      },
+      {
+        "type": "Période à examiner",
+        "texte": "Après échange avec le requérant, les recherches portent sur [éléments recherchés], pour la période comprise entre le [date de début] et le [date de fin]."
+      },
+      {
+        "type": "Questions à examiner",
+        "texte": "À la suite d’un échange avec le requérant, notre examen vise à apporter des éléments de réponse aux questions suivantes : [questions à examiner]."
+      }
+    ],
+    "sources": [
+      "Lexique forensique FR — usage professionnel"
     ]
   },
   {
@@ -3764,6 +4196,67 @@
     "renvoi_principal": "hachage",
     "termes_proches": [
       "Hachage et empreinte numérique"
+    ]
+  },
+  {
+    "id": "verrouillage-deverrouillage-ios",
+    "terme": "Verrouillage et déverrouillage (iOS)",
+    "anglais": "Device lock and unlock events",
+    "categorie": "Téléphonie : iOS : Artefacts système",
+    "definition": "Événements correspondant aux changements d’état de verrouillage d’un terminal iOS. Lorsque ces événements sont disponibles dans les données acquises, leur examen contribue à documenter certaines périodes d’activité du terminal et à les rapprocher d’autres événements système ou applicatifs, sans établir à lui seul une interaction humaine ou l’identité de l’utilisateur.",
+    "synonymes": [
+      "Événements de verrouillage iOS",
+      "Événements de déverrouillage iOS"
+    ],
+    "termes_proches": [
+      "Biome (iOS)",
+      "Traces d'activité",
+      "Horodatage",
+      "Activité applicative"
+    ],
+    "termes_deconseilles": [],
+    "donnees_potentielles": [
+      "Événements horodatés de changement d’état de verrouillage",
+      "Périodes pendant lesquelles le terminal est signalé comme verrouillé ou déverrouillé",
+      "Éléments de corrélation avec des événements système et l’activité applicative"
+    ],
+    "points_attention": [
+      "L’état déverrouillé ne démontre pas une manipulation effective de l’appareil ni l’identité de la personne qui l’utilise.",
+      "L’état de verrouillage ne doit pas être confondu avec l’état de l’écran ou avec une action humaine.",
+      "Les événements peuvent être incomplets ou absents selon la version d’iOS, l’acquisition et la conservation des données ; leur absence n’exclut pas une activité.",
+      "Les horodatages et la cohérence chronologique des événements doivent être vérifiés.",
+      "La structure et les emplacements de la base KnowledgeC relèvent d’une fiche technique distincte."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Présentation",
+        "texte": "Le système iOS est susceptible de conserver des événements relatifs aux états de verrouillage et de déverrouillage du terminal, permettant de documenter certaines périodes de son activité."
+      },
+      {
+        "type": "Événements identifiés",
+        "texte": "L’analyse des données système met en évidence plusieurs événements horodatés correspondant à des changements d’état de verrouillage du terminal."
+      },
+      {
+        "type": "Période de déverrouillage",
+        "texte": "Les événements relevés indiquent que le terminal était signalé comme déverrouillé entre les horodatages considérés."
+      },
+      {
+        "type": "Corrélation avec les applications",
+        "texte": "Le rapprochement des événements de verrouillage et de déverrouillage avec les traces d’activité applicative contribue à documenter la chronologie d’utilisation du terminal, sans permettre à lui seul d’identifier la personne à l’origine de ces activités."
+      },
+      {
+        "type": "Limites d’interprétation",
+        "texte": "Les événements de verrouillage et de déverrouillage ne permettent pas, à eux seuls, d’identifier la personne ayant manipulé le terminal ni de déterminer les actions effectivement réalisées."
+      },
+      {
+        "type": "Absence de données",
+        "texte": "Les données accessibles dans l’extraction ne permettent pas de reconstituer les périodes de verrouillage et de déverrouillage du terminal pour la période étudiée."
+      }
+    ],
+    "sources": [
+      "Athena Forensics — The KnowledgeC Database, https://athenaforensics.co.uk/the-knowledgec-database/",
+      "Belkasoft — Apple Biome Forensics Artifacts, https://belkasoft.com/biome-forensics-artifacts",
+      "Mattia Epifani, ZENA Forensics — 84 Streams Later (2026), https://blog.digital-forensics.it/2026/07/84-streams-later-exploring-evolution-of.html"
     ]
   },
   {
