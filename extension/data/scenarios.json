@@ -95,11 +95,187 @@
       },
       {
         "terme": "analyse-donnees",
-        "formulation": "Éléments susceptibles d’éclairer l’affaire"
+        "formulation": "Éléments susceptibles d'éclairer l'affaire"
       },
       {
         "terme": "remise-resultats",
         "formulation": "Remise dans un format exploitable"
+      }
+    ]
+  },
+  {
+    "id": "ios-afu-extraction-partielle",
+    "titre": "Téléphone iOS AFU — extraction partielle",
+    "categorie": "Téléphonie mobile",
+    "description": "Terminal verrouillé en état AFU, code inconnu, extraction partielle et décodage réalisé.",
+    "etapes": [
+      {
+        "terme": "scelle",
+        "formulation": "Scellé intact"
+      },
+      {
+        "terme": "scelle",
+        "formulation": "Ouverture pour examen"
+      },
+      {
+        "terme": "etat-afu-ios",
+        "formulation": "Terminal verrouillé en état AFU"
+      },
+      {
+        "terme": "code-deverrouillage",
+        "formulation": "Code inconnu"
+      },
+      {
+        "terme": "extraction",
+        "formulation": "Extraction partielle"
+      },
+      {
+        "terme": "decodage-donnees",
+        "formulation": "Décodage réalisé"
+      },
+      {
+        "terme": "remise-resultats",
+        "formulation": "Remise de résultats partiels"
+      }
+    ]
+  },
+  {
+    "id": "ios-bfu-extraction-tres-partielle",
+    "titre": "Téléphone iOS BFU — extraction très partielle",
+    "categorie": "Téléphonie mobile",
+    "description": "État BFU identifié, code inconnu, extraction très partielle effectivement obtenue et décodage réalisé.",
+    "etapes": [
+      {
+        "terme": "scelle",
+        "formulation": "Scellé intact"
+      },
+      {
+        "terme": "scelle",
+        "formulation": "Ouverture pour examen"
+      },
+      {
+        "terme": "etat-bfu-ios",
+        "formulation": "État BFU identifié"
+      },
+      {
+        "terme": "code-deverrouillage",
+        "formulation": "Code inconnu"
+      },
+      {
+        "terme": "extraction",
+        "formulation": "Extraction très partielle"
+      },
+      {
+        "terme": "decodage-donnees",
+        "formulation": "Décodage réalisé"
+      },
+      {
+        "terme": "remise-resultats",
+        "formulation": "Remise de résultats partiels"
+      }
+    ]
+  },
+  {
+    "id": "extraction-impossible-orientation",
+    "titre": "Extraction impossible — orientation vers un service spécialisé",
+    "categorie": "Mission",
+    "description": "Extraction non réalisable avec les moyens disponibles ; orientation du requérant et reconditionnement.",
+    "etapes": [
+      {
+        "terme": "scelle",
+        "formulation": "Scellé intact"
+      },
+      {
+        "terme": "scelle",
+        "formulation": "Ouverture pour examen"
+      },
+      {
+        "terme": "limites-techniques-orientation",
+        "formulation": "Orientation avec indication du service"
+      },
+      {
+        "terme": "scelle",
+        "formulation": "Reconditionnement après examen"
+      }
+    ]
+  },
+  {
+    "id": "support-endommage-reparation-documentee",
+    "titre": "Support endommagé — réparation et extraction",
+    "categorie": "Prise en charge",
+    "description": "Réparation sommaire documentée suivie d’une extraction, d’un décodage et d’une remise des résultats.",
+    "etapes": [
+      {
+        "terme": "etat-support",
+        "formulation": "Support endommagé"
+      },
+      {
+        "terme": "reparation-support",
+        "formulation": "Réparation sommaire"
+      },
+      {
+        "terme": "reparation-support",
+        "formulation": "Traçabilité de l'intervention"
+      },
+      {
+        "terme": "extraction",
+        "formulation": "Extraction réalisée"
+      },
+      {
+        "terme": "decodage-donnees",
+        "formulation": "Décodage réalisé"
+      },
+      {
+        "terme": "remise-resultats",
+        "formulation": "Extraction et décodage"
+      }
+    ]
+  },
+  {
+    "id": "sim-contacts-operateur",
+    "titre": "Carte SIM — contacts opérateur uniquement",
+    "categorie": "Téléphonie mobile",
+    "description": "Examen d’une carte SIM ne révélant que des contacts de service préenregistrés par l’opérateur.",
+    "etapes": [
+      {
+        "terme": "carte-sim",
+        "formulation": "Extraction de la carte SIM"
+      },
+      {
+        "terme": "carte-sim",
+        "formulation": "Contacts préenregistrés par l’opérateur"
+      },
+      {
+        "terme": "remise-resultats",
+        "formulation": "Remise dans un format exploitable"
+      }
+    ]
+  },
+  {
+    "id": "mission-recherches-ciblees-elements-identifies",
+    "titre": "Recherches ciblées — éléments présentant un intérêt identifiés",
+    "categorie": "Mission",
+    "description": "Recherches précisées avec le requérant sur une période, puis extraction, décodage et remise des éléments sélectionnés.",
+    "etapes": [
+      {
+        "terme": "precision-mission-requerant",
+        "formulation": "Période à examiner"
+      },
+      {
+        "terme": "extraction",
+        "formulation": "Extraction réalisée"
+      },
+      {
+        "terme": "decodage-donnees",
+        "formulation": "Décodage réalisé"
+      },
+      {
+        "terme": "analyse-donnees",
+        "formulation": "Éléments susceptibles d'éclairer l'affaire"
+      },
+      {
+        "terme": "remise-resultats",
+        "formulation": "Remise des éléments identifiés par l'analyste"
       }
     ]
   }
