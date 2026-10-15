@@ -604,6 +604,52 @@ def _report_formulations(entry):
     return [("Formulation", legacy)] if legacy else []
 
 
+def _structured_formulation(entry, label):
+    """Retrouve les données enrichies, sans changer les formulations historiques."""
+    for item in entry.get("formulations_rapport", []) or []:
+        if isinstance(item, dict) and (item.get("type") or "").strip() == label:
+            return item
+    return None
+
+
+def _insert_writer_formulation(doc, view, item):
+    """Insère du texte puis, si présent, un vrai tableau UNO éditable."""
+    paragraph = (item.get("texte") or "").strip()
+    grid = item.get("tableau")
+    if not isinstance(grid, dict):
+        view.getText().insertString(view, paragraph, False)
+        return
+    headers = grid.get("colonnes", [])
+    rows = grid.get("lignes", [])
+    if not (isinstance(headers, list) and 1 <= len(headers) <= 20
+            and all(isinstance(h, str) for h in headers)
+            and isinstance(rows, list) and len(rows) <= 200
+            and all(isinstance(row, list) and len(row) == len(headers)
+                    for row in rows)):
+        raise ValueError("Format de tableau invalide")
+    # On travaille avec un curseur indépendant pour ne pas dépendre du focus du dialogue.
+    cursor = doc.Text.createTextCursorByRange(view.getStart())
+    doc.Text.insertString(cursor, paragraph + "\n", False)
+    cursor.gotoEndOfParagraph(False)
+    table = doc.createInstance("com.sun.star.text.TextTable")
+    table.initialize(len(rows) + 1, len(headers))
+    doc.Text.insertTextContent(cursor, table, False)
+    for i, row in enumerate([headers] + rows):
+        for j, value in enumerate(row):
+            cell = table.getCellByPosition(j, i)
+            cell.setString(str(value))
+            # Bleu sobre pour l'en-tête, alternance légère des lignes.
+            cell.BackColor = 0x17365D if i == 0 else (
+                0xF0F4F8 if i % 2 == 0 else 0xFFFFFF
+            )
+            if i == 0:
+                text_cursor = cell.Text.createTextCursor()
+                text_cursor.gotoStart(False)
+                text_cursor.gotoEnd(True)
+                text_cursor.CharColor = 0xFFFFFF
+                text_cursor.CharWeight = 150.0
+
+
 def _report_example(entry):
     formulations = _report_formulations(entry)
     return formulations[0][1] if formulations else ""
@@ -962,7 +1008,19 @@ class DialogListener(
             doc = _desktop().getCurrentComponent()
             if doc and doc.supportsService("com.sun.star.text.TextDocument"):
                 view = doc.getCurrentController().getViewCursor()
-                view.getText().insertString(view, text_to_insert, False)
+                chosen = (_structured_formulation(
+                    self.current, item["label"]
+                ) if self.formulation_ranges else None)
+                try:
+                    if chosen:
+                        _insert_writer_formulation(doc, view, chosen)
+                    else:
+                        view.getText().insertString(view, text_to_insert, False)
+                except Exception as exc:
+                    self.status_label.getModel().Label = (
+                        "Insertion impossible : " + str(exc)
+                    )
+                    return
                 self.status_label.getModel().Label = (
                     "Formulation insérée dans le document"
                 )
