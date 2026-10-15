@@ -45,6 +45,10 @@ Les horodatages identifiés doivent être interprétés en tenant compte des car
 
 Afin de garantir la cohérence de la présentation chronologique, l'ensemble des dates et heures mentionnées dans le présent rapport est exprimé en temps universel coordonné (UTC+00:00).
 
+### Référentiel temporel — heure de Paris
+
+Sauf indication contraire précisée entre parenthèses, les dates et heures citées dans le présent rapport sont exprimées dans le fuseau horaire de Paris (Europe/Paris), soit UTC+1 en heure d’hiver et UTC+2 en heure d’été. Le passage à l’heure d’été intervient le dernier dimanche de mars et le retour à l’heure d’hiver le dernier dimanche d’octobre, à l’heure du changement réglementaire.
+
 > Ces fiches sont des documents de travail du projet : les définitions restent soumises à la revue terminologique et documentaire.
 
 [← Retour à l’index](README.md)
