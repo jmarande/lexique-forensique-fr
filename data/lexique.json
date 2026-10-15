@@ -2079,6 +2079,14 @@
       {
         "type": "Élément non disponible",
         "texte": "Un emplacement correspondant à un élément associé à l’application Instagram est identifié, sans que son contenu soit disponible dans les données extraites."
+      },
+      {
+        "type": "Conversation entre deux comptes",
+        "texte": "L'examen des données de l'application Instagram Direct met en évidence une conversation entre les comptes suivants :\n- Le compte associé au téléphone examiné, « [COMPTE_ASSOCIE] » (identifiant : [IDENTIFIANT_ASSOCIE]).\n- Le compte « [AUTRE_COMPTE] » (identifiant : [AUTRE_IDENTIFIANT])."
+      },
+      {
+        "type": "Conversation de groupe",
+        "texte": "L'examen des données de l'application Instagram Direct met en évidence une conversation de groupe intitulée « [NOM_GROUPE] ». Les données examinées permettent d'identifier notamment les comptes suivants :\n- Le compte associé au téléphone examiné, « [COMPTE_ASSOCIE] » (identifiant : [IDENTIFIANT_ASSOCIE]).\n- Le compte « [COMPTE_2] » (identifiant : [IDENTIFIANT_2]).\n- Le compte « [COMPTE_3] » (identifiant : [IDENTIFIANT_3])."
       }
     ],
     "sources": [
@@ -2357,6 +2365,14 @@
       {
         "type": "Élément non disponible",
         "texte": "Un emplacement correspondant à un élément associé à l’application Messages est identifié, sans que son contenu soit disponible dans les données extraites."
+      },
+      {
+        "type": "Conversation entre deux comptes",
+        "texte": "L'examen des données de l'application Messages (Apple) met en évidence une conversation entre les comptes suivants :\n- Le compte associé au téléphone examiné, « [COMPTE_ASSOCIE] » (identifiant : [IDENTIFIANT_ASSOCIE]).\n- Le compte « [AUTRE_COMPTE] » (identifiant : [AUTRE_IDENTIFIANT])."
+      },
+      {
+        "type": "Conversation de groupe",
+        "texte": "L'examen des données de l'application Messages (Apple) met en évidence une conversation de groupe intitulée « [NOM_GROUPE] ». Les données examinées permettent d'identifier notamment les comptes suivants :\n- Le compte associé au téléphone examiné, « [COMPTE_ASSOCIE] » (identifiant : [IDENTIFIANT_ASSOCIE]).\n- Le compte « [COMPTE_2] » (identifiant : [IDENTIFIANT_2]).\n- Le compte « [COMPTE_3] » (identifiant : [IDENTIFIANT_3])."
       }
     ],
     "sources": [
@@ -2423,6 +2439,14 @@
       {
         "type": "Élément non disponible",
         "texte": "Un emplacement correspondant à un élément associé à l’application Messenger est identifié, sans que son contenu soit disponible dans les données extraites."
+      },
+      {
+        "type": "Conversation entre deux comptes",
+        "texte": "L'examen des données de l'application Messenger met en évidence une conversation entre les comptes suivants :\n- Le compte associé au téléphone examiné, « [COMPTE_ASSOCIE] » (identifiant : [IDENTIFIANT_ASSOCIE]).\n- Le compte « [AUTRE_COMPTE] » (identifiant : [AUTRE_IDENTIFIANT])."
+      },
+      {
+        "type": "Conversation de groupe",
+        "texte": "L'examen des données de l'application Messenger met en évidence une conversation de groupe intitulée « [NOM_GROUPE] ». Les données examinées permettent d'identifier notamment les comptes suivants :\n- Le compte associé au téléphone examiné, « [COMPTE_ASSOCIE] » (identifiant : [IDENTIFIANT_ASSOCIE]).\n- Le compte « [COMPTE_2] » (identifiant : [IDENTIFIANT_2]).\n- Le compte « [COMPTE_3] » (identifiant : [IDENTIFIANT_3])."
       }
     ],
     "sources": [
@@ -2994,6 +3018,14 @@
       {
         "type": "Application présentée sous le nom Tato Talk",
         "texte": "Nous identifions la présence de l’application Tato Talk sur le support examiné. Le site officiel de Potato présente cette dénomination comme le nouveau nom de son application distribuée pour iPhone."
+      },
+      {
+        "type": "Conversation entre deux comptes",
+        "texte": "L'examen des données de l'application Potato / Tato Talk met en évidence une conversation entre les comptes suivants :\n- Le compte associé au téléphone examiné, « [COMPTE_ASSOCIE] » (identifiant : [IDENTIFIANT_ASSOCIE]).\n- Le compte « [AUTRE_COMPTE] » (identifiant : [AUTRE_IDENTIFIANT])."
+      },
+      {
+        "type": "Conversation de groupe",
+        "texte": "L'examen des données de l'application Potato / Tato Talk met en évidence une conversation de groupe intitulée « [NOM_GROUPE] ». Les données examinées permettent d'identifier notamment les comptes suivants :\n- Le compte associé au téléphone examiné, « [COMPTE_ASSOCIE] » (identifiant : [IDENTIFIANT_ASSOCIE]).\n- Le compte « [COMPTE_2] » (identifiant : [IDENTIFIANT_2]).\n- Le compte « [COMPTE_3] » (identifiant : [IDENTIFIANT_3])."
       }
     ]
   },
@@ -3465,6 +3497,14 @@
       {
         "type": "Élément non disponible",
         "texte": "Un emplacement correspondant à un élément associé à l’application Signal est identifié, sans que son contenu soit disponible dans les données extraites."
+      },
+      {
+        "type": "Conversation entre deux comptes",
+        "texte": "L'examen des données de l'application Signal met en évidence une conversation entre les comptes suivants :\n- Le compte associé au téléphone examiné, « [COMPTE_ASSOCIE] » (identifiant : [IDENTIFIANT_ASSOCIE]).\n- Le compte « [AUTRE_COMPTE] » (identifiant : [AUTRE_IDENTIFIANT])."
+      },
+      {
+        "type": "Conversation de groupe",
+        "texte": "L'examen des données de l'application Signal met en évidence une conversation de groupe intitulée « [NOM_GROUPE] ». Les données examinées permettent d'identifier notamment les comptes suivants :\n- Le compte associé au téléphone examiné, « [COMPTE_ASSOCIE] » (identifiant : [IDENTIFIANT_ASSOCIE]).\n- Le compte « [COMPTE_2] » (identifiant : [IDENTIFIANT_2]).\n- Le compte « [COMPTE_3] » (identifiant : [IDENTIFIANT_3])."
       }
     ],
     "sources": [
@@ -3531,6 +3571,14 @@
       {
         "type": "Média non disponible",
         "texte": "Un emplacement correspondant à un média associé à l’application Snapchat est identifié, sans que le contenu du fichier soit disponible dans les données extraites."
+      },
+      {
+        "type": "Conversation entre deux comptes",
+        "texte": "L'examen des données de l'application Snapchat met en évidence une conversation entre les comptes suivants :\n- Le compte associé au téléphone examiné, « [COMPTE_ASSOCIE] » (identifiant : [IDENTIFIANT_ASSOCIE]).\n- Le compte « [AUTRE_COMPTE] » (identifiant : [AUTRE_IDENTIFIANT])."
+      },
+      {
+        "type": "Conversation de groupe",
+        "texte": "L'examen des données de l'application Snapchat met en évidence une conversation de groupe intitulée « [NOM_GROUPE] ». Les données examinées permettent d'identifier notamment les comptes suivants :\n- Le compte associé au téléphone examiné, « [COMPTE_ASSOCIE] » (identifiant : [IDENTIFIANT_ASSOCIE]).\n- Le compte « [COMPTE_2] » (identifiant : [IDENTIFIANT_2]).\n- Le compte « [COMPTE_3] » (identifiant : [IDENTIFIANT_3])."
       }
     ],
     "sources": [
@@ -3843,6 +3891,14 @@
       {
         "type": "Élément non disponible",
         "texte": "Un emplacement correspondant à un élément associé à l’application Telegram est identifié, sans que son contenu soit disponible dans les données extraites."
+      },
+      {
+        "type": "Conversation entre deux comptes",
+        "texte": "L'examen des données de l'application Telegram met en évidence une conversation entre les comptes suivants :\n- Le compte associé au téléphone examiné, « [COMPTE_ASSOCIE] » (identifiant : [IDENTIFIANT_ASSOCIE]).\n- Le compte « [AUTRE_COMPTE] » (identifiant : [AUTRE_IDENTIFIANT])."
+      },
+      {
+        "type": "Conversation de groupe",
+        "texte": "L'examen des données de l'application Telegram met en évidence une conversation de groupe intitulée « [NOM_GROUPE] ». Les données examinées permettent d'identifier notamment les comptes suivants :\n- Le compte associé au téléphone examiné, « [COMPTE_ASSOCIE] » (identifiant : [IDENTIFIANT_ASSOCIE]).\n- Le compte « [COMPTE_2] » (identifiant : [IDENTIFIANT_2]).\n- Le compte « [COMPTE_3] » (identifiant : [IDENTIFIANT_3])."
       }
     ],
     "sources": [
@@ -4057,6 +4113,14 @@
       {
         "type": "Élément non disponible",
         "texte": "Un emplacement correspondant à un élément associé à l’application WhatsApp est identifié, sans que son contenu soit disponible dans les données extraites."
+      },
+      {
+        "type": "Conversation entre deux comptes",
+        "texte": "L'examen des données de l'application WhatsApp met en évidence une conversation entre les comptes suivants :\n- Le compte associé au téléphone examiné, « [COMPTE_ASSOCIE] » (identifiant : [IDENTIFIANT_ASSOCIE]).\n- Le compte « [AUTRE_COMPTE] » (identifiant : [AUTRE_IDENTIFIANT])."
+      },
+      {
+        "type": "Conversation de groupe",
+        "texte": "L'examen des données de l'application WhatsApp met en évidence une conversation de groupe intitulée « [NOM_GROUPE] ». Les données examinées permettent d'identifier notamment les comptes suivants :\n- Le compte associé au téléphone examiné, « [COMPTE_ASSOCIE] » (identifiant : [IDENTIFIANT_ASSOCIE]).\n- Le compte « [COMPTE_2] » (identifiant : [IDENTIFIANT_2]).\n- Le compte « [COMPTE_3] » (identifiant : [IDENTIFIANT_3])."
       }
     ],
     "sources": [
