@@ -12,6 +12,10 @@ Le bouton **Mes fiches** ouvre la gestion des fiches personnelles. La vérificat
 
 Les données officielles restent protégées. Les données utilisateur sont enregistrées dans `~/.lexique-forensique-fr/`.
 
+## Présentation des formulations dans les rapports
+
+L'insertion applique **Times New Roman** aux textes ajoutés depuis les modules Lexique et Scénarios. Les formulations structurées peuvent contenir un titre en gras et un véritable tableau Writer. Les tableaux suivent la [charte de mise en forme](../docs/CHARTE-MISE-EN-FORME.md) : en-tête gris moyen, texte noir et alternance des lignes blanches/gris clair.
+
 ## Vérification du document
 
 Le vérificateur distingue notamment :
