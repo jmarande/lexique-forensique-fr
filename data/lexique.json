@@ -620,6 +620,34 @@
       {
         "type": "Limites d'attribution",
         "texte": "Les données techniques associées au compte utilisateur [nom du compte] ne permettent pas, à elles seules, d'établir l'identité de la personne ayant effectivement utilisé ce compte."
+      },
+      {
+        "type": "Comptes utilisateurs et services identifiés sur le support — tableau",
+        "texte": "L'examen des données extraites du support permet d'identifier plusieurs comptes utilisateurs ou comptes associés à des services. Les informations relevées sont présentées dans le tableau suivant :",
+        "tableau": {
+          "colonnes": [
+            "Nom du compte ou service",
+            "Nom du compte",
+            "Informations complémentaires"
+          ],
+          "lignes": [
+            [
+              "[SERVICE_1]",
+              "[COMPTE_1]",
+              "[INFORMATIONS_1]"
+            ],
+            [
+              "[SERVICE_2]",
+              "[COMPTE_2]",
+              "[INFORMATIONS_2]"
+            ],
+            [
+              "[SERVICE_3]",
+              "[COMPTE_3]",
+              "[INFORMATIONS_3]"
+            ]
+          ]
+        }
       }
     ],
     "termes_proches": [
