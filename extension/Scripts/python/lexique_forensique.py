@@ -629,7 +629,7 @@ def _insert_writer_formulation(doc, view, item):
         raise ValueError("Format de tableau invalide")
     # On travaille avec un curseur indépendant pour ne pas dépendre du focus du dialogue.
     cursor = doc.Text.createTextCursorByRange(view.getStart())
-    doc.Text.insertString(cursor, paragraph + "\\n", False)
+    doc.Text.insertString(cursor, paragraph + "\n", False)
     cursor.gotoEndOfParagraph(False)
     table = doc.createInstance("com.sun.star.text.TextTable")
     table.initialize(len(rows) + 1, len(headers))
