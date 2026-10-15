@@ -42,6 +42,19 @@ Certains éléments associés à l’application Signal ont été reconstruits a
 
 Un emplacement correspondant à un élément associé à l’application Signal est identifié, sans que son contenu soit disponible dans les données extraites.
 
+### Conversation entre deux comptes
+
+L'examen des données de l'application Signal met en évidence une conversation entre les comptes suivants :
+- Le compte associé au téléphone examiné, « [COMPTE_ASSOCIE] » (identifiant : [IDENTIFIANT_ASSOCIE]).
+- Le compte « [AUTRE_COMPTE] » (identifiant : [AUTRE_IDENTIFIANT]).
+
+### Conversation de groupe
+
+L'examen des données de l'application Signal met en évidence une conversation de groupe intitulée « [NOM_GROUPE] ». Les données examinées permettent d'identifier notamment les comptes suivants :
+- Le compte associé au téléphone examiné, « [COMPTE_ASSOCIE] » (identifiant : [IDENTIFIANT_ASSOCIE]).
+- Le compte « [COMPTE_2] » (identifiant : [IDENTIFIANT_2]).
+- Le compte « [COMPTE_3] » (identifiant : [IDENTIFIANT_3]).
+
 > Ces fiches sont des documents de travail du projet : les définitions restent soumises à la revue terminologique et documentaire.
 
 [← Retour à l’index](README.md)
