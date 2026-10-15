@@ -37,7 +37,6 @@ Les opérations techniques permettent de récupérer partiellement le contenu d'
 
 Les informations disponibles ne permettent pas de déterminer les circonstances dans lesquelles cet élément a été supprimé.
 
-
 ### Qualification par le logiciel
 
 Certains éléments sont signalés comme supprimés par le logiciel d'analyse. Cette qualification repose sur l'interprétation des structures et des traces disponibles et ne permet pas, à elle seule, de déterminer les circonstances de leur suppression.
