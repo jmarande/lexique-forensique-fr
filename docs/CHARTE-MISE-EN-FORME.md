@@ -33,9 +33,9 @@ L'examen des données extraites du support permet d'identifier plusieurs comptes
 
 | Nom du compte ou service | Nom du compte | Informations complémentaires |
 | --- | --- | --- |
-| [SERVICE_1] | [COMPTE_1] | [INFORMATIONS_1] |
-| [SERVICE_2] | [COMPTE_2] | [INFORMATIONS_2] |
-| [SERVICE_3] | [COMPTE_3] | [INFORMATIONS_3] |
+|  |  |  |
+|  |  |  |
+|  |  |  |
 
 ## Contrôles de non-régression
 
