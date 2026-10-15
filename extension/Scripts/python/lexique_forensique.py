@@ -612,42 +612,91 @@ def _structured_formulation(entry, label):
     return None
 
 
+# Charte de présentation des formulations et tableaux de rapport.
+_REPORT_FONT = "Times New Roman"
+_REPORT_HEADER_BACKGROUND = 0xB2B2B2
+_REPORT_ROW_BACKGROUND = 0xEEEEEE
+_REPORT_BORDER_COLOR = 0x808080
+
+
+def _insert_report_text(view, value):
+    """Insère une formulation classique en Times New Roman."""
+    view.CharFontName = _REPORT_FONT
+    view.CharWeight = 100.0
+    view.getText().insertString(view, value, False)
+
+
 def _insert_writer_formulation(doc, view, item):
-    """Insère du texte puis, si présent, un vrai tableau UNO éditable."""
+    """Insère la formulation et, si prévu, un tableau Writer natif mis en forme."""
     paragraph = (item.get("texte") or "").strip()
     grid = item.get("tableau")
     if not isinstance(grid, dict):
-        view.getText().insertString(view, paragraph, False)
+        _insert_report_text(view, paragraph)
         return
+
     headers = grid.get("colonnes", [])
     rows = grid.get("lignes", [])
     if not (isinstance(headers, list) and 1 <= len(headers) <= 20
             and all(isinstance(h, str) for h in headers)
             and isinstance(rows, list) and len(rows) <= 200
             and all(isinstance(row, list) and len(row) == len(headers)
-                    for row in rows)):
+                    for row in rows)
+            and all(isinstance(value, str) for row in rows for value in row)):
         raise ValueError("Format de tableau invalide")
-    # On travaille avec un curseur indépendant pour ne pas dépendre du focus du dialogue.
-    cursor = doc.Text.createTextCursorByRange(view.getStart())
-    doc.Text.insertString(cursor, paragraph + "\n", False)
-    cursor.gotoEndOfParagraph(False)
+
+    text = view.getText()
+    cursor = text.createTextCursorByRange(view.getStart())
+    paragraph_break = uno.getConstantByName(
+        "com.sun.star.text.ControlCharacter.PARAGRAPH_BREAK"
+    )
+    heading = (item.get("titre") or "").strip()
+    if heading:
+        cursor.CharFontName = _REPORT_FONT
+        cursor.CharColor = 0x000000
+        cursor.CharWeight = 150.0
+        text.insertString(cursor, heading, False)
+        # Deux ruptures : le titre, puis une ligne de séparation.
+        for _ in range(2):
+            text.insertControlCharacter(cursor, paragraph_break, False)
+            cursor.gotoEndOfParagraph(False)
+
+    cursor.CharFontName = _REPORT_FONT
+    cursor.CharColor = 0x000000
+    cursor.CharWeight = 100.0
+    text.insertString(cursor, paragraph, False)
+    # Séparer l'introduction du tableau sans l'intégrer à la même ligne.
+    for _ in range(2):
+        text.insertControlCharacter(cursor, paragraph_break, False)
+        cursor.gotoEndOfParagraph(False)
+
     table = doc.createInstance("com.sun.star.text.TextTable")
     table.initialize(len(rows) + 1, len(headers))
-    doc.Text.insertTextContent(cursor, table, False)
+    text.insertTextContent(cursor, table, False)
+
     for i, row in enumerate([headers] + rows):
         for j, value in enumerate(row):
             cell = table.getCellByPosition(j, i)
-            cell.setString(str(value))
-            # Bleu sobre pour l'en-tête, alternance légère des lignes.
-            cell.BackColor = 0x17365D if i == 0 else (
-                0xF0F4F8 if i % 2 == 0 else 0xFFFFFF
-            )
+            cell.setString(value)
+            cell.BackColor = (_REPORT_HEADER_BACKGROUND if i == 0 else
+                              (_REPORT_ROW_BACKGROUND if i % 2 == 0 else 0xFFFFFF))
+            cell_cursor = cell.Text.createTextCursor()
+            cell_cursor.gotoStart(False)
+            cell_cursor.gotoEnd(True)
+            cell_cursor.CharFontName = _REPORT_FONT
+            cell_cursor.CharColor = 0x000000
+            cell_cursor.CharWeight = 150.0 if i == 0 else 100.0
             if i == 0:
-                text_cursor = cell.Text.createTextCursor()
-                text_cursor.gotoStart(False)
-                text_cursor.gotoEnd(True)
-                text_cursor.CharColor = 0xFFFFFF
-                text_cursor.CharWeight = 150.0
+                cell_cursor.ParaAdjust = 3  # Centré ; données alignées à gauche.
+
+    # Bordures fines grises, homogènes à la référence visuelle.
+    line = uno.createUnoStruct("com.sun.star.table.BorderLine2")
+    line.Color = _REPORT_BORDER_COLOR
+    line.LineWidth = 20  # En centièmes de millimètre.
+    borders = table.TableBorder2
+    for edge in ("Top", "Bottom", "Left", "Right", "Horizontal", "Vertical"):
+        setattr(borders, edge + "Line", line)
+        setattr(borders, "Is" + edge + "LineValid", True)
+    table.TableBorder2 = borders
 
 
 def _report_example(entry):
@@ -1015,7 +1064,7 @@ class DialogListener(
                     if chosen:
                         _insert_writer_formulation(doc, view, chosen)
                     else:
-                        view.getText().insertString(view, text_to_insert, False)
+                        _insert_report_text(view, text_to_insert)
                 except Exception as exc:
                     self.status_label.getModel().Label = (
                         "Insertion impossible : " + str(exc)
@@ -1711,7 +1760,7 @@ class ScenarioListener(
             return
         text_to_insert = "\n\n".join(step["texte"] for step in steps)
         view = doc.getCurrentController().getViewCursor()
-        view.getText().insertString(view, text_to_insert, False)
+        _insert_report_text(view, text_to_insert)
         self.status_label.getModel().Label = "Scénario inséré dans le document"
 
     def _current_index(self):
