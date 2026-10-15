@@ -1973,6 +1973,10 @@
       {
         "type": "Uniformisation UTC+00:00",
         "texte": "Afin de garantir la cohérence de la présentation chronologique, l'ensemble des dates et heures mentionnées dans le présent rapport est exprimé en temps universel coordonné (UTC+00:00)."
+      },
+      {
+        "type": "Référentiel temporel — heure de Paris",
+        "texte": "Sauf indication contraire précisée entre parenthèses, les dates et heures citées dans le présent rapport sont exprimées dans le fuseau horaire de Paris (Europe/Paris), soit UTC+1 en heure d’hiver et UTC+2 en heure d’été. Le passage à l’heure d’été intervient le dernier dimanche de mars et le retour à l’heure d’hiver le dernier dimanche d’octobre, à l’heure du changement réglementaire."
       }
     ],
     "termes_proches": [
@@ -1984,7 +1988,8 @@
     "points_attention": [
       "La formulation UTC+00:00 exige une conversion ou vérification effective de toutes les dates concernées.",
       "L'horloge d'un appareil peut être décalée.",
-      "Une date de fichier ne correspond pas nécessairement à la création de son contenu."
+      "Une date de fichier ne correspond pas nécessairement à la création de son contenu.",
+      "La formulation Europe/Paris suppose une conversion ou une vérification effective selon la date de chaque événement. Lors du retour à l’heure d’hiver, certaines heures locales se répètent : préciser le décalage UTC pour lever l’ambiguïté."
     ]
   },
   {
