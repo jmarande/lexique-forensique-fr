@@ -59,7 +59,17 @@ Les données techniques associées au compte utilisateur [nom du compte] ne perm
 
 ### Comptes utilisateurs et services identifiés sur le support — tableau
 
+**Les comptes utilisateurs**
+
 L'examen des données extraites du support permet d'identifier plusieurs comptes utilisateurs ou comptes associés à des services. Les informations relevées sont présentées dans le tableau suivant :
+
+| Nom du compte ou service | Nom du compte | Informations complémentaires |
+| --- | --- | --- |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+
+*Dans Writer, ce modèle s'insère sous la forme d'un tableau éditable, selon la charte de mise en forme du Lexique.*
 
 > Ces fiches sont des documents de travail du projet : les définitions restent soumises à la revue terminologique et documentaire.
 
