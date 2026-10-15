@@ -37,6 +37,11 @@ Les opérations de récupération mises en œuvre ne permettent pas de restituer
 
 L'état du support et les moyens techniques disponibles ne permettent pas de mettre en œuvre une récupération des données dans les conditions de l'examen.
 
+
+### Récupération et reconstruction combinées
+
+L'exploitation des données comprend des opérations automatisées de récupération ainsi que, lorsque les éléments techniques le permettent, des reconstructions complémentaires réalisées manuellement par nos soins.
+
 > Ces fiches sont des documents de travail du projet : les définitions restent soumises à la revue terminologique et documentaire.
 
 [← Retour à l’index](README.md)
