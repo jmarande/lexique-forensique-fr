@@ -632,19 +632,19 @@
           ],
           "lignes": [
             [
-              "[SERVICE_1]",
-              "[COMPTE_1]",
-              "[INFORMATIONS_1]"
+              "",
+              "",
+              ""
             ],
             [
-              "[SERVICE_2]",
-              "[COMPTE_2]",
-              "[INFORMATIONS_2]"
+              "",
+              "",
+              ""
             ],
             [
-              "[SERVICE_3]",
-              "[COMPTE_3]",
-              "[INFORMATIONS_3]"
+              "",
+              "",
+              ""
             ]
           ]
         },
