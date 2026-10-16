@@ -4189,5 +4189,123 @@
       "Centre d’aide WhatsApp — Messages éphémères",
       "Centre d’aide WhatsApp — Utilisation de WhatsApp"
     ]
+  },
+  {
+    "id": "tiktok",
+    "terme": "TikTok",
+    "anglais": "TikTok",
+    "categorie": "Application — Messagerie et réseau social",
+    "plateformes": [
+      "Android",
+      "iOS",
+      "Web"
+    ],
+    "identifiants_applicatifs": {
+      "Android": "com.zhiliaoapp.musically",
+      "iOS": "com.zhiliaoapp.musically"
+    },
+    "synonymes": [],
+    "termes_proches": [
+      "Réseau social",
+      "Messagerie instantanée",
+      "Vidéo en ligne",
+      "Publication",
+      "Contenu multimédia"
+    ],
+    "termes_deconseilles": [],
+    "definition": "TikTok est une application de réseau social principalement destinée à la création, à la consultation et au partage de vidéos courtes et de contenus multimédias.\n\nElle permet notamment la publication de vidéos, les commentaires, les mentions « J'aime », le suivi d'autres comptes et les échanges par messagerie privée, individuels ou collectifs.\n\nL'application propose également un système de recommandation de contenus, des diffusions en direct et la possibilité de conserver des publications à l'état de brouillon.",
+    "donnees_potentielles": [
+      "Les comptes associés à l'application, leurs pseudonymes et identifiants techniques.",
+      "Les messages directs et les conversations individuelles ou collectives.",
+      "Les vidéos publiées, enregistrées ou conservées comme brouillons.",
+      "Les commentaires, mentions « J'aime », favoris et autres interactions.",
+      "Les comptes suivis et les relations entre comptes.",
+      "Les historiques de recherche et certaines traces de consultation.",
+      "Les photographies, vidéos, vignettes et autres fichiers multimédias.",
+      "Les données temporaires, fichiers de cache et métadonnées associées.",
+      "Les horodatages disponibles relatifs à certaines activités."
+    ],
+    "points_attention": [
+      "La présence de l'application TikTok sur un support ne démontre pas, à elle seule, son utilisation effective.",
+      "Un compte TikTok peut comporter un nom affiché, un nom d'utilisateur et un identifiant numérique interne. Ces éléments doivent être distingués lors de l'identification des comptes.",
+      "La présence d'une vidéo dans le cache de l'application ne permet pas, à elle seule, d'affirmer qu'elle a été visionnée. Certains contenus peuvent être préchargés automatiquement.",
+      "Un fichier multimédia associé à TikTok ne permet pas nécessairement d'établir qu'il a été créé, publié, envoyé ou reçu par l'utilisateur du téléphone.",
+      "Les brouillons sont distincts des publications. Leur présence ne démontre pas une mise en ligne.",
+      "Les informations accessibles localement peuvent être incomplètes ou différer des données conservées par le service.",
+      "L'absence d'un message, d'une vidéo ou d'une interaction dans les données extraites ne démontre pas nécessairement que cet élément n'a jamais existé.",
+      "L'identification d'un compte ou de traces d'activité ne suffit pas, à elle seule, à établir l'identité de la personne ayant effectué les actions correspondantes."
+    ],
+    "formulations_rapport": [
+      {
+        "type": "Application identifiée",
+        "texte": "Nous identifions la présence de l'application TikTok sur le support examiné."
+      },
+      {
+        "type": "Présentation de l'application",
+        "texte": "TikTok est une application de réseau social permettant notamment la création, la consultation et le partage de vidéos, les interactions entre utilisateurs ainsi que les échanges par messagerie privée."
+      },
+      {
+        "type": "Données associées",
+        "texte": "L'examen des données extraites du support met en évidence plusieurs éléments associés à l'application TikTok."
+      },
+      {
+        "type": "Compte utilisateur identifié",
+        "texte": "L'examen des données de l'application TikTok permet d'identifier un compte portant le nom « [NOM DU COMPTE] », associé à l'identifiant [IDENTIFIANT DU COMPTE]."
+      },
+      {
+        "type": "Conversations identifiées",
+        "texte": "L'examen des données de l'application TikTok met en évidence plusieurs conversations entre comptes utilisateurs, dont certaines sont susceptibles de présenter un intérêt au regard de la mission confiée."
+      },
+      {
+        "type": "Conversation entre deux comptes",
+        "texte": "L'examen des données de l'application TikTok met en évidence une conversation entre les comptes suivants :\n- Le compte associé au téléphone examiné, « [COMPTE_ASSOCIE] » (identifiant : [IDENTIFIANT_ASSOCIE]).\n- Le compte « [AUTRE_COMPTE] » (identifiant : [AUTRE_IDENTIFIANT])."
+      },
+      {
+        "type": "Conversation de groupe",
+        "texte": "L'examen des données de l'application TikTok met en évidence une conversation de groupe intitulée « [NOM_GROUPE] ». Les données examinées permettent d'identifier notamment les comptes suivants :\n- Le compte associé au téléphone examiné, « [COMPTE_ASSOCIE] » (identifiant : [IDENTIFIANT_ASSOCIE]).\n- Le compte « [COMPTE_2] » (identifiant : [IDENTIFIANT_2]).\n- Le compte « [COMPTE_3] » (identifiant : [IDENTIFIANT_3])."
+      },
+      {
+        "type": "Vidéos publiées",
+        "texte": "L'examen des données associées au compte TikTok « [NOM DU COMPTE] » permet d'identifier plusieurs vidéos enregistrées comme ayant été publiées depuis ce compte."
+      },
+      {
+        "type": "Vidéos conservées comme brouillons",
+        "texte": "L'examen des données de l'application TikTok permet d'identifier plusieurs vidéos conservées à l'état de brouillon, sans élément permettant d'établir leur publication."
+      },
+      {
+        "type": "Interactions avec des contenus",
+        "texte": "L'examen des données associées à l'application TikTok permet d'identifier plusieurs enregistrements relatifs à des interactions avec des publications, notamment des commentaires et des mentions « J'aime »."
+      },
+      {
+        "type": "Historique des recherches",
+        "texte": "L'examen des données de l'application TikTok permet d'identifier des enregistrements relatifs à des recherches effectuées au sein de l'application."
+      },
+      {
+        "type": "Vidéos présentes dans le cache",
+        "texte": "Nous identifions plusieurs fichiers vidéo dans les données de cache de l'application TikTok. Leur présence ne permet pas, à elle seule, d'établir qu'ils ont effectivement été visionnés par l'utilisateur du support."
+      },
+      {
+        "type": "Fichiers multimédias associés",
+        "texte": "L'examen des données extraites permet d'identifier plusieurs fichiers multimédias associés à l'application TikTok, sans que leur origine ou les circonstances de leur enregistrement puissent systématiquement être déterminées."
+      },
+      {
+        "type": "Données partiellement accessibles",
+        "texte": "Les conditions techniques de l'extraction ne permettent d'accéder qu'à une partie des données associées à l'application TikTok. Les éléments examinés ne peuvent donc être considérés comme exhaustifs."
+      },
+      {
+        "type": "Traces d'interactions sans contenu",
+        "texte": "L'examen des données de l'application TikTok permet d'identifier des traces d'interactions entre plusieurs comptes, sans que les éléments disponibles permettent de restituer la nature ou le contenu des échanges correspondants."
+      },
+      {
+        "type": "Limites d'attribution",
+        "texte": "Les éléments techniques identifiés permettent de rattacher certaines activités à un compte TikTok, sans suffire, à eux seuls, à établir l'identité de la personne ayant réalisé les actions correspondantes."
+      }
+    ],
+    "sources": [
+      "Centre d'aide TikTok — Messages directs et discussions de groupe, https://support.tiktok.com/fr/using-tiktok/messaging-and-notifications/direct-message-settings",
+      "Centre d'aide TikTok — Modifier, publier et supprimer (brouillons), https://support.tiktok.com/fr/using-tiktok/creating-videos/editing-posting-and-deleting",
+      "Horsman, G. et Shou, L. (2022), Case Study: Forensic Analysis of TikTok on iOS, DFIR Review, https://doi.org/10.21428/b0ac9c28.f750a1dd",
+      "Hu, X. et Karabiyik, U. (2024), Shopping While Watching: An Updated Forensic Analysis of TikTok on Android and iOS, ISNCC, https://doi.org/10.1109/ISNCC62547.2024.10759027"
+    ]
   }
 ]
