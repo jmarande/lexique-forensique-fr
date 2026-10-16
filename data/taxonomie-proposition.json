@@ -737,6 +737,15 @@
         "informatique"
       ],
       "ancienne_categorie": "Application — Messagerie et réseau social"
+    },
+    {
+      "id": "tiktok",
+      "classification": "applications/messageries",
+      "domaines": [
+        "telephonie",
+        "informatique"
+      ],
+      "ancienne_categorie": "Application — Messagerie et réseau social"
     }
   ]
 }
