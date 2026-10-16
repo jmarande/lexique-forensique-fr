@@ -3,7 +3,7 @@
 Catalogue généré automatiquement depuis [data/lexique.json](../data/lexique.json).
 Ce catalogue n'est pas une validation juridique ou normative des définitions.
 
-**84 fiches disponibles** — 0 validées, 84 en attente de relecture.
+**85 fiches disponibles** — 0 validées, 85 en attente de relecture.
 
 [Procédure de validation](../docs/VALIDATION-FICHES.md)
 
@@ -152,6 +152,7 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Signal](signal.md)
 - [Snapchat](snapchat.md)
 - [Telegram](telegram.md)
+- [TikTok](tiktok.md)
 - [WhatsApp](whatsapp.md)
 
 ## 🌐 Navigation Internet
@@ -247,6 +248,7 @@ Ce catalogue n'est pas une validation juridique ou normative des définitions.
 - [Système d'exploitation](systeme-exploitation.md)
 - [Système de fichiers](systeme-fichiers.md)
 - [Telegram](telegram.md)
+- [TikTok](tiktok.md)
 - [Traces d'activité](traces-activite.md)
 - [Valeur de hachage](valeur-hachage.md)
 - [Verrouillage et déverrouillage (iOS)](verrouillage-deverrouillage-ios.md)
